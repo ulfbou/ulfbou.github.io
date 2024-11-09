@@ -1,0 +1,46 @@
+﻿@page "/contact"
+@using MudBlazor
+
+<PageTitle>Contact information</PageTitle>
+
+<MudContainer>
+    <MudText Typo="Typo.h3">Let's get in touch!</MudText>
+
+    <MudText Typo="Typo.subtitle1">You can find me on:</MudText>
+
+    <MudList T="string">
+        <MudListItem Inline="true">
+            <MudLink Href="https://www.linkedin.com/in/ulf-bourelius-a9090248/" Target="_blank">
+                <MudIcon Icon="@Icons.Custom.Brands.LinkedIn" Size="Size.Large" />
+                <MudText Typo="@Typo.subtitle1" Inline="false">LinkedIn</MudText>
+            </MudLink>
+        </MudListItem>
+        <MudListItem Inline="true">
+            <MudLink Href="https://github.com/ulfbou" Target="_blank">
+                <MudIcon Icon="@Icons.Custom.Brands.GitHub" Size="Size.Large" />
+                <MudText Typo="@Typo.subtitle1" Inline="false">GitHub</MudText>
+            </MudLink>
+        </MudListItem>
+
+        <MudListItem Inline="true">
+            <MudLink Href="https://Homepage/" Target="_blank">
+                <MudIcon Icon="@Icons.Material.Filled.Web" Size="Size.Large" />
+                <MudText Typo="@Typo.subtitle1" Inline="false">Webpage</MudText>
+            </MudLink>
+        </MudListItem>
+
+        <MudListItem Inline="true">
+            <MudLink Href="https://www.facebook.com/ubourelius/" Target="_blank">
+                <MudIcon Icon="@Icons.Custom.Brands.Facebook" Size="Size.Large" />
+                <MudText Typo="@Typo.subtitle1" Inline="false">Facebook</MudText>
+            </MudLink>
+        </MudListItem>
+
+        <MudListItem Inline="true">
+            <MudLink Href="https://www.instagram.com/ulfbourelius/" Target="_blank">
+                <MudIcon Icon="@Icons.Custom.Brands.Instagram" Size="Size.Large" />
+                <MudText Typo="@Typo.subtitle1" Inline="false">Instagram</MudText>
+            </MudLink>
+        </MudListItem>
+    </MudList>
+</MudContainer>

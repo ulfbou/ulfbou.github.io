@@ -1,0 +1,13 @@
+﻿.articles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1rem;
+}
+
+pre, .article pre, .article pre > code, pre > code {
+    background-color: #1e1a16;
+    padding: 0.5rem;
+    border-radius: 5px;
+    display: block;
+    margin: 1rem 0;
+}

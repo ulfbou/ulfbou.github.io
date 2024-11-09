@@ -1,0 +1,53 @@
+@* @using Homepage.Common.Helpers
+@using Homepage.Common.Models
+
+<MudCard>
+    <MudNavGroup Text="@Title">
+        @foreach (var category in Content.Items)
+        {
+            <MudNavLink Href="@($"{BaseLink}/{category}")"
+                        OnClick="() => Context.AddCategories([category])">
+                @category
+            </MudNavLink>
+        }
+    </MudNavGroup>
+    @if (Content.TotalPages == 1)
+    {
+        <MudCardActions>
+            <MudButton Disabled="@(Content.PageIndex == 0)" OnClick="@(async () => await Previous())">Previous</MudButton>
+            <MudButton Disabled="@(Content.PageIndex + 1 * Content.PageSize >= Content.TotalPages)" OnClick="@(async () => await Next())">Next</MudButton>
+        </MudCardActions>
+    }
+</MudCard>
+@code {
+    [Inject] private ContentContext Context { get; set; }
+    [Parameter] public PagedList<string> Content { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string BaseLink { get; set; }
+
+    protected void OnParameterSet()
+    {
+        Content ??= new();
+        if (string.IsNullOrWhiteSpace(Title))
+        {
+            Title = "Pagination";
+        }
+
+        if (string.IsNullOrWhiteSpace(BaseLink))
+        {
+            BaseLink = "page";
+        }
+    }
+
+    private async Task Next()
+    {
+        Content.PageIndex++;
+        await Task.CompletedTask;
+    }
+
+    private async Task Previous()
+    {
+        Content.PageIndex--;
+        await Task.CompletedTask;
+    }
+} *@

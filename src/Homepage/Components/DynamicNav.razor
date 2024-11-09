@@ -1,0 +1,70 @@
+﻿@using Homepage.Common.Helpers
+@using Homepage.Common.Models
+@using Homepage.Common.Services
+
+@* <Pagination Content="@CategoryPagedList" BaseLink="category" Title="Categories" />
+<Pagination Content="@TagPagedList" BaseLink="tags" Title="Tags" />
+ *@
+@code {
+    [Inject] private ContentService ContentService { get; set; }
+    [Inject] private ContextService ContextService { get; set; }
+    [Inject] private ContentContext Context { get; set; }
+    private PagedList<string> CategoryPagedList = new();
+    private PagedList<string> TagPagedList = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSorted();
+    }
+
+    private async Task LoadSorted()
+    {
+        // Get categories and sort based on relevance to current context
+        var categories = await ContentService.GetCategories();
+
+        // Custom sorting logic (example: prioritize the current category)
+        // if (!string.IsNullOrEmpty(Context.CurrentCategory))
+        // {
+        //     categories = categories
+        //         .OrderByDescending(c => c == Context.CurrentCategory)
+        //         .ThenBy(c => c);
+        // }
+
+        CategoryPagedList.Items = categories.ToList();
+
+        var tags = await ContentService.GetTags();
+
+        // Custom sorting logic (example: prioritize the current tag)
+        // if (!string.IsNullOrEmpty(Context.CurrentTag))
+        // {
+        //     tags = tags
+        //         .OrderByDescending(t => t == Context.CurrentTag)
+        //         .ThenBy(t => t);
+        // }
+
+        TagPagedList.Items = tags.ToList();
+    }
+
+    private IEnumerable<T> GetPaged<T>(PagedList<T> pagedList) where T : class
+    {
+        return pagedList.Items
+            .Skip(pagedList.PageIndex * pagedList.PageSize)
+            .Take(pagedList.PageSize);
+    }
+
+    private void NextPage<T>(PagedList<T> pagedList) where T : class
+    {
+        if ((pagedList.PageIndex + 1) * pagedList.PageSize < pagedList.Items.Count())
+        {
+            pagedList.PageIndex++;
+        }
+    }
+
+    private void PreviousPage<T>(PagedList<T> pagedList) where T : class
+    {
+        if (pagedList.PageIndex > 0)
+        {
+            pagedList.PageIndex--;
+        }
+    }
+}

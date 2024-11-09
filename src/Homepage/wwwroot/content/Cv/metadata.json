@@ -1,0 +1,332 @@
+{
+  "PersonalInfo": {
+    "Name": "Ulf Bourelius",
+    "Title": "Fullstack C# .NET Software Developer",
+    "Location": "Stockholm, Sweden",
+    "Email": "ulfbourelius71@gmail.com",
+    "Phone": "+46 764 - 16 41 24",
+    "LinkedIn": "https://www.linkedin.com/in/ulf-bourelius-a9090248",
+    "ProfileImageUrl": "images/1517494205971.jpeg"
+  },
+  "WorkExperiences": [
+    {
+      "Position": "Fullstack .Net Software Developer (Internship)",
+      "Company": "ZoCom AB",
+      "StartDate": "2024",
+      "EndDate": "2024",
+      "Responsibilities": [
+        "Developed a custom Content Management System (CMS) using Blazor and ASP.NET Core",
+        "Worked with an Agile/Scrum methodology for iterative development and flexibility.",
+        "Utilized CI/CD pipelines to automate testing and deployment, ensuring consistent quality and reducing manual errors.",
+        "Leveraged containerization with Docker to package the application and its dependencies for portability and scalability.",
+        "Responsible for deploying the application on Azure, utilizing serverless functions and SQL Server for a scalable and cost-effective solution.",
+        "Responsible for Backend Development",
+        "Implemented new features and improved performance"
+      ],
+      "CompanyLogoUrl": "ZoCom.png"
+    },
+    {
+      "Position": "GoKart Coach",
+      "Company": "GoKart Stockholm AB",
+      "StartDate": "2016",
+      "EndDate": "2023",
+      "Responsibilities": [
+        "Responsible for customer service, coaching customers, and leading group activities for up to 60 people."
+      ],
+      "CompanyLogoUrl": "GokartStockholm.png"
+    },
+    {
+      "Position": "Salesperson",
+      "Company": "Dollarstore",
+      "StartDate": "2015",
+      "EndDate": "2016",
+      "Responsibilities": [
+        "Handled product packaging and sales of sports and health products.",
+        "Provided customer service and support, ensuring customer satisfaction and repeat business."
+      ],
+      "CompanyLogoUrl": "DollarStore.png"
+    },
+    {
+      "Position": "Salesperson",
+      "Company": "O & D Shop",
+      "StartDate": "2013",
+      "EndDate": "2016",
+      "Responsibilities": [
+        "Handled product packaging and sales of various products including sports goods.",
+        "Provided customer service and support, ensuring customer satisfaction and repeat business."
+      ],
+      "CompanyLogoUrl": "ODShop.jpeg"
+    },
+    {
+      "Position": "Salesperson",
+      "Company": "XXL Sport & Vildmark",
+      "StartDate": "2012",
+      "EndDate": "2013",
+      "Responsibilities": [
+        "Handled product packaging and sales of various products including sports goods.",
+        "Responsible for signage and product displays to attract customers and promote sales."
+      ],
+      "CompanyLogoUrl": "XXLSportOchVildmark.png"
+    },
+    {
+      "Position": "Web Developer",
+      "Company": "Huntingschool",
+      "StartDate": "2010",
+      "EndDate": "2010",
+      "Responsibilities": [
+        "Developed a web portal for e-learning.",
+        "Assisted in teaching at a labor market education program (through Lexicon) in HTML, CSS & Photoshop."
+      ]
+    },
+    {
+      "Position": "Childcare Worker",
+      "Company": "Förskolorna i Grantorp",
+      "StartDate": "2005",
+      "EndDate": "2008",
+      "Responsibilities": [
+        "Responsible for the care and development of children aged 4-5 years.",
+        "Planned and implemented educational activities to support children's learning and social development."
+      ]
+    },
+    {
+      "Position": "Childcare Worker",
+      "Company": "Förskolan ERA",
+      "StartDate": "2003",
+      "EndDate": "2005",
+      "Responsibilities": [
+        "Responsible for the care and development of children aged 4-5 years.",
+        "Planned and implemented educational activities to support children's learning and social development."
+      ]
+    },
+    {
+      "Position": "Programmer",
+      "Company": "Ericsson UAB",
+      "StartDate": "2001",
+      "EndDate": "2002",
+      "Responsibilities": [
+        "Developed a tool for AXE commands (metasyntax parser) in Prolog."
+      ],
+      "CompanyLogoUrl": "EricssonUAB.png"
+    }
+  ],
+  "Educations": [
+    {
+      "Degree": "Fullstack .NET Development",
+      "Institution": "Lexicon IT-Proffs",
+      "GraduationDate": "2024",
+      "OrganisationLogoUrl": "LexiconItProffs.gif"
+    },
+    {
+      "Degree": "Bachelor of Science in Computer Science",
+      "Institution": "Stockholms Universitet",
+      "GraduationDate": "2002",
+      "OrganisationLogoUrl": "StockholmsUniversitet.png"
+    }
+  ],
+  "Skills": [
+    {
+      "Name": ".NET",
+      "Level": 9,
+      "Tooltip": "Extensive experience with .NET ecosystem, proficient in creating scalable and maintainable applications across .NET platforms.",
+      "Category": [ "Backend Development" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Agile",
+      "Level": 8,
+      "Tooltip": "Strong experience with Agile methodologies, focusing on iterative development, collaboration, and continuous improvement.",
+      "Category": [ "Project Management" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "ASP.NET Core",
+      "Level": 8,
+      "Tooltip": "Proficient in building modern, cross-platform web applications with ASP.NET Core, using best practices for security and scalability.",
+      "Category": [ "Web Development" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Blazor",
+      "Level": 7,
+      "Tooltip": "Experienced in developing rich, interactive UI applications using Blazor WebAssembly and Blazor Server.",
+      "Category": [ "Frontend Development" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Azure DevOps",
+      "Level": 7,
+      "Tooltip": "Skilled in setting up and managing CI/CD pipelines with Azure DevOps, focusing on automation, quality, and fast deployment cycles.",
+      "Category": [ "DevOps" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "C#",
+      "Level": 9,
+      "Tooltip": "Proficient in C# for building high-quality, maintainable code across various types of applications.",
+      "Category": [ "Programming Languages" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "CI/CD",
+      "Level": 5,
+      "Tooltip": "Experienced in continuous integration and deployment practices, with strong skills in implementing automated workflows and testing.",
+      "Category": [ "DevOps" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Entity Framework Core",
+      "Level": 7,
+      "Tooltip": "Proficient in using Entity Framework Core for data management in .NET applications, ensuring optimized database interactions.",
+      "Category": [ "Data Management" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "SQL",
+      "Level": 8,
+      "Tooltip": "Experienced in SQL for data querying, database design, and optimization, particularly in Microsoft SQL Server and Azure SQL.",
+      "Category": [ "Data Management" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "JavaScript",
+      "Level": 6,
+      "Tooltip": "Working knowledge of JavaScript, focusing on web application front-end logic and enhancing user interactions.",
+      "Category": [ "Frontend Development" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "Git",
+      "Level": 8,
+      "Tooltip": "Experienced in version control with Git, including branching strategies (Git-Flow) and collaboration on GitHub.",
+      "Category": [ "Version Control" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Software Design Patterns",
+      "Level": 7,
+      "Tooltip": "Well-versed in software design patterns, applying modular and maintainable design principles for clean architecture.",
+      "Category": [ "Architecture", "Design" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Scrum",
+      "Level": 8,
+      "Tooltip": "Strong experience with Agile methodologies, particularly Scrum, for iterative development and continuous improvement.",
+      "Category": [ "Project Management" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Docker",
+      "Level": 5,
+      "Tooltip": "Basic knowledge of Docker for containerization, focusing on efficient deployment and environment management.",
+      "Category": [ "DevOps" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "HTML5",
+      "Level": 7,
+      "Tooltip": "Proficient in HTML5 for building accessible, semantic, and well-structured web pages.",
+      "Category": [ "Frontend Development" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "CSS",
+      "Level": 6,
+      "Tooltip": "Competent in CSS for responsive and adaptive web design, with an emphasis on clean, maintainable styles.",
+      "Category": [ "Frontend Development" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "XUnit",
+      "Level": 7,
+      "Tooltip": "Experienced in unit testing with XUnit, focusing on test-driven development (TDD) for reliable code.",
+      "Category": [ "Testing" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "Azure SQL Database",
+      "Level": 6,
+      "Tooltip": "Working knowledge of Azure SQL for cloud-based database solutions, focusing on scalability and data security.",
+      "Category": [ "Cloud and Database" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "JSON",
+      "Level": 8,
+      "Tooltip": "Experienced in using JSON for data serialization and API communication, with a focus on integration and interoperability.",
+      "Category": [ "Data Management" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Microservices",
+      "Level": 5,
+      "Tooltip": "Familiar with microservices architecture, focusing on building scalable and modular services.",
+      "Category": [ "Architecture" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "Node.js",
+      "Level": 4,
+      "Tooltip": "Basic understanding of Node.js for backend services, primarily for RESTful API development.",
+      "Category": [ "Backend Development" ],
+      "Relevance": "Low"
+    },
+    {
+      "Name": "Test-Driven Development (TDD)",
+      "Level": 6,
+      "Tooltip": "Experienced in TDD, ensuring code reliability through unit testing and continuous validation of requirements.",
+      "Category": [ "Testing" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Frontend Development",
+      "Level": 6,
+      "Tooltip": "General frontend development skills, including HTML, CSS, JavaScript, and UI frameworks like Bootstrap.",
+      "Category": [ "Frontend Development" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "Coaching and Mentorship",
+      "Level": 7,
+      "Tooltip": "Effective in coaching and mentoring, sharing knowledge to support team growth and technical excellence.",
+      "Category": [ "Professional Skills" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "Agile Methodologies",
+      "Level": 8,
+      "Tooltip": "Experienced in Agile methodologies, particularly Scrum, for adaptive and responsive development cycles.",
+      "Category": [ "Project Management" ],
+      "Relevance": "High"
+    },
+    {
+      "Name": "Azure Serverless",
+      "Level": 5,
+      "Tooltip": "Basic knowledge of serverless computing with Azure, suitable for scalable and event-driven applications.",
+      "Category": [ "Cloud Development" ],
+      "Relevance": "Medium"
+    },
+    {
+      "Name": "Responsive Web Design",
+      "Level": 6,
+      "Tooltip": "Experienced in designing adaptive layouts that ensure a consistent user experience across devices.",
+      "Category": [ "Frontend Development" ],
+      "Relevance": "Medium"
+    }
+  ],
+  "Projects": [
+    {
+      "Name": "Zentient Framework",
+      "Description": "Developing a modular C# .NET 8 project, primarily focusing on Zentient.Tests (a comprehensive testing tool), Zentient.Repository and Zentient.Extensions (enriching basic types with helpful extension methods). Applying software patterns and principles using C# and .NET 8, continuously refining components for optimal performance.",
+      "Technologies": [ "C#", "LINQ", "ASP.NET Core", "ASP.NET Core Identity", "Software Development Patterns", "Reflection", "Entity Framework Core" ],
+      "GitHubLink": "https://github.com/ulfbou/ZentientFramework"
+    }
+  ],
+  "Achievements": [
+    {
+      "Name": "Employee of the Month",
+      "Description": "Recognized for outstanding contributions to the team",
+      "Date": "2022-05-15"
+    }
+  ]
+}
