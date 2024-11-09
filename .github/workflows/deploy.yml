@@ -1,0 +1,45 @@
+name: Build and Deploy Blazor WebAssembly
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'src/**'
+  workflow_dispatch:
+  
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        uses: actions/checkout@v3
+
+      - name: Setup .NET Core SDK
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Cache .NET packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/*.csproj') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
+
+      - name: Restore dependencies
+        run: dotnet restore src/UlfBou.GitHub.IO/UlfBou.GitHub.IO.csproj
+
+      - name: Build the Blazor WebAssembly app
+        run: dotnet build src/UlfBou.GitHub.IO/UlfBou.GitHub.IO.csproj --configuration Release
+
+      - name: Publish the Blazor WebAssembly app
+        run: dotnet publish src/UlfBou.GitHub.IO/UlfBou.GitHub.IO.csproj --configuration Release --output build
+        
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./build/wwwroot
+          publish_branch: gh-pages
