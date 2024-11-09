@@ -32,10 +32,10 @@ jobs:
         run: dotnet restore src/UlfBou.GitHub.IO/UlfBou.GitHub.IO.csproj
 
       - name: Build the Blazor WebAssembly app
-        run: dotnet build src/UlfBou.GitHub.IO/UlfBou.GitHub.IO.csproj --configuration Release
+        run: dotnet build src/Homepage/Homepage.csproj --configuration Release
 
       - name: Publish the Blazor WebAssembly app
-        run: dotnet publish src/UlfBou.GitHub.IO/UlfBou.GitHub.IO.csproj --configuration Release --output build
+        run: dotnet publish src/Homepage/Homepage.csproj --configuration Release --output build
         
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
