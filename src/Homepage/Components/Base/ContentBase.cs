@@ -13,7 +13,6 @@ using Homepage.Common.Models;
 using Homepage.Common.Services;
 
 using Homepage.Common.Helpers;
-using Homepage.Common.Services;
 
 namespace Homepage.Components.Base;
 
@@ -49,8 +48,8 @@ public abstract class ContentBase : BaseComponent
     protected bool IsLoading { get; set; } = false;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-    protected string MetadataUrl => "Content/metadata.json";
-    protected string ContentDirectory => "Content";
+    protected string MetadataUrl => "content/metadata.json";
+    protected string ContentDirectory => "content";
 
     protected override async Task OnInitializedAsync()
     {

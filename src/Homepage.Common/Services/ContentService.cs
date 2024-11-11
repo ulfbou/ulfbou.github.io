@@ -10,7 +10,7 @@ namespace Homepage.Common.Services;
 public class ContentService(HttpClient httpClient)
 {
     private readonly HttpClient _httpClient = httpClient;
-    public const string BaseUri = "Content";
+    public const string BaseUri = "content";
 
     private Metadata? _metadata;
     private List<string>? _tags;

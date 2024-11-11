@@ -7,7 +7,7 @@ namespace Homepage.Common.Services;
 public class ContextService(ContentService contentService, Similarity jaccardSimilarity)
 {
     private readonly ContentService _contentService = contentService;
-    public const string BaseUri = "Content/";
+    public const string BaseUri = "content/";
 
     public IEnumerable<PostMetadata> Metadata
     {

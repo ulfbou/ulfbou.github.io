@@ -277,12 +277,12 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var logger = Log.ForContext("Category", "CV").ForContext("Method", "OnInitializedAsync");
+        var logger = Log.ForContext("Category", "cv").ForContext("Method", "OnInitializedAsync");
         logger.Information("Initializing CV page");
         await Console.Out.WriteLineAsync(DateTime.Now.ToString().ToJson());
         await base.OnInitializedAsync();
         logger.Information("Base initialized");
-        CVData = await ContentService.GetJson<CVModel>("Cv");
+        CVData = await ContentService.GetJson<CVModel>("cv");
 
         if (CVData == null)
         {
@@ -295,7 +295,7 @@
             CVData.PersonalInfo.ProfileImageUrl = "images/profile.jpg";
             CVData.PersonalInfo.Location = "Stockholm, Sweden";
         }
-        logger.Information("CV data retrieved");
+        logger.Information("cv data retrieved");
         var errors = CVData.Validate();
         logger.Information("Validation errors: {Errors}", errors);
         foreach (var error in errors)
