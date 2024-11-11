@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Homepage",
   "resources": {
-    "hash": "sha256-a9GAPVE5ELnpjpYsKl+fe9B/EwoYSUEeSQduhIyijRE=",
+    "hash": "sha256-5EbLKu2ONejFJ18oLGIyJqjqQSL9Z2AklNIMLFLaD5c=",
     "jsModuleNative": {
       "dotnet.native.8.0.10.4xsnm8lwn6.js": "sha256-QVxMlY7ohmjgde/bZMA0dlWDAeuUP+tEfkiSdg4DFcE="
     },
@@ -18,8 +18,8 @@
     },
     "assembly": {
       "Bogus.wasm": "sha256-f+eHEnC6EJOpjXzE11hmrwCT61N+kMiE6vm/AjRrX3E=",
-      "Homepage.Common.wasm": "sha256-iXzb6sUJ7jrYjXFUUX2kwnRz4QSWk+ooRz96HRlK1dM=",
-      "Homepage.wasm": "sha256-D+jYFfJZtsN242pygyYG0fFz3cIJa3ZtRWwfLD8VH64=",
+      "Homepage.Common.wasm": "sha256-uxXWHHGHrDqhDT2sTXZ/3Vz6PM6MLLxjj1C5XYLpIj0=",
+      "Homepage.wasm": "sha256-aEgZuYxZv63o6S2UKI7zHHB8zYiPsw04iWAATUaQ6Tk=",
       "Markdig.wasm": "sha256-+0BicYzI+5ABC8GZr1ITU0gPsHD5CMBjOpk5297sa58=",
       "Microsoft.AspNetCore.Components.Forms.wasm": "sha256-1QyG+V9dCcY96uRZWmy+6ZUr0aVy5OdPgZCPZc2R5gQ=",
       "Microsoft.AspNetCore.Components.wasm": "sha256-VnrB7cJEugv1k1CQEcruzRUMqDAWp3/UND4IMXkGUf8=",
