@@ -126,15 +126,15 @@
   "Skills": [
     {
       "Name": ".NET",
-      "Level": 9,
+      "Level": 8,
       "Tooltip": "Extensive experience with .NET ecosystem, proficient in creating scalable and maintainable applications across .NET platforms.",
       "Category": [ "Backend Development" ],
       "Relevance": "High"
     },
     {
-      "Name": "Agile",
-      "Level": 8,
-      "Tooltip": "Strong experience with Agile methodologies, focusing on iterative development, collaboration, and continuous improvement.",
+      "Name": "Agile Methodologies",
+      "Level": 7,
+      "Tooltip": "Experienced in Agile methodologies, particularly Scrum, for adaptive and responsive development cycles with focus on iterative development, collaboration, and continuous improvement.",
       "Category": [ "Project Management" ],
       "Relevance": "High"
     },
@@ -161,14 +161,14 @@
     },
     {
       "Name": "C#",
-      "Level": 9,
+      "Level": 8,
       "Tooltip": "Proficient in C# for building high-quality, maintainable code across various types of applications.",
       "Category": [ "Programming Languages" ],
       "Relevance": "High"
     },
     {
       "Name": "CI/CD",
-      "Level": 5,
+      "Level": 6,
       "Tooltip": "Experienced in continuous integration and deployment practices, with strong skills in implementing automated workflows and testing.",
       "Category": [ "DevOps" ],
       "Relevance": "High"
@@ -185,7 +185,7 @@
       "Level": 8,
       "Tooltip": "Experienced in SQL for data querying, database design, and optimization, particularly in Microsoft SQL Server and Azure SQL.",
       "Category": [ "Data Management" ],
-      "Relevance": "High"
+      "Relevance": "Medium"
     },
     {
       "Name": "JavaScript",
@@ -206,21 +206,21 @@
       "Level": 7,
       "Tooltip": "Well-versed in software design patterns, applying modular and maintainable design principles for clean architecture.",
       "Category": [ "Architecture", "Design" ],
-      "Relevance": "High"
+      "Relevance": "Medium"
     },
     {
       "Name": "Scrum",
       "Level": 8,
       "Tooltip": "Strong experience with Agile methodologies, particularly Scrum, for iterative development and continuous improvement.",
       "Category": [ "Project Management" ],
-      "Relevance": "High"
+      "Relevance": "Medium"
     },
     {
       "Name": "Docker",
       "Level": 5,
       "Tooltip": "Basic knowledge of Docker for containerization, focusing on efficient deployment and environment management.",
       "Category": [ "DevOps" ],
-      "Relevance": "Medium"
+      "Relevance": "High"
     },
     {
       "Name": "HTML5",
@@ -247,7 +247,7 @@
       "Name": "Azure SQL Database",
       "Level": 6,
       "Tooltip": "Working knowledge of Azure SQL for cloud-based database solutions, focusing on scalability and data security.",
-      "Category": [ "Cloud and Database" ],
+      "Category": [ "Cloud Computing", "Data Management" ],
       "Relevance": "Medium"
     },
     {
@@ -255,7 +255,7 @@
       "Level": 8,
       "Tooltip": "Experienced in using JSON for data serialization and API communication, with a focus on integration and interoperability.",
       "Category": [ "Data Management" ],
-      "Relevance": "High"
+      "Relevance": "Medium"
     },
     {
       "Name": "Microservices",
@@ -291,13 +291,6 @@
       "Tooltip": "Effective in coaching and mentoring, sharing knowledge to support team growth and technical excellence.",
       "Category": [ "Professional Skills" ],
       "Relevance": "Medium"
-    },
-    {
-      "Name": "Agile Methodologies",
-      "Level": 8,
-      "Tooltip": "Experienced in Agile methodologies, particularly Scrum, for adaptive and responsive development cycles.",
-      "Category": [ "Project Management" ],
-      "Relevance": "High"
     },
     {
       "Name": "Azure Serverless",
