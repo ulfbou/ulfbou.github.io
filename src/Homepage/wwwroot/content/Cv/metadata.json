@@ -126,182 +126,182 @@
   "Skills": [
     {
       "Name": ".NET",
-      "Level": 8,
+      "Level": 80,
       "Tooltip": "Extensive experience with .NET ecosystem, proficient in creating scalable and maintainable applications across .NET platforms.",
       "Category": [ "Backend Development" ],
       "Relevance": "High"
     },
     {
       "Name": "Agile Methodologies",
-      "Level": 7,
+      "Level": 70,
       "Tooltip": "Experienced in Agile methodologies, particularly Scrum, for adaptive and responsive development cycles with focus on iterative development, collaboration, and continuous improvement.",
       "Category": [ "Project Management" ],
       "Relevance": "High"
     },
     {
       "Name": "ASP.NET Core",
-      "Level": 8,
+      "Level": 80,
       "Tooltip": "Proficient in building modern, cross-platform web applications with ASP.NET Core, using best practices for security and scalability.",
       "Category": [ "Web Development" ],
       "Relevance": "High"
     },
     {
       "Name": "Blazor",
-      "Level": 7,
+      "Level": 70,
       "Tooltip": "Experienced in developing rich, interactive UI applications using Blazor WebAssembly and Blazor Server.",
       "Category": [ "Frontend Development" ],
       "Relevance": "High"
     },
     {
       "Name": "Azure DevOps",
-      "Level": 7,
+      "Level": 70,
       "Tooltip": "Skilled in setting up and managing CI/CD pipelines with Azure DevOps, focusing on automation, quality, and fast deployment cycles.",
       "Category": [ "DevOps" ],
       "Relevance": "High"
     },
     {
       "Name": "C#",
-      "Level": 8,
+      "Level": 80,
       "Tooltip": "Proficient in C# for building high-quality, maintainable code across various types of applications.",
       "Category": [ "Programming Languages" ],
       "Relevance": "High"
     },
     {
       "Name": "CI/CD",
-      "Level": 6,
+      "Level": 60,
       "Tooltip": "Experienced in continuous integration and deployment practices, with strong skills in implementing automated workflows and testing.",
       "Category": [ "DevOps" ],
       "Relevance": "High"
     },
     {
       "Name": "Entity Framework Core",
-      "Level": 7,
+      "Level": 70,
       "Tooltip": "Proficient in using Entity Framework Core for data management in .NET applications, ensuring optimized database interactions.",
       "Category": [ "Data Management" ],
       "Relevance": "Medium"
     },
     {
       "Name": "SQL",
-      "Level": 8,
+      "Level": 80,
       "Tooltip": "Experienced in SQL for data querying, database design, and optimization, particularly in Microsoft SQL Server and Azure SQL.",
       "Category": [ "Data Management" ],
       "Relevance": "Medium"
     },
     {
       "Name": "JavaScript",
-      "Level": 6,
+      "Level": 60,
       "Tooltip": "Working knowledge of JavaScript, focusing on web application front-end logic and enhancing user interactions.",
       "Category": [ "Frontend Development" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Git",
-      "Level": 8,
+      "Level": 80,
       "Tooltip": "Experienced in version control with Git, including branching strategies (Git-Flow) and collaboration on GitHub.",
       "Category": [ "Version Control" ],
       "Relevance": "High"
     },
     {
       "Name": "Software Design Patterns",
-      "Level": 7,
+      "Level": 70,
       "Tooltip": "Well-versed in software design patterns, applying modular and maintainable design principles for clean architecture.",
       "Category": [ "Architecture", "Design" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Scrum",
-      "Level": 8,
+      "Level": 80,
       "Tooltip": "Strong experience with Agile methodologies, particularly Scrum, for iterative development and continuous improvement.",
       "Category": [ "Project Management" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Docker",
-      "Level": 5,
+      "Level": 50,
       "Tooltip": "Basic knowledge of Docker for containerization, focusing on efficient deployment and environment management.",
       "Category": [ "DevOps" ],
       "Relevance": "High"
     },
     {
       "Name": "HTML5",
-      "Level": 7,
+      "Level": 70,
       "Tooltip": "Proficient in HTML5 for building accessible, semantic, and well-structured web pages.",
       "Category": [ "Frontend Development" ],
       "Relevance": "Medium"
     },
     {
       "Name": "CSS",
-      "Level": 6,
+      "Level": 60,
       "Tooltip": "Competent in CSS for responsive and adaptive web design, with an emphasis on clean, maintainable styles.",
       "Category": [ "Frontend Development" ],
       "Relevance": "Medium"
     },
     {
       "Name": "XUnit",
-      "Level": 7,
+      "Level": 70,
       "Tooltip": "Experienced in unit testing with XUnit, focusing on test-driven development (TDD) for reliable code.",
       "Category": [ "Testing" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Azure SQL Database",
-      "Level": 6,
+      "Level": 60,
       "Tooltip": "Working knowledge of Azure SQL for cloud-based database solutions, focusing on scalability and data security.",
       "Category": [ "Cloud Computing", "Data Management" ],
       "Relevance": "Medium"
     },
     {
       "Name": "JSON",
-      "Level": 8,
+      "Level": 80,
       "Tooltip": "Experienced in using JSON for data serialization and API communication, with a focus on integration and interoperability.",
       "Category": [ "Data Management" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Microservices",
-      "Level": 5,
+      "Level": 50,
       "Tooltip": "Familiar with microservices architecture, focusing on building scalable and modular services.",
       "Category": [ "Architecture" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Node.js",
-      "Level": 4,
+      "Level": 40,
       "Tooltip": "Basic understanding of Node.js for backend services, primarily for RESTful API development.",
       "Category": [ "Backend Development" ],
       "Relevance": "Low"
     },
     {
       "Name": "Test-Driven Development (TDD)",
-      "Level": 6,
+      "Level": 60,
       "Tooltip": "Experienced in TDD, ensuring code reliability through unit testing and continuous validation of requirements.",
       "Category": [ "Testing" ],
       "Relevance": "High"
     },
     {
       "Name": "Frontend Development",
-      "Level": 6,
+      "Level": 60,
       "Tooltip": "General frontend development skills, including HTML, CSS, JavaScript, and UI frameworks like Bootstrap.",
       "Category": [ "Frontend Development" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Coaching and Mentorship",
-      "Level": 7,
+      "Level": 70,
       "Tooltip": "Effective in coaching and mentoring, sharing knowledge to support team growth and technical excellence.",
       "Category": [ "Professional Skills" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Azure Serverless",
-      "Level": 5,
+      "Level": 50,
       "Tooltip": "Basic knowledge of serverless computing with Azure, suitable for scalable and event-driven applications.",
       "Category": [ "Cloud Development" ],
       "Relevance": "Medium"
     },
     {
       "Name": "Responsive Web Design",
-      "Level": 6,
+      "Level": 60,
       "Tooltip": "Experienced in designing adaptive layouts that ensure a consistent user experience across devices.",
       "Category": [ "Frontend Development" ],
       "Relevance": "Medium"

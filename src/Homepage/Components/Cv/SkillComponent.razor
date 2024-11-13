@@ -1,0 +1,27 @@
+﻿@inherits ContentBase
+@using Homepage.Components.Base
+@using MudBlazor
+
+<MudCard Class="@SkillClass" Style="@(IsGrid ? "width: 150px;" : "width: 100%;")">
+    <MudCardHeader>
+        <MudIcon Icon="@SkillIcon" Size="Size.Large" Color="@IconColor" />
+        <MudTooltip Text="@SkillDescription">
+            <MudText Typo="Typo.h6">@SkillName</MudText>
+        </MudTooltip>
+    </MudCardHeader>
+    @if (!IsGrid)
+    {
+        <MudCardContent>
+            <MudText Typo="Typo.body2">@SkillDescription</MudText>
+        </MudCardContent>
+    }
+</MudCard>
+
+@code {
+    [Parameter] public string SkillName { get; set; }
+    [Parameter] public string SkillDescription { get; set; }
+    [Parameter] public string SkillIcon { get; set; } = Icons.Material.Filled.Star;
+    [Parameter] public Color IconColor { get; set; } = Color.Primary;
+    [Parameter] public bool IsGrid { get; set; }
+    private string SkillClass => IsGrid ? "skill-card grid-layout" : "skill-card list-layout";
+}

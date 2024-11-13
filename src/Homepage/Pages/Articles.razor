@@ -15,10 +15,11 @@
     }
     else if (!string.IsNullOrEmpty(ContentHtml))
     {
-        <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
+        <MudCard class="pa-6 ma-6">
             <MudText Typo="Typo.body1">@((MarkupString)ContentHtml)</MudText>
-            <MudButton Variant="Variant.Outlined" OnClick="() => ResetContent()">Back</MudButton>
-        </MudPaper>
+        </MudCard>
+        <MudDivider />
+        <MudButton Variant="Variant.Outlined" Align="Align.Center" OnClick="() => ResetContent()" Class="ma-6 pa-6">Back</MudButton>
     }
     else if (ContentList.Any())
     {

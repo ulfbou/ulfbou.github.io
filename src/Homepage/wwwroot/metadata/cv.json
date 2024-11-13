@@ -1,0 +1,29 @@
+{
+  "PersonalInfo": {
+    "Name": "Ulf Bourelius",
+    "Title": "Fullstack C# .NET Software Developer",
+    "Location": "Stockholm, Sweden",
+    "Email": "ulfbourelius71@gmail.com",
+    "Phone": "+46 764 - 16 41 24",
+    "LinkedIn": "https://www.linkedin.com/in/ulf-bourelius-a9090248",
+    "ProfileImageUrl": "images/1517494205971.jpeg"
+  },
+  "WorkExperiences": [
+    {
+      "Position": "Fullstack .NET Software Developer",
+      "Company": "ZoCom AB",
+      "StartDate": "2024",
+      "EndDate": "2024",
+      "Responsibilities": [],
+      "CompanyLogoUrl": "ZoCom.png"
+    }
+  ],
+  "Educations": [
+  ],
+  "Skills": [
+  ],
+  "Projects": [
+  ],
+  "Achievements": [
+  ]
+}

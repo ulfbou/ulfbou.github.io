@@ -1,0 +1,31 @@
+﻿@* ProjectComponent.razor *@
+@inherits ContentBase
+@using Homepage.Components.Base
+@using MudBlazor
+
+<MudCard Class="@ProjectClass" Style="@(IsCompact ? "height: 200px; width: 200px;" : "width: 100%;")">
+    <MudCardMedia Image="@ProjectImage" Alt="@ProjectTitle" Class="project-image" />
+    <MudCardContent>
+        <MudText Typo="Typo.h5">@ProjectTitle</MudText>
+        @if (!IsCompact)
+        {
+            <MudText Typo="Typo.body2">@ProjectDescription</MudText>
+        }
+    </MudCardContent>
+    <MudCardActions>
+        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="() => OpenProjectLink(ProjectLink)">
+            View Project
+        </MudButton>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter] public string ProjectTitle { get; set; }
+    [Parameter] public string ProjectDescription { get; set; }
+    [Parameter] public string ProjectImage { get; set; }
+    [Parameter] public string ProjectLink { get; set; }
+    [Parameter] public bool IsCompact { get; set; }
+    private string ProjectClass => IsCompact ? "project-item compact-layout" : "project-item detailed-layout";
+
+    private void OpenProjectLink(string link) => Navigation.NavigateTo(link);
+}

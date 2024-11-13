@@ -1,6 +1,6 @@
 ﻿using Homepage.Common.Models;
 
-namespace Homepage.Common.Helpers
+namespace Homepage.Common.Utils
 {
     public static class ContextDrivenSorter
     {

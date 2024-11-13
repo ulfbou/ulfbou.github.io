@@ -8,4 +8,5 @@ namespace Homepage.Pages;
 
 public partial class Cv : ContentBase
 {
+
 }

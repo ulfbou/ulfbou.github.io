@@ -1,0 +1,40 @@
+﻿<h3>PersonalInformationComponent</h3>
+<MudItem>
+    <!-- Personal Info -->
+    <MudCard Class="cv-card cv-personal-info">
+        <MudCardContent Class="text-center">
+            <MudAvatar Size="Size.Large" Alt="@Name" Class="cv-profile-image">
+                <MudImage Alt="@Name" Src="@ProfileImageUrl" Class="cv-profile-image" />
+            </MudAvatar>
+            <MudText Typo="Typo.h4" Class="text-brown-darken4">@Name</MudText>
+            <MudText Typo="Typo.subtitle1" Class="text-brown-darken2">@Title</MudText>
+            <MudDivider Class="my-2" />
+            <MudText Typo="Typo.body2" Class=""><MudIcon Icon="@Icons.Material.Filled.Place" Color="Color.Secondary" /> @Location</MudText>
+            <MudText Typo="Typo.body2"><MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Primary" /> @Email</MudText>
+            <MudText Typo="Typo.body2">
+                @* <MudIcon Icon="@Icons.Material.Filled.LinkedIn" Color="Color.Primary" /> *@
+                <a href="@LinkedIn" target="_blank">@LinkedIn</a>
+            </MudText>
+        </MudCardContent>
+
+        @* Button with Icon to provide a randomized version of the CV by navigating to "/cv/randomzied" *@
+        <MudCardActions>
+            <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="() => ReloadPage()">
+                <MudIcon Icon="@Icons.Material.Filled.Shuffle" />
+                Randomize CV
+            </MudButton>
+        </MudCardActions>
+    </MudCard>
+</MudItem>
+
+@code {
+    [Parameter] public string Name { get; set; }
+    [Parameter] public string Title { get; set; }
+    [Parameter] public string Location { get; set; }
+    [Parameter] public string Email { get; set; }
+    [Parameter] public string LinkedIn { get; set; }
+    [Parameter] public string ProfileImageUrl { get; set; }
+    [Inject] NavigationManager Navigation { get; set; }
+
+    private void ReloadPage() => Navigation.NavigateTo("/randomized-cv");
+}

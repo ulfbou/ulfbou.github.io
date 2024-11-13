@@ -12,7 +12,7 @@ using System.Net.Http.Json;
 using Homepage.Common.Models;
 using Homepage.Common.Services;
 
-using Homepage.Common.Helpers;
+using Homepage.Common.Utils;
 
 namespace Homepage.Components.Base;
 

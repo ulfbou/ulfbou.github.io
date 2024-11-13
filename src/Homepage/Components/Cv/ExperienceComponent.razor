@@ -1,0 +1,20 @@
+﻿@* ExperienceComponent.razor *@
+@using MudBlazor
+
+<MudPaper Class="@ExperienceClass" Elevation="3">
+    <MudText Typo="Typo.h5">@JobTitle</MudText>
+    <MudText Typo="Typo.body1">@CompanyName</MudText>
+    <MudText Typo="Typo.caption" Color="Color.Secondary">@DateRange</MudText>
+    @if (IsTimeline)
+    {
+        <MudDivider Class="timeline-divider" />
+    }
+</MudPaper>
+
+@code {
+    [Parameter] public string JobTitle { get; set; }
+    [Parameter] public string CompanyName { get; set; }
+    [Parameter] public string DateRange { get; set; }
+    [Parameter] public bool IsTimeline { get; set; }
+    private string ExperienceClass => IsTimeline ? "experience-item timeline-layout" : "experience-item list-layout";
+}

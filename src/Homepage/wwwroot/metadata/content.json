@@ -1,0 +1,191 @@
+[
+  {
+    "Title": "A Beginner's Guide to C#",
+    "Summary": "This article introduces the basics of C#, a powerful and versatile programming language. We'll cover fundamental concepts like variables, data types, operators, control flow, and object-oriented programming.",
+    "Url": "beginners-guide-to-csharp",
+    "Date": "2024-10-29",
+    "Categories": [ "C#", ".NET", "Programming" ],
+    "Tags": [ "CSharp", "tutorial", "CSharpBasics", "DotNetFramework", "object-oriented-programming" ],
+    "Keywords": [ "C#", ".NET", "programming language", "tutorial", "beginner" ]
+  },
+  {
+    "Title": "Understanding .NET Core: A Modern Framework",
+    "Summary": "Explore the world of .NET Core, a cross-platform, high-performance framework for building modern applications. We'll discuss its key features, benefits, and how to get started with it.",
+    "Url": "understanding-dotnet-core-a-modern-framework",
+    "Date": "2024-10-29",
+    "Categories": [ ".NET", "C#", "Framework" ],
+    "Tags": [ "DotNetCore", "cross-platform", "high-performance", "framework" ],
+    "Keywords": [ ".NET Core", ".NET", "framework", "cross-platform", "high-performance" ]
+  },
+  {
+    "Title": "Asynchronous Programming in C#",
+    "Summary": "Learn how to write asynchronous code in C# using async/await keywords. We'll delve into the concepts of asynchronous programming, its benefits, and how to implement it effectively.",
+    "Url": "asynchronous-programming-in-csharp",
+    "Date": "2024-10-30",
+    "Categories": [ "CSharp", "DotNet", "Programming" ],
+    "Tags": [ "asynchronous programming", "async/await", "CSharp", "DotNet" ],
+    "Keywords": [ "asynchronous programming", "async/await", "C#", ".NET", "concurrent programming" ]
+  },
+  {
+    "Title": "Dependency Injection in C#",
+    "Summary": "Discover the power of dependency injection (DI) and how it can improve the testability, maintainability, and modularity of your C# applications. We'll explore different DI patterns and frameworks.",
+    "Url": "dependency-injection-in-csharp",
+    "Date": "2024-10-30",
+    "Categories": [ "C#", ".NET", "Design Patterns" ],
+    "Tags": [ "dependency injection", "DI", "CSharp", "DotNet", "design patterns" ],
+    "Keywords": [ "dependency injection", "DI", "C#", ".NET", "design patterns", "IoC" ]
+  },
+  {
+    "Title": "Building RESTful APIs with ASP.NET Core",
+    "Summary": "Learn how to build robust and scalable RESTful APIs using ASP.NET Core. We'll cover routing, controllers, actions, model binding, and middleware.",
+    "Url": "building-restful-apis-with-aspnet-core",
+    "Date": "2024-10-31",
+    "Categories": [ "C#", ".NET", "Web Development" ],
+    "Tags": [ "ASP.NET Core", "RESTful API", "web API", "CSharp", "DotNet" ],
+    "Keywords": [ "ASP.NET Core", "RESTful API", "web API", "C#", ".NET", "web development" ]
+  },
+  {
+    "Title": "Data Access with Entity Framework Core",
+    "Summary": "Explore Entity Framework Core, a popular ORM framework for .NET. We'll learn how to use it to interact with databases, perform CRUD operations, and query data efficiently.",
+    "Url": "data-access-with-entity-framework-core",
+    "Date": "2024-10-31",
+    "Categories": [ "C#", ".NET", "Data Access" ],
+    "Tags": [ "Entity Framework Core", "ORM", "database", "CSharp", "DotNet" ],
+    "Keywords": [ "Entity Framework Core", "ORM", "database", "C#", ".NET", "data access" ]
+  },
+  {
+    "Title": "Testing C# Applications with Unit Tests",
+    "Summary": "Learn how to write effective unit tests for your C# code using frameworks like NUnit or xUnit. We'll discuss testing principles, mocking, and test-driven development (TDD).",
+    "Url": "testing-csharp-applications-with-unit-tests",
+    "Date": "2024-11-01",
+    "Categories": [ "C#", ".NET", "Testing" ],
+    "Tags": [ "unit testing", "NUnit", "xUnit", "CSharp", "DotNet", "TDD" ],
+    "Keywords": [ "unit testing", "NUnit", "xUnit", "C#", ".NET", "TDD", "testing" ]
+  },
+  {
+    "Title": "Performance Optimization Techniques in C#",
+    "Summary": "Discover various techniques to optimize the performance of your C# applications. We'll explore profiling tools, code optimization strategies, and best practices for writing efficient code.",
+    "Url": "performance-optimization-techniques-in-csharp",
+    "Date": "2024-11-02",
+    "Categories": [ "C#", ".NET", "Performance" ],
+    "Tags": [ "performance optimization", "CSharp", "DotNet", "profiling", "code optimization" ],
+    "Keywords": [ "performance optimization", "C#", ".NET", "profiling", "code optimization", "performance tuning" ]
+  },
+  {
+    "Title": "C# and Microservices Architecture",
+    "Summary": "Learn how to build microservices architecture with C# and .NET. We'll discuss the benefits of microservices, service communication, and deployment strategies.",
+    "Url": "csharp-and-microservices-architecture",
+    "Date": "2024-11-03",
+    "Categories": [ "C#", ".NET", "Architecture" ],
+    "Tags": [ "microservices", "CSharp", "dotnet", "microservices architecture" ],
+    "Keywords": [ "microservices", "C#", ".NET", "microservices architecture", "distributed systems" ]
+  },
+  {
+    "Title": "Leveraging LINQ for Data Queries in C#",
+    "Summary": "Explore the power of Language Integrated Query (LINQ) to query data in C#. We'll cover LINQ to Objects, LINQ to SQL, and LINQ to Entities.",
+    "Url": "leveraging-linq-for-data-queries-in-csharp",
+    "Date": "2024-11-05",
+    "Categories": [ "C#", ".NET", "Data Access" ],
+    "Tags": [ "LINQ", "CSharp", "DotNet", "data querying", "LINQ to Objects", "LINQ to SQL", "LINQ to Entities" ],
+    "Keywords": [ "LINQ", "C#", ".NET", "data querying", "LINQ to Objects", "LINQ to SQL", "LINQ to Entities" ]
+  },
+  {
+    "Title": "Introduction to DevOps",
+    "Summary": "Learn the basics of DevOps, a set of practices that combines software development and IT operations to shorten the systems development life cycle and provide continuous delivery with high quality.",
+    "Url": "introduction-to-devops",
+    "Date": "2024-11-06",
+    "Categories": [ "DevOps", "Software Engineering" ],
+    "Tags": [ "DevOps", "CICD", "Agile", "Automation" ],
+    "Keywords": [ "DevOps", "CI/CD", "Agile", "Automation", "software development", "IT operations" ]
+  },
+  {
+    "Title": "Continuous Integration and Continuous Delivery (CI/CD)",
+    "Summary": "Explore CI/CD pipelines, a key component of DevOps. Learn how to automate the building, testing, and deployment of applications.",
+    "Url": "continuous-integration-and-continuous-delivery-cicd",
+    "Date": "2024-11-06",
+    "Categories": [ "DevOps", "Software Engineering" ],
+    "Tags": [ "CICD", "DevOps", "Automation", "Jenkins", "GitLab CI/CD", "Azure DevOps" ],
+    "Keywords": [ "CI/CD", "DevOps", "Automation", "Jenkins", "GitLab CI/CD", "Azure DevOps", "continuous integration", "continuous delivery" ]
+  },
+  {
+    "Title": "Infrastructure as Code (IaC)",
+    "Summary": "Discover the benefits of Infrastructure as Code (IaC) and how it can help automate the provisioning and management of infrastructure.",
+    "Url": "infrastructure-as-code-iac",
+    "Date": "2024-11-06",
+    "Categories": [ "DevOps", "Software Engineering" ],
+    "Tags": [ "IaC", "DevOps", "Automation", "Terraform", "AWS CloudFormation", "Azure Resource Manager" ],
+    "Keywords": [ "IaC", "DevOps", "Automation", "Terraform", "AWS CloudFormation", "Azure Resource Manager", "infrastructure as code" ]
+  },
+  {
+    "Title": "Containerization with Docker",
+    "Summary": "Learn how to use Docker to create, deploy, and manage containerized applications. Explore key Docker concepts like images, containers, and registries.",
+    "Url": "containerization-with-docker",
+    "Date": "2024-11-06",
+    "Categories": [ "DevOps", "Software Engineering" ],
+    "Tags": [ "Docker", "Containers", "DevOps", "Microservices", "Container Orchestration" ],
+    "Keywords": [ "Docker", "Containers", "DevOps", "Microservices", "Container Orchestration", "containerization" ]
+  },
+  {
+    "Title": "Container Orchestration with Kubernetes",
+    "Summary": "Explore Kubernetes, an open-source container orchestration platform. Learn how to deploy, scale, and manage containerized applications with Kubernetes.",
+    "Url": "container-orchestration-with-kubernetes",
+    "Date": "2024-11-06",
+    "Categories": [ "DevOps", "Software Engineering" ],
+    "Tags": [ "Kubernetes", "Containers", "DevOps", "Microservices", "Container Orchestration" ],
+    "Keywords": [ "Kubernetes", "Containers", "DevOps", "Microservices", "Container Orchestration", "container orchestration" ]
+  },
+  {
+    "Title": "Monitoring and Logging in DevOps",
+    "Summary": "Learn about the importance of monitoring and logging in DevOps. Discover tools and best practices for monitoring application performance and collecting logs.",
+    "Url": "monitoring-and-logging-in-devops",
+    "Date": "2024-11-02",
+    "Categories": [ "DevOps", "Software Engineering" ],
+    "Tags": [ "Monitoring", "Logging", "DevOps", "Alerting", "ELK Stack", "Prometheus" ],
+    "Keywords": [ "Monitoring", "Logging", "DevOps", "Alerting", "ELK Stack", "Prometheus", "application performance monitoring", "log management" ]
+  },
+  {
+    "Title": "Security in DevOps",
+    "Summary": "Explore the key security principles and practices in DevOps. Learn how to integrate security into the software development life cycle and protect your applications.",
+    "Url": "security-in-devops",
+    "Date": "2024-11-04",
+    "Categories": [ "DevOps", "Software Engineering" ],
+    "Tags": [ "Security", "DevOps", "CICD", "Automation", "OWASP", "Security Testing" ],
+    "Keywords": [ "Security", "DevOps", "CI/CD", "Automation", "OWASP", "Security Testing", "security practices", "secure software development" ]
+  },
+  {
+    "Title": "GitOps: A Modern Approach to Infrastructure and Application Delivery",
+    "Summary": "Explore GitOps, a way of implementing continuous delivery for cloud-native applications. Learn how to use Git as a single source of truth for infrastructure and application configuration.",
+    "Url": "gitops-a-modern-approach-to-infrastructure-and-application-delivery",
+    "Date": "2024-11-06",
+    "Categories": [ "DevOps", "Cloud Computing" ],
+    "Tags": [ "GitOps", "DevOps", "Cloud", "Continuous Delivery", "Git" ],
+    "Keywords": [ "GitOps", "DevOps", "Cloud", "Continuous Delivery", "Git", "Git-based deployments" ]
+  },
+  {
+    "Title": "Serverless Computing with AWS Lambda",
+    "Summary": "Learn how to build and deploy serverless applications with AWS Lambda. Explore key Lambda concepts like functions, triggers, and event sources.",
+    "Url": "serverless-computing-with-aws-lambda",
+    "Date": "2024-11-07",
+    "Categories": [ "DevOps", "Cloud Computing" ],
+    "Tags": [ "AWS Lambda", "Serverless", "DevOps", "Cloud", "Event-driven" ],
+    "Keywords": [ "AWS Lambda", "Serverless", "DevOps", "Cloud", "Event-driven", "serverless computing" ]
+  },
+  {
+    "Title": "Introduction to Cloud Computing",
+    "Summary": "Cloud computing offers scalable, flexible, and cost-effective access to computing resources via the internet. This guide covers the fundamentals of cloud computing, including essential concepts, service models, and deployment models. Explore leading cloud providers such as AWS, Azure, and Google Cloud.",
+    "Url": "introduction-to-cloud-computing",
+    "Date": "2024-11-06",
+    "Categories": [ "Cloud Computing" ],
+    "Tags": [ "Cloud Computing", "AWS", "Azure", "Google Cloud", "IaaS", "PaaS", "SaaS" ],
+    "Keywords": [ "Cloud Computing", "AWS", "Azure", "Google Cloud", "IaaS", "PaaS", "SaaS", "cloud services" ]
+  },
+  {
+    "Title": "AWS Certified Solutions Architect - Associate",
+    "Summary": "Prepare for the AWS Certified Solutions Architect - Associate exam with this comprehensive guide. Learn about key AWS services, architectural best practices, and exam tips.",
+    "Url": "aws-certified-solutions-architect-associate",
+    "Date": "2024-11-01",
+    "Categories": [ "Cloud Computing", "Certification" ],
+    "Tags": [ "AWS", "Certification", "Cloud Computing", "Solutions Architect", "Exam Prep" ],
+    "Keywords": [ "AWS", "Certification", "Cloud Computing", "Solutions Architect", "Exam Prep", "AWS Certified Solutions Architect - Associate" ]
+  }
+]

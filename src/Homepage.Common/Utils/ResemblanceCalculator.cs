@@ -1,4 +1,4 @@
-﻿namespace Homepage.Common.Helpers;
+﻿namespace Homepage.Common.Utils;
 
 public class ResemblanceCalculator<TCategory> where TCategory : notnull, IEquatable<TCategory>
 {

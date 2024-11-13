@@ -1,0 +1,44 @@
+﻿@page "/palette"
+@using MudBlazor.Utilities
+
+<MudPaper Color="Color.Primary" Class="pa-6 ma-6">
+    <MudText Typo="Typo.h1">Palette</MudText>
+    <MudDivider />
+    <MudCard Color="Color.Secondary" Class="pa-6 ma-6">
+        <MudGrid xs="12">
+            <MudCard Color="Color.Secondary">
+                @foreach (var color in Colors)
+                {
+                    <MudGridItem xs="12" md="12" Inline="false">
+                        <MudText Typo="Typo.body1">@Color(color)</MudText>
+                    </MudGridItem>
+                }
+            </MudCard>
+        </MudGrid>
+    </MudCard>
+</MudPaper>
+
+<MudPaper Color="Color.Primary" class="pa-6 ma-6" Spacing="5">
+    <MudAlert Severity="Severity.Normal" Variant="Variant.Filled">The reactor type is RBMK-1000</MudAlert>
+    <MudAlert Severity="Severity.Info" Variant="Variant.Filled">The reactor was fired up successfully</MudAlert>
+    <MudAlert Severity="Severity.Success" Variant="Variant.Filled">The reactor is running at optimum temperature</MudAlert>
+    <MudAlert Severity="Severity.Warning" Variant="Variant.Filled">The reactor temperature exceeds the optimal range</MudAlert>
+    <MudAlert Severity="Severity.Error" Variant="Variant.Filled">Meltdown is imminent</MudAlert>
+</MudPaper>
+@code {
+    [Inject] private ThemeManager ThemeManager { get; set; }
+    private MudTheme Theme { get; set; }
+    private List<MudColor> Colors { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        var generator = new MudThemeGenerator();
+        Theme = generator.GenerateMonochromeTheme();
+    }
+    protected string Color(MudColor color)
+    {
+        return $"({color.H}, {color.S}, {color.L}, {color.A})";
+    }
+}

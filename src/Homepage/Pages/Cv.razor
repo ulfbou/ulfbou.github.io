@@ -29,11 +29,70 @@
                             <a href="@CVData.PersonalInfo.LinkedIn" target="_blank">@CVData.PersonalInfo.LinkedIn</a>
                         </MudText>
                     </MudCardContent>
-                </MudCard>
 
-                <!-- Skill Categories in Tabs -->
-                <MudText Typo="Typo.h5">Skills</MudText>
+                    @* Button with Icon to provide a randomized version of the CV by navigating to "/cv/randomzied" *@
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Secondary" OnClick="() => RandomizeCv()">
+                            <MudIcon Icon="@Icons.Material.Filled.Shuffle" />
+                            Randomize CV
+                        </MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+
+            <!-- Skill Categories in Tabs -->
+            <MudItem xs="12" md="4">
+                <MudCarousel ShowArrows="true" ShowIndicators="true" AutoPlay="false" TData="IGrouping<string, SkillModel>">
+                    @foreach (var categoryGroup in SkillGroups)
+                    {
+                        <MudCarouselItem>
+                            <MudCard Class="cv-card cv-skills">
+                                <MudCardContent>
+                                    <MudText Typo="Typo.h6">@categoryGroup.Key</MudText>
+                                    <MudList T="SkillModel" Dense="true">
+                                        @foreach (var skill in categoryGroup)
+                                        {
+                                            <MudListItem T="SkillModel">
+                                                <MudGrid Spacing="2" Justify="Justify.Center">
+                                                    <MudItem xs="6">
+                                                        <MudText Typo="Typo.body2">@skill.Name</MudText>
+                                                    </MudItem>
+                                                    <MudItem xs="6">
+                                                        <MudProgressLinear Value="@skill.Level" Color="Color.Primary" Size="Size.Small" />
+                                                        <MudText Typo="Typo.body2" Class="mt-2">@skill.Tooltip</MudText>
+                                                    </MudItem>
+                                                </MudGrid>
+                                            </MudListItem>
+                                        }
+                                    </MudList>
+                                </MudCardContent>
+                            </MudCard>
+                        </MudCarouselItem>
+                    }
+                </MudCarousel>
+            </MudItem>
+            <MudItem xs="12" md="4">
                 <MudTabs>
+                    @foreach (var categoryGroup in SkillGroups)
+                    {
+                        <MudTabPanel Text="@categoryGroup.Key">
+                            <MudList Dense="true" T="SkillModel">
+                                @foreach (var skill in categoryGroup)
+                                {
+                                    <MudListItem>
+                                        <MudText Typo="Typo.h6">@skill.Name</MudText>
+                                        <MudProgressLinear Value="@skill.Level" Color="Color.Primary" />
+                                        @* Add additional details like tooltip or relevance here, if desired *@
+                                    </MudListItem>
+                                }
+                            </MudList>
+                        </MudTabPanel>
+                    }
+                </MudTabs>
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudText Typo="Typo.h5">Skills</MudText>
+                <MudTabs MinimumTabWidth="120px">
                     @foreach (var category in _skillsByCategory.Keys)
                     {
                         <MudTabPanel Label="@category" Text="@category" Icon="@(_categoryIcons.ContainsKey(category) ? _categoryIcons[category] : string.Empty)">
@@ -47,8 +106,7 @@
                                                     <MudItem xs="12" md="6" Align="@Align.Left">
                                                         <MudText Typo="Typo.body2">
                                                             @{
-                                                                var icons = skill.Category.Select(c => _categoryIcons.ContainsKey(c) ? _categoryIcons[c] : string.Empty);
-                                                                var icon = icons.FirstOrDefault(i => !string.IsNullOrWhiteSpace(i)) ?? string.Empty;
+                                                                var icon = _categoryIcons.GetValueOrDefault(skill.Category.FirstOrDefault());
                                                             }
                                                             @if (skill.Category.Count() > 1)
                                                             {
@@ -69,6 +127,8 @@
                         </MudTabPanel>
                     }
                 </MudTabs>
+            </MudItem>
+            <MudItem xs="12" md="4">
 
                 <!-- Key Skills -->
                 <MudCard Class="cv-card cv-skills">
@@ -274,6 +334,7 @@
     private IEnumerable<SkillModel> _skills = new List<SkillModel>();
     private Dictionary<string, List<SkillModel>> _skillsByCategory = new();
     private IEnumerable<string> _categories = new List<string>();
+    private IEnumerable<IGrouping<string, SkillModel>> SkillGroups;
 
     protected override async Task OnInitializedAsync()
     {
@@ -304,6 +365,10 @@
         }
 
         _skills = CVData.Skills;
+        SkillGroups = _skills.SelectMany(skill =>
+            skill.Category.Select(category => new { skill, category }))
+            .GroupBy(x => x.category, x => x.skill);
+
         _categories = CVData.Skills.SelectMany(s => s.Category).Distinct();
 
         foreach (var category in _categories)
@@ -328,5 +393,9 @@
     {
         var category = categories.FirstOrDefault() ?? string.Empty;
         return _categoryIcons.ContainsKey(category) ? _categoryIcons[category] : string.Empty;
+    }
+    private void RandomizeCv()
+    {
+        Navigation.NavigateTo("/randomzied-cv");
     }
 }

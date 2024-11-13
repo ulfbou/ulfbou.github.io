@@ -1,0 +1,20 @@
+﻿@* EducationComponent.razor *@
+@using MudBlazor
+
+<MudExpansionPanel Class="@EducationClass">
+    <MudExpansionPanelHeader>
+        <MudText Typo="Typo.h5">@Institution</MudText>
+    </MudExpansionPanelHeader>
+    <MudExpansionPanelContent>
+        <MudText Typo="Typo.body1">@Degree</MudText>
+        <MudText Typo="Typo.caption">@DateRange</MudText>
+    </MudExpansionPanelContent>
+</MudExpansionPanel>
+
+@code {
+    [Parameter] public string Institution { get; set; }
+    [Parameter] public string Degree { get; set; }
+    [Parameter] public string DateRange { get; set; }
+    [Parameter] public bool IsAccordion { get; set; }
+    private string EducationClass => IsAccordion ? "education-panel accordion-layout" : "education-panel card-layout";
+}

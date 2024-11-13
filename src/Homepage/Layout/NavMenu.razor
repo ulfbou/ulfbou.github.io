@@ -1,13 +1,23 @@
 ﻿@using MudBlazor
 
 <MudNavMenu>
-    <MudNavLink Href="/" Match="NavLinkMatch.All">Dashboard</MudNavLink>
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Color="Color.Primary">Dashboard</MudNavLink>
     <MudNavLink Href="" Match="NavLinkMatch.All">
         <MudIcon Icon="@Icons.Material.Filled.Home" /> Home
     </MudNavLink>
     @* <DynamicNav /> *@
-    <MudNavLink Href="/cv" Match="NavLinkMatch.All">
+    <MudNavLink Href="/cv" Match="NavLinkMatch.All" Color="Color.Primary">
         <MudIcon Icon="@Icons.Material.Filled.Person" /> CV
+    </MudNavLink>
+    @* Randomize the MudTheme *@
+    <MudButton OnClick="() => ChangeTheme()" Color="Color.Primary">
+        <MudIcon Icon="@Icons.Material.Filled.Palette" /> Change Theme
+    </MudButton>
+    <MudNavLink Href="/skills" Match="NavLinkMatch.All" Color="Color.Primary">
+        <MudIcon Icon="@Icons.Material.Filled.Person" /> Skills
+    </MudNavLink>
+    <MudNavLink Href="/palette" Match="NavLinkMatch.All" Color="Color.Primary">
+        <MudIcon Icon="@Icons.Material.Filled.Person" /> Palette
     </MudNavLink>
     @*
     <MudNavLink Href="/" Match="NavLinkMatch.All">
@@ -26,8 +36,17 @@
     <MudIcon Icon="@Icons.Material.Filled.Build" /> Projects
     </MudNavLink>
     *@
-    <MudNavLink Href="/contact" Match="NavLinkMatch.All">
+    <MudNavLink Href="/contact" Match="NavLinkMatch.All" Color="Color.Primary">
         <MudIcon Icon="@Icons.Material.Filled.ContactSupport" /> Contact
     </MudNavLink>
 
 </MudNavMenu>
+
+@code {
+    [Inject] private ThemeManager ThemeManager { get; set; }
+
+    private void ChangeTheme()
+    {
+        MudTheme theme = ThemeManager.GenerateTheme();
+    }
+}

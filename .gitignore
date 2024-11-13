@@ -7,3 +7,6 @@
 /src/Homepage/obj
 /src/Homepage.Common/bin/Debug/net8.0
 /src/Homepage.Common/obj
+/NewServer/Homepage
+/.vs/ProjectEvaluation
+/src/Homepage.Server/obj
