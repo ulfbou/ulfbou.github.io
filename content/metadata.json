@@ -187,5 +187,14 @@
     "Categories": [ "Cloud Computing", "Certification" ],
     "Tags": [ "AWS", "Certification", "Cloud Computing", "Solutions Architect", "Exam Prep" ],
     "Keywords": [ "AWS", "Certification", "Cloud Computing", "Solutions Architect", "Exam Prep", "AWS Certified Solutions Architect - Associate" ]
-  }
+  }, 
+{
+    "Title": "The Convergence of Minds and Machines: Exploring Cognition and AI",
+    "Summary": "This series delves into the fascinating intersection of human intelligence and artificial intelligence. We'll explore how human cognition inspires AI development, the challenges of building ethical and intelligent machines, and the future of human-AI collaboration.",
+    "Url": "minds-and-machines-series",
+    "Date": "2024-11-30",
+    "Categories": ["Artificial Intelligence", "Human-Computer Interaction", "Technology", "Philosophy"],
+    "Tags": ["AI", "machine learning", "cognitive science", "ethics", "future of technology"],
+    "Keywords": ["artificial intelligence", "machine learning", "human cognition", "ethics", "future"]
+}
 ]
