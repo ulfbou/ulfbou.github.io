@@ -1,28 +1,29 @@
-﻿namespace Homepage.Common.Models;
-
-public class AchievementModel
+﻿namespace Homepage.Common.Models
 {
-    public string Name { get; set; }
-    public string Description { get; set; }
-    public string Date { get; set; }
-
-    public IEnumerable<string> Validate()
+    public class AchievementModel
     {
-        if (string.IsNullOrWhiteSpace(Name))
-        {
-            Name = "Achievement";
-            yield return "Name is required";
-        }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Date { get; set; }
 
-        if (string.IsNullOrWhiteSpace(Description))
+        public IEnumerable<string> Validate()
         {
-            Description = "Description";
-            yield return "Description is required";
-        }
+            if (string.IsNullOrWhiteSpace(Name))
+            {
+                Name = "Achievement";
+                yield return "Name is required";
+            }
 
-        if (Date == default)
-        {
-            yield return "Date is required";
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                Description = "Description";
+                yield return "Description is required";
+            }
+
+            if (Date == default)
+            {
+                yield return "Date is required";
+            }
         }
     }
 }
