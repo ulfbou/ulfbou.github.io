@@ -1,12 +1,16 @@
 ﻿using Homepage.Common.Models;
 using Homepage.Common.Services;
 
+using Markdig;
+
 using Microsoft.Extensions.Configuration;
 
 using Serilog;
 
 using System.Text.Json;
 using System.Text.RegularExpressions;
+
+using static MudBlazor.CategoryTypes;
 
 public class Program
 {
@@ -94,6 +98,28 @@ public class Program
                 Log.Information("Generated about.html");
             }
 
+            foreach (var metadata in allMetadata)
+            {
+                Log.Information($"Generating HTML for content: {metadata.Title}");
+                var markdownFilePath = Path.Combine(contentRepoPath, metadata.ContentPath);
+                if (!File.Exists(markdownFilePath))
+                {
+                    Log.Warning($"Markdown file not found for {metadata.Title}: {markdownFilePath}. Skipping.");
+                    continue;
+                }
+
+                var markdownContent = await File.ReadAllTextAsync(markdownFilePath);
+                var contentHtml = Markdown.ToHtml(markdownContent, pipeline);
+
+                // This is the CRITICAL part: Ensure the outputPath is correct
+                var outputPath = Path.Combine(outputDirectory, "content", $"{metadata.Slug}.html"); // This should be correct
+
+                // Ensure the content directory exists
+                Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+
+                await File.WriteAllTextAsync(outputPath, contentHtml);
+                Log.Information($"Generated article HTML: {outputPath}");
+            }
             foreach (var metadata in allMetadata)
             {
                 var markdownPath = Path.Combine(contentRepoPath, metadata.ContentPath);
