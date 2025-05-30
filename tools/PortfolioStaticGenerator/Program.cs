@@ -1,5 +1,4 @@
-﻿// tools/PortfolioStaticGenerator/Program.cs
-using Homepage.Common.Models;
+﻿using Homepage.Common.Models;
 using Homepage.Common.Services;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -8,24 +7,13 @@ using System.Reflection.Metadata;
 
 Console.WriteLine("Starting static site generation...");
 
-// --- Configuration ---
-// Current location is Huddinge, Stockholm County, Sweden.
-// Current time is Friday, May 30, 2025 at 2:43:20 PM CEST.
+const string ContentRepoPath = "../../../portfolio-content/";
+const string OutputDirectory = "../_site";
+const string BaseUrl = "https://ulfbou.github.io/";
 
-// Path to your content repository (where metadata.json and .md files are)
-// This remains '../../portfolio-content/' as previously confirmed for your separate content repo.
-const string ContentRepoPath = "../../portfolio-content/"; // This path is correct for separate content repo
-
-const string OutputDirectory = "../_site"; // Output folder for generated HTML files
-
-// IMPORTANT: Updated BaseUrl for ulfbou.github.io (User Page)
-const string BaseUrl = "https://ulfbou.github.io/"; // ADJUST THIS URL if your domain changes!
-
-// --- Setup Services (simplified for console app) ---
 var httpClient = new HttpClient();
 var markdownService = new MarkdownService(httpClient, null!);
 
-// --- Generation Logic ---
 try
 {
     if (Directory.Exists(OutputDirectory))
@@ -145,7 +133,6 @@ static string GenerateHtmlPage(
     cleanDescription = Regex.Replace(cleanDescription, @"\s+", " ").Trim();
     if (cleanDescription.Length > 160) cleanDescription = cleanDescription.Substring(0, 157) + "...";
 
-    // IMPORTANT: BaseUrl updated for ulfbou.github.io
     string html = $@"<!DOCTYPE html>
 <html lang=""en"">
 <head>
