@@ -4,55 +4,54 @@
 @using System.Text.Json
 @using Homepage.Components
 @using Homepage.Components.Base
-@using Homepage.Components
 
 <MudContainer Class="mt-6">
     @if (IsLoading)
     {
-        <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
-            <MudProgressCircular Indeterminate="true" Size="Size.Medium" Color="Color.Primary" />
-        </MudPaper>
+                                                                    <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
+                                                                        <MudProgressCircular Indeterminate="true" Size="Size.Medium" Color="Color.Primary" />
+                                                                    </MudPaper>
     }
     else if (!string.IsNullOrEmpty(ContentHtml))
     {
-        <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
-            <MudText Typo="Typo.body1">@((MarkupString)ContentHtml)</MudText>
-            <MudButton Variant="Variant.Outlined" OnClick="() => ResetContent()">Back</MudButton>
-        </MudPaper>
+                                                                                                                                                                                                                                                                <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
+                                                                                                                                                                                                                                                                    <MudText Typo="Typo.body1">@((MarkupString)ContentHtml)</MudText>
+                                                                                                                                                                                                                                                                    <MudButton Variant="Variant.Outlined" OnClick="() => ResetContent()">Back</MudButton>
+                                                                                                                                                                                                                                                                </MudPaper>
     }
     else if (ContentList.Any())
     {
-        <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
-            <MudList T="string">
-                <MudListItem>
-                    <MudText Typo="Typo.h3" Align="Align.Center">
-                        Articles
-                    </MudText>
-                </MudListItem>
-                <MudDivider DividerType="DividerType.Inset" />
-                <MudListItem>
-                    <MudText Typo="Typo.body1">
-                        This is a collection of articles I have written. They are mostly about software development, but I also write about other topics that interest me.
-                    </MudText>
-                </MudListItem>
-            </MudList>
-        </MudPaper>
+                                                                                                                                                                                                                                                                <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
+                                                                                                                                                                                                                                                                    <MudList T="string">
+                                                                                                                                                                                                                                                                        <MudListItem>
+                                                                                                                                                                                                                                                                            <MudText Typo="Typo.h3" Align="Align.Center">
+                                                                                                                                                                                                                                                                                Articles
+                                                                                                                                                                                                                                                                            </MudText>
+                                                                                                                                                                                                                                                                        </MudListItem>
+                                                                                                                                                                                                                                                                        <MudDivider DividerType="DividerType.Inset" />
+                                                                                                                                                                                                                                                                        <MudListItem>
+                                                                                                                                                                                                                                                                            <MudText Typo="Typo.body1">
+                                                                                                                                                                                                                                                                                This is a collection of articles I have written. They are mostly about software development, but I also write about other topics that interest me.
+                                                                                                                                                                                                                                                                            </MudText>
+                                                                                                                                                                                                                                                                        </MudListItem>
+                                                                                                                                                                                                                                                                    </MudList>
+                                                                                                                                                                                                                                                                </MudPaper>
 
         @foreach (var post in ContentList.Take(_maxItems))
         {
-            <ContentCard Content="@post" OnClick="() => LoadContent(post.Url)" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <ContentCard Content="@post" OnClick="() => LoadContent(post.Slug)" />
         }
 
         @if (ContentList.Count > _maxItems)
         {
-            <MudButton Variant="Variant.Outlined" OnClick="() => _maxItems += 5">Load more</MudButton>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <MudButton Variant="Variant.Outlined" OnClick="() => _maxItems += 5">Load more</MudButton>
         }
     }
     else
     {
-        <MudText Typo="Typo.body1">No articles found</MudText>
+                                                                                                                                                                                                                                                                <MudText Typo="Typo.body1">No articles found</MudText>
     }
-</MudContainer>
+    </MudContainer>
 
 @code {
     private int _maxItems = 5;

@@ -11,179 +11,179 @@
     <MudGrid Spacing="4">
         @if (CVData != null)
         {
-            <!-- Left Column: Personal Info and Skills -->
-            <MudItem xs="12" md="4">
-                <!-- Personal Info -->
-                <MudCard Class="cv-card cv-personal-info">
-                    <MudCardContent Class="text-center">
-                        <MudAvatar Size="Size.Large" Alt="@CVData.PersonalInfo.Name" Class="cv-profile-image">
-                            <MudImage Alt="@CVData.PersonalInfo.Name" Src="@CVData.PersonalInfo.ProfileImageUrl" Class="cv-profile-image" />
-                        </MudAvatar>
-                        <MudText Typo="Typo.h4" Class="text-brown-darken4">@CVData.PersonalInfo.Name</MudText>
-                        <MudText Typo="Typo.subtitle1" Class="text-brown-darken2">@CVData.PersonalInfo.Title</MudText>
-                        <MudDivider Class="my-2" />
-                        <MudText Typo="Typo.body2" Class=""><MudIcon Icon="@Icons.Material.Filled.Place" Color="Color.Secondary" /> @CVData.PersonalInfo.Location</MudText>
-                        <MudText Typo="Typo.body2"><MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Primary" /> @CVData.PersonalInfo.Email</MudText>
-                        <MudText Typo="Typo.body2">
+                                                                                                                                            <!-- Left Column: Personal Info and Skills -->
+                                                                                                                                            <MudItem xs="12" md="4">
+                                                                                                                                                <!-- Personal Info -->
+                                                                                                                                                <MudCard Class="cv-card cv-personal-info">
+                                                                                                                                                    <MudCardContent Class="text-center">
+                                                                                                                                                        <MudAvatar Size="Size.Large" Alt="@CVData.PersonalInfo.Name" Class="cv-profile-image">
+                                                                                                                                                            <MudImage Alt="@CVData.PersonalInfo.Name" Src="@CVData.PersonalInfo.ProfileImageUrl" Class="cv-profile-image" />
+                                                                                                                                                        </MudAvatar>
+                                                                                                                                                        <MudText Typo="Typo.h4" Class="text-brown-darken4">@CVData.PersonalInfo.Name</MudText>
+                                                                                                                                                        <MudText Typo="Typo.subtitle1" Class="text-brown-darken2">@CVData.PersonalInfo.Title</MudText>
+                                                                                                                                                        <MudDivider Class="my-2" />
+                                                                                                                                                        <MudText Typo="Typo.body2" Class=""><MudIcon Icon="@Icons.Material.Filled.Place" Color="Color.Secondary" /> @CVData.PersonalInfo.Location</MudText>
+                                                                                                                                                        <MudText Typo="Typo.body2"><MudIcon Icon="@Icons.Material.Filled.Email" Color="Color.Primary" /> @CVData.PersonalInfo.Email</MudText>
+                                                                                                                                                        <MudText Typo="Typo.body2">
                             @* <MudIcon Icon="@Icons.Material.Filled.LinkedIn" Color="Color.Primary" /> *@
-                            <a href="@CVData.PersonalInfo.LinkedIn" target="_blank">@CVData.PersonalInfo.LinkedIn</a>
-                        </MudText>
-                    </MudCardContent>
-                </MudCard>
+                                                                                                                                                            <a href="@CVData.PersonalInfo.LinkedIn" target="_blank">@CVData.PersonalInfo.LinkedIn</a>
+                                                                                                                                                        </MudText>
+                                                                                                                                                    </MudCardContent>
+                                                                                                                                                </MudCard>
 
-                <!-- Skill Categories in Tabs -->
-                <MudText Typo="Typo.h5">Skills</MudText>
-                <MudTabs>
+                                                                                                                                                <!-- Skill Categories in Tabs -->
+                                                                                                                                                <MudText Typo="Typo.h5">Skills</MudText>
+                                                                                                                                                <MudTabs>
                     @foreach (var category in _skillsByCategory.Keys)
                     {
-                        <MudTabPanel Label="@category" Text="@category" Icon="@(_categoryIcons.ContainsKey(category) ? _categoryIcons[category] : string.Empty)">
-                            <MudList T="SkillModel">
+                                                                                                                                                                                                                                                                                        <MudTabPanel Label="@category" Text="@category" Icon="@(_categoryIcons.ContainsKey(category) ? _categoryIcons[category] : string.Empty)">
+                                                                                                                                                                                                                                                                                            <MudList T="SkillModel">
                                 @foreach (var skill in _skillsByCategory[category])
                                 {
-                                    <MudListItem T="SkillModel">
-                                        <MudGrid Spacing="2" Justify="Justify.Center">
-                                            <MudItem xs="6">
-                                                <MudTooltip Text="@skill.Tooltip" Inline="false">
-                                                    <MudItem xs="12" md="6" Align="@Align.Left">
-                                                        <MudText Typo="Typo.body2">
+                                                                                                                                                                                                                                                                                                                                                                                                                                    <MudListItem T="SkillModel">
+                                                                                                                                                                                                                                                                                                                                                                                                                                        <MudGrid Spacing="2" Justify="Justify.Center">
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <MudItem xs="6">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <MudTooltip Text="@skill.Tooltip" Inline="false">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    <MudItem xs="12" md="6" Align="@Align.Left">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <MudText Typo="Typo.body2">
                                                             @{
                                                                 var icons = skill.Category.Select(c => _categoryIcons.ContainsKey(c) ? _categoryIcons[c] : string.Empty);
                                                                 var icon = icons.FirstOrDefault(i => !string.IsNullOrWhiteSpace(i)) ?? string.Empty;
                                                             }
                                                             @if (skill.Category.Count() > 1)
                                                             {
-                                                                <MudIcon Icon="@icon" Color="Color.Warning" Size="Size.Small" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                <MudIcon Icon="@icon" Color="Color.Warning" Size="Size.Small" />
                                                             }
                                                             @skill.Name
-                                                        </MudText>
-                                                    </MudItem>
-                                                </MudTooltip>
-                                            </MudItem>
-                                            <MudItem xs="5" md="6">
-                                                <MudProgressLinear Value="@(skill.Level * 9)" Color="Color.Primary" Size="Size.Small" />
-                                            </MudItem>
-                                        </MudGrid>
-                                    </MudListItem>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        </MudText>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    </MudItem>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                </MudTooltip>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </MudItem>
+                                                                                                                                                                                                                                                                                                                                                                                                                                            <MudItem xs="5" md="6">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                <MudProgressLinear Value="@(skill.Level * 9)" Color="Color.Primary" Size="Size.Small" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                            </MudItem>
+                                                                                                                                                                                                                                                                                                                                                                                                                                        </MudGrid>
+                                                                                                                                                                                                                                                                                                                                                                                                                                    </MudListItem>
                                 }
-                            </MudList>
-                        </MudTabPanel>
+                                                                                                                                                                                                                                                                                            </MudList>
+                                                                                                                                                                                                                                                                                        </MudTabPanel>
                     }
-                </MudTabs>
+                                                                                                                                                </MudTabs>
 
-                <!-- Key Skills -->
-                <MudCard Class="cv-card cv-skills">
-                    <MudCardContent>
-                        <!-- Highlighted Skills Section -->
-                        <MudText Typo="Typo.h6" Class="highlighted-title">Key Skills</MudText>
-                        <MudGrid Spacing="2">
+                                                                                                                                                <!-- Key Skills -->
+                                                                                                                                                <MudCard Class="cv-card cv-skills">
+                                                                                                                                                    <MudCardContent>
+                                                                                                                                                        <!-- Highlighted Skills Section -->
+                                                                                                                                                        <MudText Typo="Typo.h6" Class="highlighted-title">Key Skills</MudText>
+                                                                                                                                                        <MudGrid Spacing="2">
                             @foreach (var skill in _skills.Where(s => s.Relevance == "High"))
                             {
-                                <MudItem xs="12" sm="6" md="6">
-                                    <MudCard Class="skill-card highlighted-skill p-2">
-                                        <MudTooltip ShowOnHover="true" Delay="500" Inline="false">
-                                            <ChildContent>
-                                                <MudText Typo="Typo.body2">
-                                                    <MudIcon Icon="@GetIcon(skill.Category)" Color="Color.Warning" Size="Size.Small" />
+                                                                                                                                                                                                                                                                                                <MudItem xs="12" sm="6" md="6">
+                                                                                                                                                                                                                                                                                                    <MudCard Class="skill-card highlighted-skill p-2">
+                                                                                                                                                                                                                                                                                                        <MudTooltip ShowOnHover="true" Delay="500" Inline="false">
+                                                                                                                                                                                                                                                                                                            <ChildContent>
+                                                                                                                                                                                                                                                                                                                <MudText Typo="Typo.body2">
+                                                                                                                                                                                                                                                                                                                    <MudIcon Icon="@GetIcon(skill.Category)" Color="Color.Warning" Size="Size.Small" />
                                                     @skill.Name
-                                                </MudText>
-                                            </ChildContent>
-                                            <TooltipContent>
-                                                <MudText Typo="Typo.body1">
+                                                                                                                                                                                                                                                                                                                </MudText>
+                                                                                                                                                                                                                                                                                                            </ChildContent>
+                                                                                                                                                                                                                                                                                                            <TooltipContent>
+                                                                                                                                                                                                                                                                                                                <MudText Typo="Typo.body1">
                                                     @skill.Tooltip
-                                                </MudText>
-                                            </TooltipContent>
-                                        </MudTooltip>
-                                        <MudProgressLinear Value="@(skill.Level * 9)" Color="Color.Info" Size="Size.Small" Class="my-7" />
-                                    </MudCard>
-                                </MudItem>
+                                                                                                                                                                                                                                                                                                                </MudText>
+                                                                                                                                                                                                                                                                                                            </TooltipContent>
+                                                                                                                                                                                                                                                                                                        </MudTooltip>
+                                                                                                                                                                                                                                                                                                        <MudProgressLinear Value="@(skill.Level * 9)" Color="Color.Info" Size="Size.Small" Class="my-7" />
+                                                                                                                                                                                                                                                                                                    </MudCard>
+                                                                                                                                                                                                                                                                                                </MudItem>
                             }
-                        </MudGrid>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
+                                                                                                                                                        </MudGrid>
+                                                                                                                                                    </MudCardContent>
+                                                                                                                                                </MudCard>
+                                                                                                                                            </MudItem>
 
-            <!-- Right Column: Summary, Experience, Projects, Education -->
-            <MudItem xs="12" md="8">
-                <!-- Summary -->
-                <MudCard Class="cv-card cv-summary">
-                    <MudCardContent>
-                        <MudText Typo="Typo.h6">Summary</MudText>
-                        <MudText Typo="Typo.body2">
-                            As a dedicated and ambitious C#/.NET Developer with a computer science background from KTH, I am passionate about creating innovative solutions. Currently enhancing my skills through advanced C#/.NET training, I thrive on learning and applying new concepts.
-                        </MudText>
-                        <MudText Typo="Typo.body2">
-                            My personal project, the Zentient Framework, showcases my expertise in C# .NET. Developed in my spare time, it emphasizes simplicity, flexibility, maintainability, and performance, reflecting my commitment to quality and continuous learning.
-                        </MudText>
-                        <MudText Typo="Typo.body2">
-                            With 20 years of experience as a handball referee, I bring discipline, endurance, and quick decision-making skills to the IT industry, enabling me to tackle complex problems effectively.
-                        </MudText>
-                    </MudCardContent>
-                </MudCard>
+                                                                                                                                            <!-- Right Column: Summary, Experience, Projects, Education -->
+                                                                                                                                            <MudItem xs="12" md="8">
+                                                                                                                                                <!-- Summary -->
+                                                                                                                                                <MudCard Class="cv-card cv-summary">
+                                                                                                                                                    <MudCardContent>
+                                                                                                                                                        <MudText Typo="Typo.h6">Summary</MudText>
+                                                                                                                                                        <MudText Typo="Typo.body2">
+                                                                                                                                                            As a dedicated and ambitious C#/.NET Developer with a computer science background from KTH, I am passionate about creating innovative solutions. Currently enhancing my skills through advanced C#/.NET training, I thrive on learning and applying new concepts.
+                                                                                                                                                        </MudText>
+                                                                                                                                                        <MudText Typo="Typo.body2">
+                                                                                                                                                            My personal project, the Zentient Framework, showcases my expertise in C# .NET. Developed in my spare time, it emphasizes simplicity, flexibility, maintainability, and performance, reflecting my commitment to quality and continuous learning.
+                                                                                                                                                        </MudText>
+                                                                                                                                                        <MudText Typo="Typo.body2">
+                                                                                                                                                            With 20 years of experience as a handball referee, I bring discipline, endurance, and quick decision-making skills to the IT industry, enabling me to tackle complex problems effectively.
+                                                                                                                                                        </MudText>
+                                                                                                                                                    </MudCardContent>
+                                                                                                                                                </MudCard>
 
-                <!-- Experience -->
-                <MudCard Class="cv-card cv-experience">
-                    <MudCardContent>
-                        <MudText Typo="Typo.h6">Experience</MudText>
-                        <MudTimeline>
+                                                                                                                                                <!-- Experience -->
+                                                                                                                                                <MudCard Class="cv-card cv-experience">
+                                                                                                                                                    <MudCardContent>
+                                                                                                                                                        <MudText Typo="Typo.h6">Experience</MudText>
+                                                                                                                                                        <MudTimeline>
                             @foreach (var experience in CVData.WorkExperiences)
                             {
                                 @* <MudTimelineItem Color="Color.Dark" Elevation="25" TimelineAlign="@(i++ % 2 == 0 ? TimelineAlign.End : TimelineAlign.Start)"> *@
-                                <MudTimelineItem Color="Color.Dark" Elevation="25" TimelineAlign="TimelineAlign.End">
-                                    <ItemOpposite>
-                                        <MudText Typo="Typo.subtitle1" Color="Color.Dark">@experience.StartDate - @experience.EndDate</MudText>
-                                    </ItemOpposite>
-                                    <ItemContent>
-                                        <MudPaper Elevation="0" Class="mt-n1">
-                                            <MudTooltip Class="full-width-tooltip" ShowOnHover="true" Delay="500" Inline="false">
-                                                <ChildContent>
+                                                                                                                                                                                                                                                                                                <MudTimelineItem Color="Color.Dark" Elevation="25" TimelineAlign="TimelineAlign.End">
+                                                                                                                                                                                                                                                                                                    <ItemOpposite>
+                                                                                                                                                                                                                                                                                                        <MudText Typo="Typo.subtitle1" Color="Color.Dark">@experience.StartDate - @experience.EndDate</MudText>
+                                                                                                                                                                                                                                                                                                    </ItemOpposite>
+                                                                                                                                                                                                                                                                                                    <ItemContent>
+                                                                                                                                                                                                                                                                                                        <MudPaper Elevation="0" Class="mt-n1">
+                                                                                                                                                                                                                                                                                                            <MudTooltip Class="full-width-tooltip" ShowOnHover="true" Delay="500" Inline="false">
+                                                                                                                                                                                                                                                                                                                <ChildContent>
                                                     @if (!string.IsNullOrWhiteSpace(experience.CompanyLogoUrl))
                                                     {
-                                                        <img src="images/@experience.CompanyLogoUrl" alt="@experience.Company" class="mud-image object-fill object-center company-logo" height="35" />
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <img src="images/@experience.CompanyLogoUrl" alt="@experience.Company" class="mud-image object-fill object-center company-logo" height="35" />
                                                         @* <MudImage Src="@experience.CompanyLogoUrl" Alt="@experience.Company" Width="50" Height="50" Class="company-logo" /> *@
                                                     }
                                                     else
                                                     {
-                                                        <MudText Typo="Typo.h5">@experience.Company</MudText>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <MudText Typo="Typo.h5">@experience.Company</MudText>
                                                     }
-                                                </ChildContent>
-                                                <TooltipContent>
+                                                                                                                                                                                                                                                                                                                </ChildContent>
+                                                                                                                                                                                                                                                                                                                <TooltipContent>
                                                     @foreach (var responsibility in experience.Responsibilities)
                                                     {
-                                                        <MudText Typo="Typo.body2" Class="responsibility-item" Align="Align.Left">• @responsibility</MudText>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        <MudText Typo="Typo.body2" Class="responsibility-item" Align="Align.Left">• @responsibility</MudText>
                                                     }
-                                                </TooltipContent>
-                                            </MudTooltip>
-                                        </MudPaper>
-                                    </ItemContent>
-                                </MudTimelineItem>
+                                                                                                                                                                                                                                                                                                                </TooltipContent>
+                                                                                                                                                                                                                                                                                                            </MudTooltip>
+                                                                                                                                                                                                                                                                                                        </MudPaper>
+                                                                                                                                                                                                                                                                                                    </ItemContent>
+                                                                                                                                                                                                                                                                                                </MudTimelineItem>
                             }
-                        </MudTimeline>
-                    </MudCardContent>
-                </MudCard>
-                <!-- Projects -->
-                <MudCard Class="cv-card cv-projects">
-                    <MudCardContent>
-                        <MudText Typo="Typo.h6">Projects</MudText>
-                        <MudList T="ProjectModel">
+                                                                                                                                                        </MudTimeline>
+                                                                                                                                                    </MudCardContent>
+                                                                                                                                                </MudCard>
+                                                                                                                                                <!-- Projects -->
+                                                                                                                                                <MudCard Class="cv-card cv-projects">
+                                                                                                                                                    <MudCardContent>
+                                                                                                                                                        <MudText Typo="Typo.h6">Projects</MudText>
+                                                                                                                                                        <MudList T="ProjectModel">
                             @foreach (var project in CVData.Projects)
                             {
-                                <MudListItem T="ProjectModel">
-                                    <MudText Typo="Typo.subtitle1">@project.Name</MudText>
-                                    <MudText Typo="Typo.body2">@project.Description</MudText>
-                                    <MudText Typo="Typo.body2">
-                                        <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
-                                        <a href="@project.GitHubLink" target="_blank">GitHub</a>
-                                    </MudText>
-                                </MudListItem>
+                                                                                                                                                                                                                                                                                                <MudListItem T="ProjectModel">
+                                                                                                                                                                                                                                                                                                    <MudText Typo="Typo.subtitle1">@project.Name</MudText>
+                                                                                                                                                                                                                                                                                                    <MudText Typo="Typo.body2">@project.Description</MudText>
+                                                                                                                                                                                                                                                                                                    <MudText Typo="Typo.body2">
+                                                                                                                                                                                                                                                                                                        <MudIcon Icon="@Icons.Material.Filled.Link" Color="Color.Primary" />
+                                                                                                                                                                                                                                                                                                        <a href="@project.GitHubLink" target="_blank">GitHub</a>
+                                                                                                                                                                                                                                                                                                    </MudText>
+                                                                                                                                                                                                                                                                                                </MudListItem>
                             }
-                        </MudList>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
+                                                                                                                                                        </MudList>
+                                                                                                                                                    </MudCardContent>
+                                                                                                                                                </MudCard>
+                                                                                                                                            </MudItem>
         }
         else
         {
-            <MudText Typo="Typo.h6">Loading...</MudText>
+                                                                                                                                            <MudText Typo="Typo.h6">Loading...</MudText>
         }
     </MudGrid>
 </MudContainer>
@@ -194,24 +194,24 @@
     private bool _displayCategoryDialog;
     /*
     Categories:
-    Architecture
-    Architecture, Design
-    Backend Development
-    Cloud Development
-    Cloud and Database
-    Data Access
-    Data Formats
-    Data Management
-    DevOps
-    Frontend Development
-    Professional Skills
-    Programming Languages
-    Project Management
-    Testing
-    Version Control
-    Web Development
+                                                                                                                                    Architecture
+                                                                                                                                    Architecture, Design
+                                                                                                                                    Backend Development
+                                                                                                                                    Cloud Development
+                                                                                                                                    Cloud and Database
+                                                                                                                                    Data Access
+                                                                                                                                    Data Formats
+                                                                                                                                    Data Management
+                                                                                                                                    DevOps
+                                                                                                                                    Frontend Development
+                                                                                                                                    Professional Skills
+                                                                                                                                    Programming Languages
+                                                                                                                                    Project Management
+                                                                                                                                    Testing
+                                                                                                                                    Version Control
+                                                                                                                                    Web Development
 
-    */
+                                                                                                                                    */
     private readonly Dictionary<string, string> _categoryIcons = new()
                                         {
                                         { "Articles", Icons.Material.Filled.Description },
@@ -282,7 +282,7 @@
         await Console.Out.WriteLineAsync(DateTime.Now.ToString().ToJson());
         await base.OnInitializedAsync();
         logger.Information("Base initialized");
-        CVData = await ContentService.GetJson<CVModel>("cv");
+        CVData = await ContentService.GetAnyJson<CVModel>("cv");
 
         if (CVData == null)
         {
@@ -291,7 +291,7 @@
             CVData.PersonalInfo.Title = "Fullstack .NET Developer";
             CVData.PersonalInfo.Email = "ulfbourelius71@gmail.com";
             CVData.PersonalInfo.Phone = "+46 70 000 00 00";
-            CVData.PersonalInfo.LinkedIn = "https://www.linkedin.com/in/ulfbourelius";
+            CVData.PersonalInfo.LinkedIn = "https://www.linkedin.com/in/ulf-bourelius-a9090248/relius";
             CVData.PersonalInfo.ProfileImageUrl = "images/profile.jpg";
             CVData.PersonalInfo.Location = "Stockholm, Sweden";
         }

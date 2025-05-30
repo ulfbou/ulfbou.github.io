@@ -1,0 +1,110 @@
+﻿@page "/about"
+
+@* HeadContent for SEO and social media sharing for the About Me page *@
+<HeadContent>
+    <title>About Ulf Bourelius - .NET Fullstack Developer Portfolio</title>
+    <meta name="description" content="Learn more about Ulf Bourelius, a passionate .NET Fullstack Web Developer, creator of Zentient.Results, and his expertise in Blazor, ASP.NET Core, and Azure." />
+
+    @* Open Graph / Facebook Meta Tags *@
+    <meta property="og:type" content="profile" />
+    <meta property="og:url" content="https://ulfbou.github.io/Zentient.Results-Portfolio-Web/about" /> @* IMPORTANT: Update with your actual About page URL *@
+    <meta property="og:title" content="About Ulf Bourelius - .NET Fullstack Developer" />
+    <meta property="og:description" content="Discover Ulf Bourelius's experience in .NET fullstack development, including his open-source project Zentient.Results, Blazor, and Azure expertise." />
+    @* Optional: If you have a specific profile image for sharing, add it here *@
+    @* <meta property="og:image" content="https://ulfbou.github.io/path/to/your/profile-share-image.jpg" /> *@
+
+    @* Twitter Card Meta Tags *@
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://ulfbou.github.io/Zentient.Results-Portfolio-Web/about" /> @* IMPORTANT: Update with your actual About page URL *@
+    <meta name="twitter:title" content="About Ulf Bourelius - .NET Fullstack Developer" />
+    <meta name="twitter:description" content="Discover Ulf Bourelius's experience in .NET fullstack development, including his open-source project Zentient.Results, Blazor, and Azure expertise." />
+    @* Optional: If you have a specific profile image for sharing, add it here *@
+    @* <meta name="twitter:image" content="https://ulfbou.github.io/path/to/your/profile-share-image.jpg" /> *@
+</HeadContent>
+
+<MudContainer MaxWidth="MaxWidth.Medium" Class="my-8">
+    <MudCard Elevation="4" Class="p-6 rounded-xl">
+        <MudCardContent>
+            <MudText Typo="Typo.h4" Class="mb-4">👋 Hello! I'm Ulf Bourelius</MudText>
+            <MudText Typo="Typo.body1" Class="mb-6">
+                I'm a passionate and experienced <b>.NET Fullstack Web Developer</b> with a strong focus on building robust, scalable, and maintainable applications using <b>C#, ASP.NET Core, Blazor, and Azure.</b>
+            </MudText>
+
+            <MudDivider Class="my-6" />
+
+            <MudText Typo="Typo.h5" Class="mb-4">💡 Creator of Zentient.Results</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                At the heart of my developer philosophy is a drive to reduce friction and improve clarity in codebases. That's why I built <MudLink Href="https://github.com/ulfbou/Zentient.Results/wiki" Target="_blank" Rel="noopener noreferrer"><b>Zentient.Results</b></MudLink>—an <b>open-source library</b> for clean, predictable result handling in C#. It brings structure to success/failure logic without introducing heavy abstractions, making error handling more expressive, testable, and readable. It's a lightweight pattern designed to scale with your application, not complicate it, ultimately making C# codebases more resilient and easier to manage.
+            </MudText>
+            <MudText Typo="Typo.body1" Class="mb-6">
+                This project is part of the broader Zentient Framework, where I explore modern development patterns and practical tools that help developers write better .NET code, faster.
+            </MudText>
+
+            <MudDivider Class="my-6" />
+
+            <MudText Typo="Typo.h5" Class="mb-4">🧠 What I Do</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                My expertise spans the full .NET stack, from <b>architecting robust back-end APIs</b> to <b>crafting engaging front-end experiences with Blazor WASM</b>. I excel at translating complex technical challenges into clean, scalable, and long-lasting solutions.
+            </MudText>
+            <MudText Typo="Typo.body1" Class="mb-2">
+                I recently completed an advanced <b>.NET Fullstack program at Lexicon</b>, where I deepened my knowledge in:
+            </MudText>
+            <ul class="list-disc list-inside mb-6 ml-4">
+                <li>Full-stack development with Blazor, Web API, and Entity Framework Core</li>
+                <li>DevOps with Azure, CI/CD pipelines, and Docker</li>
+                <li>Unit testing with xUnit, Moq, and TDD</li>
+                <li>Building and deploying scalable cloud applications using Azure Functions and CosmosDB</li>
+            </ul>
+
+            <MudDivider Class="my-6" />
+
+            <MudText Typo="Typo.h5" Class="mb-4">💼 Recent Experience</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                Most recently, I worked with <b>ZoCom</b> on a hybrid internship where I <b>led development of a custom Content Management System</b>. This project leveraged:
+            </MudText>
+            <ul class="list-disc list-inside mb-4 ml-4">
+                <li><b>ASP.NET Core and Blazor</b> for a dynamic, component-based UI</li>
+                <li><b>Azure DevOps</b> for CI/CD automation and testing</li>
+                <li><b>Docker</b> for containerization</li>
+                <li><b>Azure SQL and serverless functions</b> for scalable cloud deployment</li>
+            </ul>
+            <MudText Typo="Typo.body1" Class="mb-6">
+                The entire project was developed using an <b>Agile/Scrum</b> approach, with a focus on iterative improvements, team collaboration, and rapid delivery. Through this experience, I honed my ability to guide a project from conception to deployment, ensuring high-quality, maintainable code.
+            </MudText>
+
+            <MudDivider Class="my-6" />
+
+            <MudText Typo="Typo.h5" Class="mb-4">🛠️ My Toolbox</MudText>
+            <MudText Typo="Typo.body1" Class="mb-2"><b>Languages & Frameworks:</b><br />C# · ASP.NET Core · Blazor · Entity Framework Core · JavaScript · SQL · Web API</MudText>
+            <MudText Typo="Typo.body1" Class="mb-2"><b>DevOps & Cloud:</b><br />Azure · Azure DevOps · CI/CD · Docker · Serverless · CosmosDB</MudText>
+            <MudText Typo="Typo.body1" Class="mb-2"><b>Testing & Tools:</b><br />xUnit · Moq · MSTest · Postman · Git · Visual Studio · Azure SQL Database</MudText>
+            <MudText Typo="Typo.body1" Class="mb-6"><b>Patterns & Practices:</b><br />TDD · REST APIs · Software Design Patterns · Clean Architecture · Agile/Scrum</MudText>
+
+            <MudDivider Class="my-6" />
+
+            <MudText Typo="Typo.h5" Class="mb-4">🧩 Beyond the Code</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                Outside of tech, I've spent over 20 years as a <b>handball referee</b>. This taught me how to stay sharp under pressure, make fast decisions, and communicate clearly—skills that I directly apply to every development sprint, especially in problem-solving and team environments.
+            </MudText>
+            <MudText Typo="Typo.body1" Class="mb-6">
+                In my downtime, I enjoy [insert a hobby here—e.g., exploring new dev tools, reading sci-fi, hiking, or tinkering with microservices].
+            </MudText>
+
+            <MudDivider Class="my-6" />
+
+            <MudText Typo="Typo.h5" Class="mb-4">📬 Let's Connect</MudText>
+            <MudText Typo="Typo.body1" Class="mb-4">
+                Ready to discuss how my skills can benefit your team? Explore my
+                <MudLink Href="https://github.com/ulfbou" Target="_blank" Rel="noopener noreferrer">GitHub</MudLink>,
+                browse my <MudLink Href="/projects">projects</MudLink>, @* Link to /projects page which you might create in Phase 3 *@
+                or connect with me directly—I'm always open to discussing new opportunities and collaborations.
+            </MudText>
+            <div class="flex flex-wrap gap-4">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Custom.Brands.GitHub" Href="https://github.com/ulfbou" Target="_blank" Rel="noopener noreferrer">GitHub</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Custom.Brands.LinkedIn" Href="https://www.linkedin.com/in/ulf-bourelius-a9090248/relius/" Target="_blank" Rel="noopener noreferrer">LinkedIn</MudButton>
+                @* Example of a button to your dedicated projects page (from Phase 3) *@
+                <MudButton Variant="Variant.Filled" Color="Color.Secondary" Href="/projects">My Projects</MudButton>
+            </div>
+        </MudCardContent>
+    </MudCard>
+</MudContainer>
