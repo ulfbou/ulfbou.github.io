@@ -1,31 +1,104 @@
 ﻿@using MudBlazor
 @inherits LayoutComponentBase
+@inject AudienceContextService AudienceService
+@inject NavigationManager NavManager
 
-<MudThemeProvider Theme="@CustomTheme" />
-<MudPopoverProvider />
+<MudThemeProvider @bind-IsDarkMode="@_isDarkMode" Theme="CustomTheme"/>
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 <MudLayout>
-    <MudAppBar Class="mb-6">
-        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleNavMenu" />
-        Homepage
+    <MudAppBar Elevation="1" Class="mud-appbar-fixed-top">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => ToggleNavMenu())" />
+        <MudText Typo="Typo.h5" Class="ml-4 cursor-pointer" OnClick="NavigateHome">Ulf's Portfolio</MudText>
+        <MudSpacer />
+        @* Ensure AudienceService is not null before accessing CurrentAudience *@
+        @if (AudienceService != null)
+        {
+                                                        <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Class="mr-4">
+                                                            Viewing as: @AudienceService.CurrentAudience
+                                                        </MudChip>
+        }
+        <MudIconButton Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" OnClick="@ToggleDarkMode" Class="mr-2" />
+        <MudIconButton Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Inherit" Href="https://www.linkedin.com/in/ulf-bourelius-a9090248/" Target="_blank" />
+        <MudIconButton Icon="@Icons.Custom.Brands.GitHub" Color="Color.Inherit" Href="https://github.com/ulfbou" Target="_blank" />
     </MudAppBar>
-    <MudDrawer @bind-Open="@_drawerOpen" Class="mr-6">
+
+    <MudDrawer @bind-Open="@_drawerOpen" Elevation="2" Fixed="true" Breakpoint="Breakpoint.Md" Width="280px">
+        <MudDrawerHeader>
+            <MudText Typo="Typo.h6">Navigation</MudText>
+        </MudDrawerHeader>
         <NavMenu />
     </MudDrawer>
+
     <MudMainContent>
-        @Body
+        <MudContainer MaxWidth="MaxWidth.Large" Class="mt-8 mb-8 px-4 py-8">
+            @Body
+        </MudContainer>
     </MudMainContent>
+
+    <footer Class="py-4 mt-auto mud-appbar-fixed-bottom">
+        <MudText Typo="Typo.body2" Class="text-center w-full">
+            &copy; @DateTime.Now.Year Ulf Bou. Built with Blazor and MudBlazor.
+            <MudLink Href="https://www.linkedin.com/in/ulf-bourelius-a9090248//" Target="_blank" Class="mx-2">LinkedIn</MudLink>
+            <MudLink Href="https://github.com/ulfbou" Target="_blank" Class="mx-2">GitHub</MudLink>
+        </MudText>
+    </footer>
 </MudLayout>
 
 @code {
+    private MudThemeProvider _mudThemeProvider = new MudThemeProvider();
     private bool _drawerOpen = true;
+    private bool _isDarkMode = false;
+
+    // Log the current audience and page to the console for debugging
+    protected override async Task OnInitializedAsync()
+    {
+        if (AudienceService != null)
+        {
+            Console.WriteLine($"Current Audience: {AudienceService.CurrentAudience}");
+            Console.WriteLine($"Current Page: {NavManager.Uri}");
+        }
+        else
+        {
+            Console.WriteLine("AudienceService is null.");
+        }
+        Console.WriteLine($"Current URL: {NavManager.Uri}");
+        _mudThemeProvider = new MudThemeProvider();
+        _isDarkMode = _mudThemeProvider.IsDarkMode;
+        await base.OnInitializedAsync();
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            if (_mudThemeProvider != null)
+            {
+                await _mudThemeProvider.WatchSystemPreference(OnSystemPreferenceChanged);
+            }
+            StateHasChanged();
+        }
+    }
+
+    private Task OnSystemPreferenceChanged(bool isDarkMode)
+    {
+        _isDarkMode = isDarkMode;
+        return Task.CompletedTask;
+    }
 
     private void ToggleNavMenu()
     {
         _drawerOpen = !_drawerOpen;
     }
+
+    private void ToggleDarkMode()
+    {
+        _isDarkMode = !_isDarkMode;
+        StateHasChanged();
+    }
+
     public MudTheme CustomTheme = new MudTheme
         {
             Typography = new Typography
