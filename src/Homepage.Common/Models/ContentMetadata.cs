@@ -66,7 +66,7 @@ namespace Homepage.Common.Models
                 Categories = faker.Make(faker.Random.Int(1, 2), () => faker.Commerce.Categories(1)[0]).ToList(),
                 PublishDate = faker.Date.Past(2),
                 TargetAudiences = faker.PickRandom(new List<string> { "developer", "techlead", "recruiter" }, faker.Random.Int(1, 2)).ToList(),
-                ContentPath = $"posts/{faker.Lorem.Slug()}.md",
+                ContentPath = $"{faker.Lorem.Slug()}.md",
                 Author = "Ulf Bou",
                 Version = "1.0",
                 FeaturedImage = faker.Image.PicsumUrl(800, 400),

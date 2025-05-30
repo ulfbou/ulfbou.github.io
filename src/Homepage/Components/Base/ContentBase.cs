@@ -18,8 +18,8 @@ namespace Homepage.Components.Base;
 
 public abstract class ContentBase : BaseComponent
 {
-    private readonly ContentContext _contentContext;
-    private readonly NavigationManager _navigationManager;
+    private readonly ContentContext _contentContext = null!;
+    private readonly NavigationManager _navigationManager = null!;
 
     private void OnNavigationLocationChanged(object sender, LocationChangedEventArgs e)
     {

@@ -18,7 +18,7 @@ namespace Homepage.Common.Services
         /// Fetches the raw Markdown content for a given path.
         /// Caches the content in local storage using a stale-while-revalidate pattern.
         /// </summary>
-        /// <param name="contentPath">The relative path to the Markdown file (e.g., "posts/my-post.md").</param>
+        /// <param name="contentPath">The relative path to the Markdown file (e.g., "my-post.md").</param>
         /// <returns>The raw Markdown content as a string.</returns>
         Task<string> GetMarkdownContentAsync(string contentPath);
 

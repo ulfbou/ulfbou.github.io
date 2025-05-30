@@ -19,9 +19,9 @@ namespace Homepage.Common.Services
         // For this example, assuming content is directly under 'portfolio-content' repo.
 #if DEBUG
         // Local development URL for testing purposes
-        public const string GITHUB_CONTENT_BASE_URL = "Posts/"; // Local path for development 
+        public const string GITHUB_CONTENT_BASE_URL = ""; // Local path for development 
 #else
-        public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/Posts/"; 
+        public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/"; 
 #endif
 
         public string BaseUri { get; set; } = GITHUB_CONTENT_BASE_URL;
