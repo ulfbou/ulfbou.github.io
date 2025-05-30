@@ -13,6 +13,7 @@ using Homepage.Common.Models;
 using Homepage.Common.Services;
 
 using Homepage.Common.Helpers;
+using System.Net.Http;
 
 namespace Homepage.Components.Base;
 
@@ -118,19 +119,20 @@ public abstract class ContentBase : BaseComponent
         return ContentList.FirstOrDefault(c => c.Title.Contains(categoryName))?.Tags.ToHashSet() ?? new HashSet<string>();
     }
 
-    // Load Markdown content with notifications and loading indicator
     protected async Task LoadContent(string contentFileName)
     {
         var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadContent");
         try
         {
             IsLoading = true;
-            var url = $"{ContentDirectory}/{contentFileName}.md";
+            // Construct the URL to fetch the .html file
+            var url = $"content/{Path.GetFileNameWithoutExtension(contentFileName)}.html";
             logger.Information("Loading content from: {Url}", url);
+
+            var htmlContent = await Http.GetStringAsync(url);
+            ContentHtml = htmlContent;
             var markdown = await Http.GetStringAsync(url);
             logger.Information("Loaded content from: {Url}", url);
-            ContentHtml = Markdown.ToHtml(markdown, new MarkdownPipelineBuilder().Build());
-            logger.Information("Converted markdown to HTML.");
         }
         catch (Exception ex)
         {
@@ -147,17 +149,5 @@ public abstract class ContentBase : BaseComponent
     protected void ResetContent()
     {
         ContentHtml = string.Empty;
-    }
-
-    private double CompareContentItems<T>(ContentMetadata item1, T relation, string propertyName) where T : IEnumerable<string>
-    {
-        var item1Relations = item1.GetType().GetProperty(propertyName)?.GetValue(item1) as IEnumerable<string>;
-        if (item1Relations == null)
-        {
-            return 0; // Handle case where property is missing or null
-        }
-
-        var relationSet = new HashSet<string>(relation);
-        return Similarity.CalculateJaccard(item1Relations.ToHashSet(), relationSet);
     }
 }
