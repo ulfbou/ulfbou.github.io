@@ -43,7 +43,7 @@ public abstract class ContentBase : BaseComponent
 #pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
     [Inject] protected ContentService ContentService { get; set; }
 
-    protected List<ContentItem> ContentList { get; set; } = new List<ContentItem>();
+    protected List<ContentMetadata> ContentList { get; set; } = new List<ContentMetadata>();
     protected string ContentHtml { get; set; }
     protected bool IsLoading { get; set; } = false;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
@@ -71,7 +71,7 @@ public abstract class ContentBase : BaseComponent
         {
             IsLoading = true;
             logger.Information("Loading metadata from: {MetadataUrl}", MetadataUrl);
-            ContentList = await Http.GetFromJsonAsync<List<ContentItem>>(MetadataUrl) ?? throw new InvalidOperationException();
+            ContentList = await Http.GetFromJsonAsync<List<ContentMetadata>>(MetadataUrl) ?? throw new InvalidOperationException();
             logger.Information("Loaded {Count} content items.", ContentList.Count);
             SortMetadata();
             logger.Information("Sorted content items by relevance.");
@@ -149,7 +149,7 @@ public abstract class ContentBase : BaseComponent
         ContentHtml = string.Empty;
     }
 
-    private double CompareContentItems<T>(ContentItem item1, T relation, string propertyName) where T : IEnumerable<string>
+    private double CompareContentItems<T>(ContentMetadata item1, T relation, string propertyName) where T : IEnumerable<string>
     {
         var item1Relations = item1.GetType().GetProperty(propertyName)?.GetValue(item1) as IEnumerable<string>;
         if (item1Relations == null)

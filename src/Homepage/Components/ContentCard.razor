@@ -1,12 +1,20 @@
 ﻿@using MudBlazor
-@using Homepage.Common.Models
+@using Homepage.Common.Models 
 
-
-<MudCard @onclick="async () => await OnClick.InvokeAsync()" Class="d-flex align-center justify-center mud-width-full pa-6 ma-6">
+<MudCard @onclick="async () => await OnClick.InvokeAsync()" Class="@($"d-flex align-center justify-center mud-width-full pa-6 ma-6 {Class}")" Outlined="true" Elevation="2">
     <MudCardContent>
         <MudText Typo="Typo.h3">@Content.Title</MudText>
-        <MudText Typo="Typo.body2" Class="text-brown-default">@Content.Summary</MudText>
-        <MudText Typo="Typo.body2" Class="text-brown-darken1">Published: @Content.Date</MudText>
+        <MudText Typo="Typo.body2" Class="text-brown-default">@Content.Description</MudText>
+        <MudText Typo="Typo.body2" Class="text-brown-darken1">Published: @Content.PublishDate.ToShortDateString()</MudText>
+        @if (Content.Tags != null && Content.Tags.Any())
+        {
+                                                                                                                                                <div class="d-flex flex-wrap mt-2">
+                @foreach (var tag in Content.Tags)
+                {
+                                                                                                                                                                                                                                                                                            <MudChip T="string" Size="Size.Small" Class="mr-1 mb-1">@tag</MudChip>
+                }
+                                                                                                                                                </div>
+        }
     </MudCardContent>
     <MudCardActions>
         <MudButton Variant="Variant.Outlined" OnClick="async () => await OnClick.InvokeAsync()">Read More</MudButton>
