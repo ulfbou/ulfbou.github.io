@@ -10,3 +10,6 @@
 /.vs
 /src/Homepage/bin/Release/net8.0
 /src/Homepage.Common/bin/Release/net8.0
+/tools/PortfolioStaticGenerator/bin/Release/net9.0
+/tools/PortfolioStaticGenerator/obj
+/tools/_site
