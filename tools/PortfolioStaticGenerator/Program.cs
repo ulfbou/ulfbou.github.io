@@ -12,17 +12,14 @@ public class Program
 {
     public static async Task Main(string[] args)
     {
-        // 1. Configuration Setup: Get values from command line arguments
         var builder = new ConfigurationBuilder();
         builder.AddCommandLine(args);
         var configuration = builder.Build();
 
-        // Get paths from command line. Provide fallback defaults for local development.
         string contentRepoPath = configuration["ContentRepoPath"] ?? "./portfolio-content";
         string outputDirectory = configuration["OutputDirectory"] ?? "../_site";
         string baseUrl = configuration["BaseUrl"] ?? "https://ulfbou.github.io/";
-        // New: Get the path to the published Blazor app's static assets
-        string blazorPublishOutputPath = configuration["BlazorPublishOutput"] ?? "./src/Homepage/wwwroot"; // Fallback to source wwwroot for local dev if not published
+        string blazorPublishOutputPath = configuration["BlazorPublishOutput"] ?? "./src/Homepage/wwwroot";
 
         // Logging setup
         Log.Logger = new LoggerConfiguration()
@@ -38,7 +35,6 @@ public class Program
 
         try
         {
-            // 2. Clean and Create Output Directory
             if (Directory.Exists(outputDirectory))
             {
                 Log.Information($"Cleaning existing output directory: {outputDirectory}");
@@ -50,7 +46,6 @@ public class Program
 
             Log.Information($"Output directory created: {outputDirectory}");
 
-            // 3. Load Metadata
             var metadataFilePath = Path.Combine(contentRepoPath, "metadata.json");
             if (!File.Exists(metadataFilePath))
             {
@@ -59,11 +54,15 @@ public class Program
             }
             var metadataJson = await File.ReadAllTextAsync(metadataFilePath);
             var allMetadata = JsonSerializer.Deserialize<List<ContentMetadata>>(metadataJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-                              ?? new List<ContentMetadata>();
+                                      ?? new List<ContentMetadata>();
 
             Log.Information($"Loaded {allMetadata.Count} content metadata entries.");
 
-            // 4. Generate Home Page
+            string outputMetadataPath = Path.Combine(outputDirectory, "content", "metadata.json");
+            Directory.CreateDirectory(Path.GetDirectoryName(outputMetadataPath)!);
+            File.Copy(metadataFilePath, outputMetadataPath, true);
+            Log.Information($"Copied metadata.json to {outputMetadataPath}");
+
             string homeHtml = GenerateHtmlPage(
                 title: "Ulf's Portfolio - .NET Fullstack Web Developer",
                 description: "Hello, I'm Ulf Bourelius, a passionate .NET Fullstack Web Developer and creator of Zentient.Results. Explore my projects, articles, and expertise in Blazor, ASP.NET Core, and Azure.",
@@ -73,8 +72,7 @@ public class Program
             await File.WriteAllTextAsync(Path.Combine(outputDirectory, "index.html"), homeHtml);
             Log.Information("Generated index.html");
 
-            // 5. Generate About Page (Adjust pathing for src/Homepage)
-            string aboutPageRazorPath = "./src/Homepage/Pages/About.razor"; // Relative to main repo root
+            string aboutPageRazorPath = "./src/Homepage/Pages/About.razor";
             if (!File.Exists(aboutPageRazorPath))
             {
                 Log.Warning($"About.razor not found at {aboutPageRazorPath}. Skipping About page generation. Ensure it's relative to the main repo's root.");
@@ -96,7 +94,6 @@ public class Program
                 Log.Information("Generated about.html");
             }
 
-            // 6. Generate Content Pages
             foreach (var metadata in allMetadata)
             {
                 var markdownPath = Path.Combine(contentRepoPath, metadata.ContentPath);
@@ -128,8 +125,6 @@ public class Program
                 Log.Information($"Generated {outputPath}");
             }
 
-            // 7. Copy Blazor App's static assets from its publish output
-            // This is the crucial part to get all framework and component library assets
             if (Directory.Exists(blazorPublishOutputPath))
             {
                 Log.Information($"Copying Blazor app's static content from {blazorPublishOutputPath} to {outputDirectory}...");
@@ -147,7 +142,7 @@ public class Program
         catch (Exception ex)
         {
             Log.Error(ex, "An error occurred during static site generation.");
-            Environment.ExitCode = 1; // Indicate failure
+            Environment.ExitCode = 1;
         }
         finally
         {
