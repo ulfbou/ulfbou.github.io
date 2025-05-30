@@ -1,119 +1,90 @@
-﻿using System.Net.Http.Json;
-
+﻿using Homepage.Common.Helpers;
 using Homepage.Common.Models;
 
-namespace Homepage.Common.Services;
-
-public class ContextService(ContentService contentService, Similarity jaccardSimilarity)
+namespace Homepage.Common.Services
 {
-    private readonly ContentService _contentService = contentService;
-    public const string BaseUri = "content/";
-
-    public IEnumerable<PostMetadata> Metadata
+    // ContextService is now primarily responsible for providing derived, sorted lists
+    // of content metadata, categories, tags, and keywords based on the ContentService.
+    public class ContextService(ContentService contentService, Similarity jaccardSimilarity)
     {
-        get
+        private readonly ContentService _contentService = contentService;
+        private readonly Similarity _jaccardSimilarity = jaccardSimilarity; // Inject Similarity
+
+        // This property now directly gets content metadata from ContentService
+        public async Task<List<ContentMetadata>> GetAllContentMetadataAsync()
         {
-            if (_metadata == null)
+            return await _contentService.GetContentMetadataAsync();
+        }
+
+        // Properties for derived lists, now calling the ContentService
+        public async Task<IEnumerable<string>> GetCategoriesAsync()
+        {
+            var categories = await _contentService.GetCategories();
+            return SortCategories(categories.ToList()); // Sort categories
+        }
+
+        public async Task<IEnumerable<string>> GetTagsAsync()
+        {
+            var tags = await _contentService.GetTags();
+            return SortTags(tags.ToList()); // Sort tags
+        }
+
+        public async Task<IEnumerable<string>> GetKeywordsAsync()
+        {
+            var keywords = await _contentService.GetKeywords();
+            return SortKeywords(keywords.ToList()); // Sort keywords
+        }
+
+        // --- Sorting Methods ---
+        // These methods now operate on the derived lists.
+        // The previous complex similarity sorting for categories is kept for now,
+        // but can be simplified if explicit audience filtering makes it less relevant.
+        private List<string> SortCategories(List<string> categories)
+        {
+            if (!categories.Any()) return categories;
+
+            // This logic assumes a "baseCategory" for similarity comparison.
+            // If this is no longer desired with explicit audience filtering,
+            // this can be simplified to alphabetical sorting.
+            var categoryData = new Dictionary<string, HashSet<string>>();
+            foreach (var category in categories)
             {
-                GetMetadata().Wait();
-            }
-            return _metadata!;
-        }
-    }
-    private IEnumerable<PostMetadata>? _metadata;
+                var items = new HashSet<string>();
+                var contentForCategory = GetAllContentMetadataAsync().Result.Where(p => p.Categories.Contains(category, StringComparer.OrdinalIgnoreCase));
 
-    public IEnumerable<string> Tags
-    {
-        get
-        {
-            if (_tags == null)
-            {
-                _tags = Metadata.SelectMany(m => m.Tags).Distinct().ToList();
-                SortTags();
-            }
-            return _tags!;
-        }
-    }
-    private List<string>? _tags;
-    private void SortTags() => throw new NotImplementedException();
+                foreach (var post in contentForCategory)
+                {
+                    items.UnionWith(post.Tags);
+                    items.UnionWith(post.Keywords ?? new List<string>());
+                }
 
-    public IEnumerable<string> Categories
-    {
-        get
-        {
-            if (_categories == null)
-            {
-                _categories = Metadata.SelectMany(m => m.Categories).Distinct().ToList();
-                SortCategories();
-            }
-            return _categories!;
-        }
-    }
-    private List<string>? _categories;
-
-    public IEnumerable<string> Keywords
-    {
-        get
-        {
-            if (_keywords == null)
-            {
-                _keywords = Metadata?.SelectMany(m => m.Keywords).Distinct().ToList();
-                SortKeywords();
-            }
-            return _keywords!;
-        }
-    }
-    private IEnumerable<string>? _keywords;
-    private void SortKeywords() => throw new NotImplementedException();
-
-
-    private async Task<List<PostMetadata>> GetMetadata()
-    {
-        try
-        {
-            var response = await _contentService.GetJson<List<PostMetadata>>();
-            _metadata = response ?? new List<PostMetadata>();
-            return _metadata.ToList();
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine(ex.Message);
-            return new List<PostMetadata>();
-        }
-    }
-
-    private void SortCategories()
-    {
-        ArgumentNullException.ThrowIfNull(_categories);
-
-        // 1. Collect data on each category and its connected tags and keywords. That is all tags and keywords that are connected to the posts in that category.
-        var categoryData = new Dictionary<string, HashSet<string>>();
-
-        foreach (var category in _categories)
-        {
-            var items = new HashSet<string>();
-
-            foreach (var post in Metadata.Where(p => p.Categories.Contains(category)))
-            {
-                items.UnionWith(post.Tags);
-                items.UnionWith(post.Keywords);
+                categoryData.Add(category, items);
             }
 
-            categoryData.Add(category, items);
+            string baseCategory = "DevOps"; // Default base category for sorting
+            if (!categoryData.ContainsKey(baseCategory) && categories.Any())
+            {
+                baseCategory = categories.First(); // Fallback to first category if DevOps not found
+            }
+
+            if (categoryData.TryGetValue(baseCategory, out var baseCategoryTags))
+            {
+                return categories.OrderByDescending(c => Similarity.CalculateJaccard(baseCategoryTags, categoryData[c])).ToList();
+            }
+
+            return categories.OrderBy(c => c).ToList();
         }
 
-        // 2. Determine a base category to start with. For example, DevOps.
-        var baseCategory = "DevOps";
-        var baseCategoryData = categoryData[baseCategory];
-
-        if (baseCategoryData == default)
+        private List<string> SortTags(List<string> tags)
         {
-            baseCategory = _categories.FirstOrDefault() ?? throw new InvalidOperationException("No categories found.");
-            baseCategoryData = categoryData[baseCategory];
+            // Simple alphabetical sorting for tags
+            return tags.OrderBy(t => t).ToList();
         }
 
-        // 3. Calculate the Jaccard similarity between the base category and all other categories to determine the sort order.
-        // 4. Sort the categories according to the Jaccard similarity.
-        _categories = _categories.OrderByDescending(c => Similarity.CalculateJaccard(baseCategoryData, categoryData[c])).ToList();
+        private List<string> SortKeywords(List<string> keywords)
+        {
+            // Simple alphabetical sorting for keywords
+            return keywords.OrderBy(k => k).ToList();
+        }
     }
 }

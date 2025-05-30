@@ -1,15 +1,16 @@
-﻿using Microsoft.JSInterop;
-
-namespace Homepage.Common.Services;
-
-public class Similarity
+﻿namespace Homepage.Common.Helpers
 {
-    public static double CalculateJaccard(HashSet<string> set1, HashSet<string> set2)
+    public class Similarity
     {
-        var intersection = set1.Intersect(set2);
-        var union = set1.Union(set2);
-        var similarity = union.Count() == 0 ? 0.0 : (double)intersection.Count() / union.Count();
+        public static double CalculateJaccard(HashSet<string> set1, HashSet<string> set2)
+        {
+            if (!set1.Any() && !set2.Any()) return 1.0;
+            if (!set1.Any() || !set2.Any()) return 0.0;
 
-        return similarity;
+            var intersection = set1.Intersect(set2);
+            var union = set1.Union(set2);
+            var similarity = (double)intersection.Count() / union.Count();
+            return similarity;
+        }
     }
 }
