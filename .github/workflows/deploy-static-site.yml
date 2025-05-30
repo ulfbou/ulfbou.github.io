@@ -1,0 +1,66 @@
+name: Deploy Portfolio Static Site to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout main application repository (ulfbou.github.io)
+        uses: actions/checkout@v4
+        with:
+          repository: ulfbou/ulfbou.github.io
+
+      - name: Checkout Portfolio-Content repository
+        uses: actions/checkout@v4
+        with:
+          repository: ulfbou/Portfolio-Content
+          path: portfolio-content
+
+      - name: Setup .NET SDK
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore dependencies for Static Generator
+        run: dotnet restore ./tools/PortfolioStaticGenerator
+
+      - name: Build Static Generator
+        run: dotnet build ./tools/PortfolioStaticGenerator --configuration Release --no-restore
+
+      - name: Run Static Generator to create _site directory
+        run: dotnet run --project ./tools/PortfolioStaticGenerator --configuration Release
+
+      - name: Copy generated _site content to root
+        run: |
+          mkdir -p temp_root
+          cp -R ./_site/. temp_root/
+          cp -R ./src/Homepage/wwwroot/. temp_root/
+          ls -R temp_root
+          rm -rf _site
+          mv temp_root/* .
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
