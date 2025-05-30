@@ -1,25 +1,20 @@
 ﻿@page "/about"
 
-@* HeadContent for SEO and social media sharing for the About Me page *@
 <HeadContent>
     <title>About Ulf Bourelius - .NET Fullstack Developer Portfolio</title>
     <meta name="description" content="Learn more about Ulf Bourelius, a passionate .NET Fullstack Web Developer, creator of Zentient.Results, and his expertise in Blazor, ASP.NET Core, and Azure." />
 
-    @* Open Graph / Facebook Meta Tags *@
     <meta property="og:type" content="profile" />
-    <meta property="og:url" content="https://ulfbou.github.io/Zentient.Results-Portfolio-Web/about" /> @* IMPORTANT: Update with your actual About page URL *@
+    <meta property="og:url" content="https://ulfbou.github.io/about" />
     <meta property="og:title" content="About Ulf Bourelius - .NET Fullstack Developer" />
     <meta property="og:description" content="Discover Ulf Bourelius's experience in .NET fullstack development, including his open-source project Zentient.Results, Blazor, and Azure expertise." />
-    @* Optional: If you have a specific profile image for sharing, add it here *@
-    @* <meta property="og:image" content="https://ulfbou.github.io/path/to/your/profile-share-image.jpg" /> *@
+    <meta property="og:image" content="https://ulfbou.github.io/images/1517494205971.jpeg" />
 
-    @* Twitter Card Meta Tags *@
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://ulfbou.github.io/Zentient.Results-Portfolio-Web/about" /> @* IMPORTANT: Update with your actual About page URL *@
+    <meta name="twitter:url" content="https://ulfbou.github.io/about" />
     <meta name="twitter:title" content="About Ulf Bourelius - .NET Fullstack Developer" />
     <meta name="twitter:description" content="Discover Ulf Bourelius's experience in .NET fullstack development, including his open-source project Zentient.Results, Blazor, and Azure expertise." />
-    @* Optional: If you have a specific profile image for sharing, add it here *@
-    @* <meta name="twitter:image" content="https://ulfbou.github.io/path/to/your/profile-share-image.jpg" /> *@
+    <meta name="twitter:image" content="https://ulfbou.github.io/images/1517494205971.jpeg" />
 </HeadContent>
 
 <MudContainer MaxWidth="MaxWidth.Medium" Class="my-8">
@@ -96,13 +91,12 @@
             <MudText Typo="Typo.body1" Class="mb-4">
                 Ready to discuss how my skills can benefit your team? Explore my
                 <MudLink Href="https://github.com/ulfbou" Target="_blank" Rel="noopener noreferrer">GitHub</MudLink>,
-                browse my <MudLink Href="/projects">projects</MudLink>, @* Link to /projects page which you might create in Phase 3 *@
+                browse my <MudLink Href="/projects">projects</MudLink>, 
                 or connect with me directly—I'm always open to discussing new opportunities and collaborations.
             </MudText>
             <div class="flex flex-wrap gap-4">
                 <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Custom.Brands.GitHub" Href="https://github.com/ulfbou" Target="_blank" Rel="noopener noreferrer">GitHub</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Custom.Brands.LinkedIn" Href="https://www.linkedin.com/in/ulf-bourelius-a9090248/relius/" Target="_blank" Rel="noopener noreferrer">LinkedIn</MudButton>
-                @* Example of a button to your dedicated projects page (from Phase 3) *@
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Custom.Brands.LinkedIn" Href="https://www.linkedin.com/in/ulf-bourelius-a9090248/" Target="_blank" Rel="noopener noreferrer">LinkedIn</MudButton>
                 <MudButton Variant="Variant.Filled" Color="Color.Secondary" Href="/projects">My Projects</MudButton>
             </div>
         </MudCardContent>
