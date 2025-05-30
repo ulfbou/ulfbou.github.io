@@ -98,6 +98,8 @@ public class Program
                 Log.Information("Generated about.html");
             }
 
+            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
             foreach (var metadata in allMetadata)
             {
                 Log.Information($"Generating HTML for content: {metadata.Title}");
@@ -111,44 +113,12 @@ public class Program
                 var markdownContent = await File.ReadAllTextAsync(markdownFilePath);
                 var contentHtml = Markdown.ToHtml(markdownContent, pipeline);
 
-                // This is the CRITICAL part: Ensure the outputPath is correct
-                var outputPath = Path.Combine(outputDirectory, "content", $"{metadata.Slug}.html"); // This should be correct
+                var outputPath = Path.Combine(outputDirectory, "content", $"{metadata.Slug}.html");
 
-                // Ensure the content directory exists
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 
                 await File.WriteAllTextAsync(outputPath, contentHtml);
                 Log.Information($"Generated article HTML: {outputPath}");
-            }
-            foreach (var metadata in allMetadata)
-            {
-                var markdownPath = Path.Combine(contentRepoPath, metadata.ContentPath);
-                if (!File.Exists(markdownPath))
-                {
-                    Log.Warning($"Markdown file not found for {metadata.Slug} at {markdownPath}. Skipping.");
-                    continue;
-                }
-
-                var markdownContent = await File.ReadAllTextAsync(markdownPath);
-                var htmlBody = await markdownService.RenderMarkdownToHtmlAsync(markdownContent);
-
-                htmlBody = Regex.Replace(htmlBody, @"^---\s*\n.*?\n---\s*\n", "", RegexOptions.Singleline);
-                htmlBody = Regex.Replace(htmlBody, @"@page "".*?""|\@inject .*?|\@using .*?|\@code .*?\s*\{.*?\}", "", RegexOptions.Singleline);
-
-                string fullHtml = GenerateHtmlPage(
-                    title: $"{metadata.Title} - Ulf's Portfolio",
-                    description: metadata.Description,
-                    bodyContent: htmlBody,
-                    featuredImage: metadata.FeaturedImage,
-                    pageUrl: $"{baseUrl}content/{metadata.Slug}",
-                    tags: metadata.Tags,
-                    baseUrl: baseUrl
-                );
-
-                var outputPath = Path.Combine(outputDirectory, "content", $"{metadata.Slug}.html");
-                Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
-                await File.WriteAllTextAsync(outputPath, fullHtml);
-                Log.Information($"Generated {outputPath}");
             }
 
             if (Directory.Exists(blazorPublishOutputPath))
