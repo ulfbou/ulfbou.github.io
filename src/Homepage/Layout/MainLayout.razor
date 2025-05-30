@@ -12,12 +12,11 @@
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => ToggleNavMenu())" />
         <MudText Typo="Typo.h5" Class="ml-4 cursor-pointer" OnClick="NavigateHome">Ulf's Portfolio</MudText>
         <MudSpacer />
-        @* Ensure AudienceService is not null before accessing CurrentAudience *@
         @if (AudienceService != null)
         {
-                                                        <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Class="mr-4">
-                                                            Viewing as: @AudienceService.CurrentAudience
-                                                        </MudChip>
+                    <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Class="mr-4">
+                        Viewing as: @AudienceService.CurrentAudience
+                    </MudChip>
         }
         <MudIconButton Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" OnClick="@ToggleDarkMode" Class="mr-2" />
         <MudIconButton Icon="@Icons.Custom.Brands.LinkedIn" Color="Color.Inherit" Href="https://www.linkedin.com/in/ulf-bourelius-a9090248/" Target="_blank" />
@@ -39,7 +38,7 @@
 
     <footer Class="py-4 mt-auto mud-appbar-fixed-bottom">
         <MudText Typo="Typo.body2" Class="text-center w-full">
-            &copy; @DateTime.Now.Year Ulf Bou. Built with Blazor and MudBlazor.
+            &copy; @DateTime.Now.Year Ulf Bourelius. Built with Blazor and MudBlazor.
             <MudLink Href="https://www.linkedin.com/in/ulf-bourelius-a9090248//" Target="_blank" Class="mx-2">LinkedIn</MudLink>
             <MudLink Href="https://github.com/ulfbou" Target="_blank" Class="mx-2">GitHub</MudLink>
         </MudText>
