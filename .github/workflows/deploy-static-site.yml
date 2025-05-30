@@ -51,11 +51,20 @@ jobs:
         with:
           dotnet-version: '8.0.x'
 
-      - name: Restore dependencies for Static Generator
-        run: dotnet restore ./tools/PortfolioStaticGenerator
+      - name: Restore dependencies for all projects
+        run: dotnet restore
 
       - name: Build Static Generator
         run: dotnet build ./tools/PortfolioStaticGenerator --configuration Release --no-restore
+
+      - name: Build and Publish Blazor App (Homepage)
+        run: dotnet publish ./src/Homepage --configuration Release -o ./publish-output --no-restore
+
+      - name: (Debug) After Blazor Publish
+        run: |
+          echo "--- (Debug) After Blazor Publish (Contents of publish-output) ---"
+          ls -R ./publish-output
+          echo "------------------------------------------------------------------"
 
       - name: (Debug) Before Static Generator Run
         run: |
@@ -68,7 +77,12 @@ jobs:
           echo "----------------------------------------------------"
 
       - name: Run Static Generator to create _site directory
-        run: dotnet run --project ./tools/PortfolioStaticGenerator --configuration Release -- ContentRepoPath="${{ github.workspace }}/portfolio-content/" OutputDirectory="${{ github.workspace }}/_site/" BaseUrl="${{ steps.deployment.outputs.page_url }}"
+        run: |
+          dotnet run --project ./tools/PortfolioStaticGenerator --configuration Release \
+            -- ContentRepoPath="${{ github.workspace }}/portfolio-content/" \
+            OutputDirectory="${{ github.workspace }}/_site/" \
+            BaseUrl="${{ steps.deployment.outputs.page_url }}" \
+            BlazorPublishOutput="${{ github.workspace }}/publish-output/wwwroot"
 
       - name: (Debug) After Static Generator Run
         run: |
@@ -85,7 +99,7 @@ jobs:
           cp -R ${{ github.workspace }}/_site/. temp_root/
           echo "Contents of temp_root (after copying):"
           ls -R temp_root
-          rm -rf ${{ github.workspace }}/_site 
+          rm -rf ${{ github.workspace }}/_site
           mv temp_root/* .
           echo "Contents of repository root (after final move):"
           ls -R .
