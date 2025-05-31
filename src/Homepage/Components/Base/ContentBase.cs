@@ -1,116 +1,127 @@
-﻿using Markdig;
+﻿using Homepage.Common.Models;
+using Homepage.Common.Services;
 
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Routing;
 
 using MudBlazor;
 
 using Serilog;
 
-using System.Net.Http.Json;
-
-using Homepage.Common.Models;
-using Homepage.Common.Services;
-
-using Homepage.Common.Helpers;
-using System.Net.Http;
-
 namespace Homepage.Components.Base
 {
-    public abstract class ContentBase : BaseComponent
+    /// <summary>
+    /// Base component for content-related Blazor components.
+    /// Handles loading, filtering, and rendering content metadata and markdown for the current audience.
+    /// </summary>
+    public abstract class ContentBase : BaseComponent, IDisposable
     {
-        private readonly ContentContext _contentContext = null!;
+#pragma warning disable CS8618
+        /// <summary>Service for loading and rendering markdown content.</summary>
+        [Inject] protected ContentMarkdownService ContentMarkdownService { get; set; }
 
-        private void OnNavigationLocationChanged(object sender, LocationChangedEventArgs e)
-        {
-            if (e.Location.Contains("/category/devops"))
-            {
-                _contentContext.AddCategories(new[] { "DevOps", "Cloud", ".NET" });
-            }
-            else if (e.Location.Contains("/category/web"))
-            {
-                _contentContext.AddCategories(new[] { "Web Development", "Frontend", "Backend" });
-            }
-            else
-            {
-                _contentContext.Clear();
-            }
-        }
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-        [Inject] protected ContentService ContentService { get; set; }
+        /// <summary>Service for managing the current audience context.</summary>
+        [Inject] protected AudienceContextService AudienceService { get; set; }
+#pragma warning restore CS8618
 
+        /// <summary>The filtered list of content metadata for the current audience.</summary>
         protected List<ContentMetadata> ContentList { get; set; } = new List<ContentMetadata>();
+
+        /// <summary>The rendered HTML content for the selected content item.</summary>
+        protected string ContentHtml { get; set; } = string.Empty;
+
+        /// <summary>Indicates whether content is currently being loaded.</summary>
         protected bool IsLoading { get; set; } = false;
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-        protected string MetadataUrl => "content/metadata.json";
-        protected string ContentDirectory => "content";
-
+        /// <inheritdoc />
         protected override async Task OnInitializedAsync()
         {
-            await LoadMetadata();
+            AudienceService.OnAudienceChanged += async () => await InvokeAsync(LoadMetadataAndFilter);
+            await LoadMetadataAndFilter();
         }
 
-        // Load JSON metadata with notifications and loading indicator
-        protected async Task LoadMetadata()
+        /// <inheritdoc />
+        public void Dispose()
         {
-            var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadMetadata");
-            if (string.IsNullOrEmpty(MetadataUrl))
+            AudienceService.OnAudienceChanged -= async () => await InvokeAsync(LoadMetadataAndFilter);
+        }
+
+        /// <summary>
+        /// Loads all content metadata and filters it for the current audience.
+        /// Updates <see cref="ContentList"/> and handles loading state and errors.
+        /// </summary>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        protected async Task LoadMetadataAndFilter()
+        {
+            var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadMetadataAndFilter");
+
+            try
             {
-                logger.Error("MetadataUrl is null or empty.");
-                Snackbar.Add("Failed to load content metadata.", Severity.Error);
+                IsLoading = true;
+                logger.Information("Loading all content metadata.");
+                var allContent = await ContentMarkdownService.GetContentMetadataAsync();
+                var currentAudience = AudienceService.CurrentAudience;
+                ContentList = allContent
+                    .Where(item => item.TargetAudiences.Contains(currentAudience, StringComparer.OrdinalIgnoreCase))
+                    .OrderByDescending(item => item.PublishDate)
+                    .ToList();
+                logger.Information("Loaded and filtered {Count} content items for audience '{Audience}'.", ContentList.Count, currentAudience);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to load and filter content metadata.");
+                Snackbar.Add($"Failed to load content: {ex.Message}", Severity.Error);
+            }
+            finally
+            {
+                IsLoading = false;
+                StateHasChanged();
+            }
+        }
+
+        /// <summary>
+        /// Loads and renders the markdown content for a given <see cref="ContentMetadata"/> item.
+        /// Updates <see cref="ContentHtml"/> and handles loading state and errors.
+        /// </summary>
+        /// <param name="contentItem">The content metadata item to load.</param>
+        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
+        protected async Task LoadContent(ContentMetadata contentItem)
+        {
+            var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadContent");
+
+            if (contentItem == null || string.IsNullOrEmpty(contentItem.ContentPath))
+            {
+                logger.Warning("Attempted to load content with null item or empty ContentPath.");
+                Snackbar.Add("Invalid content item selected.", Severity.Warning);
                 return;
             }
 
             try
             {
                 IsLoading = true;
-                logger.Information("Loading metadata from: {MetadataUrl}", MetadataUrl);
-                ContentList = await Http.GetFromJsonAsync<List<ContentMetadata>>(MetadataUrl) ?? throw new InvalidOperationException();
-                logger.Information("Loaded {Count} content items.", ContentList.Count);
-                SortMetadata();
-                logger.Information("Sorted content items by relevance.");
+                logger.Information("Loading markdown content for: {ContentPath}", contentItem.ContentPath);
+                var markdown = await ContentMarkdownService.GetMarkdownContentAsync(contentItem.ContentPath);
+                logger.Information("Loaded markdown content for: {ContentPath}", contentItem.ContentPath);
+                ContentHtml = await ContentMarkdownService.RenderMarkdownToHtmlAsync(markdown);
+                logger.Information("Converted markdown to HTML.");
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Failed to load content metadata.");
-                Snackbar.Add($"Failed to load content", Severity.Error);
-                throw;
+                logger.Error(ex, "Failed to load content from: {ContentPath}", contentItem.ContentPath);
+                Snackbar.Add($"Failed to load content: {ex.Message}", Severity.Error);
+                ContentHtml = $"<p>Error loading content: {ex.Message}</p>";
             }
             finally
             {
                 IsLoading = false;
+                StateHasChanged();
             }
         }
 
-        private void SortMetadata()
+        /// <summary>Resets the rendered content and reloads the filtered content metadata.</summary>
+        protected void ResetContent()
         {
-            // Sort the content according to relevance from Categories: DevOps, Cloud and .NET
-            // Compare with Jaccard similarity coefficient
-            var categories = new List<string> { "DevOps", "Cloud", ".NET" };
-            HashSet<string> baseCategoryTags = GetTagsByCategory(categories);
-
-            ContentList = ContentList.OrderByDescending(contentItem => Similarity.CalculateJaccard(baseCategoryTags, contentItem.Tags.ToHashSet())).ToList();
-        }
-
-        // Get all tags associated with a list of category names
-        private HashSet<string> GetTagsByCategory(List<string> categoryNames)
-        {
-            var categoryNamesJoined = string.Join("|", categoryNames);
-            var tagCollection = new HashSet<string>();
-            var categories = ContentList.Select(selector => selector.Tags.Where(tag => tag.Contains(categoryNamesJoined)));
-
-            foreach (var categoryName in categoryNames)
-            {
-                var tags = GetTagsByCategory(categoryName);
-                tagCollection.UnionWith(tags);
-            }
-            return tagCollection;
-        }
-
-        private HashSet<string> GetTagsByCategory(string categoryName)
-        {
-            return ContentList.FirstOrDefault(c => c.Title.Contains(categoryName))?.Tags.ToHashSet() ?? new HashSet<string>();
+            ContentHtml = string.Empty;
+            _ = LoadMetadataAndFilter();
         }
     }
 }
