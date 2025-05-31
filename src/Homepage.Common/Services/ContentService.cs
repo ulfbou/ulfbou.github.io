@@ -1,9 +1,8 @@
-﻿// --- Homepage.Common.Services/ContentService.cs (Corrected) ---
-using System.Text.Json;
+﻿using System.Text.Json;
 using Serilog;
 using Homepage.Common.Models;
 using Markdig; // Required for Markdown.ToHtml
-using Blazored.LocalStorage; // Required for caching
+using Blazored.LocalStorage;
 
 namespace Homepage.Common.Services
 {
@@ -14,7 +13,6 @@ namespace Homepage.Common.Services
         private List<ContentMetadata>? _allContentMetadata;
 
 #if DEBUG
-        // Local development URL for testing purposes
         public const string GITHUB_CONTENT_BASE_URL = "";
 #else
 public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/content/";
@@ -40,7 +38,6 @@ public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/content/
 
             try
             {
-                // Attempt to load from local storage first
                 var cachedJson = await _localStorage.GetItemAsync<string>("content_metadata");
                 if (!string.IsNullOrEmpty(cachedJson))
                 {
