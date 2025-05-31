@@ -74,7 +74,6 @@ namespace Homepage.Components.Base
                 {
                     logger.Error(ex, "Failed to load and filter content metadata.");
                     Snackbar.Add($"Failed to load content: {ex.Message}", Severity.Error);
-                    // Do not re-throw here, allow the UI to show an empty list or error message gracefully
                 }
                 finally
                 {

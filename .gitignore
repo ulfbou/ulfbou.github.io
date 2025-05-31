@@ -14,3 +14,4 @@
 /tools/PortfolioStaticGenerator/obj
 /tools/_site
 /tools/PortfolioStaticGenerator/bin/Debug/net8.0
+/tools/PortfolioStaticGenerator/bin/Release/net8.0

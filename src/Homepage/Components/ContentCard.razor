@@ -8,12 +8,12 @@
         <MudText Typo="Typo.body2" Class="text-brown-darken1">Published: @Content.PublishDate.ToShortDateString()</MudText>
         @if (Content.Tags != null && Content.Tags.Any())
         {
-                                                                                                                                                <div class="d-flex flex-wrap mt-2">
+                                                                                                                                                                                                                                                                                                                                        <div class="d-flex flex-wrap mt-2">
                 @foreach (var tag in Content.Tags)
                 {
-                                                                                                                                                                                                                                                                                            <MudChip T="string" Size="Size.Small" Class="mr-1 mb-1">@tag</MudChip>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <MudChip T="string" Size="Size.Small" Class="mr-1 mb-1">@tag</MudChip>
                 }
-                                                                                                                                                </div>
+                                                                                                                                                                                                                                                                                                                                        </div>
         }
     </MudCardContent>
     <MudCardActions>

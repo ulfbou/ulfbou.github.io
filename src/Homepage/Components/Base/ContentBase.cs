@@ -20,14 +20,9 @@ namespace Homepage.Components.Base;
 public abstract class ContentBase : BaseComponent
 {
     private readonly ContentContext _contentContext = null!;
-    private readonly NavigationManager _navigationManager = null!;
 
     private void OnNavigationLocationChanged(object sender, LocationChangedEventArgs e)
     {
-        // Implement logic to activate/deactivate the context based on the new URL
-        // For example, you could use URL patterns or specific routes to trigger context changes.
-        // Here's a simplified example:
-
         if (e.Location.Contains("/category/devops"))
         {
             _contentContext.AddCategories(new[] { "DevOps", "Cloud", ".NET" });
@@ -45,7 +40,6 @@ public abstract class ContentBase : BaseComponent
     [Inject] protected ContentService ContentService { get; set; }
 
     protected List<ContentMetadata> ContentList { get; set; } = new List<ContentMetadata>();
-    protected string ContentHtml { get; set; }
     protected bool IsLoading { get; set; } = false;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
@@ -117,37 +111,5 @@ public abstract class ContentBase : BaseComponent
     private HashSet<string> GetTagsByCategory(string categoryName)
     {
         return ContentList.FirstOrDefault(c => c.Title.Contains(categoryName))?.Tags.ToHashSet() ?? new HashSet<string>();
-    }
-
-    protected async Task LoadContent(string contentFileName)
-    {
-        var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadContent");
-        try
-        {
-            IsLoading = true;
-            // Construct the URL to fetch the .html file
-            var url = $"content/{Path.GetFileNameWithoutExtension(contentFileName)}.html";
-            logger.Information("Loading content from: {Url}", url);
-
-            var htmlContent = await Http.GetStringAsync(url);
-            ContentHtml = htmlContent;
-            var markdown = await Http.GetStringAsync(url);
-            logger.Information("Loaded content from: {Url}", url);
-        }
-        catch (Exception ex)
-        {
-            logger.Error(ex, "Failed to load content from: {Url}", contentFileName);
-            Snackbar.Add($"Failed to load content: {ex.Message}", Severity.Error);
-            throw;
-        }
-        finally
-        {
-            IsLoading = false;
-        }
-    }
-
-    protected void ResetContent()
-    {
-        ContentHtml = string.Empty;
     }
 }

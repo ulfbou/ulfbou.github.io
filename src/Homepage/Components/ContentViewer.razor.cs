@@ -4,7 +4,7 @@ namespace Homepage.Components
 {
     public partial class ContentViewer : ComponentBase
     {
-        [Inject] private HttpClient Http { get; set; }
+        [Inject] private HttpClient Http { get; set; } = null!;
         [Parameter] public required string ContentTitle { get; set; }
         [Parameter] public required string Url { get; set; }
         private string ContentHtml = string.Empty;
