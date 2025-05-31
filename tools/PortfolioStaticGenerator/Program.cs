@@ -20,7 +20,7 @@ public class Program
         builder.AddCommandLine(args);
         var configuration = builder.Build();
 
-        string contentRepoPath = configuration["ContentRepoPath"] ?? "./portfolio-content";
+        string contentRepoPath = configuration["ContentRepoPath"] ?? "../../../Portfolio-Content/";
         string outputDirectory = configuration["OutputDirectory"] ?? "../_site";
         string baseUrl = configuration["BaseUrl"] ?? "https://ulfbou.github.io/";
         string blazorPublishOutputPath = configuration["BlazorPublishOutput"] ?? "./src/Homepage/wwwroot";
@@ -35,7 +35,6 @@ public class Program
         Log.Information("Starting static site generation...");
 
         var httpClient = new HttpClient();
-        var markdownService = new MarkdownService(httpClient, null!);
 
         try
         {
@@ -102,7 +101,7 @@ public class Program
 
             foreach (var metadata in allMetadata)
             {
-                Log.Information($"Generating HTML for content: {metadata.Title}");
+                Log.Information($"Copying Markdown file for content: {metadata.Title}");
                 var markdownFilePath = Path.Combine(contentRepoPath, metadata.ContentPath);
                 if (!File.Exists(markdownFilePath))
                 {
@@ -110,15 +109,12 @@ public class Program
                     continue;
                 }
 
-                var markdownContent = await File.ReadAllTextAsync(markdownFilePath);
-                var contentHtml = Markdown.ToHtml(markdownContent, pipeline);
-
-                var outputPath = Path.Combine(outputDirectory, "content", $"{metadata.Slug}.html");
+                var outputPath = Path.Combine(outputDirectory, "content", metadata.ContentPath);
 
                 Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
 
-                await File.WriteAllTextAsync(outputPath, contentHtml);
-                Log.Information($"Generated article HTML: {outputPath}");
+                File.Copy(markdownFilePath, outputPath, overwrite: true);
+                Log.Information($"Copied Markdown file to: {outputPath}");
             }
 
             if (Directory.Exists(blazorPublishOutputPath))
