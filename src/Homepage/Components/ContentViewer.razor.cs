@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using Homepage.Components.Base;
+
+using Microsoft.AspNetCore.Components;
 
 namespace Homepage.Components
 {

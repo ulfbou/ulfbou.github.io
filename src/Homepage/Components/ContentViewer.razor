@@ -1,8 +1,10 @@
 ﻿@using System.Reflection.Metadata
+@inherits ComponentBase
+
 <MudContainer>
     <MudText Typo="Typo.h4">@ContentTitle</MudText>
     @if (!string.IsNullOrEmpty(ContentHtml))
     {
-        <MudText Typo="Typo.body1">@((MarkupString)ContentHtml)</MudText>
+            <MudText Typo="Typo.body1">@((MarkupString)ContentHtml)</MudText>
     }
-</MudContainer>
+    </MudContainer>
