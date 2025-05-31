@@ -15,101 +15,102 @@ using Homepage.Common.Services;
 using Homepage.Common.Helpers;
 using System.Net.Http;
 
-namespace Homepage.Components.Base;
-
-public abstract class ContentBase : BaseComponent
+namespace Homepage.Components.Base
 {
-    private readonly ContentContext _contentContext = null!;
-
-    private void OnNavigationLocationChanged(object sender, LocationChangedEventArgs e)
+    public abstract class ContentBase : BaseComponent
     {
-        if (e.Location.Contains("/category/devops"))
-        {
-            _contentContext.AddCategories(new[] { "DevOps", "Cloud", ".NET" });
-        }
-        else if (e.Location.Contains("/category/web"))
-        {
-            _contentContext.AddCategories(new[] { "Web Development", "Frontend", "Backend" });
-        }
-        else
-        {
-            _contentContext.Clear();
-        }
-    }
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    [Inject] protected ContentService ContentService { get; set; }
+        private readonly ContentContext _contentContext = null!;
 
-    protected List<ContentMetadata> ContentList { get; set; } = new List<ContentMetadata>();
-    protected bool IsLoading { get; set; } = false;
+        private void OnNavigationLocationChanged(object sender, LocationChangedEventArgs e)
+        {
+            if (e.Location.Contains("/category/devops"))
+            {
+                _contentContext.AddCategories(new[] { "DevOps", "Cloud", ".NET" });
+            }
+            else if (e.Location.Contains("/category/web"))
+            {
+                _contentContext.AddCategories(new[] { "Web Development", "Frontend", "Backend" });
+            }
+            else
+            {
+                _contentContext.Clear();
+            }
+        }
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+        [Inject] protected ContentService ContentService { get; set; }
+
+        protected List<ContentMetadata> ContentList { get; set; } = new List<ContentMetadata>();
+        protected bool IsLoading { get; set; } = false;
 #pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
 
-    protected string MetadataUrl => "content/metadata.json";
-    protected string ContentDirectory => "content";
+        protected string MetadataUrl => "content/metadata.json";
+        protected string ContentDirectory => "content";
 
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadMetadata();
-    }
-
-    // Load JSON metadata with notifications and loading indicator
-    protected async Task LoadMetadata()
-    {
-        var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadMetadata");
-        if (string.IsNullOrEmpty(MetadataUrl))
+        protected override async Task OnInitializedAsync()
         {
-            logger.Error("MetadataUrl is null or empty.");
-            Snackbar.Add("Failed to load content metadata.", Severity.Error);
-            return;
+            await LoadMetadata();
         }
 
-        try
+        // Load JSON metadata with notifications and loading indicator
+        protected async Task LoadMetadata()
         {
-            IsLoading = true;
-            logger.Information("Loading metadata from: {MetadataUrl}", MetadataUrl);
-            ContentList = await Http.GetFromJsonAsync<List<ContentMetadata>>(MetadataUrl) ?? throw new InvalidOperationException();
-            logger.Information("Loaded {Count} content items.", ContentList.Count);
-            SortMetadata();
-            logger.Information("Sorted content items by relevance.");
+            var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadMetadata");
+            if (string.IsNullOrEmpty(MetadataUrl))
+            {
+                logger.Error("MetadataUrl is null or empty.");
+                Snackbar.Add("Failed to load content metadata.", Severity.Error);
+                return;
+            }
+
+            try
+            {
+                IsLoading = true;
+                logger.Information("Loading metadata from: {MetadataUrl}", MetadataUrl);
+                ContentList = await Http.GetFromJsonAsync<List<ContentMetadata>>(MetadataUrl) ?? throw new InvalidOperationException();
+                logger.Information("Loaded {Count} content items.", ContentList.Count);
+                SortMetadata();
+                logger.Information("Sorted content items by relevance.");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Failed to load content metadata.");
+                Snackbar.Add($"Failed to load content", Severity.Error);
+                throw;
+            }
+            finally
+            {
+                IsLoading = false;
+            }
         }
-        catch (Exception ex)
+
+        private void SortMetadata()
         {
-            logger.Error(ex, "Failed to load content metadata.");
-            Snackbar.Add($"Failed to load content", Severity.Error);
-            throw;
+            // Sort the content according to relevance from Categories: DevOps, Cloud and .NET
+            // Compare with Jaccard similarity coefficient
+            var categories = new List<string> { "DevOps", "Cloud", ".NET" };
+            HashSet<string> baseCategoryTags = GetTagsByCategory(categories);
+
+            ContentList = ContentList.OrderByDescending(contentItem => Similarity.CalculateJaccard(baseCategoryTags, contentItem.Tags.ToHashSet())).ToList();
         }
-        finally
+
+        // Get all tags associated with a list of category names
+        private HashSet<string> GetTagsByCategory(List<string> categoryNames)
         {
-            IsLoading = false;
+            var categoryNamesJoined = string.Join("|", categoryNames);
+            var tagCollection = new HashSet<string>();
+            var categories = ContentList.Select(selector => selector.Tags.Where(tag => tag.Contains(categoryNamesJoined)));
+
+            foreach (var categoryName in categoryNames)
+            {
+                var tags = GetTagsByCategory(categoryName);
+                tagCollection.UnionWith(tags);
+            }
+            return tagCollection;
         }
-    }
 
-    private void SortMetadata()
-    {
-        // Sort the content according to relevance from Categories: DevOps, Cloud and .NET
-        // Compare with Jaccard similarity coefficient
-        var categories = new List<string> { "DevOps", "Cloud", ".NET" };
-        HashSet<string> baseCategoryTags = GetTagsByCategory(categories);
-
-        ContentList = ContentList.OrderByDescending(contentItem => Similarity.CalculateJaccard(baseCategoryTags, contentItem.Tags.ToHashSet())).ToList();
-    }
-
-    // Get all tags associated with a list of category names
-    private HashSet<string> GetTagsByCategory(List<string> categoryNames)
-    {
-        var categoryNamesJoined = string.Join("|", categoryNames);
-        var tagCollection = new HashSet<string>();
-        var categories = ContentList.Select(selector => selector.Tags.Where(tag => tag.Contains(categoryNamesJoined)));
-
-        foreach (var categoryName in categoryNames)
+        private HashSet<string> GetTagsByCategory(string categoryName)
         {
-            var tags = GetTagsByCategory(categoryName);
-            tagCollection.UnionWith(tags);
+            return ContentList.FirstOrDefault(c => c.Title.Contains(categoryName))?.Tags.ToHashSet() ?? new HashSet<string>();
         }
-        return tagCollection;
-    }
-
-    private HashSet<string> GetTagsByCategory(string categoryName)
-    {
-        return ContentList.FirstOrDefault(c => c.Title.Contains(categoryName))?.Tags.ToHashSet() ?? new HashSet<string>();
     }
 }

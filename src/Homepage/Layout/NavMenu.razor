@@ -9,60 +9,55 @@
     <MudText Typo="Typo.subtitle2" Class="mud-text-secondary px-4 py-2">View As:</MudText>
     @if (AudienceService != null)
     {
-                                                                    <MudRadioGroup T="string" SelectedOption="AudienceService.CurrentAudience" SelectedOptionChanged="OnAudienceOptionChanged"
-                                                                                    Dense="true" Class="px-4 py-2">
+                <MudRadioGroup T="string" SelectedOption="AudienceService.CurrentAudience" SelectedOptionChanged="OnAudienceOptionChanged"
+                               Dense="true" Class="px-4 py-2">
             @foreach (var audience in AudienceService.GetAvailableAudiences())
             {
-                                                                                                                                        <MudRadio T="string" Option="@audience" Color="Color.Primary">@ToTitleCase(audience)</MudRadio>
+                                <MudRadio T="string" Option="@audience" Color="Color.Primary">@ToTitleCase(audience)</MudRadio>
             }
-                                                                    </MudRadioGroup>
-
-                                                                    <MudDivider Class="my-2" />
-
-                                                                    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
-                                                                    <MudNavLink Href="/about" Icon="@Icons.Material.Filled.Info">About Me</MudNavLink>
-
-                                                                    <MudNavGroup Title="Content" Icon="@Icons.Material.Filled.Article" Expanded="true">
+                </MudRadioGroup>
+                <MudDivider Class="my-2" />
+                <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+                <MudNavLink Href="/about" Icon="@Icons.Material.Filled.Info">About Me</MudNavLink>
+                <MudNavGroup Title="Content" Icon="@Icons.Material.Filled.Article" Expanded="true">
             @if (_contentMetadata == null)
             {
-                                                                                                                                        <MudProgressCircular Indeterminate="true" Size="Size.Small" Class="ml-4 my-2" />
+                                <MudProgressCircular Indeterminate="true" Size="Size.Small" Class="ml-4 my-2" />
             }
             else if (!_contentMetadata.Any())
             {
-                                                                                                                                        <MudText Typo="Typo.body2" Class="ml-4">No content found for this audience.</MudText>
+                                <MudText Typo="Typo.body2" Class="ml-4">No content found for this audience.</MudText>
             }
             else
             {
                 @foreach (var category in _contentMetadata
-        .Where(m => m.TargetAudiences.Contains(AudienceService.CurrentAudience, StringComparer.OrdinalIgnoreCase))
-        .SelectMany(m => m.Categories)
-        .Distinct()
-        .OrderBy(c => c))
+                 .Where(m => m.TargetAudiences.Contains(AudienceService.CurrentAudience, StringComparer.OrdinalIgnoreCase))
+                 .SelectMany(m => m.Categories)
+                 .Distinct()
+                 .OrderBy(c => c))
                 {
-                                                                                                                                                                                                        <MudNavGroup Title="@ToTitleCase(category.Replace("-", " "))" Icon="@Icons.Material.Filled.Folder" Expanded="true">
+                                            <MudNavGroup Title="@ToTitleCase(category.Replace("-", " "))" Icon="@Icons.Material.Filled.Folder" Expanded="true">
                         @foreach (var item in _contentMetadata
-            .Where(m => m.Categories.Contains(category, StringComparer.OrdinalIgnoreCase) && m.TargetAudiences.Contains(AudienceService.CurrentAudience, StringComparer.OrdinalIgnoreCase))
-            .OrderByDescending(m => m.PublishDate))
+                         .Where(m => m.Categories.Contains(category, StringComparer.OrdinalIgnoreCase) && m.TargetAudiences.Contains(AudienceService.CurrentAudience, StringComparer.OrdinalIgnoreCase))
+                         .OrderByDescending(m => m.PublishDate))
                         {
-                                                                                                                                                                                                                                                                            <MudNavLink Href="@($"/content/{item.Slug}")" Icon="@Icons.Material.Filled.Description">
+                                                            <MudNavLink Href="@($"/content/{item.Slug}")" Icon="@Icons.Material.Filled.Description">
                                 @item.Title
                                 @if (AudienceService.CurrentAudience == "recruiter" && item.IsFeatured)
                                 {
-                                                                                                                                                                                                                                                                                                                                                <MudChip T="string" Size="Size.Small" Color="Color.Tertiary" Class="ml-2">Featured</MudChip>
+                                                                            <MudChip T="string" Size="Size.Small" Color="Color.Tertiary" Class="ml-2">Featured</MudChip>
                                 }
-                                                                                                                                                                                                                                                                            </MudNavLink>
+                                                            </MudNavLink>
                         }
-                                                                                                                                                                                                        </MudNavGroup>
+                                            </MudNavGroup>
                 }
             }
-                                                                    </MudNavGroup>
-
-                                                                    <MudDivider Class="my-2" />
-
-                                                                    <MudNavGroup Title="More" Icon="@Icons.Material.Filled.MoreHoriz" Expanded="false">
-                                                                        <MudNavLink Href="https://www.linkedin.com/in/ulf-bourelius-a9090248//" Target="_blank" Icon="@Icons.Custom.Brands.LinkedIn">LinkedIn Profile</MudNavLink>
-                                                                        <MudNavLink Href="https://github.com/ulfbou" Target="_blank" Icon="@Icons.Custom.Brands.GitHub">GitHub Profile</MudNavLink>
-                                                                    </MudNavGroup>
+                </MudNavGroup>
+                <MudDivider Class="my-2" />
+                <MudNavGroup Title="More" Icon="@Icons.Material.Filled.MoreHoriz" Expanded="false">
+                    <MudNavLink Href="https://www.linkedin.com/in/ulf-bourelius-a9090248/" Target="_blank" Icon="@Icons.Custom.Brands.LinkedIn">LinkedIn Profile</MudNavLink>
+                    <MudNavLink Href="https://github.com/ulfbou" Target="_blank" Icon="@Icons.Custom.Brands.GitHub">GitHub Profile</MudNavLink>
+                </MudNavGroup>
     }
     </MudNavMenu>
 
@@ -89,11 +84,6 @@
     private void OnAudienceOptionChanged(string newAudience)
     {
         AudienceService.SetAudience(newAudience);
-    }
-
-    public void Dispose()
-    {
-        AudienceService.OnAudienceChanged -= OnAudienceChangedHandler;
     }
 
     private static string ToTitleCase(string input)
