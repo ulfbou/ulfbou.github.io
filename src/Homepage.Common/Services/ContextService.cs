@@ -3,68 +3,65 @@ using Homepage.Common.Models;
 
 namespace Homepage.Common.Services
 {
-    // ContextService is now primarily responsible for providing derived, sorted lists
-    // of content metadata, categories, tags, and keywords based on the ContentService.
-    public class ContextService(ContentService contentService, Similarity jaccardSimilarity)
+    public class ContextService
     {
-        private readonly ContentService _contentService = contentService;
-        private readonly Similarity _jaccardSimilarity = jaccardSimilarity; // Inject Similarity
+        private readonly ContentMarkdownService _contentService;
+        private readonly Similarity _jaccardSimilarity;
 
-        // This property now directly gets content metadata from ContentService
+        public ContextService(ContentMarkdownService contentService, Similarity jaccardSimilarity)
+        {
+            _contentService = contentService;
+            _jaccardSimilarity = jaccardSimilarity;
+        }
+
         public async Task<List<ContentMetadata>> GetAllContentMetadataAsync()
         {
             return await _contentService.GetContentMetadataAsync();
         }
 
-        // Properties for derived lists, now calling the ContentService
         public async Task<IEnumerable<string>> GetCategoriesAsync()
         {
             var categories = await _contentService.GetCategories();
-            return SortCategories(categories.ToList()); // Sort categories
+            return await SortCategories(categories.ToList());
         }
 
         public async Task<IEnumerable<string>> GetTagsAsync()
         {
             var tags = await _contentService.GetTags();
-            return SortTags(tags.ToList()); // Sort tags
+            return SortTags(tags.ToList());
         }
 
         public async Task<IEnumerable<string>> GetKeywordsAsync()
         {
             var keywords = await _contentService.GetKeywords();
-            return SortKeywords(keywords.ToList()); // Sort keywords
+            return SortKeywords(keywords.ToList());
         }
 
-        // --- Sorting Methods ---
-        // These methods now operate on the derived lists.
-        // The previous complex similarity sorting for categories is kept for now,
-        // but can be simplified if explicit audience filtering makes it less relevant.
-        private List<string> SortCategories(List<string> categories)
+        private async Task<List<string>> SortCategories(List<string> categories)
         {
             if (!categories.Any()) return categories;
 
-            // This logic assumes a "baseCategory" for similarity comparison.
-            // If this is no longer desired with explicit audience filtering,
-            // this can be simplified to alphabetical sorting.
             var categoryData = new Dictionary<string, HashSet<string>>();
+            var allContentMetadata = await GetAllContentMetadataAsync();
+
             foreach (var category in categories)
             {
                 var items = new HashSet<string>();
-                var contentForCategory = GetAllContentMetadataAsync().Result.Where(p => p.Categories.Contains(category, StringComparer.OrdinalIgnoreCase));
+                var contentForCategory = allContentMetadata.Where(p => p.Categories.Contains(category, StringComparer.OrdinalIgnoreCase));
 
                 foreach (var post in contentForCategory)
                 {
-                    items.UnionWith(post.Tags);
-                    items.UnionWith(post.Keywords ?? new List<string>());
+                    if (post.Tags != null) items.UnionWith(post.Tags);
+                    if (post.Keywords != null) items.UnionWith(post.Keywords);
                 }
 
                 categoryData.Add(category, items);
             }
 
-            string baseCategory = "DevOps"; // Default base category for sorting
+            string baseCategory = "DevOps";
             if (!categoryData.ContainsKey(baseCategory) && categories.Any())
             {
-                baseCategory = categories.First(); // Fallback to first category if DevOps not found
+                baseCategory = categories.First();
             }
 
             if (categoryData.TryGetValue(baseCategory, out var baseCategoryTags))
@@ -77,13 +74,11 @@ namespace Homepage.Common.Services
 
         private List<string> SortTags(List<string> tags)
         {
-            // Simple alphabetical sorting for tags
             return tags.OrderBy(t => t).ToList();
         }
 
         private List<string> SortKeywords(List<string> keywords)
         {
-            // Simple alphabetical sorting for keywords
             return keywords.OrderBy(k => k).ToList();
         }
     }
