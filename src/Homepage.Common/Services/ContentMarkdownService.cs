@@ -32,7 +32,7 @@ namespace Homepage.Common.Services
         {
             _httpClient = httpClient;
             _localStorage = localStorage;
-            _logger = Log.Logger.ForContext<ContentMarkdownService>(); // Initialize logger
+            _logger = Log.Logger.ForContext<ContentMarkdownService>();
         }
 
         /// <inheritdoc />
@@ -58,7 +58,6 @@ namespace Homepage.Common.Services
             {
                 _logger.Error(ex, "Error loading metadata from local storage. Falling back to network fetch.");
             }
-
             return await FetchAndCacheMetadataFromNetworkAsync();
         }
 
@@ -84,7 +83,7 @@ namespace Homepage.Common.Services
                 _logger.Warning("Falling back to dummy content metadata for DEBUG build.");
                 _cachedMetadata = Enumerable.Range(1, 10).Select(i => ContentMetadata.CreateDummy(i)).ToList();
 #else
-                throw; // Re-throw in Release builds for proper error handling
+                throw;
 #endif
                 return _cachedMetadata ?? new List<ContentMetadata>();
             }
@@ -118,7 +117,7 @@ namespace Homepage.Common.Services
             var pipeline = new MarkdownPipelineBuilder()
                 .UseAdvancedExtensions()
                 .UseYamlFrontMatter()
-                .UseAutoIdentifiers() // Essential for TOC generation
+                .UseAutoIdentifiers()
                 .Build();
             var html = Markdown.ToHtml(markdown, pipeline);
             _logger.Information("Markdown converted to HTML.");
@@ -128,7 +127,7 @@ namespace Homepage.Common.Services
         /// <inheritdoc />
         public async Task<TData?> GetAnyJson<TData>(string path) where TData : class
         {
-            var logger = Log.Logger.ForContext<ContentMarkdownService>(); // Update context
+            var logger = Log.Logger.ForContext<ContentMarkdownService>();
             try
             {
                 logger.Information("Loading JSON from: {Path}", path);
@@ -198,21 +197,18 @@ namespace Homepage.Common.Services
         {
             try
             {
-                var response = await _httpClient.GetAsync($"{GITHUB_CONTENT_BASE_URL}{contentPath}");
+                var url = $"{GITHUB_CONTENT_BASE_URL}{contentPath}";
+                _logger.Information("Fetching markdown from network: {Url}", url);
+                var response = await _httpClient.GetAsync(url);
                 response.EnsureSuccessStatusCode();
                 var markdown = await response.Content.ReadAsStringAsync();
-
-                if (_localStorage is not null)
-                {
-                    await _localStorage.SetItemAsync(cacheKey, markdown);
-                }
-
+                await _localStorage.SetItemAsync(cacheKey, markdown);
+                _logger.Information("Successfully fetched and cached markdown for {ContentPath}.", contentPath);
                 return markdown;
             }
             catch (Exception ex)
             {
-                var logger = Log.Logger.ForContext<ContentMarkdownService>();
-                logger.Error(ex, "Error fetching markdown from network for {ContentPath}.", contentPath);
+                _logger.Error(ex, "Failed to fetch markdown from network for {ContentPath}.", contentPath);
                 return $"<p>Error loading content: {ex.Message}</p>";
             }
         }
