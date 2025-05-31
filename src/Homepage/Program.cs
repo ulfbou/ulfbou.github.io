@@ -14,22 +14,20 @@ builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
+    .MinimumLevel.Override("Homepage", Serilog.Events.LogEventLevel.Debug)
+    .MinimumLevel.Warning()
     .WriteTo.BrowserConsole()
     .CreateLogger();
 
-builder.Logging.ClearProviders();
-builder.Logging.AddSerilog(Log.Logger);
-builder.Services.AddMudServices();
-builder.Services.AddScoped<ContentService>();
-builder.Services.AddSingleton<ContentContext>();
-builder.Services.AddScoped<Similarity>();
-builder.Services.AddScoped<ContextService>();
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Logging.AddSerilog();
 
-// Add Blazored Local Storage services
-builder.Services.AddBlazoredLocalStorage();
-
-builder.Services.AddSingleton<AudienceContextService>();
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) })
+                .AddBlazoredLocalStorage()
+                .AddScoped<IMarkdownService, ContentMarkdownService>()
+                .AddScoped<ContentMarkdownService>()
+                .AddScoped<AudienceContextService>()
+                .AddScoped<Similarity>()
+                .AddScoped<ContextService>()
+                .AddMudServices();
 
 await builder.Build().RunAsync();
