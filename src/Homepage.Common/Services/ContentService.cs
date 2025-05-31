@@ -17,7 +17,7 @@ namespace Homepage.Common.Services
         // Local development URL for testing purposes
         public const string GITHUB_CONTENT_BASE_URL = "";
 #else
-        public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/"; 
+public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/content/";
 #endif
 
         public string BaseUri { get; set; } = GITHUB_CONTENT_BASE_URL;

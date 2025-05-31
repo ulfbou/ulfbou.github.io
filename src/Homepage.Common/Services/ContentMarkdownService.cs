@@ -22,7 +22,7 @@ namespace Homepage.Common.Services
         public const string GITHUB_CONTENT_BASE_URL = ""; // For local debugging, might be empty or specific local URL
 #else
         // IMPORTANT: Ensure this matches where your static generator places content/metadata.json and .md files
-        public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/content/";
+        public const string GITHUB_CONTENT_BASE_URL = ContentService.GITHUB_CONTENT_BASE_URL;
 #endif
 
         /// <summary>Initializes a new instance of the <see cref="ContentMarkdownService"/> class.</summary>
