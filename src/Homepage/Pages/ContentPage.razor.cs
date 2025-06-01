@@ -1,10 +1,10 @@
 ﻿using Homepage.Common.Models;
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-
 using Serilog;
-
+using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
 namespace Homepage.Pages
 {
     public partial class ContentPage : Homepage.Components.Base.ContentBase
@@ -18,12 +18,14 @@ namespace Homepage.Pages
         private ElementReference _markdownContentContainer;
         private List<TocEntry> _tocEntries = new();
 
+        /// <inheritdoc />
         protected override async Task OnParametersSetAsync()
         {
             _isLoading = true;
             _htmlContent = null;
             _currentMetadata = null;
             _tocHtmlContent = null;
+            _tocEntries.Clear();
 
             var allMetadata = await MarkdownService.GetContentMetadataAsync();
             _currentMetadata = allMetadata.FirstOrDefault(m => m.Slug.Equals(Slug, StringComparison.OrdinalIgnoreCase));
@@ -34,41 +36,62 @@ namespace Homepage.Pages
                 (string mainHtml, string generatedTocHtml) = await MarkdownService.RenderMarkdownWithTocAsync(markdown);
                 _htmlContent = mainHtml;
                 _tocHtmlContent = generatedTocHtml;
+                _tocEntries = ParseTocHtmlToTocEntries(generatedTocHtml);
             }
             else
             {
                 _htmlContent = null;
                 _tocHtmlContent = null;
+                _tocEntries.Clear();
             }
 
             Log.ForContext("Class: {Name}", GetType().Name)
-                .ForContext("Method", "OnParametersSetAsync")
-                .ForContext("Slug", Slug)
-                .Information("ContentPage.razor.cs: Loaded content for slug '{Slug}'. Metadata found: {MetadataFound}", Slug, _currentMetadata != null);
+               .ForContext("Method", "OnParametersSetAsync")
+               .ForContext("Slug", Slug)
+               .ForContext("TocEntriesCount", _tocEntries.Count)
+               .Information("ContentPage.razor.cs: Loaded content for slug '{Slug}'. Metadata found: {MetadataFound}. TOC entries found: {TocEntriesCount}", Slug, _currentMetadata != null, _tocEntries.Count);
 
             _isLoading = false;
         }
 
+        /// <inheritdoc />
         protected override async Task OnAfterRenderAsync(bool firstRender)
         {
             if (!_isLoading && _htmlContent != null && _markdownContentContainer.Id != null)
             {
                 await JSRuntime.InvokeVoidAsync("appJsFunctions.highlightCode", _markdownContentContainer.Id);
                 await JSRuntime.InvokeVoidAsync("appJsFunctions.applyLazyLoading", _markdownContentContainer.Id);
-
-                var headings = await JSRuntime.InvokeAsync<List<TocEntry>>("appJsFunctions.getHeadings", _markdownContentContainer.Id);
-
-                if (headings != null && headings.Any())
-                {
-                    _tocEntries = headings;
-                    await this.InvokeAsync(StateHasChanged);
-                }
             }
         }
 
-        private async Task ScrollToHeading(string id)
+        private List<TocEntry> ParseTocHtmlToTocEntries(string tocHtml)
         {
-            await JSRuntime.InvokeVoidAsync("appJsFunctions.scrollToElement", id);
+            var entries = new List<TocEntry>();
+
+            if (string.IsNullOrWhiteSpace(tocHtml))
+            {
+                return entries;
+            }
+
+            var listItemRegex = new Regex(@"<li class=""toc-level-(\d+)""><a href=""#(.*?)"">(.*?)</a></li>", RegexOptions.Singleline);
+
+            foreach (Match match in listItemRegex.Matches(tocHtml))
+            {
+                if (int.TryParse(match.Groups[1].Value, out int level))
+                {
+                    entries.Add(new TocEntry
+                    {
+                        Id = match.Groups[2].Value,
+                        Text = match.Groups[3].Value,
+                        Level = level
+                    });
+                }
+            }
+
+            return entries;
         }
+
+        private async Task ScrollToHeading(string id)
+            => await JSRuntime.InvokeVoidAsync("appJsFunctions.scrollToElement", id);
     }
 }
