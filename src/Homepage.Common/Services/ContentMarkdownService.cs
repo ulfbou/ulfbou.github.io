@@ -28,7 +28,7 @@ namespace Homepage.Common.Services
 #if DEBUG
         public const string GITHUB_CONTENT_BASE_URL = "";
 #else
-        public const string GITHUB_CONTENT_BASE_URL = Homepage.Common.Constants.ContentServiceConstants.GITHUB_CONTENT_BASE_URL;
+        public const string GITHUB_CONTENT_BASE_URL = ContentService.GITHUB_CONTENT_BASE_URL;
 #endif
 
         /// <summary>Initializes a new instance of the <see cref="ContentMarkdownService"/> class.</summary>
