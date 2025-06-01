@@ -3,7 +3,6 @@ using System.Text.Json.Serialization;
 
 namespace Homepage.Common.Models
 {
-    // This will be our single, canonical metadata model
     public class ContentMetadata
     {
         [JsonPropertyName("slug")]
@@ -34,7 +33,6 @@ namespace Homepage.Common.Models
         [JsonPropertyName("publishDate")]
         public DateTime PublishDate { get; set; } = DateTime.MinValue;
 
-        // New property for audience targeting
         [JsonPropertyName("targetAudiences")]
         public List<string> TargetAudiences { get; set; } = new();
 

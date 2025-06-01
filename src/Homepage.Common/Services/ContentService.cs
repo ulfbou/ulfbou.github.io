@@ -15,7 +15,7 @@ namespace Homepage.Common.Services
 #if DEBUG
         public const string GITHUB_CONTENT_BASE_URL = "";
 #else
-public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/content/";
+        public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/content/";
 #endif
 
         public string BaseUri { get; set; } = GITHUB_CONTENT_BASE_URL;
@@ -84,10 +84,10 @@ public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/content/
 #if DEBUG
                 logger.Warning("Falling back to dummy content metadata for DEBUG build.");
                 _allContentMetadata = Enumerable.Range(1, 10).Select(i => ContentMetadata.CreateDummy(i)).ToList();
+                return _allContentMetadata ?? new List<ContentMetadata>();
 #else
                 throw; // Re-throw in production for critical failure
 #endif
-                return _allContentMetadata ?? new List<ContentMetadata>();
             }
         }
 

@@ -95,10 +95,10 @@ namespace Homepage.Common.Services
 #if DEBUG
                 _logger.Warning("Falling back to dummy content metadata for DEBUG build.");
                 _cachedMetadata = Enumerable.Range(1, 10).Select(i => ContentMetadata.CreateDummy(i)).ToList();
+                return _cachedMetadata ?? new List<ContentMetadata>();
 #else
                 throw;
 #endif
-                return _cachedMetadata ?? new List<ContentMetadata>();
             }
         }
 

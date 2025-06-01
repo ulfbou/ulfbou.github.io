@@ -1,3 +1,4 @@
+/* --- Layout & Structure (MainLayout Specific) --- */
 .page {
     position: relative;
     display: flex;
@@ -8,42 +9,120 @@ main {
     flex: 1;
 }
 
+.content {
+    padding-top: 1.1rem;
+}
+
 .sidebar {
     background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
 }
 
 .top-row {
-    background-color: #f7f7f7;
+    background-color: rgba(0, 0, 0, 0.4);
     border-bottom: 1px solid #d6d5d5;
-    justify-content: flex-end;
     height: 3.5rem;
     display: flex;
     align-items: center;
+    justify-content: flex-end; /* Default for larger screens */
 }
 
-    .top-row ::deep a, .top-row ::deep .btn-link {
-        white-space: nowrap;
-        margin-left: 1.5rem;
-        text-decoration: none;
+/* --- Navigation (MainLayout Specific) --- */
+.navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.1rem;
+}
+
+.nav-item {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type {
+        padding-top: 1rem;
     }
 
-        .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
-            text-decoration: underline;
-        }
+    .nav-item:last-of-type {
+        padding-bottom: 1rem;
+    }
 
-        .top-row ::deep a:first-child {
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+/* ::deep rules for elements within MainLayout's scope */
+.top-row ::deep a,
+.top-row ::deep .btn-link {
+    white-space: nowrap;
+    margin-left: 1.5rem;
+    text-decoration: none;
+}
 
+    .top-row ::deep a:hover,
+    .top-row ::deep .btn-link:hover {
+        text-decoration: underline;
+    }
+
+    .top-row ::deep a:first-child {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+.nav-item ::deep a {
+    color: #d7d7d7;
+    border-radius: 4px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+}
+
+    .nav-item ::deep a.active {
+        background-color: rgba(255, 255, 255, 0.37);
+        color: white;
+    }
+
+    .nav-item ::deep a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: white;
+    }
+
+/* Icons (Bi) - Assuming these are used within MainLayout's navigation */
+.bi {
+    display: inline-block;
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    top: -1px;
+    background-size: cover;
+}
+
+.bi-house-door-fill-nav-menu {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8.707 1.5a1 1 0 0 0-1.414 0L.354 7.646a.5.5 0 0 0 .636.758L10 2.25l-2.293-2.293zM5.5 10a.5.5 0 0 0-1 0v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V10a.5.5 0 0 0-1 0v3h-3v-3z' fill='white'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.bi-plus-square-fill-nav-menu {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3a.5.5 0 0 1 1 0'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.bi-list-nested-nav-menu {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M4.5 11.5A.5.5 0 0 1 5 11h9a.5.5 0 0 1 0 1H5a.5.5 0 0 1-.5-.5m-2-4A.5.5 0 0 1 3 7h9a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m-2-4A.5.5 0 0 1 1 3h9a.5.5 0 0 1 0 1H1a.5.5 0 0 1-.5-.5'%3E%3C/path%3E%3C/svg%3E");
+}
+
+/* --- Responsive Adjustments (MainLayout Specific) --- */
 @media (max-width: 640.98px) {
     .top-row {
         justify-content: space-between;
     }
 
-        .top-row ::deep a, .top-row ::deep .btn-link {
+        .top-row ::deep a,
+        .top-row ::deep .btn-link {
             margin-left: 0;
         }
+
+    .mud-main-content { /* Adjusting main content for small screens, likely due to sidebar collapse */
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
 }
 
 @media (min-width: 641px) {
@@ -69,9 +148,4 @@ main {
             text-align: right;
             width: 0;
         }
-
-    .top-row, article {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
-    }
 }

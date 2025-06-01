@@ -5,6 +5,7 @@ using Serilog;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Linq;
+
 namespace Homepage.Pages
 {
     public partial class ContentPage : Homepage.Components.Base.ContentBase
