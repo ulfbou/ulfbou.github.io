@@ -16,3 +16,5 @@
 /tools/PortfolioStaticGenerator/bin/Debug/net8.0
 /tools/PortfolioStaticGenerator/bin/Release/net8.0
 /src/Homepage/diff
+/src/Homepage/bin/Release/net9.0
+/src/Homepage.Common/bin/Release/net9.0
