@@ -12,150 +12,152 @@ using System.Text.RegularExpressions;
 
 using static MudBlazor.CategoryTypes;
 
-public class Program
+namespace PortfolioStaticGenerator
 {
-    public static async Task Main(string[] args)
+    public class Program
     {
-        var builder = new ConfigurationBuilder();
-        builder.AddCommandLine(args);
-        var configuration = builder.Build();
-
-        string contentRepoPath = configuration["ContentRepoPath"] ?? "../../../Portfolio-Content/";
-        string outputDirectory = configuration["OutputDirectory"] ?? "../_site";
-        string baseUrl = configuration["BaseUrl"] ?? "https://ulfbou.github.io/";
-        string blazorPublishOutputPath = configuration["BlazorPublishOutput"] ?? "./src/Homepage/wwwroot";
-
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .WriteTo.Debug()
-            .WriteTo.Console()
-            .CreateLogger();
-
-        Log.Information("Starting static site generation...");
-
-        var httpClient = new HttpClient();
-
-        try
+        public static async Task Main(string[] args)
         {
-            if (Directory.Exists(outputDirectory))
+            var builder = new ConfigurationBuilder();
+            builder.AddCommandLine(args);
+            var configuration = builder.Build();
+
+            string contentRepoPath = configuration["ContentRepoPath"] ?? "../../../Portfolio-Content/";
+            string outputDirectory = configuration["OutputDirectory"] ?? "../_site";
+            string baseUrl = configuration["BaseUrl"] ?? "https://ulfbou.github.io/";
+            string blazorPublishOutputPath = configuration["BlazorPublishOutput"] ?? "./src/Homepage/wwwroot";
+
+            Log.Logger = new LoggerConfiguration()
+                .MinimumLevel.Debug()
+                .WriteTo.Debug()
+                .WriteTo.Console()
+                .CreateLogger();
+
+            Log.Information("Starting static site generation...");
+
+            var httpClient = new HttpClient();
+
+            try
             {
-                Log.Information($"Cleaning existing output directory: {outputDirectory}");
-                Directory.Delete(outputDirectory, true);
-            }
-
-            Directory.CreateDirectory(outputDirectory);
-            Directory.CreateDirectory(Path.Combine(outputDirectory, "content"));
-
-            Log.Information($"Output directory created: {outputDirectory}");
-
-            var metadataFilePath = Path.Combine(contentRepoPath, "metadata.json");
-            if (!File.Exists(metadataFilePath))
-            {
-                Log.Error($"Error: metadata.json not found at {metadataFilePath}. Please ensure 'ContentRepoPath' is correct and content is available.");
-                Environment.Exit(1);
-            }
-            var metadataJson = await File.ReadAllTextAsync(metadataFilePath);
-            var allMetadata = JsonSerializer.Deserialize<List<ContentMetadata>>(metadataJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-                                      ?? new List<ContentMetadata>();
-
-            Log.Information($"Loaded {allMetadata.Count} content metadata entries.");
-
-            string outputMetadataPath = Path.Combine(outputDirectory, "content", "metadata.json");
-            Directory.CreateDirectory(Path.GetDirectoryName(outputMetadataPath)!);
-            File.Copy(metadataFilePath, outputMetadataPath, true);
-            Log.Information($"Copied metadata.json to {outputMetadataPath}");
-
-            string homeHtml = GenerateHtmlPage(
-                title: "Ulf's Portfolio - .NET Fullstack Web Developer",
-                description: "Hello, I'm Ulf Bourelius, a passionate .NET Fullstack Web Developer and creator of Zentient.Results. Explore my projects, articles, and expertise in Blazor, ASP.NET Core, and Azure.",
-                bodyContent: "<div class=\"p-6\"><h1 class=\"mud-typography mud-typography-h4 mb-4\">Hello, I'm Ulf Bourelius!</h1><p class=\"mud-typography mud-typography-body1 mb-6\">Welcome to my portfolio. I'm a passionate and experienced .NET Fullstack Web Developer with a strong focus on building robust, scalable, and maintainable applications using C#, ASP.NET Core, Blazor, and Azure.</p><p class=\"mud-typography mud-typography-body1\">As a fellow developer, explore my technical deep-dives and practical guides.</p></div>",
-                baseUrl: baseUrl
-            );
-            await File.WriteAllTextAsync(Path.Combine(outputDirectory, "index.html"), homeHtml);
-            Log.Information("Generated index.html");
-
-            string aboutPageRazorPath = "./src/Homepage/Pages/About.razor";
-            if (!File.Exists(aboutPageRazorPath))
-            {
-                Log.Warning($"About.razor not found at {aboutPageRazorPath}. Skipping About page generation. Ensure it's relative to the main repo's root.");
-            }
-            else
-            {
-                var aboutContentRaw = await File.ReadAllTextAsync(aboutPageRazorPath);
-                var aboutBodyMatch = Regex.Match(aboutContentRaw, @"<MudCardContent>(.*?)</MudCardContent>", RegexOptions.Singleline);
-                var aboutBodyHtml = aboutBodyMatch.Success ? aboutBodyMatch.Groups[1].Value : "<h1>About Me</h1><p>Content coming soon.</p>";
-
-                string aboutHtml = GenerateHtmlPage(
-                    title: "About Ulf Bourelius - .NET Fullstack Developer Portfolio",
-                    description: "Learn more about Ulf Bourelius, a passionate .NET Fullstack Web Developer, creator of Zentient.Results, and his expertise in Blazor, ASP.NET Core, and Azure.",
-                    bodyContent: aboutBodyHtml,
-                    pageUrl: $"{baseUrl}about",
-                    baseUrl: baseUrl
-                );
-                await File.WriteAllTextAsync(Path.Combine(outputDirectory, "about.html"), aboutHtml);
-                Log.Information("Generated about.html");
-            }
-
-            var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
-
-            foreach (var metadata in allMetadata)
-            {
-                Log.Information($"Copying Markdown file for content: {metadata.Title}");
-                var markdownFilePath = Path.Combine(contentRepoPath, metadata.ContentPath);
-                if (!File.Exists(markdownFilePath))
+                if (Directory.Exists(outputDirectory))
                 {
-                    Log.Warning($"Markdown file not found for {metadata.Title}: {markdownFilePath}. Skipping.");
-                    continue;
+                    Log.Information($"Cleaning existing output directory: {outputDirectory}");
+                    Directory.Delete(outputDirectory, true);
                 }
 
-                var outputPath = Path.Combine(outputDirectory, "content", metadata.ContentPath);
+                Directory.CreateDirectory(outputDirectory);
+                Directory.CreateDirectory(Path.Combine(outputDirectory, "content"));
 
-                Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+                Log.Information($"Output directory created: {outputDirectory}");
 
-                File.Copy(markdownFilePath, outputPath, overwrite: true);
-                Log.Information($"Copied Markdown file to: {outputPath}");
+                var metadataFilePath = Path.Combine(contentRepoPath, "metadata.json");
+                if (!File.Exists(metadataFilePath))
+                {
+                    Log.Error($"Error: metadata.json not found at {metadataFilePath}. Please ensure 'ContentRepoPath' is correct and content is available.");
+                    Environment.Exit(1);
+                }
+                var metadataJson = await File.ReadAllTextAsync(metadataFilePath);
+                var allMetadata = JsonSerializer.Deserialize<List<ContentMetadata>>(metadataJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+                                          ?? new List<ContentMetadata>();
+
+                Log.Information($"Loaded {allMetadata.Count} content metadata entries.");
+
+                string outputMetadataPath = Path.Combine(outputDirectory, "content", "metadata.json");
+                Directory.CreateDirectory(Path.GetDirectoryName(outputMetadataPath)!);
+                File.Copy(metadataFilePath, outputMetadataPath, true);
+                Log.Information($"Copied metadata.json to {outputMetadataPath}");
+
+                string homeHtml = GenerateHtmlPage(
+                    title: "Ulf's Portfolio - .NET Fullstack Web Developer",
+                    description: "Hello, I'm Ulf Bourelius, a passionate .NET Fullstack Web Developer and creator of Zentient.Results. Explore my projects, articles, and expertise in Blazor, ASP.NET Core, and Azure.",
+                    bodyContent: "<div class=\"p-6\"><h1 class=\"mud-typography mud-typography-h4 mb-4\">Hello, I'm Ulf Bourelius!</h1><p class=\"mud-typography mud-typography-body1 mb-6\">Welcome to my portfolio. I'm a passionate and experienced .NET Fullstack Web Developer with a strong focus on building robust, scalable, and maintainable applications using C#, ASP.NET Core, Blazor, and Azure.</p><p class=\"mud-typography mud-typography-body1\">As a fellow developer, explore my technical deep-dives and practical guides.</p></div>",
+                    baseUrl: baseUrl
+                );
+                await File.WriteAllTextAsync(Path.Combine(outputDirectory, "index.html"), homeHtml);
+                Log.Information("Generated index.html");
+
+                string aboutPageRazorPath = "./src/Homepage/Pages/About.razor";
+                if (!File.Exists(aboutPageRazorPath))
+                {
+                    Log.Warning($"About.razor not found at {aboutPageRazorPath}. Skipping About page generation. Ensure it's relative to the main repo's root.");
+                }
+                else
+                {
+                    var aboutContentRaw = await File.ReadAllTextAsync(aboutPageRazorPath);
+                    var aboutBodyMatch = Regex.Match(aboutContentRaw, @"<MudCardContent>(.*?)</MudCardContent>", RegexOptions.Singleline);
+                    var aboutBodyHtml = aboutBodyMatch.Success ? aboutBodyMatch.Groups[1].Value : "<h1>About Me</h1><p>Content coming soon.</p>";
+
+                    string aboutHtml = GenerateHtmlPage(
+                        title: "About Ulf Bourelius - .NET Fullstack Developer Portfolio",
+                        description: "Learn more about Ulf Bourelius, a passionate .NET Fullstack Web Developer, creator of Zentient.Results, and his expertise in Blazor, ASP.NET Core, and Azure.",
+                        bodyContent: aboutBodyHtml,
+                        pageUrl: $"{baseUrl}about",
+                        baseUrl: baseUrl
+                    );
+                    await File.WriteAllTextAsync(Path.Combine(outputDirectory, "about.html"), aboutHtml);
+                    Log.Information("Generated about.html");
+                }
+
+                var pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
+
+                foreach (var metadata in allMetadata)
+                {
+                    Log.Information($"Copying Markdown file for content: {metadata.Title}");
+                    var markdownFilePath = Path.Combine(contentRepoPath, metadata.ContentPath);
+                    if (!File.Exists(markdownFilePath))
+                    {
+                        Log.Warning($"Markdown file not found for {metadata.Title}: {markdownFilePath}. Skipping.");
+                        continue;
+                    }
+
+                    var outputPath = Path.Combine(outputDirectory, "content", metadata.ContentPath);
+
+                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath)!);
+
+                    File.Copy(markdownFilePath, outputPath, overwrite: true);
+                    Log.Information($"Copied Markdown file to: {outputPath}");
+                }
+
+                if (Directory.Exists(blazorPublishOutputPath))
+                {
+                    Log.Information($"Copying Blazor app's static content from {blazorPublishOutputPath} to {outputDirectory}...");
+                    CopyDirectory(blazorPublishOutputPath, outputDirectory);
+                    Log.Information("Finished copying Blazor app's static content.");
+                }
+                else
+                {
+                    Log.Warning($"Blazor app publish output not found at {blazorPublishOutputPath}. Static assets might be missing.");
+                }
+
+                Log.Information("Static site generation completed successfully!");
+
             }
-
-            if (Directory.Exists(blazorPublishOutputPath))
+            catch (Exception ex)
             {
-                Log.Information($"Copying Blazor app's static content from {blazorPublishOutputPath} to {outputDirectory}...");
-                CopyDirectory(blazorPublishOutputPath, outputDirectory);
-                Log.Information("Finished copying Blazor app's static content.");
+                Log.Error(ex, "An error occurred during static site generation.");
+                Environment.ExitCode = 1;
             }
-            else
+            finally
             {
-                Log.Warning($"Blazor app publish output not found at {blazorPublishOutputPath}. Static assets might be missing.");
+                Log.CloseAndFlush();
             }
-
-            Log.Information("Static site generation completed successfully!");
-
         }
-        catch (Exception ex)
+
+        static string GenerateHtmlPage(
+                string title,
+                string description,
+                string bodyContent,
+                string? featuredImage = null,
+                string? pageUrl = null,
+                List<string>? tags = null,
+                string baseUrl = "https://ulfbou.github.io/")
         {
-            Log.Error(ex, "An error occurred during static site generation.");
-            Environment.ExitCode = 1;
-        }
-        finally
-        {
-            Log.CloseAndFlush();
-        }
-    }
-
-    static string GenerateHtmlPage(
-            string title,
-            string description,
-            string bodyContent,
-            string? featuredImage = null,
-            string? pageUrl = null,
-            List<string>? tags = null,
-            string baseUrl = "https://ulfbou.github.io/")
-    {
-        string cleanDescription = Regex.Replace(description, @"<[^>]*>", string.Empty);
-        cleanDescription = Regex.Replace(cleanDescription, @"\s+", " ").Trim();
-        if (cleanDescription.Length > 160) cleanDescription = cleanDescription.Substring(0, 157) + "...";
+            string cleanDescription = Regex.Replace(description, @"<[^>]*>", string.Empty);
+            cleanDescription = Regex.Replace(cleanDescription, @"\s+", " ").Trim();
+            if (cleanDescription.Length > 160) cleanDescription = cleanDescription.Substring(0, 157) + "...";
 
 
-        string html = $@"<!DOCTYPE html>
+            string html = $@"<!DOCTYPE html>
 <html lang=""en"">
 <head>
     <meta charset=""utf-8"" />
@@ -237,27 +239,28 @@ document.addEventListener('blazor:started', () => {{
     </ script>
 </ body>
 </ html>";
-        return html;
-    }
-
-    static void CopyDirectory(string sourceDir, string destinationDir)
-    {
-        var dir = new DirectoryInfo(sourceDir);
-        if (!dir.Exists) throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
-
-        DirectoryInfo[] dirs = dir.GetDirectories();
-        Directory.CreateDirectory(destinationDir);
-
-        foreach (FileInfo file in dir.GetFiles())
-        {
-            string targetFilePath = Path.Combine(destinationDir, file.Name);
-            file.CopyTo(targetFilePath, true);
+            return html;
         }
 
-        foreach (DirectoryInfo subDir in dirs)
+        static void CopyDirectory(string sourceDir, string destinationDir)
         {
-            string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
-            CopyDirectory(subDir.FullName, newDestinationDir);
+            var dir = new DirectoryInfo(sourceDir);
+            if (!dir.Exists) throw new DirectoryNotFoundException($"Source directory not found: {dir.FullName}");
+
+            DirectoryInfo[] dirs = dir.GetDirectories();
+            Directory.CreateDirectory(destinationDir);
+
+            foreach (FileInfo file in dir.GetFiles())
+            {
+                string targetFilePath = Path.Combine(destinationDir, file.Name);
+                file.CopyTo(targetFilePath, true);
+            }
+
+            foreach (DirectoryInfo subDir in dirs)
+            {
+                string newDestinationDir = Path.Combine(destinationDir, subDir.Name);
+                CopyDirectory(subDir.FullName, newDestinationDir);
+            }
         }
     }
 }
