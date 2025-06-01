@@ -6,9 +6,9 @@
 <Pagination Content="@TagPagedList" BaseLink="tags" Title="Tags" />
  *@
 @code {
-    [Inject] private ContentService ContentService { get; set; }
-    [Inject] private ContextService ContextService { get; set; }
-    [Inject] private ContentContext Context { get; set; }
+    [Inject] private ContentService ContentService { get; set; } = null!;
+    [Inject] private ContextService ContextService { get; set; } = null!;
+    [Inject] private ContentContext Context { get; set; } = null!;
     private PagedList<string> CategoryPagedList = new();
     private PagedList<string> TagPagedList = new();
 
