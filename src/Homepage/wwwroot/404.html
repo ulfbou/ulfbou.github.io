@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Page Not Found</title>
+    <script type="text/javascript">
+        // Single Page Apps for GitHub Pages
+        // https://github.com/rafrex/spa-github-pages
+        // Copyright (c) 2016 Rafael Pedicini, licensed under the MIT License
+        // ----------------------------------------------------------------------
+        // This script checks to see if a redirect is present in the query string
+        // and, if so, redirects the browser to the target url.
+        // ----------------------------------------------------------------------
+        (function () {
+            var redirect = sessionStorage.getItem('redirect');
+            if (redirect) {
+                sessionStorage.removeItem('redirect');
+                window.location.replace(redirect);
+            }
+        })();
+
+        (function () {
+            var path = window.location.pathname;
+            var query = window.location.search;
+            var hash = window.location.hash;
+            var baseHref = document.querySelector('base')?.getAttribute('href') || '/';
+
+            if (path !== baseHref && !path.endsWith('.html') && !path.endsWith('.css') && !path.endsWith('.js') && !path.endsWith('.json') && !path.endsWith('.wasm')) {
+                sessionStorage.setItem('redirect', baseHref + '?path=' + encodeURIComponent(path + query) + hash);
+                window.location.replace(baseHref);
+            }
+        })();
+    </script>
+</head>
+<body>
+    <p>Redirecting...</p>
+    <p>If you are not redirected automatically, follow this <a href="/">link to the homepage</a>.</p>
+</body>
+</html>
