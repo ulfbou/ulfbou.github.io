@@ -25,7 +25,6 @@ public class Program
         string baseUrl = configuration["BaseUrl"] ?? "https://ulfbou.github.io/";
         string blazorPublishOutputPath = configuration["BlazorPublishOutput"] ?? "./src/Homepage/wwwroot";
 
-        // Logging setup
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Debug()
             .WriteTo.Debug()
