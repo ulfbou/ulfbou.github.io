@@ -1,28 +1,34 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 using Blazored.LocalStorage;
 
 using Homepage.Common.Models;
 
 using Markdig;
+using Markdig.Extensions.AutoIdentifiers;
+using Markdig.Extensions.Yaml;
+using Markdig.Syntax;
 
 using Serilog;
 
 namespace Homepage.Common.Services
 {
-    /// <summary>A service for managing Markdown content.</summary>
-    public class ContentMarkdownService : IMarkdownService
+    public partial class ContentMarkdownService : IMarkdownService
     {
         private readonly HttpClient _httpClient;
-        private readonly ILocalStorageService _localStorage; // Made non-nullable as it's required for caching
-        private List<ContentMetadata>? _cachedMetadata; // For content_metadata.json caching
-        private readonly ILogger _logger; // Use Serilog ILogger for consistency
+        private readonly MarkdownPipeline _pipeline;
+        private readonly ILocalStorageService _localStorage;
+        private List<ContentMetadata>? _cachedMetadata;
+        private readonly ILogger _logger;
 
 #if DEBUG
-        public const string GITHUB_CONTENT_BASE_URL = ""; // For local debugging, might be empty or specific local URL
+        public const string GITHUB_CONTENT_BASE_URL = "";
 #else
-        // IMPORTANT: Ensure this matches where your static generator places content/metadata.json and .md files
-        public const string GITHUB_CONTENT_BASE_URL = ContentService.GITHUB_CONTENT_BASE_URL;
+        public const string GITHUB_CONTENT_BASE_URL = Homepage.Common.Constants.ContentServiceConstants.GITHUB_CONTENT_BASE_URL;
 #endif
 
         /// <summary>Initializes a new instance of the <see cref="ContentMarkdownService"/> class.</summary>
@@ -33,7 +39,14 @@ namespace Homepage.Common.Services
             _httpClient = httpClient;
             _localStorage = localStorage;
             _logger = Log.Logger.ForContext<ContentMarkdownService>();
+
+            _pipeline = new MarkdownPipelineBuilder()
+                .UseAdvancedExtensions()
+                .UseAutoIdentifiers(AutoIdentifierOptions.AutoLink)
+                .UseYamlFrontMatter()
+                .Build();
         }
+
 
         /// <inheritdoc />
         public async Task<List<ContentMetadata>> GetContentMetadataAsync()
@@ -114,14 +127,56 @@ namespace Homepage.Common.Services
         /// <inheritdoc />
         public Task<string> RenderMarkdownToHtmlAsync(string markdown)
         {
-            var pipeline = new MarkdownPipelineBuilder()
-                .UseAdvancedExtensions()
-                .UseYamlFrontMatter()
-                .UseAutoIdentifiers()
-                .Build();
-            var html = Markdown.ToHtml(markdown, pipeline);
+            var html = Markdown.ToHtml(markdown, _pipeline);
             _logger.Information("Markdown converted to HTML.");
             return Task.FromResult(html);
+        }
+
+        /// <summary>
+        /// Renders Markdown to HTML and generates a Table of Contents HTML using regex.
+        /// </summary>
+        /// <param name="markdown">The Markdown content string.</param>
+        /// <returns>A tuple containing the rendered HTML and the generated TOC HTML.</returns>
+        public Task<(string html, string tocHtml)> RenderMarkdownWithTocAsync(string markdown)
+        {
+            var html = Markdown.ToHtml(markdown, _pipeline);
+            var tocHtml = GenerateTocHtml(markdown);
+
+            return Task.FromResult((html, tocHtml));
+        }
+
+        /// <summary>
+        /// Generates an HTML Table of Contents from Markdown content using regular expressions.
+        /// </summary>
+        /// <param name="markdownContent">The raw Markdown content.</param>
+        /// <returns>HTML string representing the Table of Contents.</returns>
+        private string GenerateTocHtml(string markdownContent)
+        {
+            var toc = new StringBuilder();
+            toc.AppendLine("<ul>");
+            var headingRegex = new Regex(@"^(\#{1,6})\s*(.*?)$", RegexOptions.Multiline);
+
+            foreach (Match match in headingRegex.Matches(markdownContent))
+            {
+                var level = match.Groups[1].Length;
+                var headingText = match.Groups[2].Value.Trim();
+
+                if (headingText.Contains("[[TOC]]", StringComparison.OrdinalIgnoreCase))
+                {
+                    continue;
+                }
+
+                var slug = headingText.ToLowerInvariant();
+                slug = Regex.Replace(slug, @"[^a-z0-9\s-]", "");
+                slug = Regex.Replace(slug, @"\s+", "-");
+                slug = slug.Trim('-');
+
+                var indent = new string(' ', (level - 1) * 2);
+                toc.AppendLine($"{indent}<li class=\"toc-level-{level}\"><a href=\"#{slug}\">{headingText}</a></li>");
+            }
+
+            toc.AppendLine("</ul>");
+            return toc.ToString();
         }
 
         /// <inheritdoc />
