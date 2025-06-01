@@ -132,15 +132,12 @@ namespace Homepage.Common.Services
             return Task.FromResult(html);
         }
 
-        /// <summary>
-        /// Renders Markdown to HTML and generates a Table of Contents HTML using regex.
-        /// </summary>
-        /// <param name="markdown">The Markdown content string.</param>
-        /// <returns>A tuple containing the rendered HTML and the generated TOC HTML.</returns>
+        /// <inheritdoc />
         public Task<(string html, string tocHtml)> RenderMarkdownWithTocAsync(string markdown)
         {
             var html = Markdown.ToHtml(markdown, _pipeline);
             var tocHtml = GenerateTocHtml(markdown);
+            _logger.Information("Generated TOC HTML: {TocHtml}", tocHtml);
 
             return Task.FromResult((html, tocHtml));
         }
