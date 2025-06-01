@@ -3,6 +3,8 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
+using Serilog;
+
 namespace Homepage.Pages
 {
     public partial class ContentPage : Homepage.Components.Base.ContentBase
@@ -38,6 +40,12 @@ namespace Homepage.Pages
                 _htmlContent = null;
                 _tocHtmlContent = null;
             }
+
+            Log.ForContext("Class: {Name}", GetType().Name)
+                .ForContext("Method", "OnParametersSetAsync")
+                .ForContext("Slug", Slug)
+                .Information("ContentPage.razor.cs: Loaded content for slug '{Slug}'. Metadata found: {MetadataFound}", Slug, _currentMetadata != null);
+
             _isLoading = false;
         }
 
