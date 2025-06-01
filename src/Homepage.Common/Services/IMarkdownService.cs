@@ -29,5 +29,17 @@ namespace Homepage.Common.Services
         /// <param name="markdown">The Markdown string to render.</param>
         /// <returns>The rendered HTML string.</returns>
         Task<string> RenderMarkdownToHtmlAsync(string markdown);
+
+        /// <summary>
+        /// Renders a Markdown string into an HTML string and generates a Table of Contents (TOC).
+        /// Uses Markdig with advanced extensions.
+        /// </summary>
+        /// <param name="markdown">The Markdown string to render.</param>
+        /// <returns>
+        /// A tuple containing:
+        /// - The rendered HTML string.
+        /// - The generated TOC HTML string.
+        /// </returns>
+        Task<(string html, string tocHtml)> RenderMarkdownWithTocAsync(string markdown);
     }
 }
