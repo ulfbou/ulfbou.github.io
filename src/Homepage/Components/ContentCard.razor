@@ -1,22 +1,31 @@
-﻿@using MudBlazor
-@using Homepage.Common.Models 
+﻿@inject Homepage.Common.Services.LocalStorageService LocalStorageService
+@inject MudBlazor.ISnackbar Snackbar
 
 <MudCard @onclick="async () => await OnClick.InvokeAsync()" Class="@($"d-flex align-center justify-center mud-width-full pa-6 ma-6 {Class}")" Outlined="true" Elevation="2">
     <MudCardContent>
-        <MudText Typo="Typo.h3">@Content.Title</MudText>
+        <div class="d-flex justify-content-between align-items-center">
+            <MudText Typo="Typo.h3">@Content.Title</MudText>
+            <MudIconButton Icon="@(IsPinned ? MudBlazor.Icons.Material.Filled.Star : MudBlazor.Icons.Material.Outlined.StarBorder)"
+                           Color="@(IsPinned ? MudBlazor.Color.Warning : MudBlazor.Color.Inherit)"
+                           OnClick="TogglePin"
+                           Size="MudBlazor.Size.Small"
+                           aria-label="@(IsPinned ? "Unpin this article" : "Pin this article")"
+                           onclick:stopPropagation="true" /> 
+        </div>
         <MudText Typo="Typo.body2" Class="text-brown-default">@Content.Description</MudText>
         <MudText Typo="Typo.body2" Class="text-brown-darken1">Published: @Content.PublishDate.ToShortDateString()</MudText>
         @if (Content.Tags != null && Content.Tags.Any())
         {
-                                                                                                                                                                                                                                                                                                                                        <div class="d-flex flex-wrap mt-2">
-                @foreach (var tag in Content.Tags)
-                {
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    <MudChip T="string" Size="Size.Small" Class="mr-1 mb-1">@tag</MudChip>
-                }
-                                                                                                                                                                                                                                                                                                                                        </div>
+        <div class="d-flex flex-wrap mt-2">
+        @foreach (var tag in Content.Tags)
+        {
+            <MudChip T="string" Size="MudBlazor.Size.Small" Class="mr-1 mb-1">@tag</MudChip>
+        }
+        </div>
         }
     </MudCardContent>
     <MudCardActions>
-        <MudButton Variant="Variant.Outlined" OnClick="async () => await OnClick.InvokeAsync()">Read More</MudButton>
+        <MudButton Variant="MudBlazor.Variant.Outlined" OnClick="async () => await OnClick.InvokeAsync()"
+                   onclick:stopPropagation="true">Read More</MudButton>
     </MudCardActions>
 </MudCard>
