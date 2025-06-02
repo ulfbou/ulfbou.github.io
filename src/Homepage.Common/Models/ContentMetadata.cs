@@ -16,14 +16,12 @@ namespace Homepage.Common.Models
         [JsonPropertyName("description")]
         public string Description { get; set; } = string.Empty;
 
-        // optional Summary
         [JsonPropertyName("summary")]
         public string? Summary { get; set; }
 
         [JsonPropertyName("tags")]
         public List<string> Tags { get; set; } = new();
 
-        // Keywords
         [JsonPropertyName("keywords")]
         public List<string> Keywords { get; set; } = new();
 

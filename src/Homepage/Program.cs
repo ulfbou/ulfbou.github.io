@@ -28,6 +28,7 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
                 .AddScoped<AudienceContextService>()
                 .AddScoped<Similarity>()
                 .AddScoped<ContextService>()
-                .AddMudServices();
+                .AddMudServices()
+                .AddSingleton<Homepage.Common.Services.LocalStorageService>();
 
 await builder.Build().RunAsync();
