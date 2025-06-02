@@ -9,7 +9,6 @@
 <HeadContent>
     <title>@_currentMetadata?.Title - Ulf's Portfolio</title>
     <meta name="description" content="@_currentMetadata?.Description" />
-
     <meta property="og:type" content="article" />
     <meta property="og:url" content="@NavManager.Uri" />
     <meta property="og:title" content="@_currentMetadata?.Title" />
@@ -18,7 +17,6 @@
     {
         <meta property="og:image" content="@_currentMetadata.FeaturedImage" />
     }
-
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="@NavManager.Uri" />
     <meta property="twitter:title" content="@_currentMetadata?.Title" />
@@ -30,17 +28,17 @@
 </HeadContent>
 
 <MudContainer MaxWidth="MaxWidth.Large" Class="my-8">
-    @if (_isLoading)
-    {
-        <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" Class="d-flex justify-center my-8" />
-        <MudText Typo="Typo.body1" Class="text-center">Loading content...</MudText>
-    }
-    else if (_htmlContent != null)
-    {
-        <MudGrid Spacing="4">
-            <MudItem xs="12" md="8">
-                <MudCard Elevation="4" Class="p-6 rounded-xl">
-                    <MudCardContent>
+    <MudGrid Spacing="4">
+        <MudItem xs="12" md="8">
+            <MudCard Elevation="4" Class="p-6 rounded-xl">
+                <MudCardContent>
+                    @if (_isLoading)
+                    {
+                        <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" Class="d-flex justify-center my-8" />
+                        <MudText Typo="Typo.body1" Class="text-center">Loading content...</MudText>
+                    }
+                    else if (_htmlContent != null)
+                    {
                         @if (!string.IsNullOrEmpty(_currentMetadata?.FeaturedImage))
                         {
                             <img src="@_currentMetadata.FeaturedImage" alt="@_currentMetadata.Title" class="mb-6 w-full h-auto rounded-lg" />
@@ -61,43 +59,42 @@
                         <div id="markdown-content-container" class="markdown-content" @ref="_markdownContentContainer">
                             @((MarkupString)_htmlContent)
                         </div>
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-
-            <MudItem xs="12" md="4">
-                <MudCard Elevation="4" Class="p-4 rounded-xl sticky top-20">
-                    <MudCardContent>
-                        <MudText Typo="Typo.h6" Class="mb-4">Table of Contents</MudText>
-                        @if (_tocEntries.Any())
-                        {
-                            <MudList T="TocEntry" Dense="true" Class="toc-list">
-                                @foreach (var entry in _tocEntries)
-                                {
-                                    <MudListItem T="TocEntry" OnClick="@(() => ScrollToHeading(entry.Id))"
-                                                 Clickable="true" Class="@(entry.Level == 3 ? "ml-4" : "")">
-                                        <MudText Typo="Typo.body2" Color="Color.Primary">
-                                            @entry.Text
-                                        </MudText>
-                                    </MudListItem>
-                                }
-                            </MudList>
-                        }
-                        else
-                        {
-                            <MudText Typo="Typo.body2" Class="mud-text-secondary">No table of contents available.</MudText>
-                        }
-                    </MudCardContent>
-                </MudCard>
-            </MudItem>
-        </MudGrid>
-    }
-    else
-    {
-        <MudAlert Severity="Severity.Error" Class="rounded-lg">
-            <MudText Typo="Typo.h6">Content Not Found</MudText>
-            <MudText Typo="Typo.body1">The requested content could not be loaded. Please check the URL or try again later.</MudText>
-            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => NavManager.NavigateTo("/"))">Go Home</MudButton>
-        </MudAlert>
-    }
+                    }
+                    else
+                    {
+                        <MudAlert Severity="Severity.Error" Class="rounded-lg">
+                            <MudText Typo="Typo.h6">Content Not Found</MudText>
+                            <MudText Typo="Typo.body1">The requested content could not be loaded. Please check the URL or try again later.</MudText>
+                            <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => NavManager.NavigateTo("/"))">Go Home</MudButton>
+                        </MudAlert>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="12" md="4" Class="toc-column-wrapper">
+            <MudCard Elevation="4" Class="p-4 rounded-xl sticky top-20 force-sticky-toc">
+                <MudCardContent>
+                    <MudText Typo="Typo.h6" Class="mb-4">Table of Contents</MudText>
+                    @if (_tocEntries.Any())
+                    {
+                        <MudList T="TocEntry" Dense="true" Class="toc-list">
+                            @foreach (var entry in _tocEntries)
+                            {
+                                <MudListItem T="TocEntry" OnClick="@(() => ScrollToHeading(entry.Id))"
+                                             Clickable="true" Class="@(entry.Level == 3 ? "ml-4" : "")">
+                                    <MudText Typo="Typo.body2" Color="Color.Primary">
+                                        @entry.Text
+                                    </MudText>
+                                </MudListItem>
+                            }
+                        </MudList>
+                    }
+                    else
+                    {
+                        <MudText Typo="Typo.body2" Class="mud-text-secondary">No table of contents available.</MudText>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
 </MudContainer>
