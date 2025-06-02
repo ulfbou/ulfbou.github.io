@@ -13,11 +13,10 @@ namespace Homepage.Common.Services
         private List<ContentMetadata>? _allContentMetadata;
 
 #if DEBUG
-        public const string GITHUB_CONTENT_BASE_URL = "";
+    public const string GITHUB_CONTENT_BASE_URL = "";
 #else
-        public const string GITHUB_CONTENT_BASE_URL = "http://ulfbou.github.io/content/";
+        public const string GITHUB_CONTENT_BASE_URL = "https://ulfbou.github.io/content/";
 #endif
-
         public string BaseUri { get; set; } = GITHUB_CONTENT_BASE_URL;
 
         public ContentService(HttpClient httpClient, ILocalStorageService localStorage)

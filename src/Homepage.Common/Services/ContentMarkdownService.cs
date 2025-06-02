@@ -17,7 +17,10 @@ using Serilog;
 
 namespace Homepage.Common.Services
 {
-    public partial class ContentMarkdownService : IMarkdownService
+    /// <summary>
+    /// 
+    /// </summary>
+    public class ContentMarkdownService : IMarkdownService
     {
         private readonly HttpClient _httpClient;
         private readonly MarkdownPipeline _pipeline;
