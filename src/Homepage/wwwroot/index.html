@@ -6,55 +6,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homepage</title>
     <base href="/" />
-    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&amp;family=Playfair+Display:wght@700&amp;family=Oranienbaum&amp;family=Droid+Sans:wght@400;700&amp;display=swap" rel="stylesheet">
+
+    <!-- Consolidated and deduplicated Google Fonts requests -->
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Oranienbaum&family=Droid+Sans:wght@400;700&family=Droid+Sans+Mono&family=Inter:wght@300;400;500;600;700&family=Montserrat&display=swap" rel="stylesheet">
+
+    <!-- Consolidated highlight.js stylesheet (single request) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+    <!-- External CSS libraries -->
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Droid+Sans&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Droid+Sans+Mono&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Oranienbaum&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
-    <link href="css/app.css" rel="stylesheet">
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/app.css" />
-    <link rel="icon" type="image/png" href="favicon.png" />
     <link href="Homepage.styles.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png" />
+
+    <!-- Tailwind CSS (defer loading for performance)
+    <script src="https://cdn.tailwindcss.com" defer></script>
+        -->
+
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-        /* Custom styles for MudBlazor overrides or specific elements */
+
         .mud-drawer-fixed-open {
             width: 280px !important;
         }
-        /* Adjust drawer width */
+
         .mud-main-content {
             padding-left: 280px !important;
         }
-        /* Adjust main content padding */
+
         .mud-appbar {
             z-index: 1000 !important;
         }
-        /* Ensure app bar is on top */
+
         .mud-drawer {
             z-index: 999 !important;
         }
-        /* Ensure drawer is below app bar */
+
         .mud-card {
             border-radius: 0.75rem;
         }
-        /* Apply rounded corners to cards */
+
         .mud-button {
             border-radius: 0.5rem;
         }
-        /* Apply rounded corners to buttons */
-        /* Custom Markdown styles for better readability and integration */
+
         .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
             margin-top: 1.5em;
             margin-bottom: 0.5em;
@@ -94,8 +96,8 @@
         }
 
         .markdown-content pre {
-            background-color: #282c34; /* Atom One Dark background */
-            color: #abb2bf; /* Atom One Dark text */
+            background-color: #282c34;
+            color: #abb2bf;
             padding: 1em;
             border-radius: 0.5rem;
             overflow-x: auto;
@@ -146,8 +148,10 @@
             margin-bottom: 1em;
         }
     </style>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
-    <script src="js/app.js"></script>
+
+    <!-- highlight.js script (single request) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
+    <script src="js/app.js" defer></script>
     <script>
         (function () {
             var path = window.location.search;

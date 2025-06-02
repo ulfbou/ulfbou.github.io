@@ -25,17 +25,27 @@
                 headings.push({
                     id: heading.id,
                     text: heading.innerText,
-                    level: parseInt(heading.tagName.substring(1)) // h2 -> 2, h3 -> 3
+                    level: parseInt(heading.tagName.substring(1))
                 });
             }
         });
         return headings;
     },
-    // Optional: Scroll to element
     scrollToElement: function (id) {
         const element = document.getElementById(id);
         if (element) {
             element.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
+    }
+};
+window.localStorageHelper = {
+    getItem: function (key) {
+        return localStorage.getItem(key);
+    },
+    setItem: function (key, value) {
+        localStorage.setItem(key, value);
+    },
+    removeItem: function (key) {
+        localStorage.removeItem(key);
     }
 };
