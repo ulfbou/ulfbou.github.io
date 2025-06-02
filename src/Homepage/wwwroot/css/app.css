@@ -1,3 +1,4 @@
+/* app.css */
 html, body, #app {
     height: 100%;
     margin: 0;
@@ -8,13 +9,135 @@ html, body, #app {
     font-family: 'Montserrat', sans-serif;
 }
 
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+.mud-drawer-fixed-open {
+    width: 280px !important;
+}
+
+.mud-appbar {
+    z-index: 1000 !important;
+}
+
+.mud-drawer {
+    z-index: 999 !important;
+}
+
+.mud-card {
+    border-radius: 0.75rem;
+}
+
+.mud-button {
+    border-radius: 0.5rem;
+}
+
+.markdown-content {
+    overflow-x: auto;
+}
+
+    .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        font-weight: 600;
+        line-height: 1.25;
+    }
+
+    .markdown-content h1 {
+        font-size: 2.25rem;
+    }
+
+    .markdown-content h2 {
+        font-size: 1.75rem;
+    }
+
+    .markdown-content h3 {
+        font-size: 1.5rem;
+    }
+
+    .markdown-content p {
+        margin-bottom: 1em;
+        line-height: 1.6;
+    }
+
+    .markdown-content ul, .markdown-content ol {
+        margin-bottom: 1em;
+        padding-left: 1.5em;
+    }
+
+    .markdown-content li {
+        margin-bottom: 0.5em;
+    }
+
+    .markdown-content a {
+        color: var(--mud-palette-primary);
+        text-decoration: underline;
+    }
+
+    .markdown-content pre {
+        background-color: #282c34;
+        color: #abb2bf;
+        padding: 1em;
+        border-radius: 0.5rem;
+        overflow-x: auto;
+        margin-bottom: 1em;
+    }
+
+    .markdown-content code {
+        font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+        font-size: 0.9em;
+    }
+
+    .markdown-content pre code {
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .markdown-content img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 0.5rem;
+        display: block;
+        margin: 1em auto;
+    }
+
+    .markdown-content table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 1em;
+    }
+
+    .markdown-content th, .markdown-content td {
+        border: 1px solid #ddd;
+        padding: 0.8em;
+        text-align: left;
+    }
+
+    .markdown-content th {
+        background-color: #f2f2f2;
+        font-weight: 600;
+    }
+
+    .markdown-content blockquote {
+        border-left: 4px solid var(--mud-palette-primary);
+        padding-left: 1em;
+        margin-left: 0;
+        font-style: italic;
+        color: #666;
+        margin-bottom: 1em;
+    }
+
+    .markdown-content p, .markdown-content li {
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
 h4, h5, h6 {
     font-family: 'Oranienbaum', serif;
 }
 
-.article .article-body h1,
-.article .article-body h2,
-.article .article-body h3 {
+.article .article-body h1, .article .article-body h2, .article .article-body h3 {
     font-family: "Playfair Display", serif;
 }
 
@@ -44,10 +167,6 @@ a, .btn-link {
     .form-control:focus, .form-check-input:focus {
         box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem #258cfb;
     }
-
-.content {
-    padding-top: 1.1rem;
-}
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
@@ -153,38 +272,6 @@ a, .btn-link {
     color: #3E2723 !important;
 }
 
-.markdown-content {
-    overflow-x: auto;
-}
-
-    .markdown-content img {
-        max-width: 100%;
-        height: auto;
-        display: block;
-    }
-
-    .markdown-content table {
-        width: 100%;
-        border-collapse: collapse;
-    }
-
-    .markdown-content th, .markdown-content td {
-        padding: 8px;
-        border: 1px solid #ddd;
-        text-align: left;
-    }
-
-    .markdown-content p, .markdown-content li {
-        word-wrap: break-word;
-        overflow-wrap: break-word;
-    }
-
-.page {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-}
-
 main {
     flex: 1;
 }
@@ -193,17 +280,7 @@ main {
     background-image: linear-gradient(180deg, rgb(5,39,103) 0%, #3a0647 70%);
 }
 
-@media (max-width: 640.98px) {
-    .top-row {
-        justify-content: space-between;
-    }
-}
-
 @media (min-width: 641px) {
-    .page {
-        flex-direction: row;
-    }
-
     .sidebar {
         width: 250px;
         height: 100vh;
@@ -251,4 +328,35 @@ main {
     overflow-y: auto;
     overflow-x: hidden;
     height: 100%;
+}
+
+@media (max-width: 959.98px) {
+    .mud-main-content {
+        margin-left: 0 !important;
+        padding-left: 0 !important;
+    }
+
+        .mud-main-content .mud-container {
+            padding-bottom: 24px !important;
+        }
+}
+
+@media (min-width: 960px) {
+    .mud-main-content {
+        padding-left: 280px !important;
+    }
+
+    .mud-layout > footer {
+        position: fixed;
+        bottom: 0;
+        width: calc(100% - var(--mud-drawer-width-left, 280px));
+        margin-left: var(--mud-drawer-width-left, 280px);
+        z-index: 998;
+        background-color: var(--mud-palette-background);
+        padding: var(--mud-spacing-unit);
+    }
+
+    .mud-main-content .mud-container {
+        padding-bottom: calc(var(--mud-appbar-height, 64px) + 40px) !important;
+    }
 }

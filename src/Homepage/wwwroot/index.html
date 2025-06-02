@@ -1,155 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Homepage</title>
     <base href="/" />
 
-    <!-- Consolidated and deduplicated Google Fonts requests -->
+    <!-- Consolidated Google Fonts (single request) -->
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Playfair+Display:wght@400;700&family=Oranienbaum&family=Droid+Sans:wght@400;700&family=Droid+Sans+Mono&family=Inter:wght@300;400;500;600;700&family=Montserrat&display=swap" rel="stylesheet">
-
-    <!-- Consolidated highlight.js stylesheet (single request) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
 
     <!-- External CSS libraries -->
     <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/app.css" />
     <link href="Homepage.styles.css" rel="stylesheet" />
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" />
 
-    <!-- Tailwind CSS (defer loading for performance)
+    <!-- Tailwind CSS (deferred for performance) -->
     <script src="https://cdn.tailwindcss.com" defer></script>
-        -->
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-
-        .mud-drawer-fixed-open {
-            width: 280px !important;
-        }
-
-        .mud-main-content {
-            padding-left: 280px !important;
-        }
-
-        .mud-appbar {
-            z-index: 1000 !important;
-        }
-
-        .mud-drawer {
-            z-index: 999 !important;
-        }
-
-        .mud-card {
-            border-radius: 0.75rem;
-        }
-
-        .mud-button {
-            border-radius: 0.5rem;
-        }
-
-        .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
-            margin-top: 1.5em;
-            margin-bottom: 0.5em;
-            font-weight: 600;
-            line-height: 1.25;
-        }
-
-        .markdown-content h1 {
-            font-size: 2.25rem;
-        }
-
-        .markdown-content h2 {
-            font-size: 1.75rem;
-        }
-
-        .markdown-content h3 {
-            font-size: 1.5rem;
-        }
-
-        .markdown-content p {
-            margin-bottom: 1em;
-            line-height: 1.6;
-        }
-
-        .markdown-content ul, .markdown-content ol {
-            margin-bottom: 1em;
-            padding-left: 1.5em;
-        }
-
-        .markdown-content li {
-            margin-bottom: 0.5em;
-        }
-
-        .markdown-content a {
-            color: var(--mud-palette-primary);
-            text-decoration: underline;
-        }
-
-        .markdown-content pre {
-            background-color: #282c34;
-            color: #abb2bf;
-            padding: 1em;
-            border-radius: 0.5rem;
-            overflow-x: auto;
-            margin-bottom: 1em;
-        }
-
-        .markdown-content code {
-            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
-            font-size: 0.9em;
-        }
-
-        .markdown-content pre code {
-            background-color: transparent;
-            padding: 0;
-        }
-
-        .markdown-content img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 0.5rem;
-            display: block;
-            margin: 1em auto;
-        }
-
-        .markdown-content table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 1em;
-        }
-
-        .markdown-content th, .markdown-content td {
-            border: 1px solid #ddd;
-            padding: 0.8em;
-            text-align: left;
-        }
-
-        .markdown-content th {
-            background-color: #f2f2f2;
-            font-weight: 600;
-        }
-
-        .markdown-content blockquote {
-            border-left: 4px solid var(--mud-palette-primary);
-            padding-left: 1em;
-            margin-left: 0;
-            font-style: italic;
-            color: #666;
-            margin-bottom: 1em;
-        }
-    </style>
-
-    <!-- highlight.js script (single request) -->
+    <!-- highlight.js (deferred) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js" defer></script>
     <script src="js/app.js" defer></script>
     <script>
@@ -164,7 +37,6 @@
         })();
     </script>
 </head>
-
 <body>
     <div id="app">
         <svg class="loading-progress">
@@ -173,7 +45,6 @@
         </svg>
         <div class="loading-progress-text"></div>
     </div>
-
     <div id="blazor-error-ui">
         An unhandled error has occurred.
         <a href="" class="reload">Reload</a>
@@ -182,5 +53,4 @@
     <script src="_framework/blazor.webassembly.js"></script>
     <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 </body>
-
 </html>
