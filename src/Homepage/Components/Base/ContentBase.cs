@@ -15,18 +15,19 @@ namespace Homepage.Components.Base
     /// </summary>
     public abstract class ContentBase : BaseComponent, IDisposable
     {
-#pragma warning disable CS8618
         /// <summary>Service for loading and rendering markdown content.</summary>
-        [Inject] protected ContentMarkdownService ContentMarkdownService { get; set; }
+        [Inject] protected ContentMarkdownService ContentMarkdownService { get; set; } = default!;
 
         /// <summary>Service for managing the current audience context.</summary>
-        [Inject] protected AudienceContextService AudienceService { get; set; }
-#pragma warning restore CS8618
+        [Inject] protected AudienceContextService AudienceService { get; set; } = default!;
 
-        /// <summary>The filtered list of content metadata for the current audience.</summary>
+        /// <summary>Service for managing global filtering and search.</summary>
+        [Inject] protected FilterService FilterService { get; set; } = default!;
+
+        /// <summary>The filtered list of content metadata for the current audience, search, and active filters.</summary>
         protected List<ContentMetadata> ContentList { get; set; } = new List<ContentMetadata>();
 
-        /// <summary>The rendered HTML content for the selected content item.</summary>
+        /// <summary>The rendered HTML content for the selected content item (used by ContentPage).</summary>
         protected string ContentHtml { get; set; } = string.Empty;
 
         /// <summary>Indicates whether content is currently being loaded.</summary>
@@ -35,40 +36,51 @@ namespace Homepage.Components.Base
         /// <inheritdoc />
         protected override async Task OnInitializedAsync()
         {
-            AudienceService.OnAudienceChanged += async () => await InvokeAsync(LoadMetadataAndFilter);
-            await LoadMetadataAndFilter();
+            FilterService.OnFilterParametersChanged += HandleFilterParametersChanged;
+            AudienceService.OnAudienceChanged += HandleAudienceChanged;
+
+            await LoadAllContentIntoFilterService();
+            ApplyFiltersToContentList();
         }
 
         /// <inheritdoc />
-        public void Dispose()
+        public virtual void Dispose()
         {
-            AudienceService.OnAudienceChanged -= async () => await InvokeAsync(LoadMetadataAndFilter);
+            FilterService.OnFilterParametersChanged -= HandleFilterParametersChanged;
+            AudienceService.OnAudienceChanged -= HandleAudienceChanged;
         }
 
-        /// <summary>
-        /// Loads all content metadata and filters it for the current audience.
-        /// Updates <see cref="ContentList"/> and handles loading state and errors.
-        /// </summary>
-        /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-        protected async Task LoadMetadataAndFilter()
+        /// <summary>Handles audience changes by updating FilterService and re-applying filters.</summary>
+        private async void HandleAudienceChanged()
         {
-            var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadMetadataAndFilter");
+            FilterService.SetAudience(AudienceService.CurrentAudience);
+            await InvokeAsync(StateHasChanged);
+        }
+
+        /// <summary>Handles changes in any filter parameter (search, tags, audience).</summary>
+        private void HandleFilterParametersChanged()
+        {
+            ApplyFiltersToContentList();
+            StateHasChanged();
+        }
+
+        /// <summary>Loads all content metadata into the FilterService. This should typically happen once.</summary>
+        protected async Task LoadAllContentIntoFilterService()
+        {
+            var logger = Log.ForContext("Class: {Name}", GetType().Name).ForContext("Method", "LoadAllContentIntoFilterService");
 
             try
             {
                 IsLoading = true;
-                logger.Information("Loading all content metadata.");
+                logger.Information("Loading all content metadata into FilterService.");
                 var allContent = await ContentMarkdownService.GetContentMetadataAsync();
-                var currentAudience = AudienceService.CurrentAudience;
-                ContentList = allContent
-                    .Where(item => item.TargetAudiences.Contains(currentAudience, StringComparer.OrdinalIgnoreCase))
-                    .OrderByDescending(item => item.PublishDate)
-                    .ToList();
-                logger.Information("Loaded and filtered {Count} content items for audience '{Audience}'.", ContentList.Count, currentAudience);
+                FilterService.InitializeContent(allContent.OrderByDescending(m => m.PublishDate).ToList());
+                FilterService.SetAudience(AudienceService.CurrentAudience);
+                logger.Information("Loaded and initialized FilterService with {Count} total content items.", allContent.Count);
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Failed to load and filter content metadata.");
+                logger.Error(ex, "Failed to load all content metadata into FilterService.");
                 Snackbar.Add($"Failed to load content: {ex.Message}", Severity.Error);
             }
             finally
@@ -77,6 +89,10 @@ namespace Homepage.Components.Base
                 StateHasChanged();
             }
         }
+
+        /// <summary>Gets the filtered content from FilterService and updates ContentList.</summary>
+        protected void ApplyFiltersToContentList()
+            => ContentList = FilterService.GetFilteredContent();
 
         /// <summary>
         /// Loads and renders the markdown content for a given <see cref="ContentMetadata"/> item.
@@ -121,7 +137,17 @@ namespace Homepage.Components.Base
         protected void ResetContent()
         {
             ContentHtml = string.Empty;
-            _ = LoadMetadataAndFilter();
+            FilterService.CurrentSearchText = string.Empty;
+            FilterService.ClearTagFilters();
+            ApplyFiltersToContentList();
         }
+
+        /// <summary>Checks if a specific tag filter is currently active.</summary>
+        protected bool IsTagFilterActive(string tag)
+            => FilterService.IsTagFilterActive(tag);
+
+        /// <summary>Handles tag filter changes by updating the FilterService.</summary>
+        protected void OnFilterChanged(string tag, bool isChecked)
+            => FilterService.SetTagFilter(tag, isChecked);
     }
 }
