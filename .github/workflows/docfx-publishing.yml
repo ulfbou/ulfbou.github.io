@@ -1,49 +1,41 @@
-name: DocFX Publish
+name: Build & Deploy DocFX Site
 
 on:
   push:
     branches:
-      - main  # Set your main branch name here
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup .NET
+      - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '9.0.x'
+          dotnet-version: '7.0.x'
 
-      - name: Restore dependencies
-        run: dotnet restore
+      - name: Install DocFX global tool
+        run: dotnet tool install -g docfx
 
-      - name: Install DocFX
-        run: dotnet tool restore
+      - name: Add .NET tools to PATH
+        run: echo "${HOME}/.dotnet/tools" >> $GITHUB_PATH
 
-      - name: Build DocFX site
-        run: dotnet docfx docfx.json
+      - name: Generate metadata
+        run: docfx metadata --config docfx.json
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+      - name: Build site
+        run: docfx build --config docfx.json
+
+      - name: Deploy to gh-pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: '_site'
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v3
+          githubtoken: ${{ secrets.GITHUBTOKEN }}
+          publish_branch: gh-pages
+          publishdir: ./site
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          commit_message: 'ci: deploy DocFX site'
