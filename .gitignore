@@ -1,20 +1,24 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+# DocFX output directory
+_site/
 
-/.vs/Homepage
-/src/Homepage/bin/Debug/net8.0
-/src/Homepage/obj
-/src/Homepage.Common/bin/Debug/net8.0
-/src/Homepage.Common/obj
-/.vs
-/src/Homepage/bin/Release/net8.0
-/src/Homepage.Common/bin/Release/net8.0
-/tools/PortfolioStaticGenerator/bin/Release/net9.0
-/tools/PortfolioStaticGenerator/obj
-/tools/_site
-/tools/PortfolioStaticGenerator/bin/Debug/net8.0
-/tools/PortfolioStaticGenerator/bin/Release/net8.0
-/src/Homepage/diff
-/src/Homepage/bin/Release/net9.0
-/src/Homepage.Common/bin/Release/net9.0
+# Backup files
+*~
+
+# VS Code settings
+.vscode/
+
+.history/
+*.code-workspace
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.cache
+.env
+.env.local
+.env.*.local
+.vs/
+
+bin/
+obj/
+
