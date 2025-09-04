@@ -16,58 +16,31 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: '8.0.x'
+          dotnet-version: '8.0.x' # Updated for DocFX compatibility
 
-      - name: Print Environment Info
+      - name: DocFX install debug (PATH and tools)
         run: |
-          echo "USER: $USER"
-          echo "HOME: $HOME"
-          echo "PATH: $PATH"
-          dotnet --info
-
-      - name: Install DocFX global tool
-        run: dotnet tool install -g docfx
-
-      - name: List .NET global tools
-        run: dotnet tool list -g
-
-      - name: Check installed tools directory
-        run: |
-          ls -al $HOME/.dotnet/tools
-          echo "PATH after install: $PATH"
+          echo "=== PATH before DocFX install ==="
+          echo "$PATH"
+          echo "=== .NET global tools before install ==="
+          dotnet tool list -g || echo "dotnet tool list failed"
+          echo "=== Installing DocFX ==="
+          dotnet tool install -g docfx || echo "docfx install failed"
+          echo "=== PATH after DocFX install ==="
+          echo "$PATH"
+          echo "=== .NET global tools after install ==="
+          dotnet tool list -g || echo "dotnet tool list failed"
+          echo "=== Contents of $HOME/.dotnet/tools ==="
+          ls -al "$HOME/.dotnet/tools" || echo "tools directory missing"
 
       - name: Add .NET tools to PATH
-        run: echo "$HOME/.dotnet/tools" >> $GITHUB_PATH
+        run: echo "${HOME}/.dotnet/tools" >> $GITHUB_PATH
 
-      - name: Print PATH before DocFX commands
-        run: echo $PATH
+      - name: Generate metadata
+        run: docfx metadata --config docfx.json
 
-      - name: Check DocFX availability (dotnet docfx)
-        run: dotnet docfx --version || echo "dotnet docfx not found"
-
-      - name: Check DocFX availability (direct)
-        run: $HOME/.dotnet/tools/docfx --version || echo "docfx executable not found"
-
-      - name: Print current directory
-        run: pwd
-
-      - name: List workspace files
-        run: ls -al
-
-      - name: Generate metadata (try dotnet docfx)
-        run: dotnet docfx metadata --config docfx.json || echo "dotnet docfx metadata failed"
-
-      - name: Generate metadata (try direct exec if above fails)
-        run: $HOME/.dotnet/tools/docfx metadata --config docfx.json || echo "docfx metadata direct failed"
-
-      - name: Build site (try dotnet docfx)
-        run: dotnet docfx build --config docfx.json || echo "dotnet docfx build failed"
-
-      - name: Build site (try direct exec if above fails)
-        run: $HOME/.dotnet/tools/docfx build --config docfx.json || echo "docfx build direct failed"
-
-      - name: List build output
-        run: ls -al ./site || echo "Site directory not found"
+      - name: Build site
+        run: docfx build --config docfx.json
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
