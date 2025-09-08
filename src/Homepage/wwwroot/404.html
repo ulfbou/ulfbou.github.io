@@ -25,6 +25,11 @@
             var hash = window.location.hash;
             var baseHref = document.querySelector('base')?.getAttribute('href') || '/';
 
+            // Do not redirect if the path starts with /docs (let static docfx handle it)
+            if (path.startsWith('/docs')) {
+                return;
+            }
+
             if (path !== baseHref && !path.endsWith('.html') && !path.endsWith('.css') && !path.endsWith('.js') && !path.endsWith('.json') && !path.endsWith('.wasm')) {
                 sessionStorage.setItem('redirect', baseHref + '?path=' + encodeURIComponent(path + query) + hash);
                 window.location.replace(baseHref);
