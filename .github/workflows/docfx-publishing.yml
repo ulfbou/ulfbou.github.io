@@ -1,53 +1,77 @@
-name: Build & Deploy DocFX Site
+# Path: .github/workflows/docs.yml
+name: Build and Deploy Documentation
 
 on:
   push:
     branches:
       - main
 
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
-  build-and-deploy:
+  deploy-docs:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v4
 
       - name: Setup .NET SDK
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: '8.0.x' # Updated for DocFX compatibility
+          dotnet-version: 9.0.x
 
-      - name: DocFX install debug (PATH and tools)
-        run: |
-          echo "=== PATH before DocFX install ==="
-          echo "$PATH"
-          echo "=== .NET global tools before install ==="
-          dotnet tool list -g || echo "dotnet tool list failed"
-          echo "=== Installing DocFX ==="
-          dotnet tool install -g docfx || echo "docfx install failed"
-          echo "=== PATH after DocFX install ==="
-          echo "$PATH"
-          echo "=== .NET global tools after install ==="
-          dotnet tool list -g || echo "dotnet tool list failed"
-          echo "=== Contents of $HOME/.dotnet/tools ==="
-          ls -al "$HOME/.dotnet/tools" || echo "tools directory missing"
+      - name: Restore NuGet Packages
+        run: dotnet restore src/Zentient.Abstractions.csproj
+
+      - name: Build Project for XML Documentation
+        run: dotnet build src/Zentient.Abstractions.csproj --configuration Release --framework net9.0
+
+      - name: Install DocFX Global Tool
+        run: dotnet tool install -g docfx
 
       - name: Add .NET tools to PATH
         run: echo "${HOME}/.dotnet/tools" >> $GITHUB_PATH
 
-      - name: Generate metadata
-        run: docfx metadata --config docfx.json
+      - name: Generate API Metadata
+        run: |
+          if [[ -d api ]]; then
+            echo "Removing existing 'api' directory to ensure clean generation."
+            rm -rf api
+          fi
+          if [[ -d _site ]]; then
+            echo "Removing existing '_site' directory to ensure clean generation."
+            rm -rf _site
+          fi
+          
+          echo "Generating API metadata from .NET 9.0 assemblies"
+          docfx metadata
 
-      - name: Build site
-        run: docfx build --config docfx.json
+      - name: Build DocFX Site
+        run: docfx build
 
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          githubtoken: ${{ secrets.GITHUBTOKEN }}
-          publish_branch: gh-pages
-          publishdir: ./site
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'ci: deploy DocFX site'
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
