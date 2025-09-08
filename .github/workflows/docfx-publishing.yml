@@ -5,7 +5,6 @@ on:
   push:
     branches:
       - main
-
   pull_request:
     branches:
       - main
@@ -36,27 +35,11 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Restore NuGet Packages
-        run: dotnet restore
-
       - name: Install DocFX
         run: dotnet tool install -g docfx
 
       - name: Add .NET tools to PATH
         run: echo "${HOME}/.dotnet/tools" >> $GITHUB_PATH
-
-      - name: Generate API Metadata
-        run: |
-          if [[ -d api ]]; then
-            echo "Removing existing 'api' directory to ensure clean generation."
-            rm -rf api
-          fi
-          if [[ -d docs ]]; then
-            echo "Removing existing 'docs' directory to ensure clean generation."
-            rm -rf docs
-          fi
-          echo "Generating API metadata from .NET 8.0 assemblies"
-          docfx metadata
 
       - name: Build DocFX site
         run: docfx docfx.json
@@ -67,7 +50,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: 'docs'
+          path: '_site'
 
       - name: Deploy to GitHub Pages
         id: deployment
