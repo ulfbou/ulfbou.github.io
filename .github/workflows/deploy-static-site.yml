@@ -24,13 +24,13 @@ jobs:
         with:
           repository: ulfbou/ulfbou.github.io
 
-      - name: (Debug) After Main Checkout
-        run: |
-          echo "--- (Debug) After Main Checkout (Current working directory) ---"
-          pwd
-          echo "--- (Debug) Contents of runner's workspace (after main checkout) ---"
-          ls -R .
-          echo "------------------------------------------------------------------"
+      # - name: (Debug) After Main Checkout
+      #   run: |
+      #     echo "--- (Debug) After Main Checkout (Current working directory) ---"
+      #     pwd
+      #     echo "--- (Debug) Contents of runner's workspace (after main checkout) ---"
+      #     ls -R .
+      #     echo "------------------------------------------------------------------"
 
       - name: Checkout Portfolio-Content repository
         uses: actions/checkout@v4
@@ -38,13 +38,13 @@ jobs:
           repository: ulfbou/Portfolio-Content
           path: portfolio-content
 
-      - name: (Debug) After Content Checkout
-        run: |
-          echo "--- (Debug) After Content Checkout (Current working directory) ---"
-          pwd
-          echo "--- (Debug) Contents of runner's workspace (after content checkout) ---"
-          ls -R .
-          echo "--------------------------------------------------------------------"
+      # - name: (Debug) After Content Checkout
+      #   run: |
+      #     echo "--- (Debug) After Content Checkout (Current working directory) ---"
+      #     pwd
+      #     echo "--- (Debug) Contents of runner's workspace (after content checkout) ---"
+      #     ls -R .
+      #     echo "--------------------------------------------------------------------"
 
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
@@ -60,21 +60,21 @@ jobs:
       - name: Build and Publish Blazor App (Homepage)
         run: dotnet publish ./src/Homepage --configuration Release -o ./publish-output --no-restore
 
-      - name: (Debug) After Blazor Publish
-        run: |
-          echo "--- (Debug) After Blazor Publish (Contents of publish-output) ---"
-          ls -R ./publish-output
-          echo "------------------------------------------------------------------"
+      # - name: (Debug) After Blazor Publish
+      #   run: |
+      #     echo "--- (Debug) After Blazor Publish (Contents of publish-output) ---"
+      #     ls -R ./publish-output
+      #     echo "------------------------------------------------------------------"
 
-      - name: (Debug) Before Static Generator Run
-        run: |
-          echo "--- (Debug) Before Static Generator Run (Current working directory) ---"
-          pwd
-          echo "--- (Debug) Contents of PortfolioStaticGenerator folder ---"
-          ls -R ./tools/PortfolioStaticGenerator/
-          echo "--- (Debug) Contents of portfolio-content folder ---"
-          ls -R ./portfolio-content/
-          echo "----------------------------------------------------"
+      # - name: (Debug) Before Static Generator Run
+      #   run: |
+      #     echo "--- (Debug) Before Static Generator Run (Current working directory) ---"
+      #     pwd
+      #     echo "--- (Debug) Contents of PortfolioStaticGenerator folder ---"
+      #     ls -R ./tools/PortfolioStaticGenerator/
+      #     echo "--- (Debug) Contents of portfolio-content folder ---"
+      #     ls -R ./portfolio-content/
+      #     echo "----------------------------------------------------"
 
       - name: Run Static Generator to create _site directory
         run: |
@@ -84,13 +84,15 @@ jobs:
             BaseUrl="${{ steps.deployment.outputs.page_url }}" \
             BlazorPublishOutput="${{ github.workspace }}/publish-output/wwwroot"
 
-      - name: (Debug) After Static Generator Run
-        run: |
-          echo "--- (Debug) After Static Generator Run (Current working directory) ---"
-          pwd
-          echo "--- (Debug) Contents of the workspace root (where _site should be) ---"
-          ls -R ${{ github.workspace }}/_site || echo "WARNING: _site directory not found at workspace root!"
-          echo "-----------------------------------------------------"
+      # NOTE: Do not remove or overwrite the 'docs' directory if present. This allows DocFX documentation to coexist at /docs.
+
+      # - name: (Debug) After Static Generator Run
+      #   run: |
+      #     echo "--- (Debug) After Static Generator Run (Current working directory) ---"
+      #     pwd
+      #     echo "--- (Debug) Contents of the workspace root (where _site should be) ---"
+      #     ls -R ${{ github.workspace }}/_site || echo "WARNING: _site directory not found at workspace root!"
+      #     echo "-----------------------------------------------------"
 
       - name: Copy generated _site content to root
         run: |

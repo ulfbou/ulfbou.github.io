@@ -9,6 +9,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -16,7 +17,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: "pages-docfx"
   cancel-in-progress: false
 
 jobs:
@@ -33,13 +34,10 @@ jobs:
       - name: Setup .NET SDK
         uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 9.0.x
+          dotnet-version: 8.0.x
 
       - name: Restore NuGet Packages
-        run: dotnet restore src/Zentient.Abstractions.csproj
-
-      - name: Build Project for XML Documentation
-        run: dotnet build src/Zentient.Abstractions.csproj --configuration Release --framework net9.0
+        run: dotnet restore
 
       - name: Install DocFX Global Tool
         run: dotnet tool install -g docfx
@@ -53,16 +51,15 @@ jobs:
             echo "Removing existing 'api' directory to ensure clean generation."
             rm -rf api
           fi
-          if [[ -d _site ]]; then
-            echo "Removing existing '_site' directory to ensure clean generation."
-            rm -rf _site
+          if [[ -d docs ]]; then
+            echo "Removing existing 'docs' directory to ensure clean generation."
+            rm -rf docs
           fi
-          
-          echo "Generating API metadata from .NET 9.0 assemblies"
+          echo "Generating API metadata from .NET 8.0 assemblies"
           docfx metadata
 
       - name: Build DocFX Site
-        run: docfx build
+        run: docfx build -o docs
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
@@ -70,7 +67,7 @@ jobs:
       - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '_site'
+          path: 'docs'
 
       - name: Deploy to GitHub Pages
         id: deployment
