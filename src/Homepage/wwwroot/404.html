@@ -26,7 +26,7 @@
             var baseHref = document.querySelector('base')?.getAttribute('href') || '/';
 
             // Do not redirect if the path starts with /docs (let static docfx handle it)
-            if (path.startsWith('/docs')) {
+            if (path.startsWith('/docs') || path.startsWith('/Zentient.')) {
                 return;
             }
 
