@@ -8,26 +8,25 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 <MudLayout>
-    <MudAppBar Elevation="1" Class="mud-appbar-fixed-top">
+    <MudAppBar Elevation="1" Class="mud-appbar-fixed-top" Fixed="true">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@((e) => ToggleNavMenu())" />
-        <MudText Typo="Typo.h5" Class="ml-4 cursor-pointer" OnClick="NavigateHome">Ulf's Portfolio</MudText>
+        <MudNavLink Href="/" Match="NavLinkMatch.All">Ulf's Portfolio</MudNavLink>
         <MudSpacer />
 
-        <MudTextField T="string"
-                      Placeholder="Search..."
-                      Variant="Variant.Text"
-                      Adornment="Adornment.End"
-                      AdornmentIcon="@Icons.Material.Filled.Search"
-                      AdornmentColor="Color.Inherit"
-                      Class="mr-4 ml-auto"
-                      Style="max-width: 300px; min-width: 150px;"
-                      @bind-Value="FilterService.CurrentSearchText" /> 
-
+<MudTextField T="string"
+              Placeholder="Search..."
+              Variant="Variant.Text"
+              Adornment="Adornment.End"
+              AdornmentIcon="@Icons.Material.Filled.Search"
+              AdornmentColor="Color.Inherit"
+              Class="mr-4 ml-auto"
+              Style="max-width: 300px; min-width: 150px;"
+              @bind-Value="FilterService.CurrentSearchText" />
         @if (AudienceService != null)
         {
-            <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Class="mr-4">
-                Viewing as: @AudienceService.CurrentAudience
-            </MudChip>
+                                                    <MudChip T="string" Color="Color.Primary" Variant="Variant.Filled" Class="mr-4">
+                                                        Viewing as: @AudienceService.CurrentAudience
+                                                    </MudChip>
         }
 
         <MudIconButton Icon="@Icons.Material.Filled.LightMode" Color="Color.Inherit" OnClick="@ToggleDarkMode" Class="mr-2" />
@@ -42,12 +41,14 @@
         <NavMenu />
     </MudDrawer>
 
-    <MudMainContent>
-        <MudContainer MaxWidth="MaxWidth.Large" Class="mt-8 mb-8 px-4 py-8">
-            @Body
-        </MudContainer>
-    </MudMainContent>
-    
+    <MudStack Style="max-height: calc(100vh - var(--mud-appbar-height)); overflow-y: auto;">
+        <MudMainContent>
+            <MudContainer MaxWidth="MaxWidth.Large" Class="mt-8 mb-8 px-4 py-8">
+                @Body
+            </MudContainer>
+        </MudMainContent>
+    </MudStack>
+
     <footer Class="py-4 mt-auto">
         <MudText Typo="Typo.body2" Class="text-center w-full">
             &copy; @DateTime.Now.Year Ulf Bourelius. Built with Blazor and MudBlazor.

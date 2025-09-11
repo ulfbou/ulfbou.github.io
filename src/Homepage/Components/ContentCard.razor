@@ -1,7 +1,4 @@
-﻿@inject Homepage.Common.Services.LocalStorageService LocalStorageService
-@inject MudBlazor.ISnackbar Snackbar
-
-<MudCard @onclick="async () => await OnClick.InvokeAsync()" Class="@($"d-flex align-center justify-center mud-width-full pa-6 ma-6 {Class}")" Outlined="true" Elevation="2">
+﻿<MudCard @onclick="async () => await OnClick.InvokeAsync()" Class="@($"d-flex align-center justify-center mud-width-full pa-6 ma-6 {Class}")" Outlined="true" Elevation="2">
     <MudCardContent>
         <div class="d-flex justify-content-between align-items-center">
             <MudText Typo="Typo.h3">@Content.Title</MudText>

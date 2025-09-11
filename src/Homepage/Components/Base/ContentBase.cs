@@ -7,6 +7,11 @@ using MudBlazor;
 
 using Serilog;
 
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
 namespace Homepage.Components.Base
 {
     /// <summary>
@@ -24,6 +29,13 @@ namespace Homepage.Components.Base
         /// <summary>Service for managing global filtering and search.</summary>
         [Inject] protected FilterService FilterService { get; set; } = default!;
 
+        /// <summary>Service for synchronizing application state with the URL.</summary>
+        [Inject] protected IUrlSynchronizationService UrlSynchronizationService { get; set; } = default!;
+
+        /// <summary>Service for managing user activity and preferences.</summary>
+        [Inject] protected IUserActivityService UserActivityService { get; set; } = default!;
+
+
         /// <summary>The filtered list of content metadata for the current audience, search, and active filters.</summary>
         protected List<ContentMetadata> ContentList { get; set; } = new List<ContentMetadata>();
 
@@ -39,8 +51,31 @@ namespace Homepage.Components.Base
             FilterService.OnFilterParametersChanged += HandleFilterParametersChanged;
             AudienceService.OnAudienceChanged += HandleAudienceChanged;
 
+            // Load all content into FilterService first
             await LoadAllContentIntoFilterService();
+
+            // Parse initial filters from URL and apply them via FilterService
+            var initialFilters = UrlSynchronizationService.ParseFiltersFromUrl();
+            if (initialFilters.HasValue)
+            {
+                FilterService.CurrentSearchText = initialFilters.Value.SearchText;
+                foreach (var tag in initialFilters.Value.ActiveTags)
+                {
+                    FilterService.SetTagFilter(tag, true);
+                }
+                FilterService.SetAudience(initialFilters.Value.Audience); // Apply audience from URL if present
+            }
+            else
+            {
+                // If no URL filters, apply default audience filter
+                FilterService.SetAudience(AudienceService.CurrentAudience);
+            }
+
+            // Apply filters to ContentList (this will be triggered by FilterService events if URL filters were set)
             ApplyFiltersToContentList();
+
+            // Update last visit timestamp
+            await UserActivityService.UpdateLastVisitTimestampAsync();
         }
 
         /// <inheritdoc />
@@ -61,6 +96,13 @@ namespace Homepage.Components.Base
         private void HandleFilterParametersChanged()
         {
             ApplyFiltersToContentList();
+
+            // Synchronize current filter state to URL
+            UrlSynchronizationService.SynchronizeFiltersToUrl(
+                FilterService.CurrentSearchText,
+                FilterService.GetAllActiveTagFilters(),
+                AudienceService.CurrentAudience // Use AudienceService.CurrentAudience for URL sync
+            );
             StateHasChanged();
         }
 
@@ -72,11 +114,10 @@ namespace Homepage.Components.Base
             try
             {
                 IsLoading = true;
-                logger.Information("Loading all content metadata into FilterService.");
+                logger.Debug("Loading all content metadata into FilterService.");
                 var allContent = await ContentMarkdownService.GetContentMetadataAsync();
                 FilterService.InitializeContent(allContent.OrderByDescending(m => m.PublishDate).ToList());
-                FilterService.SetAudience(AudienceService.CurrentAudience);
-                logger.Information("Loaded and initialized FilterService with {Count} total content items.", allContent.Count);
+                logger.Debug("Loaded and initialized FilterService with {Count} total content items.", allContent.Count);
             }
             catch (Exception ex)
             {
@@ -92,7 +133,9 @@ namespace Homepage.Components.Base
 
         /// <summary>Gets the filtered content from FilterService and updates ContentList.</summary>
         protected void ApplyFiltersToContentList()
-            => ContentList = FilterService.GetFilteredContent();
+        {
+            ContentList = FilterService.GetFilteredContent();
+        }
 
         /// <summary>
         /// Loads and renders the markdown content for a given <see cref="ContentMetadata"/> item.
@@ -114,11 +157,17 @@ namespace Homepage.Components.Base
             try
             {
                 IsLoading = true;
-                logger.Information("Loading markdown content for: {ContentPath}", contentItem.ContentPath);
+                logger.Debug("Loading markdown content for: {ContentPath}", contentItem.ContentPath);
                 var markdown = await ContentMarkdownService.GetMarkdownContentAsync(contentItem.ContentPath);
-                logger.Information("Loaded markdown content for: {ContentPath}", contentItem.ContentPath);
+                logger.Debug("Loaded markdown content for: {ContentPath}", contentItem.ContentPath);
                 ContentHtml = await ContentMarkdownService.RenderMarkdownToHtmlAsync(markdown);
-                logger.Information("Converted markdown to HTML.");
+                logger.Debug("Converted markdown to HTML.");
+
+                // Record content view activity
+                if (contentItem != null && !string.IsNullOrEmpty(contentItem.Slug))
+                {
+                    await UserActivityService.RecordContentViewAsync(contentItem.Slug);
+                }
             }
             catch (Exception ex)
             {
@@ -144,10 +193,21 @@ namespace Homepage.Components.Base
 
         /// <summary>Checks if a specific tag filter is currently active.</summary>
         protected bool IsTagFilterActive(string tag)
-            => FilterService.IsTagFilterActive(tag);
+        {
+            return FilterService.IsTagFilterActive(tag);
+        }
 
         /// <summary>Handles tag filter changes by updating the FilterService.</summary>
         protected void OnFilterChanged(string tag, bool isChecked)
-            => FilterService.SetTagFilter(tag, isChecked);
+        {
+            Log.ForContext("Class: {Name}", GetType().Name)
+               .ForContext("Method", "OnFilterChanged")
+               .Debug("Tag filter changed: {Tag}, IsChecked: {IsChecked}", tag, isChecked);
+            FilterService.GetAllActiveTagFilters();
+            FilterService.SetTagFilter(tag, isChecked);
+            Log.ForContext("Class: {Name}", GetType().Name)
+               .ForContext("Method", "OnFilterChanged")
+               .Debug("Tag filter changed: {Tag}, IsChecked: {IsChecked}", tag, isChecked);
+        }
     }
 }

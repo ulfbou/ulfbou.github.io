@@ -1,0 +1,539 @@
+diff --git a/src/Homepage/wwwroot/css/app.css b/src/Homepage/wwwroot/css/app.css
+index 5a822c6..8bebd4d 100644
+--- a/src/Homepage/wwwroot/css/app.css
++++ b/src/Homepage/wwwroot/css/app.css
+@@ -1,4 +1,3 @@
+-/* app.css */
+ html, body, #app {
+     height: 100%;
+     margin: 0;
+@@ -33,6 +32,50 @@ body {
+     border-radius: 0.5rem;
+ }
+ 
++.mud-main-content {
++    flex-grow: 1;
++    overflow-y: auto;
++    overflow-x: hidden;
++    height: 100%;
++}
++
++@media (min-width: 960px) {
++    .mud-main-content {
++        padding-left: 280px !important;
++    }
++}
++
++@media (max-width: 959.98px) {
++    .mud-main-content {
++        padding-left: 0 !important;
++        margin-left: 0 !important;
++    }
++}
++
++@media (min-width: 960px) {
++    .mud-layout > footer {
++        position: fixed;
++        bottom: 0;
++        width: calc(100% - var(--mud-drawer-width-left, 280px));
++        margin-left: var(--mud-drawer-width-left, 280px);
++        z-index: 998;
++        background-color: var(--mud-palette-background);
++        padding: var(--mud-spacing-unit) calc(var(--mud-spacing-unit) * 2);
++    }
++}
++
++@media (min-width: 960px) {
++    .mud-main-content .mud-container {
++        padding-bottom: calc(var(--mud-appbar-height, 64px) + 80px) !important;
++    }
++}
++
++@media (max-width: 959.98px) {
++    .mud-main-content .mud-container {
++        padding-bottom: 24px !important;
++    }
++}
++
+ .markdown-content {
+     overflow-x: auto;
+ }
+@@ -154,20 +197,23 @@ a, .btn-link {
+ }
+ 
+ .btn-primary {
+-    color: #fff;
+     background-color: #1b6ec2;
+     border-color: #1861ac;
++    color: #fff;
+ }
+ 
+ .btn, .btn-link.nav-link, .form-control, .form-check-input {
+     transition: box-shadow 0.15s ease-in-out;
+ }
+ 
+-    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
+-    .form-control:focus, .form-check-input:focus {
++    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+         box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem #258cfb;
+     }
+ 
++.content {
++    padding-top: 1.1rem;
++}
++
+ .valid.modified:not([type=checkbox]) {
+     outline: 1px solid #26b050;
+ }
+@@ -272,6 +318,12 @@ a, .btn-link {
+     color: #3E2723 !important;
+ }
+ 
++.page {
++    position: relative;
++    display: flex;
++    flex-direction: column;
++}
++
+ main {
+     flex: 1;
+ }
+@@ -280,7 +332,17 @@ main {
+     background-image: linear-gradient(180deg, rgb(5,39,103) 0%, #3a0647 70%);
+ }
+ 
++@media (max-width: 640.98px) {
++    .top-row {
++        justify-content: space-between;
++    }
++}
++
+ @media (min-width: 641px) {
++    .page {
++        flex-direction: row;
++    }
++
+     .sidebar {
+         width: 250px;
+         height: 100vh;
+@@ -316,11 +378,38 @@ main {
+     top: 20px !important;
+ }
+ 
+-.mud-layout {
+-    flex-grow: 1;
++html, body, #app {
+     height: 100%;
++    margin: 0;
++    padding: 0;
+     display: flex;
+     flex-direction: column;
++    overflow: hidden;
++    font-family: 'Montserrat', sans-serif;
++}
++
++body {
++    font-family: 'Inter', sans-serif;
++}
++
++.mud-drawer-fixed-open {
++    width: 280px !important;
++}
++
++.mud-appbar {
++    z-index: 1000 !important;
++}
++
++.mud-drawer {
++    z-index: 999 !important;
++}
++
++.mud-card {
++    border-radius: 0.75rem;
++}
++
++.mud-button {
++    border-radius: 0.5rem;
+ }
+ 
+ .mud-main-content {
+@@ -330,22 +419,20 @@ main {
+     height: 100%;
+ }
+ 
+-@media (max-width: 959.98px) {
++@media (min-width: 960px) {
+     .mud-main-content {
+-        margin-left: 0 !important;
+-        padding-left: 0 !important;
++        padding-left: 280px !important;
+     }
+-
+-        .mud-main-content .mud-container {
+-            padding-bottom: 24px !important;
+-        }
+ }
+ 
+-@media (min-width: 960px) {
++@media (max-width: 959.98px) {
+     .mud-main-content {
+-        padding-left: 280px !important;
++        padding-left: 0 !important;
++        margin-left: 0 !important;
+     }
++}
+ 
++@media (min-width: 960px) {
+     .mud-layout > footer {
+         position: fixed;
+         bottom: 0;
+@@ -353,10 +440,320 @@ main {
+         margin-left: var(--mud-drawer-width-left, 280px);
+         z-index: 998;
+         background-color: var(--mud-palette-background);
+-        padding: var(--mud-spacing-unit);
++        padding: var(--mud-spacing-unit) calc(var(--mud-spacing-unit) * 2);
++    }
++}
++
++@media (min-width: 960px) {
++    .mud-main-content .mud-container {
++        padding-bottom: calc(var(--mud-appbar-height, 64px) + 80px) !important;
+     }
++}
+ 
++@media (max-width: 959.98px) {
+     .mud-main-content .mud-container {
+-        padding-bottom: calc(var(--mud-appbar-height, 64px) + 40px) !important;
++        padding-bottom: 24px !important;
++    }
++}
++
++.markdown-content {
++    overflow-x: auto;
++}
++
++    .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
++        margin-top: 1.5em;
++        margin-bottom: 0.5em;
++        font-weight: 600;
++        line-height: 1.25;
++    }
++
++    .markdown-content h1 {
++        font-size: 2.25rem;
++    }
++
++    .markdown-content h2 {
++        font-size: 1.75rem;
++    }
++
++    .markdown-content h3 {
++        font-size: 1.5rem;
++    }
++
++    .markdown-content p {
++        margin-bottom: 1em;
++        line-height: 1.6;
++    }
++
++    .markdown-content ul, .markdown-content ol {
++        margin-bottom: 1em;
++        padding-left: 1.5em;
++    }
++
++    .markdown-content li {
++        margin-bottom: 0.5em;
++    }
++
++    .markdown-content a {
++        color: var(--mud-palette-primary);
++        text-decoration: underline;
++    }
++
++    .markdown-content pre {
++        background-color: #282c34;
++        color: #abb2bf;
++        padding: 1em;
++        border-radius: 0.5rem;
++        overflow-x: auto;
++        margin-bottom: 1em;
++    }
++
++    .markdown-content code {
++        font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
++        font-size: 0.9em;
++    }
++
++    .markdown-content pre code {
++        background-color: transparent;
++        padding: 0;
++    }
++
++    .markdown-content img {
++        max-width: 100%;
++        height: auto;
++        border-radius: 0.5rem;
++        display: block;
++        margin: 1em auto;
++    }
++
++    .markdown-content table {
++        width: 100%;
++        border-collapse: collapse;
++        margin-bottom: 1em;
++    }
++
++    .markdown-content th, .markdown-content td {
++        border: 1px solid #ddd;
++        padding: 0.8em;
++        text-align: left;
+     }
++
++    .markdown-content th {
++        background-color: #f2f2f2;
++        font-weight: 600;
++    }
++
++    .markdown-content blockquote {
++        border-left: 4px solid var(--mud-palette-primary);
++        padding-left: 1em;
++        margin-left: 0;
++        font-style: italic;
++        color: #666;
++        margin-bottom: 1em;
++    }
++
++    .markdown-content p, .markdown-content li {
++        word-wrap: break-word;
++        overflow-wrap: break-word;
++    }
++
++h4, h5, h6 {
++    font-family: 'Oranienbaum', serif;
++}
++
++.article .article-body h1, .article .article-body h2, .article .article-body h3 {
++    font-family: "Playfair Display", serif;
++}
++
++.skills {
++    font-family: 'Droid Sans', sans-serif;
++}
++
++h1:focus {
++    outline: none;
++}
++
++a, .btn-link {
++    color: #0071c1;
++}
++
++.btn-primary {
++    background-color: #1b6ec2;
++    border-color: #1861ac;
++    color: #fff;
++}
++
++.btn, .btn-link.nav-link, .form-control, .form-check-input {
++    transition: box-shadow 0.15s ease-in-out;
++}
++
++    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
++        box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem #258cfb;
++    }
++
++.content {
++    padding-top: 1.1rem;
++}
++
++.valid.modified:not([type=checkbox]) {
++    outline: 1px solid #26b050;
++}
++
++.invalid {
++    outline: 1px solid red;
++}
++
++.validation-message {
++    color: red;
++}
++
++#blazor-error-ui {
++    background: lightyellow;
++    bottom: 0;
++    box-shadow: 0 -1px 2px rgba(0,0,0,0.2);
++    display: none;
++    left: 0;
++    padding: 0.6rem 1.25rem;
++    position: fixed;
++    width: 100%;
++    z-index: 1000;
++}
++
++    #blazor-error-ui .dismiss {
++        cursor: pointer;
++        position: absolute;
++        right: 0.75rem;
++        top: 0.5rem;
++    }
++
++.loading-progress {
++    position: relative;
++    display: block;
++    width: 8rem;
++    height: 8rem;
++    margin: 20vh auto 1rem;
++}
++
++    .loading-progress circle {
++        fill: none;
++        stroke: #e0e0e0;
++        stroke-width: 0.6rem;
++        transform-origin: 50% 50%;
++        transform: rotate(-90deg);
++    }
++
++        .loading-progress circle:last-child {
++            stroke: #1b6ec2;
++            stroke-dasharray: calc(3.141 * var(--blazor-load-percentage, 0%) * 0.8), 500%;
++            transition: stroke-dasharray 0.05s ease-in-out;
++        }
++
++.loading-progress-text {
++    position: absolute;
++    text-align: center;
++    font-weight: bold;
++    inset: calc(20vh + 3.25rem) 0 auto 0.2rem;
++}
++
++    .loading-progress-text:after {
++        content: var(--blazor-load-percentage-text, "Loading");
++    }
++
++.text-brown-default {
++    color: #795548 !important;
++}
++
++.text-brown-lighten5 {
++    color: #EFEBE9 !important;
++}
++
++.text-brown-lighten4 {
++    color: #D7CCC8 !important;
++}
++
++.text-brown-lighten3 {
++    color: #BCAAA4 !important;
++}
++
++.text-brown-lighten2 {
++    color: #A1887F !important;
++}
++
++.text-brown-lighten1 {
++    color: #8D6E63 !important;
++}
++
++.text-brown-darken1 {
++    color: #6D4C41 !important;
++}
++
++.text-brown-darken2 {
++    color: #5D4037 !important;
++}
++
++.text-brown-darken3 {
++    color: #4E342E !important;
++}
++
++.text-brown-darken4 {
++    color: #3E2723 !important;
++}
++
++.page {
++    position: relative;
++    display: flex;
++    flex-direction: column;
++}
++
++main {
++    flex: 1;
++}
++
++.sidebar {
++    background-image: linear-gradient(180deg, rgb(5,39,103) 0%, #3a0647 70%);
++}
++
++@media (max-width: 640.98px) {
++    .top-row {
++        justify-content: space-between;
++    }
++}
++
++@media (min-width: 641px) {
++    .page {
++        flex-direction: row;
++    }
++
++    .sidebar {
++        width: 250px;
++        height: 100vh;
++        position: sticky;
++        top: 0;
++    }
++}
++
++.navbar-toggler {
++    background-color: rgba(255,255,255,0.1);
++}
++
++.navbar-brand {
++    font-size: 1.1rem;
++}
++
++.toc-column-wrapper {
++    min-height: 100%;
++    display: flex;
++    flex-direction: column;
++}
++
++    .toc-column-wrapper > .mud-card.sticky {
++        flex-grow: 0;
++    }
++
++.mud-grid {
++    align-items: stretch;
++}
++
++.force-sticky-toc {
++    position: sticky !important;
++    top: 20px !important;
+ }
+diff --git a/src/Homepage/wwwroot/index.html b/src/Homepage/wwwroot/index.html
+index 28a8be8..fe24c44 100644
+--- a/src/Homepage/wwwroot/index.html
++++ b/src/Homepage/wwwroot/index.html
+@@ -36,6 +36,22 @@
+             }
+         })();
+     </script>
++    <style>
++        .mud-main-content {
++            flex-grow: 1;
++            overflow-y: auto;
++            overflow-x: hidden;
++            height: 100%;
++            margin-left: 0 !important;
++            min-width: 200px !important;
++        }
++
++        @media (max-width: 959.98px) {
++            .mud-main-content {
++                padding-left: 0 !important;
++            }
++        }
++    </style>
+ </head>
+ <body>
+     <div id="app">

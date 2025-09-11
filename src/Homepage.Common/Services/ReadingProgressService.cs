@@ -30,7 +30,7 @@ namespace Homepage.Common.Services
             try
             {
                 await _jsRuntime.InvokeVoidAsync("readingProgressTracker.init", _objectRef);
-                _logger.Information("ReadingProgressService initialized JavaScript tracker.");
+                _logger.Debug("ReadingProgressService initialized JavaScript tracker.");
             }
             catch (JSException ex)
             {
@@ -65,7 +65,7 @@ namespace Homepage.Common.Services
                     await _jsRuntime.InvokeVoidAsync("readingProgressTracker.dispose");
                     _objectRef.Dispose();
                     _objectRef = null;
-                    _logger.Information("ReadingProgressService disposed.");
+                    _logger.Debug("ReadingProgressService disposed.");
                 }
                 catch (Exception ex)
                 {

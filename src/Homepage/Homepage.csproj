@@ -5,6 +5,7 @@
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<BlazorWebAssemblyEnableLinking>true</BlazorWebAssemblyEnableLinking>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -24,7 +25,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Homepage.Common\Homepage.Common.csproj" />
+	  <ProjectReference Include="..\Homepage.Common\Homepage.Common.csproj" />
 	</ItemGroup>
 
 </Project>

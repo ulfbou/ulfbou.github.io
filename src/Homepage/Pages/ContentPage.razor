@@ -15,7 +15,7 @@
     <meta property="og:description" content="@_currentMetadata?.Description" />
     @if (!string.IsNullOrEmpty(_currentMetadata?.FeaturedImage))
     {
-                                <meta property="og:image" content="@_currentMetadata.FeaturedImage" />
+                                                                        <meta property="og:image" content="@_currentMetadata.FeaturedImage" />
     }
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="@NavManager.Uri" />
@@ -23,50 +23,50 @@
     <meta property="twitter:description" content="@_currentMetadata?.Description" />
     @if (!string.IsNullOrEmpty(_currentMetadata?.FeaturedImage))
     {
-                                <meta property="twitter:image" content="@_currentMetadata.FeaturedImage" />
+                                                                        <meta property="twitter:image" content="@_currentMetadata.FeaturedImage" />
     }
     </HeadContent>
 
     <MudContainer MaxWidth="MaxWidth.Large" Class="my-8">
-        <MudGrid Spacing="4">
-            <MudItem xs="12" md="8">
-                <MudCard Elevation="4" Class="p-2 rounded-xl">
-                    <MudCardContent>
+            <MudGrid Spacing="4">
+                <MudItem xs="12" md="8">
+                    <MudCard Elevation="4" Class="p-2 rounded-xl">
+                        <MudCardContent>
                     @if (_isLoading)
                     {
-                                                <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" Class="d-flex justify-center my-8" />
-                                                <MudText Typo="Typo.body1" Class="text-center">Loading content...</MudText>
+                                                                                        <MudProgressCircular Indeterminate="true" Color="Color.Primary" Size="Size.Large" Class="d-flex justify-center my-8" />
+                                                                                        <MudText Typo="Typo.body1" Class="text-center">Loading content...</MudText>
                     }
                     else if (_htmlContent != null)
                     {
                         @if (!string.IsNullOrEmpty(_currentMetadata?.FeaturedImage))
                         {
-                                                                            <img src="@_currentMetadata.FeaturedImage" alt="@_currentMetadata.Title" class="mb-6 w-full h-auto rounded-lg" />
+                                                                                                                                                            <img src="@_currentMetadata.FeaturedImage" alt="@_currentMetadata.Title" class="mb-6 w-full h-auto rounded-lg" />
                         }
-                                                <MudText Typo="Typo.h4" Class="mb-4">@_currentMetadata?.Title</MudText>
-                                                <MudText Typo="Typo.body2" Class="mud-text-secondary mb-4">
-                                                    Published: @_currentMetadata?.PublishDate.ToShortDateString()
+                                                                <MudText Typo="Typo.h4" Class="mb-4">@_currentMetadata?.Title</MudText>
+                                                                <MudText Typo="Typo.body2" Class="mud-text-secondary mb-4">
                             @if (!string.IsNullOrEmpty(_currentMetadata?.Author))
                             {
-                                                                                <span class="ml-4">By: @_currentMetadata.Author</span>
+                                                                                                                                                                <span class="ml-4">By: @_currentMetadata.Author</span>
                             }
                             @if (_currentMetadata?.Tags != null && _currentMetadata.Tags.Any())
                             {
-                                                                                <span class="ml-4">Tags: @(string.Join(", ", _currentMetadata.Tags))</span>
+                                                                                                                                                                <span class="ml-4">Tags: @(string.Join(", ", _currentMetadata.Tags))</span>
                             }
+                                                    <p>Published: @_currentMetadata?.PublishDate.ToShortDateString()</p>
                                                 </MudText>
                                                 <MudDivider Class="my-4" />
                                                 <div id="markdown-content-container" class="markdown-content" @ref="_markdownContentContainer">
                             @((MarkupString)_htmlContent)
-                                                </div>
+                                                                </div>
                     }
                     else
                     {
-                                                <MudAlert Severity="Severity.Error" Class="rounded-lg">
-                                                    <MudText Typo="Typo.h6">Content Not Found</MudText>
-                                                    <MudText Typo="Typo.body1">The requested content could not be loaded. Please check the URL or try again later.</MudText>
-                                                    <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => NavManager.NavigateTo("/"))">Go Home</MudButton>
-                                                </MudAlert>
+                                                                <MudAlert Severity="Severity.Error" Class="rounded-lg">
+                                                                    <MudText Typo="Typo.h6">Content Not Found</MudText>
+                                                                    <MudText Typo="Typo.body1">The requested content could not be loaded. Please check the URL or try again later.</MudText>
+                                                                    <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="@(() => NavManager.NavigateTo("/"))">Go Home</MudButton>
+                                                                </MudAlert>
                     }
                 </MudCardContent>
             </MudCard>
@@ -77,21 +77,21 @@
                     <MudText Typo="Typo.h6" Class="mb-4">Table of Contents</MudText>
                     @if (_tocEntries.Any())
                     {
-                                                <MudList T="TocEntry" Dense="true" Class="toc-list">
+                                                                                        <MudList T="TocEntry" Dense="true" Class="toc-list">
                             @foreach (var entry in _tocEntries)
                             {
-                                                                                <MudListItem T="TocEntry" OnClick="@(() => ScrollToHeading(entry.Id))"
-                                                                                             Clickable="true" Class="@(entry.Level == 3 ? "ml-4" : "")">
-                                                                                    <MudText Typo="Typo.body2" Color="Color.Primary">
+                                                                                                                                                                <MudListItem T="TocEntry" OnClick="@(() => ScrollToHeading(entry.Id))"
+                                                                                                                                                                             Clickable="true" Class="@(entry.Level == 3 ? "ml-4" : "")">
+                                                                                                                                                                    <MudText Typo="Typo.body2" Color="Color.Primary">
                                         @entry.Text
-                                                                                    </MudText>
-                                                                                </MudListItem>
+                                                                                                                                                                    </MudText>
+                                                                                                                                                                </MudListItem>
                             }
-                                                </MudList>
+                                                                                        </MudList>
                     }
                     else
                     {
-                                                <MudText Typo="Typo.body2" Class="mud-text-secondary">No table of contents available.</MudText>
+                                                                                        <MudText Typo="Typo.body2" Class="mud-text-secondary">No table of contents available.</MudText>
                     }
                 </MudCardContent>
             </MudCard>

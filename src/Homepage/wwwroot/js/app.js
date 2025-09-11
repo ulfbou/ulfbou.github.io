@@ -1,4 +1,5 @@
-﻿window.appJsFunctions = {
+﻿console.log("app.js loaded and starting execution (Version: 2024-06-05_02).");
+window.appJsFunctions = {
     highlightCode: function (elementId) {
         const element = document.getElementById(elementId);
         if (element) {

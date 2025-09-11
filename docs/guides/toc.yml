@@ -1,0 +1,10 @@
+- name: Setup
+  href: setup.md
+- name: Quick Start
+  href: quick-start.md
+- name: Workflows
+  items:
+    - name: CI/CD
+      href: workflows/ci-cd.md
+    - name: Local Development
+      href: workflows/local-development.md

@@ -1,4 +1,3 @@
-/* app.css */
 html, body, #app {
     height: 100%;
     margin: 0;
@@ -33,12 +32,48 @@ body {
     border-radius: 0.5rem;
 }
 
+.mud-main-content {
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+    max-height: calc(100vh - var(--mud-appbar-height));
+    padding-top: var(--mud-appbar-height);
+}
+
+@media (min-width: 960px) {
+    .mud-layout > footer {
+        position: fixed;
+        bottom: 0;
+        width: calc(100% - var(--mud-drawer-width-left, 280px));
+        margin-left: var(--mud-drawer-width-left, 280px);
+        z-index: 998;
+        background-color: var(--mud-palette-background);
+        padding: var(--mud-spacing-unit) calc(var(--mud-spacing-unit) * 2);
+    }
+
+    .mud-main-content .mud-container {
+        padding-bottom: calc(var(--mud-appbar-height, 64px) + 80px) !important;
+    }
+}
+
+@media (max-width: 959.98px) {
+    .mud-main-content .mud-container {
+        padding-bottom: 24px !important;
+    }
+}
+
 .markdown-content {
     overflow-x: auto;
 }
 
-    .markdown-content h1, .markdown-content h2, .markdown-content h3, .markdown-content h4, .markdown-content h5, .markdown-content h6 {
-        margin-top: 1.5em;
+    .markdown-content h1,
+    .markdown-content h2,
+    .markdown-content h3,
+    .markdown-content h4,
+    .markdown-content h5,
+    .markdown-content h6 {
+        margin-top: 0.5em;
         margin-bottom: 0.5em;
         font-weight: 600;
         line-height: 1.25;
@@ -61,7 +96,8 @@ body {
         line-height: 1.6;
     }
 
-    .markdown-content ul, .markdown-content ol {
+    .markdown-content ul,
+    .markdown-content ol {
         margin-bottom: 1em;
         padding-left: 1.5em;
     }
@@ -108,7 +144,8 @@ body {
         margin-bottom: 1em;
     }
 
-    .markdown-content th, .markdown-content td {
+    .markdown-content th,
+    .markdown-content td {
         border: 1px solid #ddd;
         padding: 0.8em;
         text-align: left;
@@ -128,7 +165,8 @@ body {
         margin-bottom: 1em;
     }
 
-    .markdown-content p, .markdown-content li {
+    .markdown-content p,
+    .markdown-content li {
         word-wrap: break-word;
         overflow-wrap: break-word;
     }
@@ -137,7 +175,9 @@ h4, h5, h6 {
     font-family: 'Oranienbaum', serif;
 }
 
-.article .article-body h1, .article .article-body h2, .article .article-body h3 {
+.article .article-body h1,
+.article .article-body h2,
+.article .article-body h3 {
     font-family: "Playfair Display", serif;
 }
 
@@ -154,19 +194,26 @@ a, .btn-link {
 }
 
 .btn-primary {
-    color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+    color: #fff;
 }
 
 .btn, .btn-link.nav-link, .form-control, .form-check-input {
     transition: box-shadow 0.15s ease-in-out;
 }
 
-    .btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
-    .form-control:focus, .form-check-input:focus {
+    .btn:focus,
+    .btn:active:focus,
+    .btn-link.nav-link:focus,
+    .form-control:focus,
+    .form-check-input:focus {
         box-shadow: 0 0 0 0.1rem #fff, 0 0 0 0.25rem #258cfb;
     }
+
+.content {
+    padding-top: 1.1rem;
+}
 
 .valid.modified:not([type=checkbox]) {
     outline: 1px solid #26b050;
@@ -272,6 +319,12 @@ a, .btn-link {
     color: #3E2723 !important;
 }
 
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
 main {
     flex: 1;
 }
@@ -280,7 +333,17 @@ main {
     background-image: linear-gradient(180deg, rgb(5,39,103) 0%, #3a0647 70%);
 }
 
+@media (max-width: 640.98px) {
+    .top-row {
+        justify-content: space-between;
+    }
+}
+
 @media (min-width: 641px) {
+    .page {
+        flex-direction: row;
+    }
+
     .sidebar {
         width: 250px;
         height: 100vh;
@@ -316,47 +379,12 @@ main {
     top: 20px !important;
 }
 
-.mud-layout {
-    flex-grow: 1;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
+:root {
+    --mud-appbar-height: 64px;
 }
 
-.mud-main-content {
-    flex-grow: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 100%;
-}
-
-@media (max-width: 959.98px) {
-    .mud-main-content {
-        margin-left: 0 !important;
-        padding-left: 0 !important;
-    }
-
-        .mud-main-content .mud-container {
-            padding-bottom: 24px !important;
-        }
-}
-
-@media (min-width: 960px) {
-    .mud-main-content {
-        padding-left: 280px !important;
-    }
-
-    .mud-layout > footer {
-        position: fixed;
-        bottom: 0;
-        width: calc(100% - var(--mud-drawer-width-left, 280px));
-        margin-left: var(--mud-drawer-width-left, 280px);
-        z-index: 998;
-        background-color: var(--mud-palette-background);
-        padding: var(--mud-spacing-unit);
-    }
-
-    .mud-main-content .mud-container {
-        padding-bottom: calc(var(--mud-appbar-height, 64px) + 40px) !important;
-    }
+.sticky {
+    position: sticky;
+    top: var(--mud-appbar-height) !important;
+    z-index: 100 !important;
 }

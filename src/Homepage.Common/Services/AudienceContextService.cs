@@ -19,7 +19,7 @@ namespace Homepage.Common.Services
                 if (_currentAudience != value)
                 {
                     _currentAudience = value;
-                    Log.Logger.ForContext<AudienceContextService>().Information("Audience changed to: {Audience}", _currentAudience);
+                    Log.Logger.ForContext<AudienceContextService>().Debug("Audience changed to: {Audience}", _currentAudience);
                     OnAudienceChanged?.Invoke();
                 }
             }
@@ -29,7 +29,7 @@ namespace Homepage.Common.Services
 
         public AudienceContextService()
         {
-            Log.Logger.ForContext<AudienceContextService>().Information("AudienceContextService initialized with default audience: {Audience}", _currentAudience);
+            Log.Logger.ForContext<AudienceContextService>().Debug("AudienceContextService initialized with default audience: {Audience}", _currentAudience);
         }
 
         public void SetAudience(string audience)
@@ -42,7 +42,7 @@ namespace Homepage.Common.Services
             }
 
             CurrentAudience = normalizedAudience;
-            Log.Logger.ForContext<AudienceContextService>().Information("Setting audience to: {Audience}", normalizedAudience);
+            Log.Logger.ForContext<AudienceContextService>().Debug("Setting audience to: {Audience}", normalizedAudience);
         }
 
         public List<string> GetAvailableAudiences()

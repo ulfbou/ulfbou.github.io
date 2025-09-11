@@ -31,17 +31,17 @@
                     {
                         @foreach (var tag in FilterService.GetAllAvailableTags())
                         {
-                                                                    <MudCheckBox T="bool"
-                                                                                 Label="@tag"
-                                                                                 Dense="true"
-                                                                                 Color="Color.Primary"
-                                                                                 Checked="@(IsTagFilterActive(tag))"
-                                                                                 CheckedChanged="@((bool isChecked) => OnFilterChanged(tag, isChecked))" />
+                                                    <MudCheckBox T="bool"
+                                                                    Label="@tag"
+                                                                    Dense="true"
+                                                                    Color="Color.Primary"
+                                                                    Checked="@(IsTagFilterActive(tag))"
+                                                                    CheckedChanged="@((bool isChecked) => OnFilterChanged(tag, isChecked))" />
                         }
                     }
                     else
                     {
-                                            <MudText Typo="Typo.body2" Class="mud-text-secondary">No tags available for filtering.</MudText>
+                                    <MudText Typo="Typo.body2" Class="mud-text-secondary">No tags available for filtering.</MudText>
                     }
                 </div>
             </MudCard>
@@ -50,23 +50,23 @@
 
     @if (IsLoading)
     {
-                            <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
-                                <MudProgressCircular Indeterminate="true" Size="Size.Medium" Color="Color.Primary" />
-                            </MudPaper>
+                                        <MudPaper Class="d-flex align-center justify-center mud-width-full pa-6 ma-6" Square="false" Outline="false">
+                                            <MudProgressCircular Indeterminate="true" Size="Size.Medium" Color="Color.Primary" />
+                                        </MudPaper>
     }
     else if (ContentList.Any())
     {
         @foreach (var post in ContentList.Take(_maxItems))
         {
-                                                    <ContentCard Content="@post" OnClick="@(() => NavManager.NavigateTo($"/content/{post.Slug}"))" />
+                                                                            <ContentCard Content="@post" OnClick="@(() => NavManager.NavigateTo($"/content/{post.Slug}"))" />
         }
         @if (ContentList.Count > _maxItems)
         {
-                                                    <MudButton Variant="Variant.Outlined" OnClick="LoadMore" Class="mt-4">Load more</MudButton>
+                                                                            <MudButton Variant="Variant.Outlined" OnClick="LoadMore" Class="mt-4">Load more</MudButton>
         }
     }
     else
     {
-                            <MudText Typo="Typo.body1" Class="text-center mt-8">No articles found matching your criteria.</MudText>
+                                        <MudText Typo="Typo.body1" Class="text-center mt-8">No articles found matching your criteria.</MudText>
     }
     </MudContainer>

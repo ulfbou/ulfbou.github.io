@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Components;
-// REMOVED: using Microsoft.AspNetCore.Components.Web;
 using Homepage.Common.Models;
 using Homepage.Common.Services;
 using MudBlazor;
@@ -19,20 +18,18 @@ namespace Homepage.Components
 
         private bool IsPinned { get; set; }
 
-        // If you encounter NullReferenceException for LocalStorageService or Snackbar,
-        // uncomment and add the following [Inject] properties:
-        // [Inject] public LocalStorageService LocalStorageService { get; set; } = default!;
-        // [Inject] public ISnackbar Snackbar { get; set; } = default!;
+        [Inject] public LocalStorageService LocalStorageService { get; set; } = default!;
+        [Inject] public ISnackbar Snackbar { get; set; } = default!;
 
         protected override async Task OnInitializedAsync()
         {
-            var pinnedSlugs = await LocalStorageService.GetPinnedProjectTitlesAsync();
+            var pinnedSlugs = await LocalStorageService.GetPinnedSlugsAsync();
             IsPinned = pinnedSlugs.Contains(Content.Slug);
         }
 
         private async Task TogglePin()
         {
-            var pinnedSlugs = await LocalStorageService.GetPinnedProjectTitlesAsync();
+            var pinnedSlugs = await LocalStorageService.GetPinnedSlugsAsync();
 
             if (IsPinned)
             {
@@ -45,7 +42,7 @@ namespace Homepage.Components
                 Snackbar.Add($"'{Content.Title}' pinned!", Severity.Success);
             }
 
-            await LocalStorageService.SetPinnedProjectTitlesAsync(pinnedSlugs);
+            await LocalStorageService.SetPinnedSlugsAsync(pinnedSlugs);
             IsPinned = !IsPinned;
         }
     }

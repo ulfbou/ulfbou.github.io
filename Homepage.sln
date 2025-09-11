@@ -13,6 +13,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{07C2787E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PortfolioStaticGenerator", "tools\PortfolioStaticGenerator\PortfolioStaticGenerator.csproj", "{64A6BCEA-4A90-40F1-A755-1CFE675142EE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		docs\toc.yml = docs\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "about", "about", "{D44C57A9-B739-4F72-9C0A-D3691B97F35F}"
+	ProjectSection(SolutionItems) = preProject
+		docs\about\toc.yml = docs\about\toc.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "concepts", "concepts", "{A1D5A423-A071-4D8B-985E-DD2C9A6A6DC2}"
+	ProjectSection(SolutionItems) = preProject
+		docs\concepts\philosophy.md = docs\concepts\philosophy.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +82,8 @@ Global
 		{8C00AEA7-C711-4DE5-B6E2-1A914825B659} = {BA8A587D-C744-49A4-8CAE-CA123020DE1C}
 		{3C430379-01BA-4A80-A83C-4C48BAAF3275} = {BA8A587D-C744-49A4-8CAE-CA123020DE1C}
 		{64A6BCEA-4A90-40F1-A755-1CFE675142EE} = {07C2787E-EAC7-C090-1BA3-A61EC2A24D84}
+		{D44C57A9-B739-4F72-9C0A-D3691B97F35F} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
+		{A1D5A423-A071-4D8B-985E-DD2C9A6A6DC2} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F0F628E6-391A-491F-91E3-5F2F0EECF2AF}

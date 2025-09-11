@@ -30,7 +30,7 @@ namespace Homepage.Common.Services
             try
             {
                 await _jsRuntime.InvokeVoidAsync("scrollTracker.observeHeadings", _objectRef);
-                _logger.Information("ScrollTrackerService started observing headings.");
+                _logger.Debug("ScrollTrackerService started observing headings.");
             }
             catch (JSException ex)
             {
@@ -65,7 +65,7 @@ namespace Homepage.Common.Services
                     await _jsRuntime.InvokeVoidAsync("scrollTracker.dispose");
                     _objectRef.Dispose();
                     _objectRef = null;
-                    _logger.Information("ScrollTrackerService disposed.");
+                    _logger.Debug("ScrollTrackerService disposed.");
                 }
                 catch (Exception ex)
                 {

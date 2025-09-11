@@ -1,0 +1,12 @@
+- name: Philosophy
+  href: philosophy.md
+- name: Architecture
+  href: architecture.md
+- name: Patterns
+  items:
+    - name: Modularity
+      href: patterns/modularity.md
+    - name: Observability
+      href: patterns/observability.md
+    - name: Error Handling
+      href: patterns/error-handling.md

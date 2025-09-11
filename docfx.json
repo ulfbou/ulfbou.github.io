@@ -1,24 +1,24 @@
 {
-    "metadata": [
+  "metadata": [
+    {
+      "src": [
         {
-            "src": [
-                {
-                    "files": ["**/*.md"],
+          "files": ["**/*.md"],
                     "exclude": ["obj/**", "_site/**"],
                     "src": "docs"
-                }
-            ],
-            "dest": "obj/api"
         }
-    ],
-    "build": {
-        "content": [
+      ],
+      "dest": "obj/api"
+    }
+  ],
+  "build": {
+    "content": [
             {
                 "files": ["**/*.md"],
                 "src": "docs"
             }
-        ],
-        "resource": [
+    ],
+    "resource": [
             {
                 "files": ["**/*.{png,jpg,jpeg,gif,svg}", "**/*.json"],
                 "src": "assets"
@@ -28,13 +28,14 @@
             {
                 "files": ["**/*.overwrite.md"]
             }
-        ],
-        "globalMetadata": {
-            "_appTitle": "Knowledge Hub",
+    ],
+    "template": [ "default", "themes/custom" ],
+    "globalMetadata": {
+      "_appTitle": "Knowledge Hub",
             "_enableSearch": true,
             "_appFooter": "© 2025 Ulf Bourelius. All rights reserved.",
             "_enableNewTab": true
-        },
+    },
         "template": ["default", "themes/custom"],
         "dest": "_site/docs",
         "xref": [],
@@ -43,5 +44,5 @@
             "priority": 0.5,
             "changefreq": "weekly"
         }
-    }
+  }
 }
