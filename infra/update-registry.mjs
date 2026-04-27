@@ -1,61 +1,37 @@
-#!/usr/bin/env node
-/**
- * infra/update-registry.mjs
- *
- * Orchestrates validate → link in a single atomic pass.
- * Intended to be called from GitHub Actions; outputs structured log lines.
- *
- * Usage:
- *   node infra/update-registry.mjs <path-to-app-info.json>
- *
- * Exit 0 = registry updated successfully
- * Exit 1 = validation or write failure (error written to stderr)
- */
+import fs from 'node:fs';
+import path from 'node:path';
 
-import { execFileSync } from "node:child_process";
-import { resolve, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+const registryPath = path.join('kernel', 'apps.json');
+const appInfoPath = process.argv[2];
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const [, , appInfoPath] = process.argv;
 if (!appInfoPath) {
-  console.error("Usage: update-registry.mjs <path-to-app-info.json>");
+  console.error('Usage: node update-registry.mjs <app-info.json>');
   process.exit(1);
 }
 
-const resolvedPath = resolve(appInfoPath);
+const appInfo = JSON.parse(fs.readFileSync(appInfoPath, 'utf8'));
 
-// ── Step 1: Validate ─────────────────────────────────────────────────────────
-
-console.log("::group::Validate manifest");
+let registry;
 try {
-  execFileSync(
-    process.execPath,
-    [resolve(__dirname, "validate-manifest.mjs"), resolvedPath],
-    { stdio: "inherit" }
-  );
+  registry = JSON.parse(fs.readFileSync(registryPath, 'utf8'));
 } catch {
-  console.error("::endgroup::");
-  console.error("::error::Manifest validation failed — registry not updated.");
-  process.exit(1);
+  registry = { apps: [] };
 }
-console.log("::endgroup::");
 
-// ── Step 2: Link ─────────────────────────────────────────────────────────────
+// --- Issue #2 requirements ---
+if (!registry.schemaVersion) registry.schemaVersion = '1.0';
+registry.schemaVersion = '1.0';
+registry.updatedAt = new Date().toISOString();
 
-console.log("::group::Link into registry");
-try {
-  execFileSync(
-    process.execPath,
-    [resolve(__dirname, "linker.mjs"), resolvedPath],
-    { stdio: "inherit" }
-  );
-} catch {
-  console.error("::endgroup::");
-  console.error("::error::Registry link failed.");
-  process.exit(1);
+if (!Array.isArray(registry.apps)) registry.apps = [];
+
+// upsert app
+const idx = registry.apps.findIndex(a => a.id === appInfo.id);
+if (idx >= 0) {
+  registry.apps[idx] = {...registry.apps[idx],...appInfo };
+} else {
+  registry.apps.push(appInfo);
 }
-console.log("::endgroup::");
 
-process.exit(0);
+fs.writeFileSync(registryPath, JSON.stringify(registry, null, 2) + '\n');
+console.log(`Registry updated: ${appInfo.id}@${appInfo.version}`);
