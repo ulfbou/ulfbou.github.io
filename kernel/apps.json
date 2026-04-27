@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema",
+  "description": "SAOS app registry — consumed by the kernel on boot.",
+  "capabilities": ["user"],
+  "apps": [
+    {
+      "id": "dashboard",
+      "title": "Dashboard",
+      "entry": "/dashboard/",
+      "capabilities": ["user"]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+# .github/workflows/link-app.yml
+#
+# SAOS Kernel — App Registration
+#
+# Triggered exclusively by repository_dispatch from a SAOS app repo.
+# Validates the incoming app-info.json, upserts the app into kernel/apps.json,
+# and commits the result. The subsequent push triggers update-hub.yml.
+#
+# Prerequisites (set once per org):
+#   - The kernel repo must have "Allow GitHub Actions to create and approve PRs"
+#     disabled. Direct commits to main are made by the github-actions bot.
+#   - App repos must store a Fine-Grained PAT (scope: "Actions: write" on this
+#     repo) as the org secret SAOS_KERNEL_TOKEN.
+#
+# Invariants:
+#   - Only payloads conforming to SAOS IPC v1 are accepted.
+#   - A failed validation leaves kernel/apps.json unmodified.
+#   - Concurrency is serialised per app id to prevent registry corruption.
+
+name: Link App
+
+on:
+  repository_dispatch:
+    types: [saos-app-register]
+
+concurrency:
+  # Serialise registrations for the same app id; cancel none (queue them).
+  group: link-app-${{ github.event.client_payload.id }}
+  cancel-in-progress: false
+
+# Default: minimal read-only permissions for the validate job (workflow_call).
+# The link job overrides this with contents: write.
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Validate manifest
+    uses: ./.github/workflows/validate-manifest.yml
+    with:
+      app_info_json: ${{ toJSON(github.event.client_payload) }}
+
+  link:
+    name: Update registry
+    needs: validate
+    if: needs.validate.outputs.valid == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout kernel repo
+        uses: actions/checkout@v4
+        with:
+          # Use a PAT so the resulting push triggers update-hub.yml.
+          # GITHUB_TOKEN pushes are intentionally excluded from triggering
+          # further workflows; a PAT or App token is required here.
+          token: ${{ secrets.SAOS_KERNEL_TOKEN }}
+
+      - name: Write app-info.json to workspace
+        run: |
+          node -e "
+            const fs = require('fs');
+            fs.writeFileSync('/tmp/app-info.json', process.env.APP_INFO_JSON, 'utf8');
+          "
+        env:
+          APP_INFO_JSON: ${{ toJSON(github.event.client_payload) }}
+
+      - name: Run update-registry (validate + link)
+        run: node infra/update-registry.mjs /tmp/app-info.json
+
+      - name: Commit registry change
+        run: |
+          APP_ID="${{ github.event.client_payload.id }}"
+          APP_VER="${{ github.event.client_payload.version }}"
+
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git add kernel/apps.json
+
+          # Commit only when there is an actual diff (idempotency guard)
+          if git diff --staged --quiet; then
+            echo "No change to kernel/apps.json — registry already up-to-date."
+          else
+            git commit -m "chore(registry): register ${APP_ID}@${APP_VER}"
+            git push
+          fi

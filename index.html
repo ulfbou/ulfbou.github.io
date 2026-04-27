@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAOS Hub</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      :root {
+        --bg: #0d1117;
+        --fg: #e6edf3;
+        --accent: #58a6ff;
+        --nav-h: 2.5rem;
+      }
+
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: system-ui, sans-serif;
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* ── Shell nav ─────────────────────────────────────────────────────── */
+
+      #saos-nav {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        height: var(--nav-h);
+        padding: 0 1rem;
+        background: #161b22;
+        border-bottom: 1px solid #30363d;
+      }
+
+      #saos-nav a {
+        color: var(--fg);
+        text-decoration: none;
+        font-size: 0.875rem;
+        opacity: 0.8;
+        transition: opacity 0.15s;
+      }
+
+      #saos-nav a:hover {
+        opacity: 1;
+        color: var(--accent);
+      }
+
+      #saos-nav .brand {
+        font-weight: 600;
+        letter-spacing: 0.05em;
+        color: var(--accent);
+        opacity: 1;
+        margin-right: auto;
+      }
+
+      /* ── App frame ─────────────────────────────────────────────────────── */
+
+      #saos-frame {
+        flex: 1;
+        border: none;
+        width: 100%;
+        height: calc(100dvh - var(--nav-h));
+      }
+    </style>
+  </head>
+  <body>
+    <nav id="saos-nav">
+      <span class="brand">SAOS</span>
+      <!-- Navigation links are injected by kernel.js after boot -->
+    </nav>
+
+    <!--
+      The app frame hosts the currently active SPA.
+      Kernel routing updates window.location; the browser navigates naturally.
+      An iframe is not used — apps share the top-level browsing context and
+      communicate exclusively via SAOS IPC v1 CustomEvents on window.
+    -->
+
+    <script src="./kernel.js"></script>
+  </body>
+</html>

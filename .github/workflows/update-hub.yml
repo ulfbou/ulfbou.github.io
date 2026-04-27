@@ -1,0 +1,70 @@
+# .github/workflows/update-hub.yml
+#
+# SAOS Kernel — Hub Deployment
+#
+# Deploys the kernel runtime and app registry to GitHub Pages whenever
+# kernel/ files change on the main branch (typically after link-app.yml
+# commits an updated apps.json).
+#
+# Invariants:
+#   - Only the files under kernel/ and the hub shell (index.html) are served.
+#   - No app code is bundled or mutated by this workflow.
+#   - Deployment is deterministic: same source tree → same pages output.
+#   - GitHub Pages environment URL is recorded as a job output.
+
+name: Update Hub
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "kernel/**"
+      - "index.html"
+
+  # Allow manual re-deployment without a code change (e.g. after Pages config reset)
+  workflow_dispatch:
+
+# Only one deployment runs at a time; queue subsequent ones.
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  deploy:
+    name: Deploy hub to GitHub Pages
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+      - name: Checkout kernel repo
+        uses: actions/checkout@v4
+
+      - name: Assemble hub artifact
+        # Collect only the files the hub needs at runtime.
+        # sdk/ and docs/ are excluded from the served site intentionally.
+        run: |
+          mkdir -p _hub
+          cp index.html         _hub/index.html
+          cp kernel/kernel.js   _hub/kernel.js
+          cp kernel/apps.json   _hub/apps.json
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload hub artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _hub
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4

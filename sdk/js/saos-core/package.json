@@ -1,0 +1,38 @@
+{
+  "name": "saos-core",
+  "version": "1.0.0",
+  "description": "SAOS IPC v1 JavaScript/TypeScript SDK — the standard library (libc) for SAOS userland applications",
+  "main": "dist/saos-core.js",
+  "module": "dist/saos-core.esm.js",
+  "types": "dist/saos-core.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "test": "node --experimental-vm-modules node_modules/.bin/jest"
+  },
+  "keywords": [
+    "saos",
+    "ipc",
+    "sdk",
+    "blazor",
+    "wasm"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^29.5.12",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^30.3.0",
+    "ts-jest": "^29.1.4",
+    "typescript": "^5.4.5"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/__tests__/**/*.test.ts"
+    ]
+  }
+}
