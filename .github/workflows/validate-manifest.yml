@@ -1,0 +1,64 @@
+# .github/workflows/validate-manifest.yml
+#
+# SAOS Kernel — Manifest Validation
+#
+# Validates that an app-info.json payload conforms to SAOS IPC v1 invariants.
+# Can be triggered manually (workflow_dispatch) for offline checks, or called
+# internally by link-app.yml via workflow_call.
+#
+# This workflow NEVER modifies any file in the repository.
+
+name: Validate App Manifest
+
+on:
+  workflow_dispatch:
+    inputs:
+      app_info_json:
+        description: "Raw app-info.json content (single-line JSON)"
+        required: true
+        type: string
+
+  workflow_call:
+    inputs:
+      app_info_json:
+        description: "Raw app-info.json content (single-line JSON)"
+        required: true
+        type: string
+    outputs:
+      valid:
+        description: "'true' when the manifest is valid"
+        value: ${{ jobs.validate.outputs.valid }}
+
+jobs:
+  validate:
+    name: Validate manifest
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    outputs:
+      valid: ${{ steps.check.outputs.valid }}
+
+    steps:
+      - name: Checkout kernel repo
+        uses: actions/checkout@v4
+
+      - name: Write manifest to workspace
+        # Use a heredoc-safe approach: write via node to avoid shell quoting issues
+        run: |
+          node -e "
+            const fs = require('fs');
+            fs.writeFileSync('/tmp/app-info.json', process.env.APP_INFO_JSON, 'utf8');
+          "
+        env:
+          APP_INFO_JSON: ${{ inputs.app_info_json }}
+
+      - name: Run validation
+        id: check
+        run: |
+          if node infra/validate-manifest.mjs /tmp/app-info.json; then
+            echo "valid=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "valid=false" >> "$GITHUB_OUTPUT"
+            exit 1
+          fi

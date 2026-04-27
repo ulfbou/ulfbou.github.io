@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Saos.Interop</RootNamespace>
+    <AssemblyName>Saos.Interop</AssemblyName>
+    <Description>SAOS IPC v1 Blazor WASM SDK — the standard library (libc) for SAOS Blazor userland applications.</Description>
+    <Version>1.0.0</Version>
+    <Authors>SAOS Platform Team</Authors>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <StaticWebAssetBasePath>/</StaticWebAssetBasePath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+  </ItemGroup>
+
+</Project>
