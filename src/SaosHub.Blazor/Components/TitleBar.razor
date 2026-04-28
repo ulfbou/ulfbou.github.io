@@ -1,0 +1,35 @@
+@implements IDisposable
+
+<div class="titlebar">
+  <div class="titlebar-dots">
+    <div class="dot dot-red"></div>
+    <div class="dot dot-yellow"></div>
+    <div class="dot dot-green"></div>
+  </div>
+  <div class="titlebar-center">
+    <span class="titlebar-logo">SAOS</span>
+    <span class="titlebar-slash">/</span>
+    <span class="titlebar-path">@CurrentPath</span>
+  </div>
+  <div class="titlebar-right">
+    <span class="status-pill pill-green"><span class="status-dot blink"></span>Kernel Active</span>
+    <span class="status-pill pill-blue">v0.1.0-alpha</span>
+    <span class="clock" id="clock">@_time</span>
+  </div>
+</div>
+
+@code {
+    [Parameter] public string CurrentPath { get; set; } = "";
+    private string _time = DateTime.Now.ToString("HH:mm:ss");
+    private System.Threading.Timer? _timer;
+
+    protected override void OnInitialized()
+    {
+        _timer = new System.Threading.Timer(_ => {
+            _time = DateTime.Now.ToString("HH:mm:ss");
+            InvokeAsync(StateHasChanged);
+        }, null, 0, 1000);
+    }
+
+    public void Dispose() => _timer?.Dispose();
+}

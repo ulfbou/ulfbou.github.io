@@ -1,0 +1,51 @@
+<nav class="sidebar">
+  <div class="sidebar-section">
+    <div class="sidebar-label">Navigation</div>
+    @foreach(var item in NavItems)
+    {
+      <div class="sidebar-item @(ActiveView==item.View?"active":"")" @onclick="() => Navigate(item.View)">
+        <span class="sidebar-icon">@item.Icon</span> @item.Label
+        @if(item.Badge != null) { <span class="sidebar-badge @(ActiveView==item.View?"active-badge":"")">@item.Badge</span> }
+      </div>
+    }
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-label">Code</div>
+    @foreach(var item in CodeItems)
+    {
+      <div class="sidebar-item @(ActiveView==item.View?"active":"")" @onclick="() => Navigate(item.View)">
+        <span class="sidebar-icon">@item.Icon</span> @item.Label
+      </div>
+    }
+  </div>
+  <div class="sidebar-bottom">
+    ulfbou.github.io<br/>
+    SAOS Kernel<br/>
+    <a href="https://github.com/ulfbou" target="_blank">IPC v1 Spec</a>
+  </div>
+</nav>
+
+@code {
+    [Parameter] public string ActiveView { get; set; } = "overview";
+    [Parameter] public EventCallback<string> OnNavigate { get; set; }
+
+    record NavItem(string View, string Label, string Icon, string? Badge);
+    List<NavItem> NavItems = new() {
+        new("overview","Overview","⬡","NOW"),
+        new("tree","Repo Tree","🌲",null),
+        new("phases","Phases","◎","4"),
+        new("blazor","Blazor Infra","◈","4"),
+        new("architecture","Architecture","◻",null),
+    };
+    List<NavItem> CodeItems = new() {
+        new("template","dotnet Template","⟨/⟩",null),
+        new("msbuild","MSBuild Target","⚙",null),
+        new("ipc","IPC Contract","⟷",null),
+        new("diagnostics","Diagnostics","◑",null),
+    };
+
+    private async Task Navigate(string view)
+    {
+        await OnNavigate.InvokeAsync(view);
+    }
+}

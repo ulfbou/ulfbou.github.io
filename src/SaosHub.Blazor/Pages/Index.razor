@@ -1,0 +1,22 @@
+@page "/"
+@inject IJSRuntime JS
+
+<div class="view active" id="view-overview">
+  <div class="view-header">
+    <div class="view-title">SAOS <span>Infrastructure</span> Roadmap</div>
+    <div class="view-subtitle">A lean, invariant kernel that never gets edited by hand — apps live in their own repos, register via JSON, and ship independently via CI.</div>
+  </div>
+  <div class="highlight-box">
+    <strong>The Invariant:</strong> The kernel never contains app code. Apps dispatch a JSON registration event. The hub rebuilds <code>apps.json</code> automatically.
+  </div>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("saosBoot.injectOriginal");
+        }
+    }
+}
