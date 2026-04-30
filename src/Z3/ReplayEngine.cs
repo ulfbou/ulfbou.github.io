@@ -1,5 +1,9 @@
+using Saos.Core;
+
 using System.Security.Cryptography;
+using System.Text;
 using System.Text.Json;
+using System.Text.Unicode;
 
 namespace Saos.Z3;
 
@@ -45,13 +49,3 @@ public static class ReplayEngine
         return (state, terminalHash);
     }
 }
-
-/// <summary>
-/// DomainEvent shape per Decision #3: {id:uuidv4, ts:ISO8601, type:string, payload:object}
-/// </summary>
-public record DomainEvent(
-    string Id,
-    DateTimeOffset Ts,
-    string Type,
-    JsonElement Payload
-);

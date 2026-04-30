@@ -1,5 +1,11 @@
+using Saos.Core;
+using Saos.Z3;
+
 using System.Text.Json;
+
 using Xunit;
+
+using DomainEvent = Saos.Core.DomainEvent;
 
 namespace Saos.Tests;
 
@@ -39,8 +45,8 @@ public class ReplayTests
         Func<int, DomainEvent, int> reducer = (state, evt) => state + 1;
 
         // Act: Replay twice to verify determinism
-        var (finalState1, terminalHash1) = Z3.ReplayEngine.Replay(initialState, events, reducer);
-        var (finalState2, terminalHash2) = Z3.ReplayEngine.Replay(initialState, events, reducer);
+        var (finalState1, terminalHash1) = ReplayEngine.Replay<int>(initialState, events, reducer);
+        var (finalState2, terminalHash2) = ReplayEngine.Replay<int>(initialState, events, reducer);
 
         // Assert: Deterministic terminal_hash (Decision #1: SHA256 hex lowercase)
         Assert.Equal(terminalHash1, terminalHash2);
@@ -58,7 +64,7 @@ public class ReplayTests
         Func<int, DomainEvent, int> reducer = (state, evt) => state;
 
         // Act
-        var (finalState, terminalHash) = Z3.ReplayEngine.Replay(initialState, events, reducer);
+        var (finalState, terminalHash) = ReplayEngine.Replay<int>(initialState, events, reducer);
 
         // Assert: State unchanged, hash produced
         Assert.Equal(42, finalState);
@@ -84,8 +90,8 @@ public class ReplayTests
         Func<int, DomainEvent, int> reducer2 = (state, evt) => state + 2;
 
         // Act
-        var (finalState1, _) = Z3.ReplayEngine.Replay(0, events, reducer1);
-        var (finalState2, _) = Z3.ReplayEngine.Replay(0, events, reducer2);
+        var (finalState1, _) = ReplayEngine.Replay(0, events, reducer1);
+        var (finalState2, _) = ReplayEngine.Replay(0, events, reducer2);
 
         // Assert: Different reducers produce different outcomes
         Assert.NotEqual(finalState1, finalState2);
