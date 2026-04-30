@@ -1,0 +1,96 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saos.example/schemas/apps-manifest.schema.json",
+  "$comment": "Decisions from context/SAOS_CONTEXT.md included (Decision 4: Manifest closed schema with prevHash; Decision 1: SHA-256 hash format).",
+  "title": "SAOS Manifest Schema v0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "manifest_id",
+    "application_id",
+    "application_version",
+    "entry",
+    "entry_point",
+    "declared_zone",
+    "declared_capabilities",
+    "integrity",
+    "ipc_contract_version"
+  ],
+  "properties": {
+    "manifest_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Immutable manifest instance id (UUID v4)."
+    },
+    "application_id": {
+      "type": "string",
+      "description": "Stable globally-unique application identifier (e.g., \"inventory\")."
+    },
+    "application_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+(-[A-Za-z0-9.-]+)?$",
+      "description": "Semantic version for the application release."
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["browser"],
+      "properties": {
+        "browser": {
+          "type": "string",
+          "description": "Relative immutable artifact path to browser entry (e.g., \"./dist/index.js\")."
+        }
+      }
+    },
+    "entry_point": {
+      "type": "string",
+      "pattern": "^/.*",
+      "description": "Route prefix the application binds to (must start with '/')."
+    },
+    "declared_zone": {
+      "type": "string",
+      "enum": ["Z0", "Z1", "Z2", "Z3", "Z4"],
+      "description": "Declared zone. Registry expects Z1 for application manifests."
+    },
+    "declared_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "emit_ipc",
+          "request_navigation",
+          "request_storage_read",
+          "request_storage_write",
+          "announce_presence"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "integrity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["hash_algorithm", "manifest_hash"],
+      "properties": {
+        "hash_algorithm": {
+          "type": "string",
+          "const": "SHA256"
+        },
+        "manifest_hash": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "SHA-256 hex lowercase of the published artifact (Decision 1)."
+        },
+        "prev_manifest_hash": {
+          "type": ["string", "null"],
+          "pattern": "^[a-f0-9]{64}$",
+          "description": "Optional previous manifest hash for lineage chaining; present when replacing an existing manifest (Decision 4)."
+        }
+      }
+    },
+    "ipc_contract_version": {
+      "type": "string",
+      "pattern": "^1\\.0$"
+    }
+  }
+}

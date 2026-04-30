@@ -1,0 +1,109 @@
+# Decision notes (from context/SAOS_CONTEXT.md):
+# Decision 1: Hash: SHA-256 hex lowercase
+# Decision 2: Capability: opaque string, exact-match
+# Decision 3: DomainEvent: {id:uuidv4, ts:ISO8601, type:string, payload:object}
+# Decision 4: Manifest: closed schema with prevHash
+# Decision 6: UUID: v4 build-time
+kernel_owned_authorities:
+  - id: aggregate_identity
+    name: Aggregate Identity Authority
+    description: >
+      Defines aggregate existence and ownership; rejects cross-aggregate mutation and identity reassignment.
+  - id: event_legality
+    name: Event Legality Authority
+    description: >
+      Validates admissible event types and structural correctness; rejects undeclared or causally invalid events.
+  - id: event_ordering
+    name: Event Ordering Authority
+    description: >
+      Enforces canonical append order; rejects retroactive insertion and nondeterministic ordering.
+  - id: state_transition
+    name: State Transition Authority
+    description: >
+      Permits only declared transitions; rejects transitions without causal predecessor validity.
+  - id: reducer_determinism
+    name: Reducer Determinism Authority
+    description: >
+      Requires deterministic reducers; rejects reducers that depend on external nondeterministic inputs.
+  - id: persistence_integrity
+    name: Persistence Integrity Authority
+    description: >
+      Ensures immutable persisted history; rejects mutation or partial visibility of persisted events.
+  - id: compaction_legality
+    name: Compaction Legality Authority
+    description: >
+      Governs summary production; rejects compaction that changes replay equivalence.
+  - id: upcasting
+    name: Upcasting Authority
+    description: >
+      Controls schema evolution and interpretation during replay; rejects undeclared semantic changes.
+  - id: transaction_boundary
+    name: Transaction Boundary Authority
+    description: >
+      Defines atomic append semantics; rejects partially-committed outcomes.
+  - id: boundary_enforcement
+    name: Boundary Enforcement Authority
+    description: >
+      Enforces kernel/application separation and rejection of kernel invariant mutation.
+  - id: capability_admission
+    name: Capability Admission Authority
+    description: >
+      Grants or denies declared capabilities; rejects implicit capability acquisition.
+  - id: failure_semantics
+    name: Failure Semantics Authority
+    description: >
+      Defines legal failure outcomes and recovery semantics; rejects undefined recovery states.
+  - id: replay
+    name: Replay Authority
+    description: >
+      Controls lawful replay semantics and acceptance criteria; rejects replay divergence.
+  - id: temporal_legality
+    name: Temporal Legality Authority
+    description: >
+      Enforces causality ordering and rejects impossible temporal sequences.
+  - id: isolation
+    name: Isolation Authority
+    description: >
+      Guarantees aggregate isolation; rejects hidden shared mutable state.
+
+application_owned_authorities:
+  - id: intent_submission
+    name: Intent Submission Authority
+    description: >
+      May submit commands and request transitions; cannot enforce legality independently.
+  - id: projection
+    name: Projection Authority
+    description: >
+      May derive read models and rebuild projections; cannot redefine canonical history.
+  - id: presentation
+    name: Presentation Authority
+    description: >
+      May render and transform outputs; may not mutate kernel state directly.
+  - id: workflow_coordination
+    name: Workflow Coordination Authority
+    description: >
+      May sequence app-level workflows; may not bypass kernel transition validation.
+  - id: integration
+    name: Integration Authority
+    description: >
+      May translate external inputs to commands; may not inject canonical events into persistence.
+  - id: policy_consumption
+    name: Policy Consumption Authority
+    description: >
+      May consume kernel legality outcomes; may not redefine kernel legality.
+  - id: query
+    name: Query Authority
+    description: >
+      May request projections and replay outputs; may not alter replay semantics.
+  - id: external_side_effect
+    name: External Side-Effect Authority
+    description: >
+      May perform side-effects external to kernel; side-effects are not canonical truth.
+  - id: session
+    name: Session Authority
+    description: >
+      May maintain transient interaction context; may not persist canonical truth outside kernel.
+  - id: recovery_invocation
+    name: Recovery Invocation Authority
+    description: >
+      May request replay/rebuild operations; may not alter replay source history.
