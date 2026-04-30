@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://saos.example/schemas/ipc-envelope.schema.json",
+  "$comment": "Decisions from context/SAOS_CONTEXT.md: 1=Hash: SHA-256 hex lowercase; 2=Capability: opaque string; 3=DomainEvent shape; 4=Manifest: closed schema with prevHash; 6=UUID: v4 build-time; 9=Navigation route prefix /app/{id}/; 10=Error: on hash mismatch, replay from prev.",
+  "title": "SAOS Canonical IPC Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "envelope_id",
+    "schema_version",
+    "message_type",
+    "source_zone",
+    "target_zone",
+    "authority_scope",
+    "timestamp_utc",
+    "payload_hash",
+    "payload"
+  ],
+  "properties": {
+    "envelope_id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "UUID v4 identifier for this envelope (build-time v4 recommended)."
+    },
+    "schema_version": {
+      "type": "string",
+      "const": "1.0",
+      "description": "Canonical envelope schema version."
+    },
+    "message_type": {
+      "type": "string",
+      "description": "Closed enum of logical envelope types.",
+      "enum": [
+        "application_request",
+        "kernel_command",
+        "replay_command",
+        "replay_result",
+        "validate_manifest",
+        "route_ipc",
+        "dispatch_shutdown",
+        "dispatch_navigation",
+        "enforce_authority",
+        "announce_presence",
+        "request_navigation",
+        "replay_stream"
+      ]
+    },
+    "source_zone": {
+      "type": "string",
+      "enum": ["Z0", "Z1", "Z2", "Z3", "Z4"]
+    },
+    "target_zone": {
+      "type": "string",
+      "enum": ["Z0", "Z1", "Z2", "Z3", "Z4"]
+    },
+    "authority_scope": {
+      "type": "string",
+      "enum": ["kernel", "application", "system"],
+      "description": "Authority surface claimed by sender; validated by Z0 against Authority Matrix."
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO8601 UTC timestamp. MUST be produced in UTC."
+    },
+    "capability_token": {
+      "type": "string",
+      "description": "Opaque capability token string (exact-match semantics per Decision 2)."
+    },
+    "payload_hash": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hex lowercase of the UTF-8 payload bytes (Decision 1)."
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Envelope payload. 'operation' field is required and must be one of closed enum values.",
+      "required": ["operation"],
+      "properties": {
+        "operation": {
+          "type": "string",
+          "enum": [
+            "announce_presence",
+            "request_navigation",
+            "validate_manifest",
+            "replay_stream",
+            "replay_result",
+            "dispatch_shutdown",
+            "dispatch_navigation",
+            "enforce_authority",
+            "route_ipc",
+            "emit_event",
+            "request_storage_read",
+            "request_storage_write"
+          ]
+        },
+        "data": {
+          "type": ["object", "null"],
+          "description": "Operation-specific payload (opaque to kernel until validated)."
+        }
+      }
+    }
+  }
+}
