@@ -1,0 +1,99 @@
+@page "/"
+
+<div class="view @(CurrentView=="overview"?"active":"")" id="view-overview">
+<div class="view-header">
+          <div class="view-title">SAOS <span>Infrastructure</span> Roadmap</div>
+          <div class="view-subtitle">A lean, invariant kernel that never gets edited by hand — apps live in their own repos, register via JSON, and ship independently via CI.</div>
+        </div>
+
+        <div class="highlight-box">
+          <strong>The Invariant:</strong> The kernel never contains app code. Apps dispatch a JSON registration event. The hub rebuilds <code>apps.json</code> automatically. One-click template → deploy → appear.
+        </div>
+
+        <div class="section-label">Phase Status</div>
+        <div class="phase-grid">
+          <div class="phase-card p0" data-navigate="phases">
+            <div class="phase-status status-active"><span class="status-dot blink"></span> Active</div>
+            <div class="phase-num">Phase 0</div>
+            <div class="phase-name">Kernel + Automation</div>
+            <div class="phase-timeline">Now — in progress</div>
+            <ul class="phase-items"><li>SAOS Kernel shell & IPC bus</li><li>Automation Plane CI pipeline</li><li>apps.json registry format</li></ul>
+          </div>
+          <div class="phase-card p1" data-navigate="phases">
+            <div class="phase-status status-planned"><span class="status-dot"></span> Planned</div>
+            <div class="phase-num">Phase 1</div>
+            <div class="phase-name">Blazor Foundation</div>
+            <div class="phase-timeline">~2 weeks</div>
+            <ul class="phase-items"><li>Saos.Interop NuGet package</li><li>dotnet new saos-blazor template</li><li>AddSaosKernel() registration</li></ul>
+          </div>
+          <div class="phase-card p2" data-navigate="phases">
+            <div class="phase-status status-future"><span class="status-dot"></span> Future</div>
+            <div class="phase-num">Phase 2</div>
+            <div class="phase-name">Versatile Services</div>
+            <div class="phase-timeline">~3 weeks after P1</div>
+            <ul class="phase-items"><li>SaosRouterAdapter</li><li>MSBuild manifest generator</li><li>SaosDiagnostics component</li></ul>
+          </div>
+          <div class="phase-card p3" data-navigate="progress">
+            <div class="phase-status status-polish"><span class="status-dot"></span> Later</div>
+            <div class="phase-num">Phase 3</div>
+            <div class="phase-name">DX Polish</div>
+            <div class="phase-timeline">After P2 ships</div>
+            <ul class="phase-items"><li>Hot reload across apps</li><li>Telemetry dashboard</li><li>Visual app builder</li></ul>
+          </div>
+        </div>
+</div>
+
+<div class="view @(CurrentView=="tree"?"active":"")" id="view-tree">
+<div class="view-header"><div class="view-title">Repo <span>Tree</span></div><div class="view-subtitle">The full SAOS infrastructure as a file tree. Click any directory to expand/collapse.</div></div>
+<div class="card"><div class="card-title">📦 ulfbou.github.io — Monorepo Layout</div><div class="tree" id="repoTree"></div></div>
+<div class="info-box"><strong>Key invariant:</strong> <code>kernel/</code> contains zero app code. Only the IPC bus, router, and shell.</div>
+</div>
+
+<div class="view @(CurrentView=="phases"?"active":"")" id="view-phases">
+<div class="view-header"><div class="view-title">Build <span>Phases</span></div><div class="view-subtitle">Four phases from kernel-only to full DX toolchain.</div></div>
+<div class="card"><div class="card-title"><span style="color:var(--green)">◉</span> Phase 0 — Kernel + Automation Plane</div><p>Build the invariant kernel and the GitHub Actions that keep <code>apps.json</code> in sync.</p></div>
+</div>
+
+<div class="view @(CurrentView=="blazor"?"active":"")" id="view-blazor">
+<div class="view-header"><div class="view-title">Blazor <span>Infrastructure</span></div><div class="view-subtitle">Four primitives that make Blazor developers feel at home in SAOS.</div></div>
+<div class="features-grid">
+  <div class="feature-card" data-navigate="template"><span class="feature-icon">📐</span><div class="feature-title">dotnet new saos-blazor</div><div class="feature-desc">One-command project scaffold.</div></div>
+  <div class="feature-card" data-navigate="msbuild"><span class="feature-icon">🔌</span><div class="feature-title">AddSaosKernel()</div><div class="feature-desc">DI extension for IPC bus.</div></div>
+  <div class="feature-card" data-navigate="msbuild"><span class="feature-icon">🛠️</span><div class="feature-title">MSBuild Target</div><div class="feature-desc">Generates app-info.json.</div></div>
+  <div class="feature-card" data-navigate="diagnostics"><span class="feature-icon">📊</span><div class="feature-title">SaosDiagnostics</div><div class="feature-desc">Dev overlay for IPC events.</div></div>
+</div>
+</div>
+
+<div class="view @(CurrentView=="architecture"?"active":"")" id="view-architecture">
+<div class="view-header"><div class="view-title">System <span>Architecture</span></div><div class="view-subtitle">How the kernel, apps, and automation plane relate.</div></div>
+<div class="arch-diagram"><div class="arch-label">GitHub Actions / Automation Plane</div><div class="arch-row"><div class="arch-box highlight-green"><span class="arch-box-icon">🏛️</span><div class="arch-box-title">Kernel Repo</div><div class="arch-box-sub">ulfbou.github.io</div></div></div></div>
+</div>
+
+<div class="view @(CurrentView=="template"?"active":"")" id="view-template">
+<div class="view-header"><div class="view-title">dotnet new <span>Template</span></div><div class="view-subtitle">Template structure for saos-blazor.</div></div>
+<div class="section-label">Template File Layout</div><div class="card"><div class="tree" id="templateTree"></div></div>
+</div>
+
+<div class="view @(CurrentView=="msbuild"?"active":"")" id="view-msbuild">
+<div class="view-header"><div class="view-title">MSBuild <span>Generator</span></div><div class="view-subtitle">Generates app-info.json at publish time.</div></div>
+<div class="highlight-box"><strong>Why MSBuild?</strong> The manifest must stay in sync with the project version.</div>
+</div>
+
+<div class="view @(CurrentView=="ipc"?"active":"")" id="view-ipc">
+<div class="view-header"><div class="view-title">Saos<span>RouterAdapter</span></div><div class="view-subtitle">Keeps a single router for all mounted apps.</div></div><div class="compare-grid"><div class="compare-col compare-bad"><div class="compare-header">❌ Without Adapter</div><div class="compare-item"><span class="ci-icon">×</span>Each app owns URL</div><div class="compare-item"><span class="ci-icon">×</span>Full page reloads</div></div><div class="compare-col compare-good"><div class="compare-header">✓ With Adapter</div><div class="compare-item"><span class="ci-icon">✓</span>Kernel owns URL</div><div class="compare-item"><span class="ci-icon">✓</span>Soft navigation</div></div></div>
+</div>
+
+<div class="view @(CurrentView=="diagnostics"?"active":"")" id="view-diagnostics">
+<div class="view-header"><div class="view-title">Saos<span>Diagnostics</span></div><div class="view-subtitle">In-browser OS task manager.</div></div>
+<SaosDiagPanel />
+</div>
+
+<div class="view @(CurrentView=="why"?"active":"")" id="view-why">
+<div class="view-header"><div class="view-title">Why This <span>Beats Fork</span></div><div class="view-subtitle">Forking apps into the kernel repo kills the OS model.</div></div>
+</div>
+
+<div class="view @(CurrentView=="progress"?"active":"")" id="view-progress">
+<div class="view-header"><div class="view-title">Build <span>Progress</span></div><div class="view-subtitle">Current completion state across all four phases.</div></div>
+</div>
+
+@code { [CascadingParameter] public string CurrentView { get; set; } = "overview"; }

@@ -1,0 +1,53 @@
+@inject IJSRuntime JS
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
+
+<SaosBoot OnFinished="() => _bootDone = true" />
+
+<div id="os" class="@(_bootDone? "visible" : "")">
+    <div class="titlebar">
+        <div class="titlebar-dots"><div class="dot dot-red"></div><div class="dot dot-yellow"></div><div class="dot dot-green"></div></div>
+        <div class="titlebar-center"><span class="titlebar-logo">SAOS</span><span class="titlebar-slash">/</span><span class="titlebar-path">@_currentView</span></div>
+        <div class="titlebar-right"><span class="status-pill pill-green"><span class="status-dot blink"></span>Kernel Active</span><SaosAppCount /><SaosClock /></div>
+    </div>
+    <div class="shell">
+        <SaosSidebar ActiveView="@_currentView" OnNavigate="Navigate" />
+        <main class="main"><CascadingValue Value="_currentView">@Body</CascadingValue></main>
+    </div>
+</div>
+
+@code {
+    private bool _bootDone;
+    private string _currentView = "overview";
+
+    protected override async Task OnAfterRenderAsync(bool first)
+ {
+ if(first){
+ try{ var saved = await JS.InvokeAsync<string>("saosPersist.load"); if(!string.IsNullOrEmpty(saved)) _currentView = saved; StateHasChanged(); }catch{}
+ }
+ }
+ protected override void OnInitialized()
+    {
+        var uri = Nav.Uri;
+        var qIdx = uri.IndexOf('?');
+        if (qIdx >= 0)
+        {
+            var qs = uri[(qIdx+1)..];
+            foreach (var pair in qs.Split('&', StringSplitOptions.RemoveEmptyEntries))
+            {
+                var kv = pair.Split('=', 2);
+                if (kv.Length == 2 && kv[0] == "view" &&!string.IsNullOrWhiteSpace(kv[1]))
+                {
+                    _currentView = Uri.UnescapeDataString(kv[1]);
+                    break;
+                }
+            }
+        }
+    }
+
+    private void Navigate(string id)
+    {
+        _currentView = id;
+        Nav.NavigateTo($"?view={id}", replace: true);
+    }
+}

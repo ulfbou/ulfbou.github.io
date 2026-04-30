@@ -1,0 +1,11 @@
+<div class="feature-card">
+  <span class="feature-icon">@Icon</span>
+  <div class="feature-title">@Title</div>
+  <div class="feature-desc">@Description</div>
+</div>
+
+@code {
+    [Parameter] public string Icon { get; set; } = "";
+    [Parameter] public string Title { get; set; } = "";
+    [Parameter] public string Description { get; set; } = "";
+}

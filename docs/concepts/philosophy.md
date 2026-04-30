@@ -46,4 +46,3 @@ Avoid creating micro-modules for single-use code — prefer cohesive modules tha
 
 * [Architecture](./architecture.md)
 * [Modularity pattern](./patterns/modularity.md)
-

@@ -1,0 +1,17 @@
+@inject IJSRuntime JS
+@implements IAsyncDisposable
+<div class="diag-panel"><div class="diag-header">kernel://events</div><div class="diag-body">
+@foreach(var e in _events){<div class="diag-event"><span class="diag-time">@e.Time</span><span class="diag-type @e.Type">@e.Type</span><span class="diag-msg">@e.Msg</span></div>}
+</div></div>
+@code {
+    record Ev(string Time, string Type, string Msg);
+    List<Ev> _events = new();
+    DotNetObjectReference<SaosDiagPanel>? _ref;
+    protected override async Task OnAfterRenderAsync(bool first)
+    {
+        if(first){ _ref = DotNetObjectReference.Create(this);
+            await JS.InvokeVoidAsync("saosDiagInit", _ref); }
+    }
+    [JSInvokable] public void Push(string t,string m){ _events.Insert(0,new(DateTime.Now.ToString("HH:mm:ss"),t,m)); if(_events.Count>6)_events.RemoveAt(6); StateHasChanged();}
+    public ValueTask DisposeAsync(){ _ref?.Dispose(); return ValueTask.CompletedTask; }
+}

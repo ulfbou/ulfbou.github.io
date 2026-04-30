@@ -1,0 +1,18 @@
+<div class="phase-card @CssClass" @onclick="() => OnClick.InvokeAsync()">
+  <div class="phase-status @StatusClass"><span class="status-dot @DotClass"></span> @StatusText</div>
+  <div class="phase-num">@Number</div>
+  <div class="phase-name">@Name</div>
+  <div class="phase-timeline">@Timeline</div>
+  <ul class="phase-items">@foreach(var item in Items){<li>@item</li>}</ul>
+</div>
+@code {
+    [Parameter] public string CssClass { get; set; } = "p0";
+    [Parameter] public string StatusText { get; set; } = "Active";
+    [Parameter] public string StatusClass { get; set; } = "status-active";
+    [Parameter] public string DotClass { get; set; } = "blink";
+    [Parameter] public string Number { get; set; } = "";
+    [Parameter] public string Name { get; set; } = "";
+    [Parameter] public string Timeline { get; set; } = "";
+    [Parameter] public string[] Items { get; set; } = Array.Empty<string>();
+    [Parameter] public EventCallback OnClick { get; set; }
+}

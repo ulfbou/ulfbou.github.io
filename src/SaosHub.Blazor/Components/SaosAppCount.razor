@@ -1,0 +1,12 @@
+@using System.Text.Json
+@inject HttpClient Http
+<span class="status-pill pill-blue">@_count apps</span>
+@code {
+    int _count;
+    protected override async Task OnInitializedAsync(){
+        try{
+            var json = await Http.GetFromJsonAsync<JsonElement>("kernel/apps.json");
+            if(json.TryGetProperty("apps", out var apps)) _count = apps.GetArrayLength();
+        }catch{}
+    }
+}
