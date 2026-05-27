@@ -1,0 +1,6 @@
+namespace Ulfbou.Site.Models;
+public class MetricsModel { public string SchemaVersion { get; set; } = "1"; public DateTime GeneratedAtUtc { get; set; } public PeriodInfo Period { get; set; } = new(); public SummaryInfo Summary { get; set; } = new(); public List<BuildLogItem> BuildLog { get; set; } = new(); public List<AttentionItem> Attention { get; set; } = new(); }
+public class PeriodInfo { public string Kind { get; set; } = ""; public string IsoWeek { get; set; } = ""; public string From { get; set; } = ""; public string To { get; set; } = ""; }
+public class SummaryInfo { public string PrimaryRepo { get; set; } = ""; public int ActiveRepos { get; set; } public int OpenLoops { get; set; } public int StalePullRequests { get; set; } }
+public class BuildLogItem { public string Repo { get; set; } = ""; public string Label { get; set; } = ""; public string RepoLabel { get; set; } = ""; public string Summary { get; set; } = ""; public string? Detail { get; set; } public string Href { get; set; } = ""; public string Status { get; set; } = ""; }
+public class AttentionItem { public string Kind { get; set; } = ""; public string Repo { get; set; } = ""; public string Text { get; set; } = ""; public string Severity { get; set; } = ""; }
