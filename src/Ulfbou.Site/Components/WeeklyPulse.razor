@@ -1,0 +1,18 @@
+@using Markdig
+@inject SiteDataClient Data
+<section aria-labelledby="this-week">
+    <h2 id="this-week">This week</h2>
+    @if (_html == null) { <p>Loading weekly pulse…</p> }
+    else if (_failed) { <p>This week's pulse is temporarily unavailable. The archive is still available at <a href="/pulse/">/pulse/</a>.</p> }
+    else { @((MarkupString)_html) }
+</section>
+@code {
+    private string? _html; private bool _failed;
+    protected override async Task OnInitializedAsync() {
+        var now = await Data.GetNowAsync();
+        var path = now?.Pulse.FriendlyMarkdown?? "/pulse/weekly-friendly.md";
+        var md = await Data.GetWeeklyMarkdownAsync(path);
+        if (md == null) { _failed = true; return; }
+        _html = Markdown.ToHtml(md);
+    }
+}

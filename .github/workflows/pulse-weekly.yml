@@ -1,0 +1,10 @@
+name: Weekly pulse
+on:
+  schedule:
+    - cron: '0 23 * * 0'
+  workflow_dispatch:
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Future: run Collector → metrics.json, then Narrator → weekly-friendly.md"

@@ -1,0 +1,29 @@
+@inject SiteDataClient Data
+<section aria-labelledby="map">
+    <h2 id="map">Map of the work</h2>
+    <div class="preview-card">
+        @if (_graph == null) { <p>Loading…</p> } else {
+            <svg viewBox="0 0 300 120" role="img" aria-label="Repository constellation preview">
+                @foreach (var edge in _graph.Edges) {
+                    var s = _graph.Nodes.FirstOrDefault(n => n.Id == edge.Source);
+                    var t = _graph.Nodes.FirstOrDefault(n => n.Id == edge.Target);
+                    if (s!= null && t!= null) {
+                        <line x1="@GetX(s)" y1="@GetY(s)" x2="@GetX(t)" y2="@GetY(t)" stroke="#cbd5e1" stroke-width="1" />
+                    }
+                }
+                @foreach (var node in _graph.Nodes) {
+                    <circle cx="@GetX(node)" cy="@GetY(node)" r="4" fill="#0f172a" />
+                    @:<text x="@(GetX(node)+6)" y="@(GetY(node)+3)" font-size="9" fill="#334155">@node.Label</text>
+                }
+            </svg>
+        }
+        <p class="muted">A small map of the projects that are currently connected.</p>
+        <p><a href="/repopulse/">Open the observatory →</a></p>
+    </div>
+</section>
+@code {
+    private GraphModel? _graph;
+    protected override async Task OnInitializedAsync() { _graph = await Data.GetGraphAsync(); }
+    private int GetX(GraphNode n) => n.Id switch { "dx.metadata" => 60, "dx.domain" => 140, "dx.annotations" => 220, "dx.facts" => 100, _ => 180 };
+    private int GetY(GraphNode n) => n.Id switch { "dx.metadata" => 40, "dx.domain" => 70, "dx.annotations" => 40, "dx.facts" => 90, _ => 60 };
+}

@@ -1,0 +1,8 @@
+name: Docs
+on:
+  workflow_dispatch:
+jobs:
+  placeholder:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Future: run DocFX, output to wwwroot/docs/"

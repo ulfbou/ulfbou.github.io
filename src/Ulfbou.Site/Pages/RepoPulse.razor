@@ -1,0 +1,13 @@
+@page "/repopulse/"
+@inject SiteDataClient Data
+<PageTitle>Observatory — ulfbou.github.io</PageTitle>
+<h1>Observatory</h1>
+<p class="muted">A quiet place to explore repositories. Full interactivity will grow here.</p>
+@if (_repos == null) { <p>Loading…</p> } else {
+    <div class="repo-grid">
+        @foreach (var repo in _repos) { <RepoCard Repo="repo" /> }
+    </div>
+    <h2>Graph preview</h2>
+    <ObservatoryPreview />
+}
+@code { private List<RepoModel>? _repos; protected override async Task OnInitializedAsync() { _repos = await Data.GetReposAsync(); } }
