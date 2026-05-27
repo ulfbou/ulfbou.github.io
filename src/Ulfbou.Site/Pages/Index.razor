@@ -1,0 +1,17 @@
+@page "/"
+@inject SiteDataClient Data
+<PageTitle>Ulf Bourelius — living logbook</PageTitle>
+<section class="hero">
+    <h1>Ulf Bourelius</h1>
+    <p>@_focusSummary</p>
+    <p class="muted">Stockholm</p>
+</section>
+<WeeklyPulse />
+<BuildLog />
+<ObservatoryPreview />
+<DocumentationCards />
+<LabCards />
+@code {
+    private string _focusSummary = "Building .NET tools for domain modeling. Currently deep in dx.metadata.";
+    protected override async Task OnInitializedAsync() { var now = await Data.GetNowAsync(); if (now?.CurrentFocus.Summary!= null) _focusSummary = now.CurrentFocus.Summary; }
+}

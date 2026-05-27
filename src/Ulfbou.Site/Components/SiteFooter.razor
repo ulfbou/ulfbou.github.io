@@ -1,0 +1,11 @@
+@inject SiteDataClient Data
+<footer class="site-footer">
+    <div class="container">
+        <p>
+            @if (_generatedAt!= null) { <span>Last generated: @_generatedAt?.ToString("yyyy-MM-dd HH:mm") UTC</span><span> · </span> }
+            <a href="https://github.com/ulfbou/ulfbou.github.io">source</a><span> · </span><a href="/pulse/feed.xml">rss</a>
+        </p>
+        <p>Built with .NET 10 Blazor WebAssembly</p>
+    </div>
+</footer>
+@code { private DateTime? _generatedAt; protected override async Task OnInitializedAsync() { var now = await Data.GetNowAsync(); _generatedAt = now?.GeneratedAtUtc; } }

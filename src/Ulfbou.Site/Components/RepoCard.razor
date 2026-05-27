@@ -1,0 +1,16 @@
+<div class="repo-card">
+    <h3><a href="@Repo.GithubUrl">@Repo.DisplayName</a></h3>
+    <p>@Repo.Summary</p>
+    <p class="meta">@HumanStatus(Repo.Status)</p>
+</div>
+@code {
+    [Parameter] public RepoModel Repo { get; set; } = default!;
+    private string HumanStatus(string s) => s switch {
+        "active" => "Active this week",
+        "needs-attention" => "Needs a look",
+        "quiet" => "Quiet this week",
+        "paused" => "Paused for now",
+        "stable" => "Stable background work",
+        _ => s
+    };
+}
