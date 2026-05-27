@@ -1,1 +1,95 @@
-{ "schemaVersion": "1", "nodes": [ { "id": "dx.metadata", "label": "dx.metadata", "group": "core" }, { "id": "dx.domain", "label": "dx.domain", "group": "core" }, { "id": "dx.annotations", "label": "dx.annotations", "group": "support" }, { "id": "dx.facts", "label": "dx.facts", "group": "support" } ], "edges": [ { "source": "dx.metadata", "target": "dx.domain", "type": "depends" }, { "source": "dx.metadata", "target": "dx.annotations", "type": "depends" }, { "source": "dx.facts", "target": "dx.domain", "type": "depends" } ] }
+{
+  "schemaVersion": "1",
+  "generatedAt": "2026-05-27T11:05:49.0747615Z",
+  "nodes": [
+    {
+      "id": "dx.cli",
+      "label": "dx.cli",
+      "group": "core"
+    },
+    {
+      "id": "ulfbou.github.io",
+      "label": "ulfbou.github.io",
+      "group": "core"
+    },
+    {
+      "id": "portfolio",
+      "label": "portfolio",
+      "group": "core"
+    },
+    {
+      "id": "ai-playground",
+      "label": "ai-playground",
+      "group": "core"
+    },
+    {
+      "id": "quizbattle",
+      "label": "quizbattle",
+      "group": "core"
+    },
+    {
+      "id": "dxs",
+      "label": "dxs",
+      "group": "core"
+    },
+    {
+      "id": "gex.cli",
+      "label": "gex.cli",
+      "group": "core"
+    },
+    {
+      "id": "homebrew-tap",
+      "label": "homebrew-tap",
+      "group": "core"
+    },
+    {
+      "id": "syss8.opf.clean",
+      "label": "syss8.opf.clean",
+      "group": "core"
+    },
+    {
+      "id": "dx.scripts",
+      "label": "dx.scripts",
+      "group": "core"
+    },
+    {
+      "id": "atlasdeck",
+      "label": "atlasdeck",
+      "group": "core"
+    },
+    {
+      "id": "dx.domain",
+      "label": "dx.domain",
+      "group": "core"
+    },
+    {
+      "id": "zentientframework",
+      "label": "zentientframework",
+      "group": "core"
+    },
+    {
+      "id": "zentient.abstractions.core",
+      "label": "zentient.abstractions.core",
+      "group": "core"
+    },
+    {
+      "id": "zentient.testing",
+      "label": "zentient.testing",
+      "group": "core"
+    }
+  ],
+  "edges": [
+    {
+      "source": "dx.cli",
+      "target": "homebrew-tap",
+      "type": "temporal",
+      "weight": 0.4
+    },
+    {
+      "source": "homebrew-tap",
+      "target": "dx.cli",
+      "type": "temporal",
+      "weight": 0.4
+    }
+  ]
+}
