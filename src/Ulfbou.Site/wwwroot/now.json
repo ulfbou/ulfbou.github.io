@@ -1,0 +1,9 @@
+{
+  "schemaVersion": "1",
+  "generatedAtUtc": "2026-05-27T21:00:00Z",
+  "owner": { "name": "Ulf Bourelius", "github": "ulfbou", "location": "Stockholm" },
+  "site": { "title": "ulfbou.github.io", "mode": "living-logbook" },
+  "currentFocus": { "summary": "Building .NET tools for domain modeling. Currently deep in dx.metadata.", "primaryRepo": "dx.metadata", "secondaryRepos": ["dx.domain", "dx.annotations"] },
+  "pulse": { "currentWeek": "2026-W22", "friendlyMarkdown": "/pulse/weekly-friendly.md", "technicalMetrics": "/pulse/technical/2026-W22.json" },
+  "signals": { "activeRepos": 3, "openLoops": 4, "stalePullRequests": 1, "quietRepos": 2 }
+}

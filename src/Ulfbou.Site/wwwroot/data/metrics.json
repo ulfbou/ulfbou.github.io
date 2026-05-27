@@ -1,0 +1,14 @@
+{
+  "schemaVersion": "1",
+  "generatedAtUtc": "2026-05-27T21:00:00Z",
+  "period": { "kind": "week", "isoWeek": "2026-W22", "from": "2026-05-18", "to": "2026-05-24" },
+  "summary": { "primaryRepo": "dx.metadata", "activeRepos": 3, "openLoops": 4, "stalePullRequests": 1 },
+  "buildLog": [
+    { "repo": "dx.metadata", "label": "Metadata work", "repoLabel": "dx.metadata", "summary": "Shaping how domain concepts are described and generated.", "detail": "Most of the visible work this week happened here.", "href": "https://github.com/ulfbou/dx.metadata", "status": "active" },
+    { "repo": "dx.domain", "label": "Domain foundations", "repoLabel": "dx.domain", "summary": "One older change needs attention before it drifts.", "detail": null, "href": "https://github.com/ulfbou/dx.domain", "status": "needs-attention" },
+    { "repo": "dx.annotations", "label": "Annotations", "repoLabel": "dx.annotations", "summary": "Quiet this week; supporting work in the background.", "detail": null, "href": "https://github.com/ulfbou/dx.annotations", "status": "quiet" }
+  ],
+  "attention": [
+    { "kind": "change", "repo": "dx.domain", "text": "One older change needs attention before it drifts.", "severity": "medium" }
+  ]
+}

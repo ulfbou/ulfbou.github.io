@@ -1,0 +1,6 @@
+[
+  { "name": "dx.metadata", "displayName": "Dx.Metadata", "status": "active", "summary": "Metadata model and source generation for domain-driven design", "githubUrl": "https://github.com/ulfbou/dx.metadata", "docsUrl": "/docs/dx.metadata/", "activityScore": 82 },
+  { "name": "dx.domain", "displayName": "Dx.Domain", "status": "needs-attention", "summary": "Core domain primitives and patterns", "githubUrl": "https://github.com/ulfbou/dx.domain", "docsUrl": "/docs/dx.domain/", "activityScore": 41 },
+  { "name": "dx.annotations", "displayName": "Dx.Annotations", "status": "quiet", "summary": "Attributes for modeling intent", "githubUrl": "https://github.com/ulfbou/dx.annotations", "docsUrl": "/docs/dx.annotations/", "activityScore": 18 },
+  { "name": "dx.facts", "displayName": "Dx.Facts", "status": "quiet", "summary": "Testing helpers for domain models", "githubUrl": "https://github.com/ulfbou/dx.facts", "docsUrl": null, "activityScore": 12 }
+]
