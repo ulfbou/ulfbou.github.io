@@ -1,10 +1,53 @@
-name: Weekly pulse
+name: Weekly Pulse
+
 on:
   schedule:
-    - cron: '0 23 * * 0'
+    - cron: "0 23 * * 0"
   workflow_dispatch:
+    inputs:
+      reason:
+        description: "Reason for manual run"
+        required: false
+        default: "manual test"
+
+permissions:
+  contents: write
+
 jobs:
-  placeholder:
+  collect:
     runs-on: ubuntu-latest
+
     steps:
-      - run: echo "Future: run Collector → metrics.json, then Narrator → weekly-friendly.md"
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup .NET 10
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+          include-prerelease: true
+
+      - name: Run Collector
+        run: dotnet run --project tools/SoloPulse.Collector --configuration Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TARGET_USER: ulfbou
+
+      - name: Verify generated output
+        run: |
+          ls -lh src/Ulfbou.Site/wwwroot/data/
+          jq '.schemaVersion' src/Ulfbou.Site/wwwroot/data/repos.json
+          jq '.repos | length' src/Ulfbou.Site/wwwroot/data/repos.json
+          jq '.schemaVersion' src/Ulfbou.Site/wwwroot/data/graph.json
+          jq '.nodes | length' src/Ulfbou.Site/wwwroot/data/graph.json
+          jq '.edges | length' src/Ulfbou.Site/wwwroot/data/graph.json
+
+      - name: Commit generated pulse data
+        run: |
+          git config user.name "pulse-bot"
+          git config user.email "pulse-bot@users.noreply.github.com"
+          git add src/Ulfbou.Site/wwwroot/data/
+          git diff --staged --quiet || git commit -m "chore: update pulse data [skip ci]"
+          git push

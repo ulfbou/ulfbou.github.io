@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+	<OutputType>Exe</OutputType>
+	<TargetFramework>net10.0</TargetFramework>
+	<Nullable>enable</Nullable>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+	<AssemblyName>SoloPulse.Collector</AssemblyName>
+	<RootNamespace>SoloPulse.Collector</RootNamespace>
+  </PropertyGroup>
+
+  <!--
+	Octokit.GraphQL is listed as the intended GraphQL SDK in the spec but the
+	implementation below uses raw HttpClient to stay compatible with .NET 10
+	without depending on a specific library version.  See README.md § "Package
+	notes" for full details.  Add it back once a .NET 10-compatible release is
+	published:
+
+	  <PackageReference Include="Octokit.GraphQL" Version="x.y.z" />
+  -->
+
+</Project>
