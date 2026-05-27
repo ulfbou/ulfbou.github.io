@@ -1,6 +1,186 @@
-[
-  { "name": "dx.metadata", "displayName": "Dx.Metadata", "status": "active", "summary": "Metadata model and source generation for domain-driven design", "githubUrl": "https://github.com/ulfbou/dx.metadata", "docsUrl": "/docs/dx.metadata/", "activityScore": 82 },
-  { "name": "dx.domain", "displayName": "Dx.Domain", "status": "needs-attention", "summary": "Core domain primitives and patterns", "githubUrl": "https://github.com/ulfbou/dx.domain", "docsUrl": "/docs/dx.domain/", "activityScore": 41 },
-  { "name": "dx.annotations", "displayName": "Dx.Annotations", "status": "quiet", "summary": "Attributes for modeling intent", "githubUrl": "https://github.com/ulfbou/dx.annotations", "docsUrl": "/docs/dx.annotations/", "activityScore": 18 },
-  { "name": "dx.facts", "displayName": "Dx.Facts", "status": "quiet", "summary": "Testing helpers for domain models", "githubUrl": "https://github.com/ulfbou/dx.facts", "docsUrl": null, "activityScore": 12 }
-]
+{
+  "schemaVersion": "1",
+  "generatedAt": "2026-05-27T11:05:49.0747615Z",
+  "repos": [
+    {
+      "name": "dx.cli",
+      "displayName": "Dx.Cli",
+      "language": "C#",
+      "momentum": 100,
+      "focusMinutes7d": 349,
+      "contextSwitchesOut": 1,
+      "lastDeepWork": "2026-05-25T18:20:41.0000000Z",
+      "returnRate": 0.93,
+      "openLoops": 1,
+      "summary": ""
+    },
+    {
+      "name": "ulfbou.github.io",
+      "displayName": "Ulfbou.Github.Io",
+      "language": "HTML",
+      "momentum": 12,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-05-27T09:28:39.0000000Z",
+      "returnRate": 1,
+      "openLoops": 1,
+      "summary": ""
+    },
+    {
+      "name": "portfolio",
+      "displayName": "Portfolio",
+      "language": "C#",
+      "momentum": 6,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-04-27T17:43:22.0000000Z",
+      "returnRate": 1,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "ai-playground",
+      "displayName": "Ai-playground",
+      "language": "unknown",
+      "momentum": 1,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-05-01T06:25:34.0000000Z",
+      "returnRate": 1,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "quizbattle",
+      "displayName": "QuizBattle",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-01-22T09:49:35.0000000Z",
+      "returnRate": 0.75,
+      "openLoops": 15,
+      "summary": ""
+    },
+    {
+      "name": "dxs",
+      "displayName": "Dxs",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-04-18T10:51:58.0000000Z",
+      "returnRate": 0.5,
+      "openLoops": 5,
+      "summary": ""
+    },
+    {
+      "name": "gex.cli",
+      "displayName": "Gex.Cli",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2025-12-10T07:46:10.0000000Z",
+      "returnRate": 1,
+      "openLoops": 3,
+      "summary": ""
+    },
+    {
+      "name": "homebrew-tap",
+      "displayName": "Homebrew-tap",
+      "language": "Ruby",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 1,
+      "lastDeepWork": "2026-04-08T18:51:45.0000000Z",
+      "returnRate": 0.67,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "syss8.opf.clean",
+      "displayName": "SYSS8.OPF.Clean",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-03-05T10:56:09.0000000Z",
+      "returnRate": 0.88,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "dx.scripts",
+      "displayName": "Dx.Scripts",
+      "language": "Shell",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-02-20T12:13:25.0000000Z",
+      "returnRate": 1,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "atlasdeck",
+      "displayName": "AtlasDeck",
+      "language": "unknown",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-01-21T20:23:15.0000000Z",
+      "returnRate": 1,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "dx.domain",
+      "displayName": "Dx.Domain",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2025-12-13T07:39:01.0000000Z",
+      "returnRate": 1,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "zentientframework",
+      "displayName": "ZentientFramework",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 18,
+      "lastDeepWork": "2025-11-26T07:01:15.0000000Z",
+      "returnRate": 0.83,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "zentient.abstractions.core",
+      "displayName": "Zentient.Abstractions.Core",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2025-10-08T12:39:31.0000000Z",
+      "returnRate": 0.5,
+      "openLoops": 0,
+      "summary": ""
+    },
+    {
+      "name": "zentient.testing",
+      "displayName": "Zentient.Testing",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2025-09-19T11:39:04.0000000Z",
+      "returnRate": 1,
+      "openLoops": 0,
+      "summary": ""
+    }
+  ]
+}

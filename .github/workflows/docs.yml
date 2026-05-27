@@ -5,4 +5,4 @@ jobs:
   placeholder:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Future: run DocFX, output to wwwroot/docs/"
+      - run: echo "Future- run DocFX, output to wwwroot/docs/"
