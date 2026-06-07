@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-05-31T23:21:08.9125777Z",
+  "generatedAt": "2026-06-07T23:21:11.9942570Z",
   "repos": [
     {
       "name": "dx.cli",
       "displayName": "Dx.Cli",
       "language": "C#",
       "momentum": 100,
-      "focusMinutes7d": 180,
+      "focusMinutes7d": 0,
       "contextSwitchesOut": 1,
       "lastDeepWork": "2026-05-25T18:20:41.0000000Z",
       "returnRate": 0.93,
@@ -18,11 +18,11 @@
       "name": "ulfbou.github.io",
       "displayName": "Ulfbou.Github.Io",
       "language": "C#",
-      "momentum": 26,
+      "momentum": 38,
       "focusMinutes7d": 0,
       "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-05-27T12:39:11.0000000Z",
-      "returnRate": 1,
+      "lastDeepWork": "2026-05-31T23:21:14.0000000Z",
+      "returnRate": 0.5,
       "openLoops": 1,
       "summary": ""
     },
