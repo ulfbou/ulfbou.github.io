@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-06-07T23:21:11.9942570Z",
+  "generatedAt": "2026-06-14T23:25:17.5398507Z",
   "repos": [
     {
       "name": "dx.cli",
@@ -21,8 +21,8 @@
       "momentum": 38,
       "focusMinutes7d": 0,
       "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-05-31T23:21:14.0000000Z",
-      "returnRate": 0.5,
+      "lastDeepWork": "2026-06-07T23:21:17.0000000Z",
+      "returnRate": 0.67,
       "openLoops": 1,
       "summary": ""
     },
