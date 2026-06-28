@@ -1,15 +1,20 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-06-22T00:01:52.3672271Z",
+  "generatedAt": "2026-06-28T23:58:08.5424963Z",
   "nodes": [
     {
-      "id": "dx.cli",
-      "label": "dx.cli",
+      "id": "provenance",
+      "label": "provenance",
       "group": "core"
     },
     {
       "id": "ulfbou.github.io",
       "label": "ulfbou.github.io",
+      "group": "core"
+    },
+    {
+      "id": "gitpulse",
+      "label": "gitpulse",
       "group": "core"
     },
     {
@@ -25,6 +30,16 @@
     {
       "id": "gex.cli",
       "label": "gex.cli",
+      "group": "core"
+    },
+    {
+      "id": "dx.cli",
+      "label": "dx.cli",
+      "group": "core"
+    },
+    {
+      "id": "dx.domain",
+      "label": "dx.domain",
       "group": "core"
     },
     {
@@ -58,23 +73,8 @@
       "group": "core"
     },
     {
-      "id": "dx.domain",
-      "label": "dx.domain",
-      "group": "core"
-    },
-    {
       "id": "zentientframework",
       "label": "zentientframework",
-      "group": "core"
-    },
-    {
-      "id": "zentient.abstractions.core",
-      "label": "zentient.abstractions.core",
-      "group": "core"
-    },
-    {
-      "id": "zentient.testing",
-      "label": "zentient.testing",
       "group": "core"
     }
   ],
