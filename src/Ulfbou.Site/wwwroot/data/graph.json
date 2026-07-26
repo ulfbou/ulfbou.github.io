@@ -1,20 +1,10 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-07-20T02:26:33.1844523Z",
+  "generatedAt": "2026-07-26T23:49:46.2339736Z",
   "nodes": [
-    {
-      "id": "provenance",
-      "label": "provenance",
-      "group": "core"
-    },
     {
       "id": "ulfbou.github.io",
       "label": "ulfbou.github.io",
-      "group": "core"
-    },
-    {
-      "id": "gitpulse",
-      "label": "gitpulse",
       "group": "core"
     },
     {
@@ -40,6 +30,16 @@
     {
       "id": "dx.domain",
       "label": "dx.domain",
+      "group": "core"
+    },
+    {
+      "id": "provenance",
+      "label": "provenance",
+      "group": "core"
+    },
+    {
+      "id": "gitpulse",
+      "label": "gitpulse",
       "group": "core"
     },
     {
