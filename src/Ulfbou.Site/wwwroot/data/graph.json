@@ -1,10 +1,15 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-07-26T23:49:46.2339736Z",
+  "generatedAt": "2026-08-02T23:17:28.3992594Z",
   "nodes": [
     {
       "id": "ulfbou.github.io",
       "label": "ulfbou.github.io",
+      "group": "core"
+    },
+    {
+      "id": "dxs.cli",
+      "label": "dxs.cli",
       "group": "core"
     },
     {
@@ -70,11 +75,6 @@
     {
       "id": "atlasdeck",
       "label": "atlasdeck",
-      "group": "core"
-    },
-    {
-      "id": "zentientframework",
-      "label": "zentientframework",
       "group": "core"
     }
   ],

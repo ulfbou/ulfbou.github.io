@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-07-26T23:49:46.2339736Z",
+  "generatedAt": "2026-08-02T23:17:28.3992594Z",
   "repos": [
     {
       "name": "ulfbou.github.io",
@@ -9,9 +9,21 @@
       "momentum": 100,
       "focusMinutes7d": 0,
       "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-07-20T02:26:39.0000000Z",
-      "returnRate": 0.89,
+      "lastDeepWork": "2026-07-26T23:49:52.0000000Z",
+      "returnRate": 0.9,
       "openLoops": 1,
+      "summary": ""
+    },
+    {
+      "name": "dxs.cli",
+      "displayName": "Dxs.Cli",
+      "language": "unknown",
+      "momentum": 53,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-07-31T13:02:24.0000000Z",
+      "returnRate": 1,
+      "openLoops": 0,
       "summary": ""
     },
     {
@@ -35,7 +47,7 @@
       "contextSwitchesOut": 0,
       "lastDeepWork": "2026-04-18T10:51:58.0000000Z",
       "returnRate": 0.5,
-      "openLoops": 5,
+      "openLoops": 12,
       "summary": ""
     },
     {
@@ -167,18 +179,6 @@
       "contextSwitchesOut": 0,
       "lastDeepWork": "2026-01-21T20:23:15.0000000Z",
       "returnRate": 1,
-      "openLoops": 0,
-      "summary": ""
-    },
-    {
-      "name": "zentientframework",
-      "displayName": "ZentientFramework",
-      "language": "C#",
-      "momentum": 0,
-      "focusMinutes7d": 0,
-      "contextSwitchesOut": 18,
-      "lastDeepWork": "2025-11-26T07:01:15.0000000Z",
-      "returnRate": 0.83,
       "openLoops": 0,
       "summary": ""
     }

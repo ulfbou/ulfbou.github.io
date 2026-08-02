@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-07-26T23:49:46.2339736Z",
+  "generatedAt": "2026-08-02T23:17:28.3992594Z",
   "peakHours": [
     8,
     12,
@@ -9,5 +9,5 @@
   "avgSessionMinutes": 0,
   "fragmentationIndex": 1,
   "deepWorkStreakDays": 0,
-  "lastQuietPeriod": "2026-07-26"
+  "lastQuietPeriod": "2026-08-02"
 }
