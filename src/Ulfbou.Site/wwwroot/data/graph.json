@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-08-02T23:17:28.3992594Z",
+  "generatedAt": "2026-08-09T23:06:37.3642617Z",
   "nodes": [
     {
       "id": "ulfbou.github.io",
@@ -10,6 +10,11 @@
     {
       "id": "dxs.cli",
       "label": "dxs.cli",
+      "group": "core"
+    },
+    {
+      "id": "dx.domain",
+      "label": "dx.domain",
       "group": "core"
     },
     {
@@ -30,11 +35,6 @@
     {
       "id": "dx.cli",
       "label": "dx.cli",
-      "group": "core"
-    },
-    {
-      "id": "dx.domain",
-      "label": "dx.domain",
       "group": "core"
     },
     {
