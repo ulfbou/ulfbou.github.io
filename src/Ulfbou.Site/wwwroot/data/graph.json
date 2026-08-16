@@ -1,7 +1,12 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-08-09T23:06:37.3642617Z",
+  "generatedAt": "2026-08-16T23:02:08.8364779Z",
   "nodes": [
+    {
+      "id": "verdant",
+      "label": "verdant",
+      "group": "core"
+    },
     {
       "id": "ulfbou.github.io",
       "label": "ulfbou.github.io",
@@ -70,11 +75,6 @@
     {
       "id": "dx.scripts",
       "label": "dx.scripts",
-      "group": "core"
-    },
-    {
-      "id": "atlasdeck",
-      "label": "atlasdeck",
       "group": "core"
     }
   ],
