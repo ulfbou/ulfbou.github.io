@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-08-30T23:01:42.2368221Z",
+  "generatedAt": "2026-09-06T23:01:47.7932850Z",
   "repos": [
     {
       "name": "verdant",
@@ -18,24 +18,12 @@
       "name": "ulfbou.github.io",
       "displayName": "Ulfbou.Github.Io",
       "language": "C#",
-      "momentum": 95,
+      "momentum": 70,
       "focusMinutes7d": 0,
       "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-08-23T23:02:44.0000000Z",
+      "lastDeepWork": "2026-08-30T23:01:49.0000000Z",
       "returnRate": 0.93,
       "openLoops": 1,
-      "summary": ""
-    },
-    {
-      "name": "dxs.cli",
-      "displayName": "Dxs.Cli",
-      "language": "unknown",
-      "momentum": 10,
-      "focusMinutes7d": 0,
-      "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-08-07T07:41:11.0000000Z",
-      "returnRate": 0.5,
-      "openLoops": 11,
       "summary": ""
     },
     {
@@ -72,6 +60,18 @@
       "lastDeepWork": "2026-04-18T10:51:58.0000000Z",
       "returnRate": 0.5,
       "openLoops": 12,
+      "summary": ""
+    },
+    {
+      "name": "dxs.cli",
+      "displayName": "Dxs.Cli",
+      "language": "unknown",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-08-07T07:41:11.0000000Z",
+      "returnRate": 0.5,
+      "openLoops": 11,
       "summary": ""
     },
     {

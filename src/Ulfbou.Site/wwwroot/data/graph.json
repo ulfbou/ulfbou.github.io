@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-08-30T23:01:42.2368221Z",
+  "generatedAt": "2026-09-06T23:01:47.7932850Z",
   "nodes": [
     {
       "id": "verdant",
@@ -10,11 +10,6 @@
     {
       "id": "ulfbou.github.io",
       "label": "ulfbou.github.io",
-      "group": "core"
-    },
-    {
-      "id": "dxs.cli",
-      "label": "dxs.cli",
       "group": "core"
     },
     {
@@ -30,6 +25,11 @@
     {
       "id": "dxs",
       "label": "dxs",
+      "group": "core"
+    },
+    {
+      "id": "dxs.cli",
+      "label": "dxs.cli",
       "group": "core"
     },
     {
