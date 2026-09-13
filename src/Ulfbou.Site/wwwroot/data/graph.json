@@ -1,10 +1,10 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-09-06T23:01:47.7932850Z",
+  "generatedAt": "2026-09-13T23:01:56.0137519Z",
   "nodes": [
     {
-      "id": "verdant",
-      "label": "verdant",
+      "id": "ads",
+      "label": "ads",
       "group": "core"
     },
     {
@@ -13,8 +13,8 @@
       "group": "core"
     },
     {
-      "id": "dx.domain",
-      "label": "dx.domain",
+      "id": "verdant",
+      "label": "verdant",
       "group": "core"
     },
     {
@@ -35,6 +35,11 @@
     {
       "id": "gex.cli",
       "label": "gex.cli",
+      "group": "core"
+    },
+    {
+      "id": "dx.domain",
+      "label": "dx.domain",
       "group": "core"
     },
     {
@@ -70,11 +75,6 @@
     {
       "id": "syss8.opf.clean",
       "label": "syss8.opf.clean",
-      "group": "core"
-    },
-    {
-      "id": "dx.scripts",
-      "label": "dx.scripts",
       "group": "core"
     }
   ],

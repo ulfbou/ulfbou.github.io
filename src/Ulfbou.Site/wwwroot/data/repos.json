@@ -1,42 +1,42 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-09-06T23:01:47.7932850Z",
+  "generatedAt": "2026-09-13T23:01:56.0137519Z",
   "repos": [
+    {
+      "name": "ads",
+      "displayName": "Ads",
+      "language": "C#",
+      "momentum": 100,
+      "focusMinutes7d": 27,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-09-08T13:02:56.0000000Z",
+      "returnRate": 1,
+      "openLoops": 0,
+      "summary": "Accountable Decision System"
+    },
+    {
+      "name": "ulfbou.github.io",
+      "displayName": "Ulfbou.Github.Io",
+      "language": "C#",
+      "momentum": 27,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-09-06T23:01:54.0000000Z",
+      "returnRate": 0.94,
+      "openLoops": 1,
+      "summary": ""
+    },
     {
       "name": "verdant",
       "displayName": "Verdant",
       "language": "C#",
-      "momentum": 100,
+      "momentum": 20,
       "focusMinutes7d": 0,
       "contextSwitchesOut": 0,
       "lastDeepWork": "2026-08-15T10:47:52.0000000Z",
       "returnRate": 0.5,
       "openLoops": 7,
       "summary": "Deterministic replay-driven simulation engine"
-    },
-    {
-      "name": "ulfbou.github.io",
-      "displayName": "Ulfbou.Github.Io",
-      "language": "C#",
-      "momentum": 70,
-      "focusMinutes7d": 0,
-      "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-08-30T23:01:49.0000000Z",
-      "returnRate": 0.93,
-      "openLoops": 1,
-      "summary": ""
-    },
-    {
-      "name": "dx.domain",
-      "displayName": "Dx.Domain",
-      "language": "C#",
-      "momentum": 10,
-      "focusMinutes7d": 0,
-      "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-08-09T15:29:36.0000000Z",
-      "returnRate": 0.5,
-      "openLoops": 2,
-      "summary": ""
     },
     {
       "name": "quizbattle",
@@ -84,6 +84,18 @@
       "lastDeepWork": "2025-12-10T07:46:10.0000000Z",
       "returnRate": 1,
       "openLoops": 3,
+      "summary": ""
+    },
+    {
+      "name": "dx.domain",
+      "displayName": "Dx.Domain",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2026-08-09T15:29:36.0000000Z",
+      "returnRate": 0.5,
+      "openLoops": 2,
       "summary": ""
     },
     {
@@ -167,18 +179,6 @@
       "contextSwitchesOut": 0,
       "lastDeepWork": "2026-03-05T10:56:09.0000000Z",
       "returnRate": 0.88,
-      "openLoops": 0,
-      "summary": ""
-    },
-    {
-      "name": "dx.scripts",
-      "displayName": "Dx.Scripts",
-      "language": "Shell",
-      "momentum": 0,
-      "focusMinutes7d": 0,
-      "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-02-20T12:13:25.0000000Z",
-      "returnRate": 1,
       "openLoops": 0,
       "summary": ""
     }
