@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-09-13T23:01:56.0137519Z",
+  "generatedAt": "2026-09-20T23:01:38.7561184Z",
   "nodes": [
     {
       "id": "ads",
@@ -10,11 +10,6 @@
     {
       "id": "ulfbou.github.io",
       "label": "ulfbou.github.io",
-      "group": "core"
-    },
-    {
-      "id": "verdant",
-      "label": "verdant",
       "group": "core"
     },
     {
@@ -33,13 +28,18 @@
       "group": "core"
     },
     {
-      "id": "gex.cli",
-      "label": "gex.cli",
+      "id": "verdant",
+      "label": "verdant",
       "group": "core"
     },
     {
       "id": "dx.domain",
       "label": "dx.domain",
+      "group": "core"
+    },
+    {
+      "id": "gex.cli",
+      "label": "gex.cli",
       "group": "core"
     },
     {

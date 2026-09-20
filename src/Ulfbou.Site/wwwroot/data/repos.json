@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-09-13T23:01:56.0137519Z",
+  "generatedAt": "2026-09-20T23:01:38.7561184Z",
   "repos": [
     {
       "name": "ads",
       "displayName": "Ads",
       "language": "C#",
       "momentum": 100,
-      "focusMinutes7d": 27,
+      "focusMinutes7d": 0,
       "contextSwitchesOut": 0,
       "lastDeepWork": "2026-09-08T13:02:56.0000000Z",
       "returnRate": 1,
@@ -18,25 +18,13 @@
       "name": "ulfbou.github.io",
       "displayName": "Ulfbou.Github.Io",
       "language": "C#",
-      "momentum": 27,
+      "momentum": 95,
       "focusMinutes7d": 0,
       "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-09-06T23:01:54.0000000Z",
+      "lastDeepWork": "2026-09-13T23:02:02.0000000Z",
       "returnRate": 0.94,
       "openLoops": 1,
       "summary": ""
-    },
-    {
-      "name": "verdant",
-      "displayName": "Verdant",
-      "language": "C#",
-      "momentum": 20,
-      "focusMinutes7d": 0,
-      "contextSwitchesOut": 0,
-      "lastDeepWork": "2026-08-15T10:47:52.0000000Z",
-      "returnRate": 0.5,
-      "openLoops": 7,
-      "summary": "Deterministic replay-driven simulation engine"
     },
     {
       "name": "quizbattle",
@@ -75,16 +63,16 @@
       "summary": ""
     },
     {
-      "name": "gex.cli",
-      "displayName": "Gex.Cli",
+      "name": "verdant",
+      "displayName": "Verdant",
       "language": "C#",
       "momentum": 0,
       "focusMinutes7d": 0,
       "contextSwitchesOut": 0,
-      "lastDeepWork": "2025-12-10T07:46:10.0000000Z",
-      "returnRate": 1,
-      "openLoops": 3,
-      "summary": ""
+      "lastDeepWork": "2026-08-15T10:47:52.0000000Z",
+      "returnRate": 0.5,
+      "openLoops": 7,
+      "summary": "Deterministic replay-driven simulation engine"
     },
     {
       "name": "dx.domain",
@@ -95,7 +83,19 @@
       "contextSwitchesOut": 0,
       "lastDeepWork": "2026-08-09T15:29:36.0000000Z",
       "returnRate": 0.5,
-      "openLoops": 2,
+      "openLoops": 3,
+      "summary": ""
+    },
+    {
+      "name": "gex.cli",
+      "displayName": "Gex.Cli",
+      "language": "C#",
+      "momentum": 0,
+      "focusMinutes7d": 0,
+      "contextSwitchesOut": 0,
+      "lastDeepWork": "2025-12-10T07:46:10.0000000Z",
+      "returnRate": 1,
+      "openLoops": 3,
       "summary": ""
     },
     {

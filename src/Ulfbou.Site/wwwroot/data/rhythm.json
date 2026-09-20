@@ -1,13 +1,13 @@
 {
   "schemaVersion": "1",
-  "generatedAt": "2026-09-13T23:01:56.0137519Z",
+  "generatedAt": "2026-09-20T23:01:38.7561184Z",
   "peakHours": [
     8,
     12,
     14
   ],
-  "avgSessionMinutes": 13,
+  "avgSessionMinutes": 0,
   "fragmentationIndex": 1,
   "deepWorkStreakDays": 0,
-  "lastQuietPeriod": "2026-09-13"
+  "lastQuietPeriod": "2026-09-20"
 }
