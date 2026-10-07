@@ -64,7 +64,11 @@
           "    id => ContinueWith(id),",
           "    error => Reject(error));"
         ]
-      }
+      },
+      "limitations": [
+        "Representative wording pending explicit publication approval.",
+        "Repository paths are illustrative evidence pointers, not public verification links."
+      ]
     },
     {
       "id": "fold",
@@ -110,7 +114,10 @@
           "authority: human",
           "next: propose smallest coherent diff"
         ]
-      }
+      },
+      "limitations": [
+        "Proof-of-concept maturity; representative wording pending explicit publication approval."
+      ]
     },
     {
       "id": "pystd-suite",
@@ -156,7 +163,10 @@
           "contracts   PASS",
           "diagnostics written to .quality/"
         ]
-      }
+      },
+      "limitations": [
+        "Active learning work; terminal output is representative and not a recorded validation run."
+      ]
     }
   ]
 }

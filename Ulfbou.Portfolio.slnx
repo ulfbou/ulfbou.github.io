@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="src/Ulfbou.Portfolio.Core/Ulfbou.Portfolio.Core.csproj" />
+  <Project Path="src/Ulfbou.Site/Ulfbou.Site.csproj" />
+  <Project Path="tests/Ulfbou.Portfolio.Core.Tests/Ulfbou.Portfolio.Core.Tests.csproj" />
+</Solution>
