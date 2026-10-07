@@ -1,0 +1,11 @@
+<Router AppAssembly="@typeof(App).Assembly">
+    <Found Context="routeData">
+        <RouteView RouteData="@routeData" />
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
+    <NotFound>
+        <LayoutView>
+            <p class="load-state">The requested view does not exist. <a href="./">Return to the portfolio.</a></p>
+        </LayoutView>
+    </NotFound>
+</Router>
