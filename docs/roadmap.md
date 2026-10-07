@@ -144,4 +144,6 @@ Before automated collection, a repository-local fixture prototype must prove aut
 
 Acceptance Ready additionally requires machine-readable inference disablement, two-layer public visibility, package identity over scope and policy, separate schema and contract versions, and stable diagnostics for invalid fixtures.
 
-Definition of Done additionally requires no new Python or NuGet dependency, no new GitHub Action, no new repository secret, no cron, no orphan branch, no deployment change, and no Phase 2 implementation or acceptance claim.
+Definition of Done additionally requires no new Python or NuGet dependency, no repository secret, no cron, no orphan branch, no deployment change, and no Phase 2 implementation or acceptance claim.
+
+The prototype pull-request gate may add `actions/setup-python` and reuse `actions/checkout` and `actions/setup-dotnet`. Repository workflows may use only those action identities plus the existing Pages identities `actions/configure-pages`, `actions/upload-pages-artifact`, and `actions/deploy-pages`. No external service, repository secret, paid dependency, or mutation-capable pull-request workflow is introduced.

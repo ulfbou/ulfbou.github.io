@@ -1,0 +1,145 @@
+name: Validate pull request
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+concurrency:
+  group: validate-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  repository-gate:
+    name: pr / repository-gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - name: Validate pull request diff
+        shell: bash
+        run: |
+          git diff --check \
+            "${{ github.event.pull_request.base.sha }}...${{ github.event.pull_request.head.sha }}"
+      - name: Validate text encoding
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import sys
+          extensions = {
+              ".cs", ".csproj", ".css", ".html", ".json", ".md", ".py",
+              ".razor", ".sh", ".slnx", ".txt", ".yaml", ".yml",
+          }
+          excluded_parts = {".git", "bin", "obj", "publish", "node_modules"}
+          failures = []
+          for path in Path(".").rglob("*"):
+              if not path.is_file() or path.suffix.lower() not in extensions:
+                  continue
+              if any(part in excluded_parts for part in path.parts):
+                  continue
+              data = path.read_bytes()
+              if data.startswith(b"\xef\xbb\xbf"):
+                  failures.append(f"BOM: {path}")
+              if b"\r" in data:
+                  failures.append(f"CR: {path}")
+              try:
+                  data.decode("utf-8")
+              except UnicodeDecodeError as error:
+                  failures.append(f"UTF-8: {path}: {error}")
+          if failures:
+              for failure in failures:
+                  print(f"::error::{failure}")
+              sys.exit(1)
+          print("PASS: governed text files are valid UTF-8, BOM-free, and LF-only")
+          PY
+      - name: Validate admitted action identities
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+          import sys
+          admitted = {
+              "actions/checkout", "actions/setup-dotnet", "actions/setup-python",
+              "actions/configure-pages", "actions/upload-pages-artifact",
+              "actions/deploy-pages",
+          }
+          pattern = re.compile(r"^\s*(?:-\s+)?uses:\s*([^@\s]+)@", flags=re.MULTILINE)
+          failures = []
+          observed = set()
+          for workflow in sorted(Path(".github/workflows").glob("*.y*ml")):
+              text = workflow.read_text(encoding="utf-8")
+              for match in pattern.finditer(text):
+                  identity = match.group(1)
+                  observed.add(identity)
+                  if identity.startswith("./"):
+                      failures.append(f"{workflow}: local action requires separate review: {identity}")
+                  elif identity not in admitted:
+                      failures.append(f"{workflow}: action identity is not admitted: {identity}")
+          if failures:
+              for failure in failures:
+                  print(f"::error::{failure}")
+              sys.exit(1)
+          print("PASS: all workflow action identities are admitted")
+          print("Observed action identities:")
+          for identity in sorted(observed):
+              print(f"- {identity}")
+          PY
+      - name: Test portfolio-data prototype
+        run: python tools/portfolio-data/tests.py
+      - name: Validate prototype fixture
+        shell: bash
+        run: |
+          ROOT=tools/portfolio-data/fixtures/valid/one-approved-claim
+          python tools/portfolio-data/cli.py validate \
+            --governance "$ROOT/governance.json" \
+            --approved "$ROOT/approved.json" \
+            --evidence "$ROOT/evidence.json"
+      - name: Verify retained prototype projection
+        shell: bash
+        run: |
+          ROOT=tools/portfolio-data/fixtures/valid/one-approved-claim
+          python tools/portfolio-data/cli.py verify \
+            --governance "$ROOT/governance.json" \
+            --approved "$ROOT/approved.json" \
+            --evidence "$ROOT/evidence.json" \
+            --projection "$ROOT/evidence-index.json"
+      - name: Verify byte-reproducible prototype projection
+        shell: bash
+        run: |
+          ROOT=tools/portfolio-data/fixtures/valid/one-approved-claim
+          OUTPUT="$RUNNER_TEMP/evidence-index.json"
+          python tools/portfolio-data/cli.py compile \
+            --governance "$ROOT/governance.json" \
+            --approved "$ROOT/approved.json" \
+            --evidence "$ROOT/evidence.json" \
+            --output "$OUTPUT"
+          cmp "$OUTPUT" "$ROOT/evidence-index.json"
+      - name: Restore
+        run: dotnet restore Ulfbou.Portfolio.slnx
+      - name: Build
+        run: dotnet build Ulfbou.Portfolio.slnx --no-restore -c Release
+      - name: Test
+        run: dotnet test Ulfbou.Portfolio.slnx --no-build -c Release
+      - name: Publish static site
+        run: dotnet publish src/Ulfbou.Site/Ulfbou.Site.csproj --no-restore -c Release -o publish
+      - name: Verify current deployment shape
+        shell: bash
+        run: |
+          test -f publish/wwwroot/index.html
+          test -f publish/wwwroot/data/portfolio.json
