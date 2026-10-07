@@ -15,3 +15,17 @@ Manual evidence covers opening comprehension, distinct propositions, contributio
 Phase 2 adds schema/semantic/reference/publication failures, candidate/private exclusion, fixtures, equivalent generation, and traceability. Later phases add block, package, collector, and curation gates defined by the roadmap.
 
 Every criterion records stable name, command/review, result, evidence location, revision, reviewer where manual, and limitations. Unknown mandatory results fail. Semantic comparison, not byte identity, decides regression.
+
+## Fixture-backed evidence prototype
+Run `python tools/portfolio-data/tests.py`. The prototype must reject admitted inference adapters, unresolved references, non-public references, non-public observations, symbolic revisions, path traversal, duplicate identities, stale package identities, and non-reproducible projections.
+
+The fixture is not approved portfolio content. The prototype adds no Python or NuGet dependency, repository secret, deployment input, or runtime dependency, and does not start Phase 2.
+
+## Pull request gate
+Every pull request targeting `master` runs the read-only `pr / repository-gate` check. The gate validates the PR diff, governed text encoding, admitted action identities, the portfolio-data prototype, retained projection reproducibility, the .NET solution, the static-site publish, and the current pre-Phase-2 runtime data path.
+
+Pull-request validation uses `actions/setup-python@v7` with Python 3.13. `tools/portfolio-data` remains standard-library-only and has no package-installation step.
+
+Pull-request validation may use only `actions/checkout`, `actions/setup-dotnet`, and `actions/setup-python`. Repository workflows as a whole may additionally use `actions/configure-pages`, `actions/upload-pages-artifact`, and `actions/deploy-pages`. No external service, repository secret, paid dependency, or mutation-capable pull-request workflow is admitted.
+
+A future runtime data-authority change must atomically update `PortfolioService`, publication generation, deployment-shape validation, fixtures, and rejection of the superseded runtime file.

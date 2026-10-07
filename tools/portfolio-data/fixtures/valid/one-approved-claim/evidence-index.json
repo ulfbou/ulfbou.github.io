@@ -1,0 +1,30 @@
+{
+  "buildIdentity": {
+    "contractVersion": "1.0",
+    "projectionSha256": "19eddd4a6d1259379786d25eb8e85115b6824fb702b40b73a41eac8fc7acc1ac",
+    "schemaVersion": "1.0"
+  },
+  "contractVersion": "1.0",
+  "projects": {
+    "dx-domain": {
+      "claims": [
+        {
+          "evidence": [
+            {
+              "kind": "repository-path",
+              "path": "src/Dx.Domain.Analyzers/",
+              "repository": "ulfbou/Dx.Domain",
+              "revision": "1111111111111111111111111111111111111111"
+            }
+          ],
+          "id": "claim.dx-domain.analyzers",
+          "limitations": [
+            "The claim is limited to the documented analyzer scope."
+          ],
+          "text": "Roslyn analyzers complement the public APIs with build-time checks."
+        }
+      ]
+    }
+  },
+  "schemaVersion": "1.0"
+}

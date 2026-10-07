@@ -1,0 +1,31 @@
+{
+  "schemaVersion": "1.0",
+  "packageId": "evp_cd2f4b8c8ff31b10638824131fce777d469e2a70d64e91f7dd0c0dcf0c49a68b",
+  "repository": {
+    "id": "dx-domain",
+    "nameWithOwner": "ulfbou/Dx.Domain"
+  },
+  "revision": "1111111111111111111111111111111111111111",
+  "collectorContractVersion": "1.0",
+  "scope": {
+    "includes": [
+      "src/Dx.Domain.Analyzers/**"
+    ],
+    "excludes": [
+      "**/bin/**",
+      "**/obj/**"
+    ]
+  },
+  "redactionPolicy": "portfolio-public-evidence@1",
+  "exclusionPolicy": "portfolio-default-exclusions@1",
+  "observations": [
+    {
+      "id": "obs.dx-domain.analyzers",
+      "kind": "repository-path",
+      "path": "src/Dx.Domain.Analyzers/",
+      "visibility": "Public",
+      "statement": "The supplied fixture records the analyzer project path.",
+      "contentSha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ]
+}
