@@ -1,0 +1,162 @@
+{
+  "profile": {
+    "name": "Ulf Bourelius",
+    "signal": "I build systems that make complex work easier to see, reason about and trust.",
+    "introduction": "My work moves between software design, developer tooling and technical learning. I use code, contracts and careful presentation to turn difficult ideas into things people can inspect and use.",
+    "direction": "I learn architecture by building: defining authority, exposing state, testing boundaries and documenting the decisions that hold a system together. The aim is not complexity for its own sake, but software whose reasoning remains visible.",
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/ulfbou"
+      }
+    ]
+  },
+  "facets": [
+    "Architecture",
+    "Developer tools",
+    "Human + AI",
+    "Learning"
+  ],
+  "projects": [
+    {
+      "id": "dx-domain",
+      "title": "Dx.Domain",
+      "shortTitle": "Domain rules with teeth",
+      "proposition": "Move architectural intent closer to the compiler.",
+      "story": "Dx.Domain explores how construction authority, value semantics and analyzer feedback can cooperate. Instead of leaving every rule in documentation or runtime exceptions, the design asks which invalid paths can be made difficult to express.",
+      "contribution": "I shaped the domain vocabulary, package boundaries, analyzer direction and release-gate discipline as one coherent design problem.",
+      "reflection": "An API is not only its signatures. Package topology, diagnostics, examples and tests all teach the caller what the architecture permits.",
+      "status": "Evolving prototype",
+      "accent": "#d75932",
+      "facets": [
+        "Architecture",
+        "Developer tools",
+        "Learning"
+      ],
+      "technologies": [
+        "C#",
+        ".NET",
+        "Roslyn",
+        "MSBuild",
+        "xUnit"
+      ],
+      "proof": [
+        {
+          "label": "Implementation",
+          "value": "src/Dx.Domain.*"
+        },
+        {
+          "label": "Behaviour",
+          "value": "tests/"
+        },
+        {
+          "label": "Release boundary",
+          "value": "builds/release/"
+        }
+      ],
+      "demo": {
+        "kind": "code",
+        "caption": "Construction authority",
+        "lines": [
+          "var result = CustomerId.Create(rawValue);",
+          "",
+          "return result.Match(",
+          "    id => ContinueWith(id),",
+          "    error => Reject(error));"
+        ]
+      }
+    },
+    {
+      "id": "fold",
+      "title": "Fold",
+      "shortTitle": "State you can carry",
+      "proposition": "Make collaboration context compact, explicit and human-governed.",
+      "story": "Fold treats persistence as scope. It investigates how a small state card can preserve intent across working sessions without turning invisible memory into authority.",
+      "contribution": "I developed the product framing, state concepts and repository governance around a simple relationship: the human manages state and the tool proposes bounded diffs.",
+      "reflection": "Compactness is useful only when authority, decisions and the next meaningful action survive the fold.",
+      "status": "Proof of concept",
+      "accent": "#376b7a",
+      "facets": [
+        "Developer tools",
+        "Human + AI",
+        "Architecture"
+      ],
+      "technologies": [
+        "Python",
+        "CLI design",
+        "GitHub",
+        "State models"
+      ],
+      "proof": [
+        {
+          "label": "Product intent",
+          "value": "docs/"
+        },
+        {
+          "label": "Implementation",
+          "value": "src/"
+        },
+        {
+          "label": "Governance",
+          "value": ".github/"
+        }
+      ],
+      "demo": {
+        "kind": "terminal",
+        "caption": "A compact interaction model",
+        "lines": [
+          "$ fold inspect",
+          "active: portfolio-reframing",
+          "authority: human",
+          "next: propose smallest coherent diff"
+        ]
+      }
+    },
+    {
+      "id": "pystd-suite",
+      "title": "pystd-suite",
+      "shortTitle": "Python quality as a system",
+      "proposition": "Turn scattered quality practices into an inspectable suite.",
+      "story": "pystd-suite is a place to explore how Python project quality can become regular, teachable and cheap to verify, rather than a collection of unrelated checks.",
+      "contribution": "I am developing the repository contracts, CLI-oriented workflows and documentation architecture while strengthening my Python engineering practice.",
+      "reflection": "A quality system should reduce uncertainty for both people and automation. Regular structure and explicit outcomes matter more than tool count.",
+      "status": "Active learning project",
+      "accent": "#7b5b91",
+      "facets": [
+        "Developer tools",
+        "Learning",
+        "Architecture"
+      ],
+      "technologies": [
+        "Python",
+        "CLI",
+        "Validation",
+        "Documentation"
+      ],
+      "proof": [
+        {
+          "label": "Quality contracts",
+          "value": "docs/"
+        },
+        {
+          "label": "Executable flows",
+          "value": "scripts/"
+        },
+        {
+          "label": "Examples",
+          "value": "examples/"
+        }
+      ],
+      "demo": {
+        "kind": "terminal",
+        "caption": "Quality as one readable flow",
+        "lines": [
+          "$ python -m pystd inspect .",
+          "structure   PASS",
+          "contracts   PASS",
+          "diagnostics written to .quality/"
+        ]
+      }
+    }
+  ]
+}
