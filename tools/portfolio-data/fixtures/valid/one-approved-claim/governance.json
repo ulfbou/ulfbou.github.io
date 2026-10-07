@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "1.0",
+  "contractVersion": "1.0",
+  "authority": {
+    "approvedClaims": "approved.json",
+    "evidencePackages": "evidence.json",
+    "generatedProjection": "evidence-index.json"
+  },
+  "publication": {
+    "requiresApprovedClaim": true,
+    "requiresApprovedReference": true,
+    "requiresPublicReferenceVisibility": true,
+    "requiresPublicObservationVisibility": true
+  },
+  "inference": {
+    "admittedAdapters": [],
+    "adapterSubstitutionRequires": [
+      "adapterImplementation",
+      "zeroChargeVerificationRecord",
+      "acceptedDecision",
+      "governanceRegistryUpdate"
+    ]
+  },
+  "surface": {
+    "allowNewPythonDependency": false,
+    "allowNewNuGetDependency": false,
+    "allowNewGitHubAction": false,
+    "allowNewRepositorySecret": false
+  }
+}

@@ -12,3 +12,16 @@
 - D-010: Code, terminal, diagrams, and demos are accessible explained content, not decoration.
 - D-011: Reorganization is allowed; semantic loss, contradiction, overclaiming, lost authority, and unreviewed publication are not.
 - D-012: The original brainstorm is an opportunity map, not a backlog or governing contract.
+- D-013: The long-term product is an accountable, evidence-backed static portfolio.
+- D-014: Approved source on the protected default branch is the sole authority for public meaning.
+- D-015: Evidence may support an approved claim but may never create, strengthen, approve, or publish one.
+- D-016: Public evidence is the approved intersection of public claims, public approved references, and public observations.
+- D-017: Generated projections are replaceable verification artifacts, not authorities.
+- D-018: The first evidence prototype is fixture-backed, deterministic, offline-capable, and independent of Phase 2 publication.
+- D-019: The operational orphan branch is introduced only when repeated collection creates material default-branch churn.
+- D-020: Scheduled execution is maintenance only and is not required for an already published site to remain correct.
+- D-021: Probabilistic assistance is disabled until an adapter passes implementation, zero-charge verification, decision, and governance gates.
+- D-022: Adapter substitution is a reviewed contract change, not provider configuration.
+- D-023: Evidence-package identity covers repository, revision, collector contract, scope, policies, and observation digests.
+- D-024: Projection schema version and compiler contract version evolve independently.
+- D-025: The prototype uses one dependency-free CLI with validate, compile, and verify subcommands.

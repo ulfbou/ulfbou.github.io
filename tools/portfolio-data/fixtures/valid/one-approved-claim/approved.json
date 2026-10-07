@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0",
+  "projects": [
+    {
+      "id": "dx-domain",
+      "claims": [
+        {
+          "id": "claim.dx-domain.analyzers",
+          "text": "Roslyn analyzers complement the public APIs with build-time checks.",
+          "visibility": "Public",
+          "limitations": [
+            "The claim is limited to the documented analyzer scope."
+          ],
+          "evidenceRefs": [
+            {
+              "packageId": "evp_cd2f4b8c8ff31b10638824131fce777d469e2a70d64e91f7dd0c0dcf0c49a68b",
+              "observationId": "obs.dx-domain.analyzers",
+              "visibility": "Public"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

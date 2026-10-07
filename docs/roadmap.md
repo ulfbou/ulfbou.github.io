@@ -138,3 +138,10 @@ Block acceptance on semantic loss, contradiction, incorrect direction, overstate
 ## Overall Definition of Done
 
 The one-page portfolio is strong without automation; approved structured content drives it; projects combine narrative and artifacts as needed; evidence and collection are bounded and traceable; suggestions remain optional; Ulf remains final authority; every accepted phase continues passing.
+
+## Phase 5 prototype entry gate
+Before automated collection, a repository-local fixture prototype must prove authority separation with one proposed claim fixture, one revision-addressed evidence package, one explicit public reference, and one deterministic evidence-index projection. The fixture is not approved portfolio content. The prototype does not alter the site, deployment, or Phase 2 scope.
+
+Acceptance Ready additionally requires machine-readable inference disablement, two-layer public visibility, package identity over scope and policy, separate schema and contract versions, and stable diagnostics for invalid fixtures.
+
+Definition of Done additionally requires no new Python or NuGet dependency, no new GitHub Action, no new repository secret, no cron, no orphan branch, no deployment change, and no Phase 2 implementation or acceptance claim.
