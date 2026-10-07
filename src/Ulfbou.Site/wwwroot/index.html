@@ -4,21 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <base href="/" />
-    <meta name="description" content="Selected software systems and design thinking by Ulf Bourelius." />
+    <meta name="description" content="Representative software systems and design thinking by Ulf Bourelius." />
     <meta name="theme-color" content="#f2efe7" />
-    <link rel="stylesheet" href="/"/>
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="stylesheet" href="css/phase1.css" />
     <title>Ulf Bourelius · Selected Systems</title>
 </head>
 <body>
     <div id="app">
-        <p class="load-state">Assembling the portfolio…</p>
+        <p class="load-state" role="status">Assembling the portfolio…</p>
     </div>
-
-    <div id="blazor-error-ui">
-        The portfolio encountered an error.
-        <a href="." class="reload">Reload</a>
+    <div id="blazor-error-ui" role="alert">
+        The portfolio encountered an error. <a href="." class="reload">Reload</a>
     </div>
-
-    <script src="/"/script>
+    <script src="_framework/blazor.webassembly.js"></script>
 </body>
 </html>
