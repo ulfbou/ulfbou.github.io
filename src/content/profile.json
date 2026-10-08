@@ -1,0 +1,21 @@
+{
+  "name": "Ulf Bourelius",
+  "signal": "I build systems that make complex work easier to see, reason about and trust.",
+  "introduction": "My work moves between software design, developer tooling and technical learning. I use code, contracts and careful presentation to turn difficult ideas into things people can inspect and use.",
+  "direction": "I learn architecture by building: defining authority, exposing state, testing boundaries and documenting the decisions that hold a system together. The aim is not complexity for its own sake, but software whose reasoning remains visible.",
+  "links": [
+    {
+      "label": "GitHub",
+      "url": "https://github.com/ulfbou"
+    }
+  ],
+  "provenance": {
+    "sourceId": "legacy-portfolio.profile",
+    "description": "Mechanically derived from the controlling public projection."
+  },
+  "publication": {
+    "state": "Published",
+    "visibility": "Public",
+    "readingDepth": "Detailed"
+  }
+}

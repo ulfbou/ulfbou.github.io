@@ -1,0 +1,74 @@
+{
+  "order": 3,
+  "id": "verdant",
+  "title": "Verdant",
+  "shortTitle": "Deterministic simulation foundations",
+  "proposition": "Make accepted state transitions reproducible, replayable and compatibility-aware.",
+  "story": "Verdant is an evolving C# and .NET foundation for simulations whose state must remain reproducible after every accepted command. It commits changes atomically, records only successful commands and reconstructs earlier states by replaying requested history prefixes from canonical initialization.",
+  "contribution": "I implemented atomic command execution, replay and historical-query APIs, independent compatibility dimensions, restricted canonical JSON serialization, SHA-256 identities and fixed-order square-grid topology.",
+  "reflection": {
+    "summary": "Determinism requires more than a repeatable algorithm. State authority, command history, serialization, compatibility and failure behavior must all agree on what can be reconstructed."
+  },
+  "status": "Implementation in progress",
+  "accent": "#6d5b93",
+  "facetIds": [
+    "architecture",
+    "learning"
+  ],
+  "technologyIds": [
+    "csharp",
+    "dotnet-10",
+    "xunit",
+    "system-text",
+    "sha-256",
+    "deterministic-json-serialization",
+    "msbuild"
+  ],
+  "proof": [
+    {
+      "label": "Transactions",
+      "value": "src/Verdant.Core/TransactionPipeline.cs",
+      "visibility": "Public"
+    },
+    {
+      "label": "Replay",
+      "value": "src/Verdant.Replay/ReplayEngine.cs",
+      "visibility": "Public"
+    },
+    {
+      "label": "Compatibility",
+      "value": "src/Verdant.Compatibility/",
+      "visibility": "Public"
+    },
+    {
+      "label": "Conformance",
+      "value": "tests/Verdant.ConformanceFixtures/",
+      "visibility": "Public"
+    }
+  ],
+  "demo": {
+    "kind": "code",
+    "caption": "Successful commands define history",
+    "lines": [
+      "canonical initialization",
+      "        + accepted command prefix",
+      "        -> isolated replay",
+      "        -> state and event batches",
+      "        -> unchanged live authority"
+    ]
+  },
+  "limitations": [
+    "The wider deterministic spatial-simulation system is not complete.",
+    "Persistence, crash recovery, Undo, Timeline mutation and replay sharing remain specification work.",
+    "Cross-runtime reproducibility and a complete First Bloom fixture suite are not established."
+  ],
+  "provenance": {
+    "sourceId": "legacy-portfolio.projects.verdant",
+    "description": "Mechanically derived from the controlling public projection."
+  },
+  "publication": {
+    "state": "Published",
+    "visibility": "Public",
+    "readingDepth": "Detailed"
+  }
+}

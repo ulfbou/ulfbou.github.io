@@ -1,0 +1,78 @@
+{
+  "order": 0,
+  "id": "dx-domain",
+  "title": "Dx.Domain",
+  "shortTitle": "Domain rules with teeth",
+  "proposition": "Move domain rules and architectural boundaries closer to the compiler.",
+  "story": "Dx.Domain is a C# and .NET library for expressing business rules through typed identities, structured results and errors, invariants, immutable facts, causation metadata and semantic annotations. Roslyn analyzers complement the public APIs by detecting prohibited construction, ignored failures, exception-driven control flow and architectural scope violations during builds.",
+  "contribution": "I designed cohesive public APIs across four dependency-controlled NuGet packages, implemented scope-aware Roslyn analyzers and MSBuild governance, and established test, documentation, packaging and release-gate workflows.",
+  "reflection": {
+    "summary": "An API is not only its signatures. Package topology, diagnostics, examples, tests and release controls collectively teach developers what an architecture permits."
+  },
+  "status": "0.1.0-alpha",
+  "accent": "#d75932",
+  "facetIds": [
+    "architecture",
+    "developer-tools",
+    "learning"
+  ],
+  "technologyIds": [
+    "csharp",
+    "dotnet-8-10",
+    "dotnet-standard-2-0",
+    "roslyn-analyzers",
+    "msbuild",
+    "xunit",
+    "fluentassertions",
+    "github-actions",
+    "docfx",
+    "nuget"
+  ],
+  "proof": [
+    {
+      "label": "Architecture",
+      "value": "docs/understand/architecture.md",
+      "visibility": "Public"
+    },
+    {
+      "label": "Analyzers",
+      "value": "src/Dx.Domain.Analyzers/",
+      "visibility": "Public"
+    },
+    {
+      "label": "Tests",
+      "value": "tests/",
+      "visibility": "Public"
+    },
+    {
+      "label": "Release gate",
+      "value": "scripts/release-gate/",
+      "visibility": "Public"
+    }
+  ],
+  "demo": {
+    "kind": "code",
+    "caption": "Explicit success and failure",
+    "lines": [
+      "var result = CustomerId.Create(rawValue);",
+      "",
+      "return result.Match(",
+      "    id => ContinueWith(id),",
+      "    error => Reject(error));"
+    ]
+  },
+  "limitations": [
+    "The repository classifies the current release as provisional prerelease software.",
+    "The analyzers provide static compile-time checks within documented scope limitations.",
+    "Production adoption, stable API compatibility and measurable business impact are not established."
+  ],
+  "provenance": {
+    "sourceId": "legacy-portfolio.projects.dx-domain",
+    "description": "Mechanically derived from the controlling public projection."
+  },
+  "publication": {
+    "state": "Published",
+    "visibility": "Public",
+    "readingDepth": "Detailed"
+  }
+}

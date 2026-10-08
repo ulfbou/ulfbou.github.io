@@ -1,0 +1,483 @@
+[
+  {
+    "id": "csharp",
+    "name": "C#",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.csharp",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "dotnet-8-10",
+    "name": ".NET 8–10",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.dotnet-8-10",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "dotnet-standard-2-0",
+    "name": ".NET Standard 2.0",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.dotnet-standard-2-0",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "roslyn-analyzers",
+    "name": "Roslyn analyzers",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.roslyn-analyzers",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "msbuild",
+    "name": "MSBuild",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.msbuild",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "xunit",
+    "name": "xUnit",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.xunit",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "fluentassertions",
+    "name": "FluentAssertions",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.fluentassertions",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "github-actions",
+    "name": "GitHub Actions",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.github-actions",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "docfx",
+    "name": "DocFX",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.docfx",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "nuget",
+    "name": "NuGet",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.nuget",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "dotnet-10",
+    "name": ".NET 10",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.dotnet-10",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "spectre-console",
+    "name": "Spectre.Console",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.spectre-console",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "sqlite",
+    "name": "SQLite",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.sqlite",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "bash",
+    "name": "Bash",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.bash",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "powershell",
+    "name": "PowerShell",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.powershell",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "blazor-webassembly",
+    "name": "Blazor WebAssembly",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.blazor-webassembly",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "razor-components",
+    "name": "Razor components",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.razor-components",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "javascript-interop",
+    "name": "JavaScript interop",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.javascript-interop",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "indexeddb",
+    "name": "IndexedDB",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.indexeddb",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "system-text-json",
+    "name": "System.Text.Json",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.system-text-json",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "css",
+    "name": "CSS",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.css",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "verdant-replay-history",
+    "name": "Verdant Replay and History",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.verdant-replay-history",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "system-text",
+    "name": "System.Text",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.system-text",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "sha-256",
+    "name": "SHA-256",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.sha-256",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "deterministic-json-serialization",
+    "name": "Deterministic JSON serialization",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.deterministic-json-serialization",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "dotnet-6-9",
+    "name": ".NET 6–9",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.dotnet-6-9",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "immutable-collections",
+    "name": "Immutable collections",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.immutable-collections",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "python-3-11-plus",
+    "name": "Python 3.11+",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.python-3-11-plus",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.git",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "github-cli",
+    "name": "GitHub CLI",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.github-cli",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "json",
+    "name": "JSON",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.json",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "json-schema",
+    "name": "JSON Schema",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.json-schema",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "dx-carriers",
+    "name": "DX carriers",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.dx-carriers",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "unittest",
+    "name": "unittest",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.unittest",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "pytest",
+    "name": "pytest",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.pytest",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "json-compatible-yaml-1-2",
+    "name": "JSON-compatible YAML 1.2",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.json-compatible-yaml-1-2",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "json-schema-contracts",
+    "name": "JSON Schema contracts",
+    "provenance": {
+      "sourceId": "legacy-portfolio.technologies.json-schema-contracts",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  }
+]

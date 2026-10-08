@@ -1,0 +1,79 @@
+{
+  "order": 5,
+  "id": "collab",
+  "title": "Collab",
+  "shortTitle": "Evidence-bounded AI delivery",
+  "proposition": "Keep AI-assisted repository changes bounded, inspectable and human-approved.",
+  "story": "Collab is Python and Bash developer tooling that constrains AI-assisted repository changes to one evidence-backed delivery at a time. It collects Git and GitHub context, validates structured handoffs, applies verified file-transfer packages and gates delivery through scope, build, test and consumer checks.",
+  "contribution": "I designed the bounded planning and implementation stages, implemented deterministic evidence collection and immutable run records, enforced branch and scope guards, and developed read-only GitHub Actions diagnostic analysis.",
+  "reflection": {
+    "summary": "AI assistance becomes more accountable when evidence, authority, scope, mutation and acceptance are represented as explicit boundaries instead of informal expectations."
+  },
+  "status": "Personal software-engineering project",
+  "accent": "#7c5578",
+  "facetIds": [
+    "developer-tools",
+    "human-ai",
+    "architecture"
+  ],
+  "technologyIds": [
+    "python-3-11-plus",
+    "bash",
+    "git",
+    "github-cli",
+    "github-actions",
+    "json",
+    "json-schema",
+    "sha-256",
+    "dx-carriers",
+    "unittest",
+    "pytest"
+  ],
+  "proof": [
+    {
+      "label": "Evidence",
+      "value": "collab-evidence.py",
+      "visibility": "Public"
+    },
+    {
+      "label": "Delivery",
+      "value": "collab-delivery-run.sh",
+      "visibility": "Public"
+    },
+    {
+      "label": "State",
+      "value": "collab-state.py",
+      "visibility": "Public"
+    },
+    {
+      "label": "Tests",
+      "value": "tests/",
+      "visibility": "Public"
+    }
+  ],
+  "demo": {
+    "kind": "terminal",
+    "caption": "Human-controlled delivery boundary",
+    "lines": [
+      "$ collab-chat-start.sh",
+      "evidence: collected",
+      "scope: bounded",
+      "authority: human",
+      "next: review one proposed delivery"
+    ]
+  },
+  "limitations": [
+    "The project does not provide autonomous software delivery, repair or knowledge promotion.",
+    "Uniform DX v2 generation across every compatibility path is not established.",
+    "Production readiness, external adoption and successful execution of every GitHub mutation path are not established."
+  ],
+  "provenance": {
+    "sourceId": "legacy-portfolio.projects.collab",
+    "description": "Mechanically derived from the controlling public projection."
+  },
+  "publication": {
+    "state": "Published",
+    "visibility": "Public",
+    "readingDepth": "Detailed"
+  }
+}

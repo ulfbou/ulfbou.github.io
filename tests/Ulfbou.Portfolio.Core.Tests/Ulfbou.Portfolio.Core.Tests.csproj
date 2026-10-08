@@ -1,3 +1,4 @@
+
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -16,6 +17,17 @@
     <ProjectReference Include="../../src/Ulfbou.Portfolio.Core/Ulfbou.Portfolio.Core.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="../../src/Ulfbou.Site/wwwroot/data/portfolio.json" Link="portfolio.json" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/content/**/*.json"
+             Link="content/%(RecursiveDir)%(Filename)%(Extension)"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/wwwroot/data/portfolio.json"
+             Link="portfolio.json"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/wwwroot/data/portfolio.json"
+             Link="legacy/portfolio.json"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/wwwroot/data/generated/portfolio.json"
+             Link="generated/portfolio.json"
+             CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
