@@ -1,0 +1,77 @@
+{
+  "order": 2,
+  "id": "mold-first-bloom",
+  "title": "MoldFirstBloom",
+  "shortTitle": "Deterministic play in the browser",
+  "proposition": "Keep interactive presentation separate from authoritative game state.",
+  "story": "MoldFirstBloom is a mobile-oriented Blazor WebAssembly vertical slice combining an isolated deterministic C# engine with a responsive browser interface. Players preview, rotate and confirm spatial moves while successful actions support reproducible replay, historical inspection and IndexedDB restoration.",
+  "contribution": "I implemented the browser-independent engine, integrated Verdant Replay and History, created the touch-first Blazor interface and engineered replay-based IndexedDB restoration with compatibility checks.",
+  "reflection": {
+    "summary": "A user-facing application can remain fluid and expressive while its authoritative state, action history and reconstruction rules stay explicit and independently testable."
+  },
+  "status": "Phase 1 vertical slice",
+  "accent": "#487f69",
+  "facetIds": [
+    "architecture",
+    "learning"
+  ],
+  "technologyIds": [
+    "csharp",
+    "dotnet-10",
+    "blazor-webassembly",
+    "razor-components",
+    "javascript-interop",
+    "indexeddb",
+    "system-text-json",
+    "xunit",
+    "css",
+    "verdant-replay-history"
+  ],
+  "proof": [
+    {
+      "label": "Engine",
+      "value": "src/Mold.Engine/",
+      "visibility": "Public"
+    },
+    {
+      "label": "Application",
+      "value": "src/Mold.App/",
+      "visibility": "Public"
+    },
+    {
+      "label": "Replay",
+      "value": "src/Mold.Engine/FirstBloomReplay.cs",
+      "visibility": "Public"
+    },
+    {
+      "label": "Tests",
+      "value": "tests/",
+      "visibility": "Public"
+    }
+  ],
+  "demo": {
+    "kind": "code",
+    "caption": "Replay as reconstruction authority",
+    "lines": [
+      "initial state + seed",
+      "        + successful actions",
+      "        -> deterministic replay",
+      "        -> historical state",
+      "        -> restored session"
+    ]
+  },
+  "limitations": [
+    "This is a Phase 1 vertical slice rather than a complete or released game.",
+    "Several broader mechanics and interface areas remain deferred or represented only by scaffolding.",
+    "End-to-end browser, persistence, Razor component and JavaScript tests are not established."
+  ],
+  "provenance": {
+    "sourceId": "legacy-portfolio.projects.mold-first-bloom",
+    "description": "Mechanically derived from the controlling public projection."
+  },
+  "publication": {
+    "state": "Published",
+    "visibility": "Public",
+    "readingDepth": "Detailed"
+  }
+}

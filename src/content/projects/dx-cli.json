@@ -1,0 +1,77 @@
+{
+  "order": 1,
+  "id": "dx-cli",
+  "title": "Dx.Cli",
+  "shortTitle": "Transactional workspace tooling",
+  "proposition": "Apply deterministic workspace changes without accepting partial state.",
+  "story": "Dx.Cli is a .NET command-line tool that applies deterministic workspace-change packages transactionally while preserving inspectable state. Its installed dxs command initializes workspaces, applies validated changes and manages snapshots, diffs, checkout, logs, sessions, packing and diagnostics.",
+  "contribution": "I designed the command workflow, separated the Spectre.Console interface from core execution authority, and implemented locking, atomic commits, rollback, interrupted-transaction recovery, SQLite metadata and content-addressed storage.",
+  "reflection": {
+    "summary": "Developer tooling becomes more trustworthy when parsing, validation, planning, execution and recovery share one explicit authority rather than several convenient mutation paths."
+  },
+  "status": "Version 0.3.0",
+  "accent": "#3f7183",
+  "facetIds": [
+    "architecture",
+    "developer-tools"
+  ],
+  "technologyIds": [
+    "csharp",
+    "dotnet-10",
+    "spectre-console",
+    "sqlite",
+    "msbuild",
+    "xunit",
+    "fluentassertions",
+    "bash",
+    "powershell",
+    "github-actions",
+    "nuget"
+  ],
+  "proof": [
+    {
+      "label": "Command surface",
+      "value": "src/Dx.Cli/Commands/",
+      "visibility": "Public"
+    },
+    {
+      "label": "Execution authority",
+      "value": "src/Dx.Core/Protocol/DxDispatcher.cs",
+      "visibility": "Public"
+    },
+    {
+      "label": "Transactions",
+      "value": "src/Dx.Core/Protocol/TransactionCoordinator.cs",
+      "visibility": "Public"
+    },
+    {
+      "label": "Tests",
+      "value": "tests/",
+      "visibility": "Public"
+    }
+  ],
+  "demo": {
+    "kind": "terminal",
+    "caption": "Inspectable workspace state",
+    "lines": [
+      "$ dxs init",
+      "$ dxs apply change.dx.txt",
+      "$ dxs snap list",
+      "$ dxs snap diff"
+    ]
+  },
+  "limitations": [
+    "The run, eval, configuration, and session creation and closure commands are prototype-gated and unavailable.",
+    "Successful publication through NuGet, GitHub Releases, WinGet or Homebrew is not established.",
+    "Production readiness, external adoption and distributed transaction guarantees are not established."
+  ],
+  "provenance": {
+    "sourceId": "legacy-portfolio.projects.dx-cli",
+    "description": "Mechanically derived from the controlling public projection."
+  },
+  "publication": {
+    "state": "Published",
+    "visibility": "Public",
+    "readingDepth": "Detailed"
+  }
+}

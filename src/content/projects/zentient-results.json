@@ -1,0 +1,76 @@
+{
+  "order": 4,
+  "id": "zentient-results",
+  "title": "Zentient.Results",
+  "shortTitle": "Explicit outcomes for .NET",
+  "proposition": "Represent expected success and failure through one structured result model.",
+  "story": "Zentient.Results is a reusable .NET library that lets application operations return explicit success values or structured failure information instead of relying solely on thrown exceptions. The model carries statuses, messages, errors, immutable metadata and optional typed values.",
+  "contribution": "I designed sealed Result and Result<T> APIs, modeled structured errors and immutable metadata, implemented generic error transformations and developed System.Text.Json conversion for generic and non-generic results.",
+  "reflection": {
+    "summary": "A result type becomes useful when it gives callers enough structured information to make a deliberate decision without hiding exceptions, statuses or failure context behind a Boolean."
+  },
+  "status": "Latest verified GitHub release: 0.4.2",
+  "accent": "#9a633f",
+  "facetIds": [
+    "architecture",
+    "developer-tools"
+  ],
+  "technologyIds": [
+    "csharp",
+    "dotnet-6-9",
+    "immutable-collections",
+    "system-text-json",
+    "xunit",
+    "fluentassertions",
+    "msbuild",
+    "github-actions",
+    "nuget"
+  ],
+  "proof": [
+    {
+      "label": "Result APIs",
+      "value": "src/Results/Result.cs",
+      "visibility": "Public"
+    },
+    {
+      "label": "Generic results",
+      "value": "src/Results/Result{T}.cs",
+      "visibility": "Public"
+    },
+    {
+      "label": "Structured errors",
+      "value": "src/Results/ErrorInfo.cs",
+      "visibility": "Public"
+    },
+    {
+      "label": "Serialization tests",
+      "value": "tests/ResultJsonConverterTests.cs",
+      "visibility": "Public"
+    }
+  ],
+  "demo": {
+    "kind": "code",
+    "caption": "Structured operation outcome",
+    "lines": [
+      "Result<Customer> result = LoadCustomer(id);",
+      "",
+      "return result.Match(",
+      "    customer => Present(customer),",
+      "    error => Handle(error));"
+    ]
+  },
+  "limitations": [
+    "Version 0.4.2 is the latest verified GitHub Release, while repository source and release notes identify 0.4.4 state.",
+    "Current NuGet publication is not established by the supplied evidence.",
+    "Production readiness, external adoption and performance superiority are not established."
+  ],
+  "provenance": {
+    "sourceId": "legacy-portfolio.projects.zentient-results",
+    "description": "Mechanically derived from the controlling public projection."
+  },
+  "publication": {
+    "state": "Published",
+    "visibility": "Public",
+    "readingDepth": "Detailed"
+  }
+}

@@ -1,0 +1,54 @@
+[
+  {
+    "id": "architecture",
+    "name": "Architecture",
+    "provenance": {
+      "sourceId": "legacy-portfolio.facets.architecture",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "developer-tools",
+    "name": "Developer tools",
+    "provenance": {
+      "sourceId": "legacy-portfolio.facets.developer-tools",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "human-ai",
+    "name": "Human + AI",
+    "provenance": {
+      "sourceId": "legacy-portfolio.facets.human-ai",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  },
+  {
+    "id": "learning",
+    "name": "Learning",
+    "provenance": {
+      "sourceId": "legacy-portfolio.facets.learning",
+      "description": "Mechanically derived from the controlling public projection."
+    },
+    "publication": {
+      "state": "Published",
+      "visibility": "Public",
+      "readingDepth": "Detailed"
+    }
+  }
+]

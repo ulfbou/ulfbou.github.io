@@ -19,3 +19,13 @@ Phase 1 may directly author prototype JSON. Phase 2 replaces it with generated d
 UI state is selected facet, expanded project, and future optional depth/preferences. State changes disclosure, not source truth. Requests use the application base address; published artifacts contain only public-safe content; optional evidence failure cannot break core stories.
 
 Do not add compilers, AOT, service workers, graph/PDF/carrier tooling, collectors, or LLM integration until a current phase and measured need justify them.
+
+## Phase 2 approved-source compilation
+
+Approved source under `src/content/` is the sole authority for authored profile, facet, technology, and project meaning. `ApprovedContentLoader` reads explicit source paths, `ContentValidator` enforces identity, reference, publication, visibility, and public-completeness rules, `CompiledPortfolioGenerator` resolves authored IDs into public display values, and `Ulfbou.Portfolio.Generator` verifies reproducibility before replacing an output file.
+
+The retained generated projection is `src/Ulfbou.Site/wwwroot/data/generated/portfolio.json`. Serialization uses camel-case properties, UTF-8 without BOM, two-space indentation, LF-only newlines, exactly one final LF, and no timestamps, machine paths, locale-sensitive values, random values, or environmental state.
+
+Semantic equivalence is proven by independently deserializing the controlling legacy projection and retained generated projection as `PortfolioData` and comparing the complete object graphs with strict collection ordering. Retained bytes are separately compared with two independently loaded and compiled results.
+
+Runtime authority remains `src/Ulfbou.Site/wwwroot/data/portfolio.json`. Runtime cutover remains blocked until one atomic change updates publication generation, `PortfolioService`, rejection of the legacy runtime file, pull-request deployment-shape validation, and corresponding fixtures and tests.

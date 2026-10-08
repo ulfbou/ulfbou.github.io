@@ -1,0 +1,78 @@
+{
+  "order": 6,
+  "id": "prototype-knowledge",
+  "title": "prototype-knowledge",
+  "shortTitle": "Knowledge with provenance",
+  "proposition": "Compile bounded AI context without allowing generated information to become authority.",
+  "story": "prototype-knowledge is a machine-readable knowledge registry and AI context compiler. Its Python CLI validates structured decisions, contracts, lessons and provenance, retrieves deterministic subsets and compiles bounded context for AI-assisted engineering.",
+  "contribution": "I designed the provenance and authority model, implemented dependency-free validation and structured retrieval, compiled selected knowledge into multiple representations and established governance and append-only history checks.",
+  "reflection": {
+    "summary": "Useful AI context needs more than retrieval. It must preserve provenance, distinguish durable knowledge from generated candidates and leave final acceptance with a human authority."
+  },
+  "status": "Version 0.1.0 private prototype",
+  "accent": "#56718f",
+  "facetIds": [
+    "human-ai",
+    "developer-tools",
+    "architecture",
+    "learning"
+  ],
+  "technologyIds": [
+    "python-3-11-plus",
+    "json",
+    "json-compatible-yaml-1-2",
+    "json-schema-contracts",
+    "sha-256",
+    "git",
+    "github-actions",
+    "unittest",
+    "dx-carriers"
+  ],
+  "proof": [
+    {
+      "label": "Core",
+      "value": "src/prototype_knowledge/core.py",
+      "visibility": "Public"
+    },
+    {
+      "label": "CLI",
+      "value": "src/prototype_knowledge/cli.py",
+      "visibility": "Public"
+    },
+    {
+      "label": "Governance",
+      "value": "src/prototype_knowledge/governance.py",
+      "visibility": "Public"
+    },
+    {
+      "label": "Tests",
+      "value": "tests/",
+      "visibility": "Public"
+    }
+  ],
+  "demo": {
+    "kind": "terminal",
+    "caption": "Bounded context compilation",
+    "lines": [
+      "$ prototype-knowledge validate",
+      "PASS",
+      "$ prototype-knowledge compile --file queries/context.yaml",
+      "selected knowledge: deterministic",
+      "publication authority: human"
+    ]
+  },
+  "limitations": [
+    "The repository is private and its packaging is intentionally incomplete.",
+    "The runtime validator does not enforce every declared JSON Schema or query option.",
+    "The project does not implement autonomous learning, repository mutation, an MCP server or a decision-ledger runtime."
+  ],
+  "provenance": {
+    "sourceId": "legacy-portfolio.projects.prototype-knowledge",
+    "description": "Mechanically derived from the controlling public projection."
+  },
+  "publication": {
+    "state": "Published",
+    "visibility": "Public",
+    "readingDepth": "Detailed"
+  }
+}

@@ -1,0 +1,449 @@
+{
+  "profile": {
+    "name": "Ulf Bourelius",
+    "signal": "I build systems that make complex work easier to see, reason about and trust.",
+    "introduction": "My work moves between software design, developer tooling and technical learning. I use code, contracts and careful presentation to turn difficult ideas into things people can inspect and use.",
+    "direction": "I learn architecture by building: defining authority, exposing state, testing boundaries and documenting the decisions that hold a system together. The aim is not complexity for its own sake, but software whose reasoning remains visible.",
+    "links": [
+      {
+        "label": "GitHub",
+        "url": "https://github.com/ulfbou"
+      }
+    ]
+  },
+  "facets": [
+    "Architecture",
+    "Developer tools",
+    "Human + AI",
+    "Learning"
+  ],
+  "projects": [
+    {
+      "id": "dx-domain",
+      "title": "Dx.Domain",
+      "shortTitle": "Domain rules with teeth",
+      "proposition": "Move domain rules and architectural boundaries closer to the compiler.",
+      "story": "Dx.Domain is a C# and .NET library for expressing business rules through typed identities, structured results and errors, invariants, immutable facts, causation metadata and semantic annotations. Roslyn analyzers complement the public APIs by detecting prohibited construction, ignored failures, exception-driven control flow and architectural scope violations during builds.",
+      "contribution": "I designed cohesive public APIs across four dependency-controlled NuGet packages, implemented scope-aware Roslyn analyzers and MSBuild governance, and established test, documentation, packaging and release-gate workflows.",
+      "reflection": "An API is not only its signatures. Package topology, diagnostics, examples, tests and release controls collectively teach developers what an architecture permits.",
+      "status": "0.1.0-alpha",
+      "accent": "#d75932",
+      "facets": [
+        "Architecture",
+        "Developer tools",
+        "Learning"
+      ],
+      "technologies": [
+        "C#",
+        ".NET 8–10",
+        ".NET Standard 2.0",
+        "Roslyn analyzers",
+        "MSBuild",
+        "xUnit",
+        "FluentAssertions",
+        "GitHub Actions",
+        "DocFX",
+        "NuGet"
+      ],
+      "proof": [
+        {
+          "label": "Architecture",
+          "value": "docs/understand/architecture.md"
+        },
+        {
+          "label": "Analyzers",
+          "value": "src/Dx.Domain.Analyzers/"
+        },
+        {
+          "label": "Tests",
+          "value": "tests/"
+        },
+        {
+          "label": "Release gate",
+          "value": "scripts/release-gate/"
+        }
+      ],
+      "demo": {
+        "kind": "code",
+        "caption": "Explicit success and failure",
+        "lines": [
+          "var result = CustomerId.Create(rawValue);",
+          "",
+          "return result.Match(",
+          "    id => ContinueWith(id),",
+          "    error => Reject(error));"
+        ]
+      },
+      "limitations": [
+        "The repository classifies the current release as provisional prerelease software.",
+        "The analyzers provide static compile-time checks within documented scope limitations.",
+        "Production adoption, stable API compatibility and measurable business impact are not established."
+      ]
+    },
+    {
+      "id": "dx-cli",
+      "title": "Dx.Cli",
+      "shortTitle": "Transactional workspace tooling",
+      "proposition": "Apply deterministic workspace changes without accepting partial state.",
+      "story": "Dx.Cli is a .NET command-line tool that applies deterministic workspace-change packages transactionally while preserving inspectable state. Its installed dxs command initializes workspaces, applies validated changes and manages snapshots, diffs, checkout, logs, sessions, packing and diagnostics.",
+      "contribution": "I designed the command workflow, separated the Spectre.Console interface from core execution authority, and implemented locking, atomic commits, rollback, interrupted-transaction recovery, SQLite metadata and content-addressed storage.",
+      "reflection": "Developer tooling becomes more trustworthy when parsing, validation, planning, execution and recovery share one explicit authority rather than several convenient mutation paths.",
+      "status": "Version 0.3.0",
+      "accent": "#3f7183",
+      "facets": [
+        "Architecture",
+        "Developer tools"
+      ],
+      "technologies": [
+        "C#",
+        ".NET 10",
+        "Spectre.Console",
+        "SQLite",
+        "MSBuild",
+        "xUnit",
+        "FluentAssertions",
+        "Bash",
+        "PowerShell",
+        "GitHub Actions",
+        "NuGet"
+      ],
+      "proof": [
+        {
+          "label": "Command surface",
+          "value": "src/Dx.Cli/Commands/"
+        },
+        {
+          "label": "Execution authority",
+          "value": "src/Dx.Core/Protocol/DxDispatcher.cs"
+        },
+        {
+          "label": "Transactions",
+          "value": "src/Dx.Core/Protocol/TransactionCoordinator.cs"
+        },
+        {
+          "label": "Tests",
+          "value": "tests/"
+        }
+      ],
+      "demo": {
+        "kind": "terminal",
+        "caption": "Inspectable workspace state",
+        "lines": [
+          "$ dxs init",
+          "$ dxs apply change.dx.txt",
+          "$ dxs snap list",
+          "$ dxs snap diff"
+        ]
+      },
+      "limitations": [
+        "The run, eval, configuration, and session creation and closure commands are prototype-gated and unavailable.",
+        "Successful publication through NuGet, GitHub Releases, WinGet or Homebrew is not established.",
+        "Production readiness, external adoption and distributed transaction guarantees are not established."
+      ]
+    },
+    {
+      "id": "mold-first-bloom",
+      "title": "MoldFirstBloom",
+      "shortTitle": "Deterministic play in the browser",
+      "proposition": "Keep interactive presentation separate from authoritative game state.",
+      "story": "MoldFirstBloom is a mobile-oriented Blazor WebAssembly vertical slice combining an isolated deterministic C# engine with a responsive browser interface. Players preview, rotate and confirm spatial moves while successful actions support reproducible replay, historical inspection and IndexedDB restoration.",
+      "contribution": "I implemented the browser-independent engine, integrated Verdant Replay and History, created the touch-first Blazor interface and engineered replay-based IndexedDB restoration with compatibility checks.",
+      "reflection": "A user-facing application can remain fluid and expressive while its authoritative state, action history and reconstruction rules stay explicit and independently testable.",
+      "status": "Phase 1 vertical slice",
+      "accent": "#487f69",
+      "facets": [
+        "Architecture",
+        "Learning"
+      ],
+      "technologies": [
+        "C#",
+        ".NET 10",
+        "Blazor WebAssembly",
+        "Razor components",
+        "JavaScript interop",
+        "IndexedDB",
+        "System.Text.Json",
+        "xUnit",
+        "CSS",
+        "Verdant Replay and History"
+      ],
+      "proof": [
+        {
+          "label": "Engine",
+          "value": "src/Mold.Engine/"
+        },
+        {
+          "label": "Application",
+          "value": "src/Mold.App/"
+        },
+        {
+          "label": "Replay",
+          "value": "src/Mold.Engine/FirstBloomReplay.cs"
+        },
+        {
+          "label": "Tests",
+          "value": "tests/"
+        }
+      ],
+      "demo": {
+        "kind": "code",
+        "caption": "Replay as reconstruction authority",
+        "lines": [
+          "initial state + seed",
+          "        + successful actions",
+          "        -> deterministic replay",
+          "        -> historical state",
+          "        -> restored session"
+        ]
+      },
+      "limitations": [
+        "This is a Phase 1 vertical slice rather than a complete or released game.",
+        "Several broader mechanics and interface areas remain deferred or represented only by scaffolding.",
+        "End-to-end browser, persistence, Razor component and JavaScript tests are not established."
+      ]
+    },
+    {
+      "id": "verdant",
+      "title": "Verdant",
+      "shortTitle": "Deterministic simulation foundations",
+      "proposition": "Make accepted state transitions reproducible, replayable and compatibility-aware.",
+      "story": "Verdant is an evolving C# and .NET foundation for simulations whose state must remain reproducible after every accepted command. It commits changes atomically, records only successful commands and reconstructs earlier states by replaying requested history prefixes from canonical initialization.",
+      "contribution": "I implemented atomic command execution, replay and historical-query APIs, independent compatibility dimensions, restricted canonical JSON serialization, SHA-256 identities and fixed-order square-grid topology.",
+      "reflection": "Determinism requires more than a repeatable algorithm. State authority, command history, serialization, compatibility and failure behavior must all agree on what can be reconstructed.",
+      "status": "Implementation in progress",
+      "accent": "#6d5b93",
+      "facets": [
+        "Architecture",
+        "Learning"
+      ],
+      "technologies": [
+        "C#",
+        ".NET 10",
+        "xUnit",
+        "System.Text",
+        "SHA-256",
+        "Deterministic JSON serialization",
+        "MSBuild"
+      ],
+      "proof": [
+        {
+          "label": "Transactions",
+          "value": "src/Verdant.Core/TransactionPipeline.cs"
+        },
+        {
+          "label": "Replay",
+          "value": "src/Verdant.Replay/ReplayEngine.cs"
+        },
+        {
+          "label": "Compatibility",
+          "value": "src/Verdant.Compatibility/"
+        },
+        {
+          "label": "Conformance",
+          "value": "tests/Verdant.ConformanceFixtures/"
+        }
+      ],
+      "demo": {
+        "kind": "code",
+        "caption": "Successful commands define history",
+        "lines": [
+          "canonical initialization",
+          "        + accepted command prefix",
+          "        -> isolated replay",
+          "        -> state and event batches",
+          "        -> unchanged live authority"
+        ]
+      },
+      "limitations": [
+        "The wider deterministic spatial-simulation system is not complete.",
+        "Persistence, crash recovery, Undo, Timeline mutation and replay sharing remain specification work.",
+        "Cross-runtime reproducibility and a complete First Bloom fixture suite are not established."
+      ]
+    },
+    {
+      "id": "zentient-results",
+      "title": "Zentient.Results",
+      "shortTitle": "Explicit outcomes for .NET",
+      "proposition": "Represent expected success and failure through one structured result model.",
+      "story": "Zentient.Results is a reusable .NET library that lets application operations return explicit success values or structured failure information instead of relying solely on thrown exceptions. The model carries statuses, messages, errors, immutable metadata and optional typed values.",
+      "contribution": "I designed sealed Result and Result<T> APIs, modeled structured errors and immutable metadata, implemented generic error transformations and developed System.Text.Json conversion for generic and non-generic results.",
+      "reflection": "A result type becomes useful when it gives callers enough structured information to make a deliberate decision without hiding exceptions, statuses or failure context behind a Boolean.",
+      "status": "Latest verified GitHub release: 0.4.2",
+      "accent": "#9a633f",
+      "facets": [
+        "Architecture",
+        "Developer tools"
+      ],
+      "technologies": [
+        "C#",
+        ".NET 6–9",
+        "Immutable collections",
+        "System.Text.Json",
+        "xUnit",
+        "FluentAssertions",
+        "MSBuild",
+        "GitHub Actions",
+        "NuGet"
+      ],
+      "proof": [
+        {
+          "label": "Result APIs",
+          "value": "src/Results/Result.cs"
+        },
+        {
+          "label": "Generic results",
+          "value": "src/Results/Result{T}.cs"
+        },
+        {
+          "label": "Structured errors",
+          "value": "src/Results/ErrorInfo.cs"
+        },
+        {
+          "label": "Serialization tests",
+          "value": "tests/ResultJsonConverterTests.cs"
+        }
+      ],
+      "demo": {
+        "kind": "code",
+        "caption": "Structured operation outcome",
+        "lines": [
+          "Result<Customer> result = LoadCustomer(id);",
+          "",
+          "return result.Match(",
+          "    customer => Present(customer),",
+          "    error => Handle(error));"
+        ]
+      },
+      "limitations": [
+        "Version 0.4.2 is the latest verified GitHub Release, while repository source and release notes identify 0.4.4 state.",
+        "Current NuGet publication is not established by the supplied evidence.",
+        "Production readiness, external adoption and performance superiority are not established."
+      ]
+    },
+    {
+      "id": "collab",
+      "title": "Collab",
+      "shortTitle": "Evidence-bounded AI delivery",
+      "proposition": "Keep AI-assisted repository changes bounded, inspectable and human-approved.",
+      "story": "Collab is Python and Bash developer tooling that constrains AI-assisted repository changes to one evidence-backed delivery at a time. It collects Git and GitHub context, validates structured handoffs, applies verified file-transfer packages and gates delivery through scope, build, test and consumer checks.",
+      "contribution": "I designed the bounded planning and implementation stages, implemented deterministic evidence collection and immutable run records, enforced branch and scope guards, and developed read-only GitHub Actions diagnostic analysis.",
+      "reflection": "AI assistance becomes more accountable when evidence, authority, scope, mutation and acceptance are represented as explicit boundaries instead of informal expectations.",
+      "status": "Personal software-engineering project",
+      "accent": "#7c5578",
+      "facets": [
+        "Developer tools",
+        "Human + AI",
+        "Architecture"
+      ],
+      "technologies": [
+        "Python 3.11+",
+        "Bash",
+        "Git",
+        "GitHub CLI",
+        "GitHub Actions",
+        "JSON",
+        "JSON Schema",
+        "SHA-256",
+        "DX carriers",
+        "unittest",
+        "pytest"
+      ],
+      "proof": [
+        {
+          "label": "Evidence",
+          "value": "collab-evidence.py"
+        },
+        {
+          "label": "Delivery",
+          "value": "collab-delivery-run.sh"
+        },
+        {
+          "label": "State",
+          "value": "collab-state.py"
+        },
+        {
+          "label": "Tests",
+          "value": "tests/"
+        }
+      ],
+      "demo": {
+        "kind": "terminal",
+        "caption": "Human-controlled delivery boundary",
+        "lines": [
+          "$ collab-chat-start.sh",
+          "evidence: collected",
+          "scope: bounded",
+          "authority: human",
+          "next: review one proposed delivery"
+        ]
+      },
+      "limitations": [
+        "The project does not provide autonomous software delivery, repair or knowledge promotion.",
+        "Uniform DX v2 generation across every compatibility path is not established.",
+        "Production readiness, external adoption and successful execution of every GitHub mutation path are not established."
+      ]
+    },
+    {
+      "id": "prototype-knowledge",
+      "title": "prototype-knowledge",
+      "shortTitle": "Knowledge with provenance",
+      "proposition": "Compile bounded AI context without allowing generated information to become authority.",
+      "story": "prototype-knowledge is a machine-readable knowledge registry and AI context compiler. Its Python CLI validates structured decisions, contracts, lessons and provenance, retrieves deterministic subsets and compiles bounded context for AI-assisted engineering.",
+      "contribution": "I designed the provenance and authority model, implemented dependency-free validation and structured retrieval, compiled selected knowledge into multiple representations and established governance and append-only history checks.",
+      "reflection": "Useful AI context needs more than retrieval. It must preserve provenance, distinguish durable knowledge from generated candidates and leave final acceptance with a human authority.",
+      "status": "Version 0.1.0 private prototype",
+      "accent": "#56718f",
+      "facets": [
+        "Human + AI",
+        "Developer tools",
+        "Architecture",
+        "Learning"
+      ],
+      "technologies": [
+        "Python 3.11+",
+        "JSON",
+        "JSON-compatible YAML 1.2",
+        "JSON Schema contracts",
+        "SHA-256",
+        "Git",
+        "GitHub Actions",
+        "unittest",
+        "DX carriers"
+      ],
+      "proof": [
+        {
+          "label": "Core",
+          "value": "src/prototype_knowledge/core.py"
+        },
+        {
+          "label": "CLI",
+          "value": "src/prototype_knowledge/cli.py"
+        },
+        {
+          "label": "Governance",
+          "value": "src/prototype_knowledge/governance.py"
+        },
+        {
+          "label": "Tests",
+          "value": "tests/"
+        }
+      ],
+      "demo": {
+        "kind": "terminal",
+        "caption": "Bounded context compilation",
+        "lines": [
+          "$ prototype-knowledge validate",
+          "PASS",
+          "$ prototype-knowledge compile --file queries/context.yaml",
+          "selected knowledge: deterministic",
+          "publication authority: human"
+        ]
+      },
+      "limitations": [
+        "The repository is private and its packaging is intentionally incomplete.",
+        "The runtime validator does not enforce every declared JSON Schema or query option.",
+        "The project does not implement autonomous learning, repository mutation, an MCP server or a decision-ledger runtime."
+      ]
+    }
+  ]
+}
