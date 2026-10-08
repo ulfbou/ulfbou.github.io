@@ -78,6 +78,102 @@
         "The repository classifies the current release as provisional prerelease software.",
         "The analyzers provide static compile-time checks within documented scope limitations.",
         "Production adoption, stable API compatibility and measurable business impact are not established."
+      ],
+      "blocks": [
+        {
+          "order": 0,
+          "id": "dx-domain.story",
+          "type": "Prose",
+          "accessibleLabel": "Dx.Domain story",
+          "readingDepth": 1,
+          "provenance": {
+            "sourceId": "legacy-portfolio.projects.dx-domain.story",
+            "description": "Exact approved Phase 2 story wording."
+          },
+          "payload": {
+            "text": "Dx.Domain is a C# and .NET library for expressing business rules through typed identities, structured results and errors, invariants, immutable facts, causation metadata and semantic annotations. Roslyn analyzers complement the public APIs by detecting prohibited construction, ignored failures, exception-driven control flow and architectural scope violations during builds."
+          }
+        },
+        {
+          "order": 1,
+          "id": "dx-domain.reflection",
+          "type": "Reflection",
+          "accessibleLabel": "Dx.Domain reflection",
+          "readingDepth": 1,
+          "provenance": {
+            "sourceId": "legacy-portfolio.projects.dx-domain.reflection",
+            "description": "Exact approved Phase 2 reflection wording."
+          },
+          "payload": {
+            "text": "An API is not only its signatures. Package topology, diagnostics, examples, tests and release controls collectively teach developers what an architecture permits."
+          }
+        },
+        {
+          "order": 2,
+          "id": "dx-domain.code",
+          "type": "Code",
+          "accessibleLabel": "Explicit success and failure",
+          "readingDepth": 1,
+          "provenance": {
+            "sourceId": "legacy-portfolio.projects.dx-domain.demo",
+            "description": "Exact approved Phase 2 code artifact."
+          },
+          "payload": {
+            "caption": "Explicit success and failure",
+            "lines": [
+              "var result = CustomerId.Create(rawValue);",
+              "",
+              "return result.Match(",
+              "    id => ContinueWith(id),",
+              "    error => Reject(error));"
+            ]
+          }
+        },
+        {
+          "order": 3,
+          "id": "dx-domain.evidence",
+          "type": "Evidence",
+          "accessibleLabel": "Dx.Domain representative evidence",
+          "readingDepth": 1,
+          "provenance": {
+            "sourceId": "legacy-portfolio.projects.dx-domain.proof",
+            "description": "Exact approved Phase 2 evidence pointers."
+          },
+          "payload": {
+            "items": [
+              {
+                "label": "Architecture",
+                "value": "docs/understand/architecture.md"
+              },
+              {
+                "label": "Analyzers",
+                "value": "src/Dx.Domain.Analyzers/"
+              },
+              {
+                "label": "Tests",
+                "value": "tests/"
+              },
+              {
+                "label": "Release gate",
+                "value": "scripts/release-gate/"
+              }
+            ]
+          }
+        },
+        {
+          "order": 4,
+          "id": "dx-domain.limitations",
+          "type": "Callout",
+          "accessibleLabel": "Dx.Domain limitations",
+          "readingDepth": 1,
+          "provenance": {
+            "sourceId": "legacy-portfolio.projects.dx-domain.limitations",
+            "description": "Exact approved Phase 2 limitation wording."
+          },
+          "payload": {
+            "text": "The repository classifies the current release as provisional prerelease software.\\nThe analyzers provide static compile-time checks within documented scope limitations.\\nProduction adoption, stable API compatibility and measurable business impact are not established."
+          }
+        }
       ]
     },
     {
@@ -139,7 +235,8 @@
         "The run, eval, configuration, and session creation and closure commands are prototype-gated and unavailable.",
         "Successful publication through NuGet, GitHub Releases, WinGet or Homebrew is not established.",
         "Production readiness, external adoption and distributed transaction guarantees are not established."
-      ]
+      ],
+      "blocks": []
     },
     {
       "id": "mold-first-bloom",
@@ -200,7 +297,8 @@
         "This is a Phase 1 vertical slice rather than a complete or released game.",
         "Several broader mechanics and interface areas remain deferred or represented only by scaffolding.",
         "End-to-end browser, persistence, Razor component and JavaScript tests are not established."
-      ]
+      ],
+      "blocks": []
     },
     {
       "id": "verdant",
@@ -258,7 +356,8 @@
         "The wider deterministic spatial-simulation system is not complete.",
         "Persistence, crash recovery, Undo, Timeline mutation and replay sharing remain specification work.",
         "Cross-runtime reproducibility and a complete First Bloom fixture suite are not established."
-      ]
+      ],
+      "blocks": []
     },
     {
       "id": "zentient-results",
@@ -318,7 +417,8 @@
         "Version 0.4.2 is the latest verified GitHub Release, while repository source and release notes identify 0.4.4 state.",
         "Current NuGet publication is not established by the supplied evidence.",
         "Production readiness, external adoption and performance superiority are not established."
-      ]
+      ],
+      "blocks": []
     },
     {
       "id": "collab",
@@ -381,7 +481,8 @@
         "The project does not provide autonomous software delivery, repair or knowledge promotion.",
         "Uniform DX v2 generation across every compatibility path is not established.",
         "Production readiness, external adoption and successful execution of every GitHub mutation path are not established."
-      ]
+      ],
+      "blocks": []
     },
     {
       "id": "prototype-knowledge",
@@ -443,7 +544,8 @@
         "The repository is private and its packaging is intentionally incomplete.",
         "The runtime validator does not enforce every declared JSON Schema or query option.",
         "The project does not implement autonomous learning, repository mutation, an MCP server or a decision-ledger runtime."
-      ]
+      ],
+      "blocks": []
     }
   ]
 }

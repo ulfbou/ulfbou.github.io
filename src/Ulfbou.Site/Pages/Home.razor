@@ -119,6 +119,15 @@ else
                             @if (openId == project.Id)
                             {
                                 <div class="project-detail" id="@detailId">
+                                    @if (project.Blocks.Count > 0)
+                                    {
+                                        <div class="story-blocks">
+                                            @foreach (var block in project.Blocks.OrderBy(item => item.Order))
+                                            {
+                                                <StoryBlockView Block="@block" />
+                                            }
+                                        </div>
+                                    }
                                     <div class="narrative">
                                         <p class="overline">The story</p>
                                         <p class="large-copy">@project.Story</p>

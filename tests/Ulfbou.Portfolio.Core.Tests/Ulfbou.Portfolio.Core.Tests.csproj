@@ -29,5 +29,8 @@
     <Content Include="../../src/Ulfbou.Site/wwwroot/data/generated/portfolio.json"
              Link="generated/portfolio.json"
              CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/Components/StoryBlockView.razor"
+             Link="repository/StoryBlockView.razor"
+             CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

@@ -1,0 +1,156 @@
+@using System.Text.Json
+@using Ulfbou.Portfolio.Core
+
+<section class="@($"story-block story-block-{CssType(Block.Type)}")"
+         aria-label="@Block.AccessibleLabel"
+         data-block-id="@Block.Id"
+         data-reading-depth="@Block.ReadingDepth">
+    @switch (Block.Type)
+    {
+        case StoryBlockType.Prose:
+            <p class="story-prose">@Text("text")</p>
+            break;
+
+        case StoryBlockType.Quote:
+            <blockquote>
+                <p>@Text("text")</p>
+                <footer>@Text("attribution")</footer>
+            </blockquote>
+            break;
+
+        case StoryBlockType.Reflection:
+            <div class="story-reflection">
+                <h5>@Block.AccessibleLabel</h5>
+                <p>@Text("text")</p>
+            </div>
+            break;
+
+        case StoryBlockType.Code:
+        case StoryBlockType.Terminal:
+            <figure class="story-artifact">
+                <figcaption>@Text("caption")</figcaption>
+                <pre tabindex="0"><code>@Lines("lines")</code></pre>
+            </figure>
+            break;
+
+        case StoryBlockType.Image:
+            <figure class="story-image">
+                <img src="@Text("source")"
+                     alt="@Text("alternative")"
+                     loading="lazy" />
+            </figure>
+            break;
+
+        case StoryBlockType.Links:
+            <ul class="story-links">
+                @foreach (var item in Items("items"))
+                {
+                    <li>
+                        <a href="@ItemText(item, "url")">
+                            @ItemText(item, "label")
+                        </a>
+                    </li>
+                }
+            </ul>
+            break;
+
+        case StoryBlockType.Evidence:
+            <dl class="story-evidence">
+                @foreach (var item in Items("items"))
+                {
+                    <div>
+                        <dt>@ItemText(item, "label")</dt>
+                        <dd><code>@ItemText(item, "value")</code></dd>
+                    </div>
+                }
+            </dl>
+            break;
+
+        case StoryBlockType.Callout:
+            <aside class="story-callout">
+                <p>@Text("text")</p>
+            </aside>
+            break;
+
+        case StoryBlockType.Relationship:
+            <p class="story-relationship">
+                <strong>@Text("subject")</strong>
+                <span>@Text("relationship")</span>
+                <strong>@Text("target")</strong>
+            </p>
+            break;
+
+        case StoryBlockType.Replay:
+            <ol class="story-replay">
+                @foreach (var step in Strings("steps"))
+                {
+                    <li>@step</li>
+                }
+            </ol>
+            break;
+
+        case StoryBlockType.DiagnosticComparison:
+            <div class="story-diagnostic">
+                <section>
+                    <h5>Before</h5>
+                    <pre tabindex="0"><code>@Text("before")</code></pre>
+                </section>
+                <section>
+                    <h5>After</h5>
+                    <pre tabindex="0"><code>@Text("after")</code></pre>
+                </section>
+            </div>
+            break;
+
+        default:
+            @if (DevelopmentFallback)
+            {
+                <p class="story-fallback" role="status">
+                    Story block unavailable in development.
+                </p>
+            }
+            else
+            {
+                throw new InvalidOperationException(
+                    $"No renderer exists for block type '{Block.Type}'.");
+            }
+            break;
+    }
+</section>
+
+@code {
+    [Parameter, EditorRequired]
+    public StoryBlock Block { get; set; } = default!;
+
+    [Parameter]
+    public bool DevelopmentFallback { get; set; }
+
+    private string Text(string name) =>
+        Block.Payload.GetProperty(name).GetString()
+        ?? throw new InvalidOperationException(
+            $"Block '{Block.Id}' has no '{name}' string.");
+
+    private IEnumerable<string> Strings(string name) =>
+        Block.Payload
+            .GetProperty(name)
+            .EnumerateArray()
+            .Select(item => item.GetString() ?? string.Empty);
+
+    private string Lines(string name) =>
+        string.Join("\n", Strings(name));
+
+    private IEnumerable<JsonElement> Items(string name) =>
+        Block.Payload
+            .GetProperty(name)
+            .EnumerateArray();
+
+    private static string ItemText(
+        JsonElement item,
+        string name) =>
+        item.GetProperty(name).GetString()
+        ?? throw new InvalidOperationException(
+            $"Block item has no '{name}' string.");
+
+    private static string CssType(StoryBlockType type) =>
+        type.ToString().ToLowerInvariant();
+}

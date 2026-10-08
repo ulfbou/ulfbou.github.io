@@ -208,6 +208,11 @@ public static class ContentValidator
             && project.Publication.Visibility
                 == Visibility.Public;
 
+        StoryBlockValidator.Validate(
+            project.Blocks,
+            path,
+            publishable);
+
         if (publishable)
         {
             Required(project.Title, $"{path}.title");
