@@ -39,6 +39,7 @@ else
             }
         </nav>
     </header>
+
     <main id="main-content">
         <section class="hero" id="top" aria-labelledby="portfolio-title">
             <div class="hero-copy">
@@ -47,6 +48,7 @@ else
                 <p class="intro">@data.Profile.Introduction</p>
                 <p class="representative-note">Representative prototype content pending final publication approval.</p>
             </div>
+
             <div class="orbit" aria-label="Portfolio themes">
                 <span class="orbit-core" aria-hidden="true">UB</span>
                 @for (var i = 0; i < data.Facets.Count; i++)
@@ -60,6 +62,7 @@ else
                     </button>
                 }
             </div>
+
             <a class="scroll-cue" href="#work">Follow the threads <span aria-hidden="true">↓</span></a>
         </section>
 
@@ -95,14 +98,18 @@ else
             else
             {
                 <div class="project-stack">
-                    @foreach (var project in VisibleProjects)
+                    @foreach (var project in data.Projects)
                     {
                         var detailId = $"project-{project.Id}";
-                        <article class="project" style="@($"--accent:{project.Accent}")">
+                        var isVisible = ProjectMatchesFacet(project);
+                        var isOpen = openId == project.Id;
+
+                        <article class="project @(!isVisible ? "filtered-out" : null)"
+                                 style="@($"--accent:{project.Accent}")">
                             <h3 class="project-heading">
                                 <button type="button"
                                         class="project-summary"
-                                        aria-expanded="@(openId == project.Id)"
+                                        aria-expanded="@isOpen"
                                         aria-controls="@detailId"
                                         @onclick="() => Toggle(project.Id)">
                                     <span class="project-index">@ProjectNumber(project)</span>
@@ -112,25 +119,33 @@ else
                                         <em>@project.Proposition</em>
                                     </span>
                                     <span class="project-tech">@string.Join(" · ", project.Technologies.Take(3))</span>
-                                    <span class="toggle">@(openId == project.Id ? "Close" : "Explore")</span>
+                                    <span class="toggle">@(isOpen ? "Close" : "Explore")</span>
                                 </button>
                             </h3>
 
-                            @if (openId == project.Id)
-                            {
-                                <div class="project-detail" id="@detailId">
-                                    @if (project.Blocks.Count > 0)
-                                    {
-                                        <div class="story-blocks">
-                                            @foreach (var block in project.Blocks.OrderBy(item => item.Order))
-                                            {
-                                                <StoryBlockView Block="@block" />
-                                            }
-                                        </div>
-                                    }
+                            <div class="project-detail @(!isOpen ? "collapsed-detail" : null)"
+                                 id="@detailId"
+                                 aria-hidden="@(!isOpen)">
+                                @if (project.Blocks.Count > 0)
+                                {
+                                    <div class="story-blocks">
+                                        @foreach (var block in project.Blocks.OrderBy(item => item.Order))
+                                        {
+                                            <StoryBlockView Block="@block" />
+                                        }
+                                    </div>
+
+                                    <div class="narrative compatibility-detail">
+                                        <h4>My contribution</h4>
+                                        <p>@project.Contribution</p>
+                                    </div>
+                                }
+                                else
+                                {
                                     <div class="narrative">
                                         <p class="overline">The story</p>
                                         <p class="large-copy">@project.Story</p>
+
                                         <div class="two-up">
                                             <div>
                                                 <h4>My contribution</h4>
@@ -169,8 +184,8 @@ else
                                             }
                                         </div>
                                     </div>
-                                </div>
-                            }
+                                }
+                            </div>
                         </article>
                     }
                 </div>
@@ -203,9 +218,13 @@ else
     private IEnumerable<Project> VisibleProjects =>
         data is null
             ? []
-            : facet is null
-                ? data.Projects
-                : data.Projects.Where(project => project.Facets.Contains(facet, StringComparer.Ordinal));
+            : data.Projects.Where(ProjectMatchesFacet);
+
+    private bool ProjectMatchesFacet(Project project) =>
+        facet is null
+        || project.Facets.Contains(
+            facet,
+            StringComparer.Ordinal);
 
     protected override Task OnInitializedAsync() => LoadAsync();
 
@@ -241,10 +260,14 @@ else
         openId = null;
     }
 
-    private void Toggle(string id) => openId = openId == id ? null : id;
+    private void Toggle(string id) =>
+        openId = openId == id ? null : id;
 
     private string ProjectNumber(Project project) =>
         data is null
             ? "00"
-            : (data.Projects.ToList().FindIndex(item => item.Id == project.Id) + 1).ToString("00");
+            : (data.Projects
+                .ToList()
+                .FindIndex(item => item.Id == project.Id) + 1)
+                .ToString("00");
 }

@@ -1,6 +1,6 @@
 # Story-block contract
 
-Phase 3 adds reusable project-story blocks without moving runtime authority from `src/Ulfbou.Site/wwwroot/data/portfolio.json`.
+Reusable project-story blocks extend project-story blocks without moving runtime authority from `src/Ulfbou.Site/wwwroot/data/portfolio.json`.
 
 ## Common contract
 
@@ -22,7 +22,7 @@ The development fallback is presentation-only and cannot permit publication.
 
 ## Compatibility
 
-Existing Phase 2 project fields remain authoritative during this additive transition. Blocks that present established information use the exact approved Phase 2 wording or evidence values. The legacy runtime path remains authoritative.
+Existing existing approved project fields remain authoritative during this additive transition. Blocks that present established information use the exact approved approved existing wording or evidence values. The legacy runtime path remains authoritative.
 
 ## Extension rule
 

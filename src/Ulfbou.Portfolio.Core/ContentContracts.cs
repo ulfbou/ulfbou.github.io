@@ -1,4 +1,3 @@
-
 namespace Ulfbou.Portfolio.Core;
 
 public enum Visibility

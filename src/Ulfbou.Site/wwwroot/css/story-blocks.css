@@ -1,0 +1,180 @@
+.filtered-out,
+.collapsed-detail {
+    display: none;
+}
+
+.compatibility-detail {
+    align-self: start;
+}
+
+@media print {
+    @page {
+        margin: 14mm;
+    }
+
+    html,
+    body {
+        background: white;
+        color: #111;
+        font-size: 10pt;
+    }
+
+    .skip-link,
+    nav,
+    .orbit,
+    .scroll-cue,
+    .facet-bar,
+    .toggle,
+    footer a {
+        display: none !important;
+    }
+
+    .masthead {
+        padding: 0 0 10mm;
+    }
+
+    .hero {
+        min-height: auto;
+        padding: 10mm 0;
+        overflow: visible;
+    }
+
+    .hero-copy {
+        max-width: none;
+    }
+
+    .hero h1 {
+        font-size: 32pt;
+    }
+
+    .work {
+        padding: 10mm 0 0;
+        background: white;
+        color: #111;
+    }
+
+    .section-title {
+        display: block;
+    }
+
+    .section-title h2 {
+        font-size: 24pt;
+    }
+
+    .filtered-out {
+        display: block !important;
+    }
+
+    .project {
+        break-inside: auto;
+        border-color: #999;
+    }
+
+    .project-heading {
+        break-after: avoid;
+        break-inside: avoid;
+    }
+
+    .project-summary {
+        grid-template-columns: 12mm minmax(0, 1fr);
+        gap: 5mm;
+        padding: 8mm 0 4mm;
+        color: #111;
+        cursor: default;
+    }
+
+    .project-name strong {
+        font-size: 20pt;
+    }
+
+    .project-name em,
+    .project-tech {
+        color: #333;
+    }
+
+    .project-tech {
+        grid-column: 2;
+        display: block;
+    }
+
+    .collapsed-detail,
+    .project-detail {
+        display: grid !important;
+    }
+
+    .project-detail {
+        grid-template-columns: 1fr;
+        gap: 5mm;
+        padding: 0 0 10mm 17mm;
+    }
+
+    .story-blocks {
+        gap: 4mm;
+    }
+
+    .story-block,
+    .narrative,
+    .compatibility-detail,
+    .artifact,
+    .proof-grid,
+    .story-artifact,
+    .story-image,
+    .story-diagnostic section {
+        break-inside: avoid;
+    }
+
+    .story-block blockquote,
+    .story-callout,
+    .story-reflection,
+    .story-artifact,
+    .story-image,
+    .story-diagnostic section,
+    .artifact,
+    .proof-grid,
+    .story-evidence {
+        background: white;
+        color: #111;
+        border-color: #777;
+        box-shadow: none;
+    }
+
+    .story-artifact pre,
+    .story-diagnostic pre,
+    .artifact pre {
+        min-height: 0;
+        overflow: visible;
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+        color: #111;
+    }
+
+    .story-evidence div {
+        background: white;
+    }
+
+    .proof-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .proof-grid code,
+    .proof-grid small,
+    .story-evidence dt {
+        color: #111;
+    }
+
+    .about {
+        break-before: auto;
+        break-inside: avoid;
+        display: block;
+        padding: 10mm 0;
+    }
+
+    .about h2 {
+        font-size: 24pt;
+    }
+
+    footer {
+        padding: 8mm 0 0;
+        color: #111;
+    }
+}

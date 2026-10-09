@@ -17,7 +17,7 @@
 - D-015: Evidence may support an approved claim but may never create, strengthen, approve, or publish one.
 - D-016: Public evidence is the approved intersection of public claims, public approved references, and public observations.
 - D-017: Generated projections are replaceable verification artifacts, not authorities.
-- D-018: The first evidence prototype is fixture-backed, deterministic, offline-capable, and independent of Phase 2 publication.
+- D-018: The first evidence prototype is fixture-backed, deterministic, offline-capable, and independent of approved-source publication.
 - D-019: The operational orphan branch is introduced only when repeated collection creates material default-branch churn.
 - D-020: Scheduled execution is maintenance only and is not required for an already published site to remain correct.
 - D-021: Probabilistic assistance is disabled until an adapter passes implementation, zero-charge verification, decision, and governance gates.

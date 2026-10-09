@@ -21,4 +21,4 @@ python tools/portfolio-data/cli.py verify \
 python tools/portfolio-data/tests.py
 ```
 
-The fixture revision and observation digest are synthetic contract data. A real evidence package remains blocked until an exact source revision and an approved Phase 2 project claim exist.
+The fixture revision and observation digest are synthetic contract data. A real evidence package remains blocked until an exact source revision and an approved Approved-source project claim exist.

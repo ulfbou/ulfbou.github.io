@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Ulfbou.Portfolio.Core.Tests;
 
-public sealed class Phase2Tests
+public sealed class ApprovedContentTests
 {
     private static string ContentDirectory =>
         Path.Combine(AppContext.BaseDirectory, "content");

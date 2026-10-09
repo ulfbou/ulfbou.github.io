@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Ulfbou.Portfolio.Core.Tests;
 
-public sealed class Phase3Tests
+public sealed class StoryBlockTests
 {
     private static string ContentDirectory =>
         Path.Combine(AppContext.BaseDirectory, "content");
@@ -28,7 +28,7 @@ public sealed class Phase3Tests
     }
 
     [Fact]
-    public void One_approved_project_uses_five_block_types()
+    public void Approved_project_demonstrates_multiple_block_types()
     {
         Load().Projects.Should().Contain(
             project =>
@@ -69,7 +69,6 @@ public sealed class Phase3Tests
     {
         var portfolio = Load();
         var project = portfolio.Projects[0];
-
         var image = Block(
             StoryBlockType.Image,
             """
@@ -100,7 +99,6 @@ public sealed class Phase3Tests
     {
         var portfolio = Load();
         var project = portfolio.Projects[0];
-
         var quote = Block(
             StoryBlockType.Quote,
             """
@@ -146,6 +144,72 @@ public sealed class Phase3Tests
         blocks.Select(block => block.Order)
             .Should()
             .BeInAscendingOrder();
+    }
+
+    [Fact]
+    public void Home_preserves_filtering_while_retaining_printable_details()
+    {
+        var home = File.ReadAllText(
+            Path.Combine(
+                AppContext.BaseDirectory,
+                "repository",
+                "Home.razor"));
+
+        home.Should().Contain(
+            "@foreach (var project in data.Projects)");
+        home.Should().Contain(
+            "ProjectMatchesFacet(project)");
+        home.Should().Contain(
+            "collapsed-detail");
+        home.Should().Contain(
+            "@if (project.Blocks.Count > 0)");
+        home.Should().Contain(
+            "narrative compatibility-detail");
+        home.Should().NotContain(
+            "@if (openId == project.Id)");
+    }
+
+    [Fact]
+    public void Print_includes_all_projects_and_details()
+    {
+        var css = File.ReadAllText(
+            Path.Combine(
+                AppContext.BaseDirectory,
+                "repository",
+                "story-blocks.css"));
+
+        css.Should().Contain(
+            ".filtered-out");
+        css.Should().Contain(
+            "display: block !important;");
+        css.Should().Contain(
+            ".collapsed-detail");
+        css.Should().Contain(
+            "display: grid !important;");
+        css.Should().Contain(
+            "footer a");
+        css.Should().Contain(
+            "white-space: pre-wrap;");
+    }
+
+    [Fact]
+    public void Site_loads_story_block_styles_after_base_styles()
+    {
+        var index = File.ReadAllText(
+            Path.Combine(
+                AppContext.BaseDirectory,
+                "repository",
+                "index.html"));
+
+        var accessibilityStyles = index.IndexOf(
+            "css/accessibility.css",
+            StringComparison.Ordinal);
+        var storyBlockStyles = index.IndexOf(
+            "css/story-blocks.css",
+            StringComparison.Ordinal);
+
+        accessibilityStyles.Should().BeGreaterThanOrEqualTo(0);
+        storyBlockStyles.Should().BeGreaterThan(accessibilityStyles);
     }
 
     private static StoryBlockDefinition Block(

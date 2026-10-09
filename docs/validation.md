@@ -8,21 +8,21 @@ dotnet build Ulfbou.Portfolio.slnx --no-restore -c Release
 dotnet test Ulfbou.Portfolio.slnx --no-build -c Release
 ```
 
-Phase 1 automated evidence covers restore/build/tests, JSON deserialization, required fields, unique IDs, known facets, `/`, loading/failure/empty states, filtering, expansion, deployment artifact, `.nojekyll`, and prohibited placeholders/private markers.
+Baseline automated evidence covers restore/build/tests, JSON deserialization, required fields, unique IDs, known facets, `/`, loading/failure/empty states, filtering, expansion, deployment artifact, `.nojekyll`, and prohibited placeholders/private markers.
 
 Manual evidence covers opening comprehension, distinct propositions, contribution/reflection separation, maturity qualification, keyboard/focus, landmarks/headings/names/states, narrow/medium/wide layouts, 200%/400% zoom, reduced motion, selectable artifacts, print, deployed root load, and content approval.
 
-Phase 2 adds schema/semantic/reference/publication failures, candidate/private exclusion, fixtures, equivalent generation, and traceability. Later phases add block, package, collector, and curation gates defined by the roadmap.
+Approved-source validation adds schema/semantic/reference/publication failures, candidate/private exclusion, fixtures, equivalent generation, and traceability. Later phases add block, package, collector, and curation gates defined by the roadmap.
 
 Every criterion records stable name, command/review, result, evidence location, revision, reviewer where manual, and limitations. Unknown mandatory results fail. Semantic comparison, not byte identity, decides regression.
 
 ## Fixture-backed evidence prototype
 Run `python tools/portfolio-data/tests.py`. The prototype must reject admitted inference adapters, unresolved references, non-public references, non-public observations, symbolic revisions, path traversal, duplicate identities, stale package identities, and non-reproducible projections.
 
-The fixture is not approved portfolio content. The prototype adds no Python or NuGet dependency, repository secret, deployment input, or runtime dependency, and does not start Phase 2.
+The fixture is not approved portfolio content. The prototype adds no Python or NuGet dependency, repository secret, deployment input, or runtime dependency, and does not alter approved-source publication.
 
 ## Pull request gate
-Every pull request targeting `master` runs the read-only `pr / repository-gate` check. The gate validates the PR diff, governed text encoding, admitted action identities, the portfolio-data prototype, retained projection reproducibility, the .NET solution, the static-site publish, and the current pre-Phase-2 runtime data path.
+Every pull request targeting `master` runs the read-only `pr / repository-gate` check. The gate validates the PR diff, governed text encoding, admitted action identities, the portfolio-data prototype, retained projection reproducibility, the .NET solution, the static-site publish, and the current runtime data path.
 
 Pull-request validation uses `actions/setup-python@v7` with Python 3.13. `tools/portfolio-data` remains standard-library-only and has no package-installation step.
 
@@ -30,7 +30,7 @@ Pull-request validation may use only `actions/checkout`, `actions/setup-dotnet`,
 
 A future runtime data-authority change must atomically update `PortfolioService`, publication generation, deployment-shape validation, fixtures, and rejection of the superseded runtime file.
 
-## Phase 2 approved-source validation
+## Approved-source validation
 
 Phase 2 validates explicit-path source loading, stable diagnostic codes and source paths, complete authored records, deterministic publication filtering, reference resolution, public visibility, and byte reproducibility. Repository-backed tests receive approved source and both public projections through test-output content resolved from `AppContext.BaseDirectory`; they do not depend on the process working directory.
 
@@ -38,7 +38,7 @@ Semantic equivalence independently deserializes the controlling legacy projectio
 
 Runtime continues to read the legacy `portfolio.json`. Runtime cutover remains blocked until publication generation, `PortfolioService`, rejection of the legacy runtime file, pull-request deployment-shape validation, and corresponding fixtures and tests change atomically.
 
-## Phase 3 story-block validation
+## Story-block validation
 
 Phase 3 validates stable IDs and order, admitted types, accessible labels, reading depth, provenance, publication metadata, renderer coverage, and type-specific payloads. Unknown types, missing image alternatives, missing quote attribution, and malformed payloads fail.
 

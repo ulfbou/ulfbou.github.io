@@ -8,7 +8,7 @@ Build a distinctive one-page portfolio. Structured content drives one coherent e
 
 Acceptance Ready means the bounded outcome is implemented, mandatory checks have named evidence, limitations are explicit, and no blocking defect or unknown result remains. Done means the result is accepted, docs match implementation, public wording is approved, semantic non-regression passes, and no undocumented workaround remains.
 
-## Phase 1 - Solidify the rapid prototype
+## Solidify the rapid prototype
 
 Outcome: deployable one-page vertical slice.
 
@@ -33,7 +33,7 @@ Outcome: deployable one-page vertical slice.
 - no placeholder contact information, private data, or invented metric is public.
 - accessibility and responsive reviews have named results.
 
-## Phase 2 - Approved structured content
+## Approved structured content
 
 Outcome: approved authored source deterministically produces public data.
 
@@ -52,9 +52,9 @@ Outcome: approved authored source deterministically produces public data.
 - each public fact has one authority and traceable approved source.
 - valid and invalid fixtures cover compilation and validation.
 - generated data is never hand-edited.
-- Phase 1 remains passing.
+- the established baseline remains passing.
 
-## Phase 3 - Versatile story blocks
+## Versatile story blocks
 
 Outcome: reusable blocks compose richer project stories.
 
@@ -71,7 +71,7 @@ Outcome: reusable blocks compose richer project stories.
 - contracts and extension rules are documented.
 - desktop, mobile, keyboard, zoom, reduced-motion, and print behavior pass.
 - adding an ordinary project requires content, not a new page component.
-- earlier phases remain passing.
+- all previously accepted behavior remains passing.
 
 ## Phase 4 - First solid public portfolio
 
@@ -93,7 +93,7 @@ Outcome: polished portfolio independent of future automation.
 - desktop/mobile/accessibility/print are coherent.
 - deployed output matches validated source.
 - visitors can understand it without instruction.
-- earlier phases remain passing.
+- all previously accepted behavior remains passing.
 
 ## Phase 5 - Evidence package contract
 
@@ -105,7 +105,7 @@ Versioned schemas cover repository/revision/scope, observations, candidates, evi
 
 ### Definition of Done
 
-Compatibility rules and normal/incomplete/conflicting/excluded fixtures pass. Portfolio works without packages. Earlier phases remain passing.
+Compatibility rules and normal/incomplete/conflicting/excluded fixtures pass. Portfolio works without packages. all previously accepted behavior remains passing.
 
 ## Phase 6 - Deterministic collector
 
@@ -117,7 +117,7 @@ Repository, revision, project, sink, inclusion, and exclusion are explicit. Path
 
 ### Definition of Done
 
-One real package is traceable; exclusions and partial behavior are proven; fixtures pass; public content remains unchanged pending review; earlier phases remain passing.
+One real package is traceable; exclusions and partial behavior are proven; fixtures pass; public content remains unchanged pending review; all previously accepted behavior remains passing.
 
 ## Phase 7 - Optional bounded curation
 
@@ -129,7 +129,7 @@ Suggestions retain candidate ID, task, evidence, revision, configuration, origin
 
 ### Definition of Done
 
-One evidence-to-approved-content example passes; rejected/unreviewed output is absent; unsupported claims and sensitive inputs are blocked; deterministic evidence remains distinct from probabilistic suggestion; earlier phases remain passing.
+One evidence-to-approved-content example passes; rejected/unreviewed output is absent; unsupported claims and sensitive inputs are blocked; deterministic evidence remains distinct from probabilistic suggestion; all previously accepted behavior remains passing.
 
 ## Cross-phase non-regression
 
@@ -140,10 +140,10 @@ Block acceptance on semantic loss, contradiction, incorrect direction, overstate
 The one-page portfolio is strong without automation; approved structured content drives it; projects combine narrative and artifacts as needed; evidence and collection are bounded and traceable; suggestions remain optional; Ulf remains final authority; every accepted phase continues passing.
 
 ## Phase 5 prototype entry gate
-Before automated collection, a repository-local fixture prototype must prove authority separation with one proposed claim fixture, one revision-addressed evidence package, one explicit public reference, and one deterministic evidence-index projection. The fixture is not approved portfolio content. The prototype does not alter the site, deployment, or Phase 2 scope.
+Before automated collection, a repository-local fixture prototype must prove authority separation with one proposed claim fixture, one revision-addressed evidence package, one explicit public reference, and one deterministic evidence-index projection. The fixture is not approved portfolio content. The prototype does not alter the site, deployment, or approved-source scope.
 
 Acceptance Ready additionally requires machine-readable inference disablement, two-layer public visibility, package identity over scope and policy, separate schema and contract versions, and stable diagnostics for invalid fixtures.
 
-Definition of Done additionally requires no new Python or NuGet dependency, no repository secret, no cron, no orphan branch, no deployment change, and no Phase 2 implementation or acceptance claim.
+Definition of Done additionally requires no new Python or NuGet dependency, no repository secret, no cron, no orphan branch, no deployment change, and no approved-source implementation or acceptance claim.
 
 The prototype pull-request gate may add `actions/setup-python` and reuse `actions/checkout` and `actions/setup-dotnet`. Repository workflows may use only those action identities plus the existing Pages identities `actions/configure-pages`, `actions/upload-pages-artifact`, and `actions/deploy-pages`. No external service, repository secret, paid dependency, or mutation-capable pull-request workflow is introduced.

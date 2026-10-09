@@ -8,7 +8,7 @@ namespace Ulfbou.Portfolio.Core.Tests;
 public sealed class PortfolioDataTests
 {
     [Fact]
-    public void Representative_data_satisfies_phase_one_contract()
+    public void Representative_data_satisfies_portfolio_contract()
     {
         var path = Path.Combine(AppContext.BaseDirectory, "portfolio.json");
         var data = JsonSerializer.Deserialize<PortfolioData>(

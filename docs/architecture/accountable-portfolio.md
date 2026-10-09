@@ -22,4 +22,4 @@ The future `portfolio-data` orphan branch is an operational data plane for evide
 
 ## Prototype boundary
 
-The first prototype is fixture-backed because Phase 2 does not yet contain approved project records. It proves authority separation, two-layer visibility, content-addressed package identity, deterministic projection, stable diagnostics, and machine-readable AI optionality. It does not alter the site, deployment, approved source, or Phase 2 acceptance state.
+The first prototype is fixture-backed because Approved project records were not yet available when the prototype was introduced contain approved project records. It proves authority separation, two-layer visibility, content-addressed package identity, deterministic projection, stable diagnostics, and machine-readable AI optionality. It does not alter the site, deployment, approved source, or approved-source acceptance state.
