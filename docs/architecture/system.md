@@ -28,10 +28,10 @@ The retained generated projection is `src/Ulfbou.Site/wwwroot/data/generated/por
 
 Semantic equivalence is proven by independently deserializing the controlling legacy projection and retained generated projection as `PortfolioData` and comparing the complete object graphs with strict collection ordering. Retained bytes are separately compared with two independently loaded and compiled results.
 
-Runtime authority remains `src/Ulfbou.Site/wwwroot/data/portfolio.json`. Runtime cutover remains blocked until one atomic change updates publication generation, `PortfolioService`, rejection of the legacy runtime file, pull-request deployment-shape validation, and corresponding fixtures and tests.
+Runtime authority is `src/Ulfbou.Site/wwwroot/data/generated/portfolio.json`. Pull-request and deployment workflows compile approved source, require the retained projection to remain byte-reproducible, and reject the superseded `data/portfolio.json` deployment path.
 
 ## Story blocks
 
 Approved projects may contain ordered reusable story blocks. `StoryBlockValidator` validates their metadata and type-specific payloads. `StoryBlockContract` defines renderer coverage, and `StoryBlockView` renders admitted types without project-specific branches.
 
-Existing existing approved project fields remain intact during the compatibility transition. Runtime authority remains `src/Ulfbou.Site/wwwroot/data/portfolio.json`; the atomic runtime cutover remains separate.
+Existing approved project fields remain intact during the compatibility transition. Story blocks and compatibility fields are compiled through the same approved-source runtime authority.

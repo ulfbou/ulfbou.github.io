@@ -32,9 +32,23 @@ jobs:
 
       - run: dotnet restore Ulfbou.Portfolio.slnx
 
+      - name: Compile approved portfolio projection
+        shell: bash
+        run: |
+          dotnet run --project src/Ulfbou.Portfolio.Generator/Ulfbou.Portfolio.Generator.csproj -- \
+            src/content \
+            src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
+          git diff --exit-code -- src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
+
       - run: dotnet test Ulfbou.Portfolio.slnx -c Release
 
       - run: dotnet publish src/Ulfbou.Site/Ulfbou.Site.csproj -c Release -o publish
+
+      - name: Verify deployment data authority
+        shell: bash
+        run: |
+          test -f publish/wwwroot/data/generated/portfolio.json
+          test ! -e publish/wwwroot/data/portfolio.json
 
       - run: |
           cp publish/wwwroot/index.html publish/wwwroot/404.html
