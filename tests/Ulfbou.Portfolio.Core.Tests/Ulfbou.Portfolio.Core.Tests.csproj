@@ -1,4 +1,3 @@
-
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -9,13 +8,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="FluentAssertions" Version="8.11.0" />
     <PackageReference Include="xunit.v3" Version="4.0.1" />
   </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="../../src/Ulfbou.Portfolio.Core/Ulfbou.Portfolio.Core.csproj" />
   </ItemGroup>
+
   <ItemGroup>
     <Content Include="../../src/content/**/*.json"
              Link="content/%(RecursiveDir)%(Filename)%(Extension)"
@@ -28,6 +30,18 @@
              CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../src/Ulfbou.Site/wwwroot/data/generated/portfolio.json"
              Link="generated/portfolio.json"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/Components/StoryBlockView.razor"
+             Link="repository/StoryBlockView.razor"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/Pages/Home.razor"
+             Link="repository/Home.razor"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/wwwroot/css/story-blocks.css"
+             Link="repository/story-blocks.css"
+             CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/wwwroot/index.html"
+             Link="repository/index.html"
              CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

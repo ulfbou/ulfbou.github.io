@@ -77,7 +77,27 @@ public sealed class CompiledPortfolioGenerator
                         project.Demo.Kind,
                         project.Demo.Caption,
                         project.Demo.Lines.ToArray()),
-                    project.Limitations.ToArray()))
+                    project.Limitations.ToArray())
+                {
+                    Blocks = project.Blocks
+                        .Where(
+                            block =>
+                                block.Publication.State
+                                    == PublicationState.Published
+                                && block.Publication.Visibility
+                                    == Visibility.Public)
+                        .OrderBy(block => block.Order)
+                        .Select(
+                            block => new StoryBlock(
+                                block.Order,
+                                block.Id,
+                                block.Type,
+                                block.AccessibleLabel,
+                                block.ReadingDepth,
+                                block.Provenance,
+                                block.Payload.Clone()))
+                        .ToArray()
+                })
             .ToArray();
 
         var publicFacets = approved.Facets

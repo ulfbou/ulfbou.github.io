@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Ulfbou.Portfolio.Core.Tests;
 
-public sealed class Phase2Tests
+public sealed class ApprovedContentTests
 {
     private static string ContentDirectory =>
         Path.Combine(AppContext.BaseDirectory, "content");
@@ -378,7 +378,6 @@ public sealed class Phase2Tests
                     "legacy",
                     "portfolio.json")),
             options);
-
         var generated =
             JsonSerializer.Deserialize<PortfolioData>(
                 File.ReadAllBytes(
@@ -388,10 +387,22 @@ public sealed class Phase2Tests
                         "portfolio.json")),
                 options);
 
-        generated.Should().BeEquivalentTo(
+        legacy.Should().NotBeNull();
+        generated.Should().NotBeNull();
+
+        var legacyGraph = JsonSerializer.SerializeToElement(
             legacy,
-            configuration =>
-                configuration.WithStrictOrdering());
+            options);
+        var generatedGraph = JsonSerializer.SerializeToElement(
+            generated,
+            options);
+
+        JsonElement.DeepEquals(
+                generatedGraph,
+                legacyGraph)
+            .Should()
+            .BeTrue(
+                "the independently deserialized complete ordered object graphs must remain semantically equivalent");
 
         generated!.Projects.Should().HaveCount(7);
     }

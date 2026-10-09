@@ -6,7 +6,10 @@ public sealed record Project(
     string Id, string Title, string ShortTitle, string Proposition, string Story,
     string Contribution, string Reflection, string Status, string Accent,
     IReadOnlyList<string> Facets, IReadOnlyList<string> Technologies,
-    IReadOnlyList<Proof> Proof, Demo Demo, IReadOnlyList<string> Limitations);
+    IReadOnlyList<Proof> Proof, Demo Demo, IReadOnlyList<string> Limitations)
+{
+    public IReadOnlyList<StoryBlock> Blocks { get; init; } = [];
+}
 public sealed record Proof(string Label, string Value);
 public sealed record Demo(string Kind, string Caption, IReadOnlyList<string> Lines);
 public sealed record Link(string Label, string Url);

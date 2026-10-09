@@ -591,3 +591,127 @@ footer code {
         color: #111;
     }
 }
+
+.story-blocks {
+    display: grid;
+    gap: 1.5rem;
+    min-width: 0;
+}
+
+.story-block {
+    min-width: 0;
+}
+
+.story-block h5 {
+    margin: 0 0 .5rem;
+    color: var(--accent);
+    font: 600 12px var(--mono);
+    text-transform: uppercase;
+}
+
+.story-block blockquote,
+.story-callout,
+.story-reflection {
+    margin: 0;
+    padding: 1.25rem;
+    border-left: 4px solid var(--accent);
+    background: rgb(255 255 255 / 5%);
+}
+
+.story-artifact,
+.story-image,
+.story-diagnostic section {
+    margin: 0;
+    min-width: 0;
+    border: 1px solid #46514f;
+    background: #0d1413;
+}
+
+.story-artifact figcaption {
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #35403d;
+    color: #9eaaa6;
+    font: 11px var(--mono);
+}
+
+.story-artifact pre,
+.story-diagnostic pre {
+    max-width: 100%;
+    margin: 0;
+    padding: 1.25rem;
+    overflow: auto;
+    white-space: pre;
+    color: #dce4e0;
+    font: 13px/1.75 var(--mono);
+    user-select: text;
+}
+
+.story-image img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.story-links,
+.story-replay {
+    padding-left: 1.5rem;
+}
+
+.story-evidence {
+    display: grid;
+    gap: 1px;
+    margin: 0;
+    background: #35403d;
+}
+
+.story-evidence div {
+    padding: 1rem;
+    background: #0d1413;
+}
+
+.story-evidence dt {
+    color: #9eaaa6;
+    font: 10px var(--mono);
+    text-transform: uppercase;
+}
+
+.story-evidence dd {
+    margin: .35rem 0 0;
+    overflow-wrap: anywhere;
+}
+
+.story-relationship {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+}
+
+.story-diagnostic {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.story-diagnostic h5 {
+    padding: .75rem 1rem;
+    border-bottom: 1px solid #35403d;
+}
+
+@media (max-width: 850px) {
+    .story-diagnostic {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .story-block {
+        break-inside: avoid;
+    }
+
+    .story-artifact pre,
+    .story-diagnostic pre {
+        overflow: visible;
+        white-space: pre-wrap;
+        color: #111;
+    }
+}

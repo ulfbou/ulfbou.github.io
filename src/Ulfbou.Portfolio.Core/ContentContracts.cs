@@ -1,4 +1,3 @@
-
 namespace Ulfbou.Portfolio.Core;
 
 public enum Visibility
@@ -85,7 +84,10 @@ public sealed record ApprovedProject(
     DemoDefinition Demo,
     IReadOnlyList<string> Limitations,
     Provenance Provenance,
-    PublicationMetadata Publication);
+    PublicationMetadata Publication)
+{
+    public IReadOnlyList<StoryBlockDefinition> Blocks { get; init; } = [];
+}
 
 public sealed record ApprovedPortfolio(
     ApprovedProfile Profile,
