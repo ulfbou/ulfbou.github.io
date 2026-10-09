@@ -132,6 +132,13 @@ jobs:
           cmp "$OUTPUT" "$ROOT/evidence-index.json"
       - name: Restore
         run: dotnet restore Ulfbou.Portfolio.slnx
+      - name: Compile approved portfolio projection
+        shell: bash
+        run: |
+          dotnet run --project src/Ulfbou.Portfolio.Generator/Ulfbou.Portfolio.Generator.csproj -- \
+            src/content \
+            src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
+          git diff --exit-code -- src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
       - name: Build
         run: dotnet build Ulfbou.Portfolio.slnx --no-restore -c Release
       - name: Test
@@ -142,4 +149,5 @@ jobs:
         shell: bash
         run: |
           test -f publish/wwwroot/index.html
-          test -f publish/wwwroot/data/portfolio.json
+          test -f publish/wwwroot/data/generated/portfolio.json
+          test ! -e publish/wwwroot/data/portfolio.json

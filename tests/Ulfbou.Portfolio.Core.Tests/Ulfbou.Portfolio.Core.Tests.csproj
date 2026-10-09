@@ -22,10 +22,10 @@
     <Content Include="../../src/content/**/*.json"
              Link="content/%(RecursiveDir)%(Filename)%(Extension)"
              CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="../../src/Ulfbou.Site/wwwroot/data/portfolio.json"
+    <Content Include="../../src/Ulfbou.Site/wwwroot/data/generated/portfolio.json"
              Link="portfolio.json"
              CopyToOutputDirectory="PreserveNewest" />
-    <Content Include="../../src/Ulfbou.Site/wwwroot/data/portfolio.json"
+    <Content Include="fixtures/legacy-portfolio.json"
              Link="legacy/portfolio.json"
              CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../src/Ulfbou.Site/wwwroot/data/generated/portfolio.json"

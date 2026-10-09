@@ -8,6 +8,6 @@ public sealed class PortfolioService(HttpClient http)
     private PortfolioData? cached;
 
     public async Task<PortfolioData> LoadAsync() =>
-        cached ??= await http.GetFromJsonAsync<PortfolioData>("data/portfolio.json")
+        cached ??= await http.GetFromJsonAsync<PortfolioData>("data/generated/portfolio.json")
             ?? throw new InvalidOperationException("Portfolio data is unavailable.");
 }
