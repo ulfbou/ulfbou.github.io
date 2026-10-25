@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "terminal-states-v1",
+  "values": [
+    "Completed",
+    "Cancelled",
+    "Revoked",
+    "Expired",
+    "Invalid",
+    "FailedTerminal",
+    "Superseded"
+  ]
+}

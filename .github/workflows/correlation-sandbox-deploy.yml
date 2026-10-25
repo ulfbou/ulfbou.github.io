@@ -1,0 +1,171 @@
+name: Correlation sandbox deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      candidate_sha:
+        description: Exact master commit to deploy
+        required: true
+        type: string
+      enable_smoke:
+        description: Enable one reviewed smoke invocation after disabled-state proof
+        required: true
+        default: false
+        type: boolean
+
+concurrency:
+  group: correlation-sandbox-deploy
+  cancel-in-progress: false
+
+permissions: {}
+
+env:
+  AWS_REGION: eu-north-1
+  STACK_NAME: ulfbou-correlation-prototype
+  TEMPLATE_FILE: infrastructure/correlation/template.json
+
+jobs:
+  validate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout exact candidate without persisted credentials
+        shell: bash
+        env:
+          CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+          REPOSITORY: ${{ github.repository }}
+          TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://x-access-token:${TOKEN}@github.com/${REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$CANDIDATE_SHA"
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+          git remote set-url origin "https://github.com/${REPOSITORY}.git"
+      - name: Validate exact candidate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python tools/correlation/validate.py
+          python tools/correlation/verify-m1.py
+          python tools/correlation/verify-m2.py
+          python tools/correlation/validate-infrastructure.py
+          python tools/correlation/validate-aws-adapter.py
+          python tools/correlation/validate-runtime-integration.py
+          dotnet restore Ulfbou.Portfolio.slnx --locked-mode
+          dotnet build Ulfbou.Portfolio.slnx --no-restore --configuration Release
+          dotnet test Ulfbou.Portfolio.slnx --no-build --configuration Release
+          sam validate --lint --template-file "$TEMPLATE_FILE"
+          sam build --template-file "$TEMPLATE_FILE" --build-dir .aws-sam/build
+      - name: Emit candidate identity
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf 'candidate_sha=%s\n' "$(git rev-parse HEAD)"
+          printf 'candidate_tree=%s\n' "$(git rev-parse 'HEAD^{tree}')"
+          find .aws-sam/build -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum
+
+  deploy:
+    needs: validate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 25
+    environment: correlation-prototype
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - name: Checkout exact validated candidate without persisted credentials
+        shell: bash
+        env:
+          CANDIDATE_SHA: ${{ inputs.candidate_sha }}
+          REPOSITORY: ${{ github.repository }}
+          TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          [[ "$CANDIDATE_SHA" =~ ^[0-9a-f]{40}$ ]]
+          git init .
+          git remote add origin "https://x-access-token:${TOKEN}@github.com/${REPOSITORY}.git"
+          git -c protocol.version=2 fetch --no-tags --depth=1 origin "$CANDIDATE_SHA"
+          git checkout --detach FETCH_HEAD
+          test "$(git rev-parse HEAD)" = "$CANDIDATE_SHA"
+          git remote set-url origin "https://github.com/${REPOSITORY}.git"
+      - name: Reproduce build before requesting AWS credentials
+        shell: bash
+        run: |
+          set -euo pipefail
+          dotnet restore Ulfbou.Portfolio.slnx --locked-mode
+          dotnet build Ulfbou.Portfolio.slnx --no-restore --configuration Release
+          dotnet test Ulfbou.Portfolio.slnx --no-build --configuration Release
+          sam validate --lint --template-file "$TEMPLATE_FILE"
+          sam build --template-file "$TEMPLATE_FILE" --build-dir .aws-sam/build
+      - name: Acquire short-lived AWS credentials through GitHub OIDC
+        shell: bash
+        env:
+          ROLE_ARN: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          EXPECTED_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
+        run: |
+          set -euo pipefail
+          test -n "$ACTIONS_ID_TOKEN_REQUEST_URL"
+          test -n "$ACTIONS_ID_TOKEN_REQUEST_TOKEN"
+          token_json="$(curl --fail --silent --show-error --proto '=https' --tlsv1.2 -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com")"
+          token="$(python -c 'import json,sys; print(json.load(sys.stdin)["value"])' <<<"$token_json")"
+          credentials="$(aws sts assume-role-with-web-identity --role-arn "$ROLE_ARN" --role-session-name "correlation-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" --web-identity-token "$token" --duration-seconds 900 --output json)"
+          unset token token_json
+          python - "$GITHUB_ENV" "$EXPECTED_ACCOUNT_ID" <<<"$credentials" <<'PY'
+          import json, pathlib, sys
+          value=json.load(sys.stdin); credentials=value["Credentials"]
+          target=pathlib.Path(sys.argv[1]); expected=sys.argv[2]
+          if not expected.isdigit() or len(expected)!=12: raise SystemExit("invalid expected account")
+          with target.open("a",encoding="utf-8") as f:
+              f.write(f"AWS_ACCESS_KEY_ID={credentials['AccessKeyId']}\n")
+              f.write(f"AWS_SECRET_ACCESS_KEY={credentials['SecretAccessKey']}\n")
+              f.write(f"AWS_SESSION_TOKEN={credentials['SessionToken']}\n")
+          PY
+          account="$(aws sts get-caller-identity --query Account --output text)"
+          test "$account" = "$EXPECTED_ACCOUNT_ID"
+      - name: Deploy disabled candidate and verify aliases
+        shell: bash
+        env:
+          BUDGET_EMAIL: ${{ secrets.AWS_BUDGET_EMAIL }}
+          PROVIDER_SECRET_ARN: ${{ secrets.AWS_PROVIDER_SECRET_ARN }}
+          GITHUB_APP_SECRET_ARN: ${{ secrets.AWS_GITHUB_APP_SECRET_ARN }}
+          OIDC_PROVIDER_ARN: ${{ secrets.AWS_GITHUB_OIDC_PROVIDER_ARN }}
+          CLEANUP_SUBJECT: ${{ secrets.AWS_CLEANUP_OIDC_SUBJECT }}
+        run: |
+          set -euo pipefail
+          sam deploy --template-file .aws-sam/build/template.yaml --stack-name "$STACK_NAME" --region "$AWS_REGION" --capabilities CAPABILITY_NAMED_IAM --resolve-s3 --no-confirm-changeset --no-fail-on-empty-changeset --parameter-overrides EnvironmentName=prototype AllowedOrigin=https://ulfbou.github.io BudgetEmail="$BUDGET_EMAIL" ProviderSecretArn="$PROVIDER_SECRET_ARN" GitHubAppSecretArn="$GITHUB_APP_SECRET_ARN" GitHubOidcProviderArn="$OIDC_PROVIDER_ARN" GitHubCleanupSubject="$CLEANUP_SUBJECT"
+          aws cloudformation wait stack-update-complete --stack-name "$STACK_NAME" --region "$AWS_REGION" || status="$?"
+          if [[ "${status:-0}" != 0 ]]; then
+            aws cloudformation describe-stack-events --stack-name "$STACK_NAME" --region "$AWS_REGION" --max-items 20
+            exit "$status"
+          fi
+          for logical in RequestFunction ResultFunction CleanupFunction; do
+            physical="$(aws cloudformation describe-stack-resource --stack-name "$STACK_NAME" --logical-resource-id "$logical" --query StackResourceDetail.PhysicalResourceId --output text)"
+            aws lambda get-alias --function-name "$physical" --name production --query '{Alias:Name,Version:FunctionVersion}' --output json
+          done
+      - name: Prove disabled state and optionally run reviewed smoke
+        shell: bash
+        env:
+          ENABLE_SMOKE: ${{ inputs.enable_smoke }}
+          API_SMOKE_TOKEN: ${{ secrets.API_SMOKE_TOKEN }}
+        run: |
+          set -euo pipefail
+          endpoint="$(aws cloudformation describe-stacks --stack-name "$STACK_NAME" --query 'Stacks[0].Outputs[?OutputKey==`ApiEndpoint`].OutputValue' --output text)"
+          response="$(curl --fail-with-body --silent --show-error --proto '=https' --tlsv1.2 -H 'content-type: application/json' --data '{"schemaVersion":"correlation-create-request-v1","scenarioId":"git-backed-correlation-cleanup","scenarioSha256":"sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa","clientOperationId":"smoke-disabled"}' "$endpoint/correlations" || true)"
+          grep -F 'CapabilityDisabled' <<<"$response"
+          if [[ "$ENABLE_SMOKE" == true ]]; then
+            test -n "$API_SMOKE_TOKEN"
+            scripts/correlation/sandbox-smoke.sh "$endpoint" "$API_SMOKE_TOKEN"
+          fi
+      - name: Capture bounded deployment evidence
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ../.dx
+          python tools/correlation/capture-sandbox-evidence.py --stack "$STACK_NAME" --region "$AWS_REGION" --candidate "${{ inputs.candidate_sha }}" --output ../.dx/correlation-m6-sandbox-evidence.txt
+          sha256sum ../.dx/correlation-m6-sandbox-evidence.txt

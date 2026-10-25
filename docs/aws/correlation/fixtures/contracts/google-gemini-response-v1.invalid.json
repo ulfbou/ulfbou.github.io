@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "google-gemini-response-v1",
+  "providerRequestId": "provider-01jk6m2w8g6wmx9zq7v4c2az",
+  "model": "deployment-model",
+  "finishReason": "STOP",
+  "candidateJson": {
+    "schemaVersion": "provider-outcome-v1",
+    "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+    "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+    "providerAlias": "google-gemini-prototype",
+    "classification": "CandidateAnalysis",
+    "observations": [
+      {
+        "question": "Is authority explicit?",
+        "assessment": "Yes",
+        "rationale": "The terminal decision authority is identified."
+      }
+    ],
+    "limitations": [
+      "Candidate analysis only."
+    ],
+    "authoritative": false
+  },
+  "unexpected": "reject"
+}

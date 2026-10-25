@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "canonical-representations-v1",
+  "values": [
+    {
+      "id": "correlation-state-canonical-json-v1",
+      "encoding": "UTF-8",
+      "bom": false,
+      "finalNewline": false,
+      "duplicateProperties": "Reject",
+      "propertyOrder": "UnicodeCodePointAscending",
+      "numbers": "IntegersOnly",
+      "timestamp": "RFC3339-UTC-milliseconds",
+      "digest": "SHA-256"
+    }
+  ]
+}

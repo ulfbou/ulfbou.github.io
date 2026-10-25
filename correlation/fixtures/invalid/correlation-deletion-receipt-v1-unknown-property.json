@@ -1,0 +1,30 @@
+{
+  "schemaVersion": "correlation-deletion-receipt-v1",
+  "receiptId": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "manifestId": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "entries": [
+    {
+      "entryId": "entry-01jk6m2w8g6wmx9zq7v4c2af",
+      "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+      "requestedStateRevision": 5,
+      "requestedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "outcome": "Deleted",
+      "observedStateRevision": 5,
+      "observedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "processedAt": "2026-10-24T02:15:00.000Z",
+      "cleanupFunctionVersion": "1",
+      "cleanupFunctionAlias": "production",
+      "awsRequestId": "12345678-1234-1234-1234-123456789abc",
+      "boundedMessageCode": "DELETED_EXACT_STATE"
+    }
+  ],
+  "summary": {
+    "requested": 1,
+    "deleted": 1,
+    "alreadyAbsent": 0,
+    "conflicts": 0,
+    "invalid": 0,
+    "temporaryFailures": 0
+  },
+  "unexpectedSecret": "must-fail"
+}

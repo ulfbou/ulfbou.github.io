@@ -1,0 +1,140 @@
+{
+  "schemaVersion": "deletion-authorization-cases-v1",
+  "cases": [
+    {
+      "id": "exact",
+      "request": {
+        "correlationId": "corr-example",
+        "expectedStateRevision": 5,
+        "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1"
+      },
+      "observed": {
+        "presence": "Present",
+        "correlationId": "corr-example",
+        "stateRevision": 5,
+        "stateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1",
+        "versionId": "v5"
+      },
+      "expected": "DeleteConditionally"
+    },
+    {
+      "id": "absent",
+      "request": {
+        "correlationId": "corr-example",
+        "expectedStateRevision": 5,
+        "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1"
+      },
+      "observed": {
+        "presence": "Absent"
+      },
+      "expected": "AlreadyAbsent"
+    },
+    {
+      "id": "newer-revision",
+      "request": {
+        "correlationId": "corr-example",
+        "expectedStateRevision": 5,
+        "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1"
+      },
+      "observed": {
+        "presence": "Present",
+        "correlationId": "corr-example",
+        "stateRevision": 6,
+        "stateSha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1",
+        "versionId": "v6"
+      },
+      "expected": "RevisionConflict"
+    },
+    {
+      "id": "same-revision-different-digest",
+      "request": {
+        "correlationId": "corr-example",
+        "expectedStateRevision": 5,
+        "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1"
+      },
+      "observed": {
+        "presence": "Present",
+        "correlationId": "corr-example",
+        "stateRevision": 5,
+        "stateSha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1",
+        "versionId": "v5b"
+      },
+      "expected": "DigestConflict"
+    },
+    {
+      "id": "wrong-correlation",
+      "request": {
+        "correlationId": "corr-example",
+        "expectedStateRevision": 5,
+        "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1"
+      },
+      "observed": {
+        "presence": "Present",
+        "correlationId": "corr-other",
+        "stateRevision": 5,
+        "stateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1",
+        "versionId": "v5"
+      },
+      "expected": "InvalidActiveState"
+    },
+    {
+      "id": "wrong-representation",
+      "request": {
+        "correlationId": "corr-example",
+        "expectedStateRevision": 5,
+        "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1"
+      },
+      "observed": {
+        "presence": "Present",
+        "correlationId": "corr-example",
+        "stateRevision": 5,
+        "stateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "unknown-v2",
+        "versionId": "v5"
+      },
+      "expected": "InvalidActiveState"
+    },
+    {
+      "id": "malformed",
+      "request": {
+        "correlationId": "corr-example",
+        "expectedStateRevision": 5,
+        "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1"
+      },
+      "observed": {
+        "presence": "Malformed"
+      },
+      "expected": "InvalidActiveState"
+    },
+    {
+      "id": "changed-before-delete",
+      "request": {
+        "correlationId": "corr-example",
+        "expectedStateRevision": 5,
+        "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1"
+      },
+      "observed": {
+        "presence": "Present",
+        "correlationId": "corr-example",
+        "stateRevision": 5,
+        "stateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "canonicalRepresentation": "correlation-state-canonical-json-v1",
+        "versionId": "v5",
+        "deletePrecondition": "Failed"
+      },
+      "expected": "RevisionConflict"
+    }
+  ]
+}

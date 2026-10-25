@@ -1,0 +1,60 @@
+{
+  "schemaVersion": "deletion-authorization-v1",
+  "keyDerivation": "active/v1/{correlationId[0:2]}/{correlationId}.json",
+  "inputFields": [
+    "correlationId",
+    "expectedStateRevision",
+    "expectedStateSha256",
+    "canonicalRepresentation"
+  ],
+  "decisions": [
+    {
+      "case": "ExactMatch",
+      "observed": "PresentValidExactIdentity",
+      "outcome": "DeleteConditionally"
+    },
+    {
+      "case": "Absent",
+      "observed": "ObjectAbsent",
+      "outcome": "AlreadyAbsent"
+    },
+    {
+      "case": "RevisionConflict",
+      "observed": "RevisionDifferent",
+      "outcome": "RevisionConflict"
+    },
+    {
+      "case": "DigestConflict",
+      "observed": "DigestDifferent",
+      "outcome": "DigestConflict"
+    },
+    {
+      "case": "IdentityConflict",
+      "observed": "CorrelationOrRepresentationDifferent",
+      "outcome": "InvalidActiveState"
+    },
+    {
+      "case": "Malformed",
+      "observed": "MalformedOversizedOrDigestInvalid",
+      "outcome": "InvalidActiveState"
+    },
+    {
+      "case": "ChangedBeforeDelete",
+      "observed": "VersionPreconditionFailed",
+      "outcome": "RevisionConflict"
+    },
+    {
+      "case": "TemporaryFailure",
+      "observed": "AWSRetryableFailure",
+      "outcome": "TemporaryFailure"
+    }
+  ],
+  "rules": [
+    "CallerKeyProhibited",
+    "BoundedReadBeforeParse",
+    "SchemaBeforeCanonicalization",
+    "ExactRevisionAndDigestRequired",
+    "ConditionalDeleteObservedVersion",
+    "ConflictNeverDeletes"
+  ]
+}

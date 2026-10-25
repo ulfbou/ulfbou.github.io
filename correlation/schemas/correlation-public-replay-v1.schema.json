@@ -1,0 +1,83 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Correlation public replay v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "correlationId",
+    "capability",
+    "terminalState",
+    "steps",
+    "limitations",
+    "classification"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "correlation-public-replay-v1"
+    },
+    "correlationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "capability": {
+      "const": "architecture-scenario-classification-v1"
+    },
+    "terminalState": {
+      "enum": [
+        "Completed",
+        "Cancelled",
+        "Revoked",
+        "Expired",
+        "Invalid",
+        "FailedTerminal",
+        "Superseded"
+      ]
+    },
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 16,
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Replay step",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "sequence",
+          "event",
+          "occurredAt"
+        ],
+        "properties": {
+          "sequence": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 16
+          },
+          "event": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Za-z0-9]{2,63}$"
+          },
+          "occurredAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      }
+    },
+    "classification": {
+      "const": "PublicTransformed"
+    }
+  }
+}

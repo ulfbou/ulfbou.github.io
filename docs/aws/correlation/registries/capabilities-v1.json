@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "capabilities-v1",
+  "values": [
+    {
+      "id": "architecture-scenario-classification-v1",
+      "requestSchema": "provider-request-v1",
+      "outcomeSchema": "provider-outcome-v1"
+    }
+  ]
+}

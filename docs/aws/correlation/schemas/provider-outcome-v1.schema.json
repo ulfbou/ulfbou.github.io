@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provider outcome v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "operationId",
+    "correlationId",
+    "providerAlias",
+    "classification",
+    "observations",
+    "limitations",
+    "authoritative"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "provider-outcome-v1"
+    },
+    "operationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "correlationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "providerAlias": {
+      "const": "google-gemini-prototype"
+    },
+    "classification": {
+      "const": "CandidateAnalysis"
+    },
+    "observations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Provider observation",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "question",
+          "assessment",
+          "rationale"
+        ],
+        "properties": {
+          "question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          },
+          "assessment": {
+            "enum": [
+              "Yes",
+              "No",
+              "Partial",
+              "Unknown"
+            ]
+          },
+          "rationale": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 600
+          }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      }
+    },
+    "authoritative": {
+      "const": false
+    }
+  }
+}

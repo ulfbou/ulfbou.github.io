@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Google Gemini response v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "providerRequestId",
+    "model",
+    "finishReason",
+    "candidateJson"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "google-gemini-response-v1"
+    },
+    "providerRequestId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120
+    },
+    "finishReason": {
+      "enum": [
+        "STOP"
+      ]
+    },
+    "candidateJson": {
+      "$ref": "provider-outcome-v1.schema.json"
+    }
+  }
+}

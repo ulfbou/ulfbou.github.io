@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "google-gemini-request-v1",
+  "modelAlias": "deployment-pinned-flash",
+  "systemInstruction": "Return bounded JSON candidate analysis.",
+  "scenario": {
+    "schemaVersion": "provider-request-v1",
+    "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+    "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+    "capability": "architecture-scenario-classification-v1",
+    "scenario": {
+      "schemaVersion": "architecture-scenario-v1",
+      "scenarioId": "git-backed-correlation-cleanup",
+      "title": "Git-governed terminal cleanup",
+      "facts": [
+        "Active state is stored in S3."
+      ],
+      "questions": [
+        "Is authority explicit?"
+      ]
+    },
+    "maximumResponseBytes": 16384
+  },
+  "generationConfig": {
+    "responseMimeType": "application/json",
+    "maximumOutputTokens": 1024,
+    "temperature": 0
+  }
+}

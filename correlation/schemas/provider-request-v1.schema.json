@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Provider request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "operationId",
+    "correlationId",
+    "capability",
+    "scenario",
+    "maximumResponseBytes"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "provider-request-v1"
+    },
+    "operationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "correlationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "capability": {
+      "const": "architecture-scenario-classification-v1"
+    },
+    "scenario": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Architecture scenario",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schemaVersion",
+        "scenarioId",
+        "title",
+        "facts",
+        "questions"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": "architecture-scenario-v1"
+        },
+        "scenarioId": {
+          "const": "git-backed-correlation-cleanup"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "facts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          }
+        },
+        "questions": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 240
+          }
+        }
+      }
+    },
+    "maximumResponseBytes": {
+      "const": 16384
+    }
+  }
+}

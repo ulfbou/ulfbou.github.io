@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "correlation-cancel-request-v1",
+  "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+  "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+  "expectedStateRevision": 3,
+  "unexpected": "reject"
+}

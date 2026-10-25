@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Correlation cancel response v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "correlationId",
+    "operationId",
+    "state",
+    "stateRevision",
+    "outcome"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "correlation-cancel-response-v1"
+    },
+    "correlationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "operationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "state": {
+      "const": "Cancelled"
+    },
+    "stateRevision": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 100
+    },
+    "outcome": {
+      "enum": [
+        "Cancelled",
+        "AlreadyTerminal"
+      ]
+    }
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Correlation deletion receipt v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "receiptId",
+    "manifestId",
+    "entries",
+    "summary"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "correlation-deletion-receipt-v1"
+    },
+    "receiptId": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "manifestId": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "entries": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 25,
+      "items": {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "title": "Deletion receipt entry v1",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entryId",
+          "correlationId",
+          "requestedStateRevision",
+          "requestedStateSha256",
+          "outcome",
+          "processedAt",
+          "cleanupFunctionVersion",
+          "cleanupFunctionAlias",
+          "awsRequestId",
+          "boundedMessageCode"
+        ],
+        "properties": {
+          "entryId": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+          },
+          "correlationId": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+          },
+          "requestedStateRevision": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 100
+          },
+          "requestedStateSha256": {
+            "type": "string",
+            "pattern": "^sha256:[0-9a-f]{64}$"
+          },
+          "outcome": {
+            "enum": [
+              "Deleted",
+              "AlreadyAbsent",
+              "RevisionConflict",
+              "DigestConflict",
+              "InvalidActiveState",
+              "InvalidRequest",
+              "TemporaryFailure"
+            ]
+          },
+          "observedStateRevision": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 100
+              },
+              {
+                "type": "string",
+                "const": "none"
+              }
+            ]
+          },
+          "observedStateSha256": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^sha256:[0-9a-f]{64}$"
+              },
+              {
+                "type": "string",
+                "const": "none"
+              }
+            ]
+          },
+          "processedAt": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+          },
+          "cleanupFunctionVersion": {
+            "type": "string",
+            "pattern": "^[1-9][0-9]*$"
+          },
+          "cleanupFunctionAlias": {
+            "const": "production"
+          },
+          "awsRequestId": {
+            "type": "string",
+            "pattern": "^[0-9a-f-]{36}$"
+          },
+          "boundedMessageCode": {
+            "type": "string",
+            "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+          }
+        }
+      }
+    },
+    "summary": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Receipt summary",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requested",
+        "deleted",
+        "alreadyAbsent",
+        "conflicts",
+        "invalid",
+        "temporaryFailures"
+      ],
+      "properties": {
+        "requested": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 25
+        },
+        "deleted": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 25
+        },
+        "alreadyAbsent": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 25
+        },
+        "conflicts": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 25
+        },
+        "invalid": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 25
+        },
+        "temporaryFailures": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 25
+        }
+      }
+    }
+  }
+}

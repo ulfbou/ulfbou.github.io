@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "correlation-cleanup-unresolved-v1",
+  "unresolvedId": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "manifestId": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "receiptId": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "entryId": "entry-01jk6m2w8g6wmx9zq7v4c2af",
+  "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+  "failureClass": "RevisionConflict",
+  "recordedAt": "2026-10-24T02:15:00.000Z",
+  "nextAction": "HumanReview",
+  "publicMessageCode": "NEWER_STATE_OBSERVED"
+}

@@ -1,0 +1,26 @@
+{
+  "schemaVersion": "correlation-create-response-v1",
+  "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+  "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+  "state": "Completed",
+  "stateRevision": 5,
+  "expiresAt": "2026-10-24T02:00:00.000Z",
+  "result": {
+    "schemaVersion": "provider-outcome-v1",
+    "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+    "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+    "providerAlias": "google-gemini-prototype",
+    "classification": "CandidateAnalysis",
+    "observations": [
+      {
+        "question": "Is authority explicit?",
+        "assessment": "Yes",
+        "rationale": "The terminal decision authority is identified."
+      }
+    ],
+    "limitations": [
+      "Candidate analysis only."
+    ],
+    "authoritative": false
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Correlation create request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "scenarioId",
+    "scenarioSha256",
+    "clientOperationId"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "correlation-create-request-v1"
+    },
+    "scenarioId": {
+      "const": "git-backed-correlation-cleanup"
+    },
+    "scenarioSha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "clientOperationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    }
+  }
+}

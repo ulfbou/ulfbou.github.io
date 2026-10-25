@@ -1,0 +1,150 @@
+{
+  "schemaVersion": "correlation-state-transitions-v1",
+  "initialState": "Created",
+  "terminalStates": [
+    "Completed",
+    "Cancelled",
+    "Revoked",
+    "Expired",
+    "Invalid",
+    "FailedTerminal",
+    "Superseded"
+  ],
+  "transitions": [
+    {
+      "id": "create",
+      "from": "none",
+      "signal": "CreateAccepted",
+      "to": "Created",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "dispatch",
+      "from": "Created",
+      "signal": "DispatchStarted",
+      "to": "Dispatching",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "await-provider",
+      "from": "Dispatching",
+      "signal": "ProviderAccepted",
+      "to": "AwaitingProvider",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "receive-result",
+      "from": "AwaitingProvider",
+      "signal": "ValidProviderResult",
+      "to": "ResultReceived",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "complete",
+      "from": "ResultReceived",
+      "signal": "ResultNormalized",
+      "to": "Completed",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "cancel",
+      "from": "AwaitingProvider",
+      "signal": "CancelAccepted",
+      "to": "Cancelled",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "expire-created",
+      "from": "Created",
+      "signal": "ExpiryObserved",
+      "to": "Expired",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "expire-dispatching",
+      "from": "Dispatching",
+      "signal": "ExpiryObserved",
+      "to": "Expired",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "expire-awaitingprovider",
+      "from": "AwaitingProvider",
+      "signal": "ExpiryObserved",
+      "to": "Expired",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "expire-resultreceived",
+      "from": "ResultReceived",
+      "signal": "ExpiryObserved",
+      "to": "Expired",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "fail-created",
+      "from": "Created",
+      "signal": "TerminalFailure",
+      "to": "FailedTerminal",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "fail-dispatching",
+      "from": "Dispatching",
+      "signal": "TerminalFailure",
+      "to": "FailedTerminal",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "fail-awaitingprovider",
+      "from": "AwaitingProvider",
+      "signal": "TerminalFailure",
+      "to": "FailedTerminal",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "fail-resultreceived",
+      "from": "ResultReceived",
+      "signal": "TerminalFailure",
+      "to": "FailedTerminal",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "invalidate",
+      "from": "AwaitingProvider",
+      "signal": "InvalidStateObserved",
+      "to": "Invalid",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    },
+    {
+      "id": "supersede",
+      "from": "AwaitingProvider",
+      "signal": "ExactRevisionSuperseded",
+      "to": "Superseded",
+      "revisionDelta": 1,
+      "replay": "EquivalentSuccess"
+    }
+  ],
+  "globalRules": [
+    "ExpectedRevisionMustEqualObservedRevision",
+    "AcceptedTransitionIncrementsExactlyOne",
+    "TerminalStatesHaveNoOutgoingTransitions",
+    "LateResultAfterTerminalIsRejected",
+    "NoExactlyOnceClaim"
+  ]
+}

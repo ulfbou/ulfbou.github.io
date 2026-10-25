@@ -1,0 +1,689 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Transform": "AWS::Serverless-2016-10-31",
+  "Description": "Bounded correlation prototype AWS sandbox.",
+  "Parameters": {
+    "EnvironmentName": {
+      "Type": "String",
+      "AllowedValues": [
+        "prototype"
+      ],
+      "Default": "prototype"
+    },
+    "AllowedOrigin": {
+      "Type": "String",
+      "AllowedPattern": "^https://ulfbou\\.github\\.io$",
+      "Default": "https://ulfbou.github.io"
+    },
+    "GitHubOidcProviderArn": {
+      "Type": "String",
+      "AllowedPattern": "^arn:aws:iam::[0-9]{12}:oidc-provider/token\\.actions\\.githubusercontent\\.com$"
+    },
+    "GitHubCleanupSubject": {
+      "Type": "String",
+      "MinLength": 20,
+      "MaxLength": 300
+    },
+    "BudgetEmail": {
+      "Type": "String",
+      "AllowedPattern": "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"
+    },
+    "MonthlyBudgetUsd": {
+      "Type": "Number",
+      "MinValue": 1,
+      "MaxValue": 25,
+      "Default": 5
+    },
+    "ProviderSecretArn": {
+      "Type": "String",
+      "AllowedPattern": "^arn:aws:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:.+$"
+    },
+    "GitHubAppSecretArn": {
+      "Type": "String",
+      "AllowedPattern": "^arn:aws:secretsmanager:[a-z0-9-]+:[0-9]{12}:secret:.+$"
+    }
+  },
+  "Resources": {
+    "CorrelationBucket": {
+      "Type": "AWS::S3::Bucket",
+      "DeletionPolicy": "Retain",
+      "UpdateReplacePolicy": "Retain",
+      "Properties": {
+        "BucketEncryption": {
+          "ServerSideEncryptionConfiguration": [
+            {
+              "ServerSideEncryptionByDefault": {
+                "SSEAlgorithm": "AES256"
+              }
+            }
+          ]
+        },
+        "BucketOwnershipControls": {
+          "Rules": [
+            {
+              "ObjectOwnership": "BucketOwnerEnforced"
+            }
+          ]
+        },
+        "PublicAccessBlockConfiguration": {
+          "BlockPublicAcls": true,
+          "BlockPublicPolicy": true,
+          "IgnorePublicAcls": true,
+          "RestrictPublicBuckets": true
+        },
+        "VersioningConfiguration": {
+          "Status": "Enabled"
+        },
+        "LifecycleConfiguration": {
+          "Rules": [
+            {
+              "Id": "ExpireActiveOrphans",
+              "Status": "Enabled",
+              "Prefix": "active/v1/",
+              "ExpirationInDays": 2,
+              "NoncurrentVersionExpiration": {
+                "NoncurrentDays": 2
+              },
+              "ExpiredObjectDeleteMarker": true
+            }
+          ]
+        }
+      }
+    },
+    "CorrelationApi": {
+      "Type": "AWS::Serverless::HttpApi",
+      "Properties": {
+        "StageName": "production",
+        "CorsConfiguration": {
+          "AllowOrigins": [
+            {
+              "Ref": "AllowedOrigin"
+            }
+          ],
+          "AllowHeaders": [
+            "content-type"
+          ],
+          "AllowMethods": [
+            "POST"
+          ],
+          "MaxAge": 300
+        },
+        "DefaultRouteSettings": {
+          "ThrottlingBurstLimit": 2,
+          "ThrottlingRateLimit": 1
+        },
+        "AccessLogSettings": {
+          "DestinationArn": {
+            "Fn::GetAtt": [
+              "ApiLogGroup",
+              "Arn"
+            ]
+          },
+          "Format": "{\"requestId\":\"$context.requestId\",\"routeKey\":\"$context.routeKey\",\"status\":\"$context.status\",\"responseLength\":\"$context.responseLength\"}"
+        }
+      }
+    },
+    "ApiLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": "/aws/http-api/ulfbou-correlation-prototype",
+        "RetentionInDays": 7
+      }
+    },
+    "RequestRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "ulfbou-correlation-request-prototype",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "bounded-runtime",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:PutObject"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "${CorrelationBucket.Arn}/active/v1/*"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "secretsmanager:GetSecretValue",
+                  "Resource": {
+                    "Ref": "ProviderSecretArn"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "lambda:InvokeFunction",
+                  "Resource": {
+                    "Fn::Sub": "${ResultFunction.Arn}:production"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/ulfbou-correlation-*:*"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "ResultRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "ulfbou-correlation-result-prototype",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "bounded-runtime",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:PutObject"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "${CorrelationBucket.Arn}/active/v1/*"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "secretsmanager:GetSecretValue",
+                  "Resource": {
+                    "Ref": "GitHubAppSecretArn"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/ulfbou-correlation-*:*"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "CleanupRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "ulfbou-correlation-cleanup-prototype",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": "lambda.amazonaws.com"
+              },
+              "Action": "sts:AssumeRole"
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "bounded-runtime",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:GetObjectVersion",
+                    "s3:DeleteObject",
+                    "s3:DeleteObjectVersion"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "${CorrelationBucket.Arn}/active/v1/*"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/ulfbou-correlation-*:*"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "RequestFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "../../src/Ulfbou.Correlation.RequestFunction/",
+        "Handler": "Ulfbou.Correlation.RequestFunction::Ulfbou.Correlation.RequestFunction.Function::FunctionHandler",
+        "Runtime": "dotnet10",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 256,
+        "Timeout": 15,
+        "ReservedConcurrentExecutions": 2,
+        "Role": {
+          "Fn::GetAtt": [
+            "RequestRole",
+            "Arn"
+          ]
+        },
+        "AutoPublishAlias": "production",
+        "DeploymentPreference": {
+          "Type": "AllAtOnce"
+        },
+        "Environment": {
+          "Variables": {
+            "CORRELATION_BUCKET": {
+              "Ref": "CorrelationBucket"
+            },
+            "LOG_LEVEL": "Information"
+          }
+        },
+        "LoggingConfig": {
+          "LogFormat": "JSON",
+          "ApplicationLogLevel": "INFO",
+          "SystemLogLevel": "WARN",
+          "LogGroup": {
+            "Fn::Sub": "/aws/lambda/ulfbou-correlation-requestfunction-prototype"
+          }
+        },
+        "Events": {
+          "CreateCorrelation": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "CorrelationApi"
+              },
+              "Path": "/correlations",
+              "Method": "POST"
+            }
+          },
+          "CancelCorrelation": {
+            "Type": "HttpApi",
+            "Properties": {
+              "ApiId": {
+                "Ref": "CorrelationApi"
+              },
+              "Path": "/correlations/{correlationId}/cancel",
+              "Method": "POST"
+            }
+          }
+        }
+      }
+    },
+    "RequestFunctionLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/ulfbou-correlation-requestfunction-prototype"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "RequestFunctionErrorAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName": "ulfbou-correlation-requestfunction-errors",
+        "Namespace": "AWS/Lambda",
+        "MetricName": "Errors",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": {
+              "Ref": "RequestFunction"
+            }
+          }
+        ],
+        "Statistic": "Sum",
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "AlarmActions": [
+          {
+            "Ref": "BudgetTopic"
+          }
+        ]
+      }
+    },
+    "ResultFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "../../src/Ulfbou.Correlation.ResultFunction/",
+        "Handler": "Ulfbou.Correlation.ResultFunction::Ulfbou.Correlation.ResultFunction.Function::FunctionHandler",
+        "Runtime": "dotnet10",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 256,
+        "Timeout": 10,
+        "ReservedConcurrentExecutions": 2,
+        "Role": {
+          "Fn::GetAtt": [
+            "ResultRole",
+            "Arn"
+          ]
+        },
+        "AutoPublishAlias": "production",
+        "DeploymentPreference": {
+          "Type": "AllAtOnce"
+        },
+        "Environment": {
+          "Variables": {
+            "CORRELATION_BUCKET": {
+              "Ref": "CorrelationBucket"
+            },
+            "LOG_LEVEL": "Information"
+          }
+        },
+        "LoggingConfig": {
+          "LogFormat": "JSON",
+          "ApplicationLogLevel": "INFO",
+          "SystemLogLevel": "WARN",
+          "LogGroup": {
+            "Fn::Sub": "/aws/lambda/ulfbou-correlation-resultfunction-prototype"
+          }
+        }
+      }
+    },
+    "ResultFunctionLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/ulfbou-correlation-resultfunction-prototype"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "ResultFunctionErrorAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName": "ulfbou-correlation-resultfunction-errors",
+        "Namespace": "AWS/Lambda",
+        "MetricName": "Errors",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": {
+              "Ref": "ResultFunction"
+            }
+          }
+        ],
+        "Statistic": "Sum",
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "AlarmActions": [
+          {
+            "Ref": "BudgetTopic"
+          }
+        ]
+      }
+    },
+    "CleanupFunction": {
+      "Type": "AWS::Serverless::Function",
+      "Properties": {
+        "CodeUri": "../../src/Ulfbou.Correlation.CleanupFunction/",
+        "Handler": "Ulfbou.Correlation.CleanupFunction::Ulfbou.Correlation.CleanupFunction.Function::FunctionHandler",
+        "Runtime": "dotnet10",
+        "Architectures": [
+          "arm64"
+        ],
+        "MemorySize": 128,
+        "Timeout": 30,
+        "ReservedConcurrentExecutions": 1,
+        "Role": {
+          "Fn::GetAtt": [
+            "CleanupRole",
+            "Arn"
+          ]
+        },
+        "AutoPublishAlias": "production",
+        "DeploymentPreference": {
+          "Type": "AllAtOnce"
+        },
+        "Environment": {
+          "Variables": {
+            "CORRELATION_BUCKET": {
+              "Ref": "CorrelationBucket"
+            },
+            "LOG_LEVEL": "Information"
+          }
+        },
+        "LoggingConfig": {
+          "LogFormat": "JSON",
+          "ApplicationLogLevel": "INFO",
+          "SystemLogLevel": "WARN",
+          "LogGroup": {
+            "Fn::Sub": "/aws/lambda/ulfbou-correlation-cleanupfunction-prototype"
+          }
+        }
+      }
+    },
+    "CleanupFunctionLogGroup": {
+      "Type": "AWS::Logs::LogGroup",
+      "Properties": {
+        "LogGroupName": {
+          "Fn::Sub": "/aws/lambda/ulfbou-correlation-cleanupfunction-prototype"
+        },
+        "RetentionInDays": 7
+      }
+    },
+    "CleanupFunctionErrorAlarm": {
+      "Type": "AWS::CloudWatch::Alarm",
+      "Properties": {
+        "AlarmName": "ulfbou-correlation-cleanupfunction-errors",
+        "Namespace": "AWS/Lambda",
+        "MetricName": "Errors",
+        "Dimensions": [
+          {
+            "Name": "FunctionName",
+            "Value": {
+              "Ref": "CleanupFunction"
+            }
+          }
+        ],
+        "Statistic": "Sum",
+        "Period": 300,
+        "EvaluationPeriods": 1,
+        "Threshold": 1,
+        "ComparisonOperator": "GreaterThanOrEqualToThreshold",
+        "TreatMissingData": "notBreaching",
+        "AlarmActions": [
+          {
+            "Ref": "BudgetTopic"
+          }
+        ]
+      }
+    },
+    "CleanupInvocationRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "ulfbou-correlation-cleanup-invoke-prototype",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": {
+                  "Ref": "GitHubOidcProviderArn"
+                }
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                  "token.actions.githubusercontent.com:sub": {
+                    "Ref": "GitHubCleanupSubject"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "invoke-qualified-cleanup-only",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": "lambda:InvokeFunction",
+                  "Resource": {
+                    "Fn::Sub": "${CleanupFunction.Arn}:production"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "BudgetTopic": {
+      "Type": "AWS::SNS::Topic",
+      "Properties": {
+        "TopicName": "ulfbou-correlation-budget-prototype"
+      }
+    },
+    "BudgetSubscription": {
+      "Type": "AWS::SNS::Subscription",
+      "Properties": {
+        "Protocol": "email",
+        "Endpoint": {
+          "Ref": "BudgetEmail"
+        },
+        "TopicArn": {
+          "Ref": "BudgetTopic"
+        }
+      }
+    },
+    "PrototypeBudget": {
+      "Type": "AWS::Budgets::Budget",
+      "Properties": {
+        "Budget": {
+          "BudgetName": "ulfbou-correlation-prototype",
+          "BudgetLimit": {
+            "Amount": {
+              "Ref": "MonthlyBudgetUsd"
+            },
+            "Unit": "USD"
+          },
+          "BudgetType": "COST",
+          "TimeUnit": "MONTHLY"
+        },
+        "NotificationsWithSubscribers": [
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "ACTUAL",
+              "Threshold": 80,
+              "ThresholdType": "PERCENTAGE"
+            },
+            "Subscribers": [
+              {
+                "Address": {
+                  "Ref": "BudgetEmail"
+                },
+                "SubscriptionType": "EMAIL"
+              }
+            ]
+          },
+          {
+            "Notification": {
+              "ComparisonOperator": "GREATER_THAN",
+              "NotificationType": "FORECASTED",
+              "Threshold": 100,
+              "ThresholdType": "PERCENTAGE"
+            },
+            "Subscribers": [
+              {
+                "Address": {
+                  "Ref": "BudgetEmail"
+                },
+                "SubscriptionType": "EMAIL"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "ApiEndpoint": {
+      "Value": {
+        "Fn::Sub": "https://${CorrelationApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/production"
+      }
+    },
+    "CleanupInvocationRoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "CleanupInvocationRole",
+          "Arn"
+        ]
+      }
+    },
+    "CleanupAliasArn": {
+      "Value": {
+        "Fn::Sub": "${CleanupFunction.Arn}:production"
+      }
+    },
+    "BucketName": {
+      "Value": {
+        "Ref": "CorrelationBucket"
+      }
+    }
+  }
+}

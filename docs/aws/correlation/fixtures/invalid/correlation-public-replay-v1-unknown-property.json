@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "correlation-public-replay-v1",
+  "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+  "capability": "architecture-scenario-classification-v1",
+  "terminalState": "Completed",
+  "steps": [
+    {
+      "sequence": 1,
+      "event": "CorrelationCreated",
+      "occurredAt": "2026-10-24T02:00:00.000Z"
+    },
+    {
+      "sequence": 2,
+      "event": "CorrelationCompleted",
+      "occurredAt": "2026-10-24T02:01:00.000Z"
+    },
+    {
+      "sequence": 3,
+      "event": "ActiveStateDeleted",
+      "occurredAt": "2026-10-24T02:15:00.000Z"
+    }
+  ],
+  "limitations": [
+    "Replay contains transformed public-safe lifecycle data only."
+  ],
+  "classification": "PublicTransformed",
+  "unexpectedSecret": "must-fail"
+}

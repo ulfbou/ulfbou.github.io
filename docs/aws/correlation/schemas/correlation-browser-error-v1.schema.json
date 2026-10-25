@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Correlation browser error v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "operationId",
+    "code",
+    "retryable",
+    "message"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "correlation-browser-error-v1"
+    },
+    "operationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "code": {
+      "enum": [
+        "InvalidRequest",
+        "ProviderUnavailable",
+        "ProviderQuotaExhausted",
+        "ProviderResponseInvalid",
+        "CorrelationExpired",
+        "CorrelationTerminal",
+        "Conflict",
+        "CapabilityDisabled",
+        "InternalFailure"
+      ]
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 240
+    }
+  }
+}

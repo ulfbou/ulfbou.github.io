@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "correlation-active-state-v1",
+  "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+  "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+  "capability": "architecture-scenario-classification-v1",
+  "providerAlias": "google-gemini-prototype",
+  "state": "AwaitingProvider",
+  "stateRevision": 3,
+  "createdAt": "2026-10-24T02:00:00.000Z",
+  "updatedAt": "2026-10-24T02:01:00.000Z",
+  "expiresAt": "2026-10-24T02:15:00.000Z",
+  "attempt": 1,
+  "maximumAttempts": 2,
+  "requestId": "req-01jk6m2w8g6wmx9zq7v4c2ad",
+  "expectedResultMode": "Synchronous",
+  "resultTarget": "browser-active-interaction-v1",
+  "previousStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "canonicalRepresentation": "correlation-state-canonical-json-v1"
+}

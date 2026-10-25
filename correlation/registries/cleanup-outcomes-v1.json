@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "cleanup-outcomes-v1",
+  "values": [
+    "Deleted",
+    "AlreadyAbsent",
+    "RevisionConflict",
+    "DigestConflict",
+    "InvalidActiveState",
+    "InvalidRequest",
+    "TemporaryFailure"
+  ]
+}

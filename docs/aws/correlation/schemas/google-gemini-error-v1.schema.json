@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Google Gemini error v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "classification",
+    "httpStatus",
+    "retryable",
+    "messageCode"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "google-gemini-error-v1"
+    },
+    "classification": {
+      "enum": [
+        "Unavailable",
+        "QuotaExhausted",
+        "Unauthorized",
+        "InvalidRequest",
+        "InvalidResponse",
+        "Timeout",
+        "Internal"
+      ]
+    },
+    "httpStatus": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 599
+    },
+    "retryable": {
+      "type": "boolean"
+    },
+    "messageCode": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_]{2,63}$"
+    }
+  }
+}

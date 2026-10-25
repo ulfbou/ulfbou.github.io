@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "correlation-tombstone-v1",
+  "tombstoneId": "tomb-01jk6m2w8g6wmx9zq7v4c2ae",
+  "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+  "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+  "capability": "architecture-scenario-classification-v1",
+  "providerAlias": "google-gemini-prototype",
+  "terminalState": "Completed",
+  "reasonCode": "CompletedNormally",
+  "expectedStateRevision": 5,
+  "canonicalRepresentation": "correlation-state-canonical-json-v1",
+  "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "terminatedAt": "2026-10-24T02:01:00.000Z",
+  "deletionEligibleAt": "2026-10-24T02:15:00.000Z",
+  "decisionAuthority": "ResultBroker",
+  "producerEventId": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "publicLimitations": [
+    "Provider output is candidate analysis, not accepted architectural truth."
+  ],
+  "classification": "PublicPermanently"
+}

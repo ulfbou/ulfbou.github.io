@@ -1,0 +1,13 @@
+{
+  "schemaVersion": "providers-v1",
+  "values": [
+    {
+      "alias": "google-gemini-prototype",
+      "capability": "architecture-scenario-classification-v1",
+      "enabledByDefault": false,
+      "resultMode": "Synchronous",
+      "dataClassification": "ReviewedPublicFixtureOnly",
+      "modelSelection": "deployment-pinned"
+    }
+  ]
+}

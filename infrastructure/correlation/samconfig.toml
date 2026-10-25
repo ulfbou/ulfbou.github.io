@@ -1,0 +1,14 @@
+version = 0.1
+
+[prototype.validate.parameters]
+template_file = "infrastructure/correlation/template.json"
+lint = true
+
+[prototype.deploy.parameters]
+stack_name = "ulfbou-correlation-prototype"
+resolve_s3 = true
+capabilities = "CAPABILITY_NAMED_IAM"
+confirm_changeset = true
+fail_on_empty_changeset = false
+region = "eu-north-1"
+parameter_overrides = "EnvironmentName=prototype AllowedOrigin=https://ulfbou.github.io"

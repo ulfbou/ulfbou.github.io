@@ -1,0 +1,18 @@
+{
+  "schemaVersion": "correlation-tombstone-event-v1",
+  "eventId": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+  "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+  "capability": "architecture-scenario-classification-v1",
+  "providerAlias": "google-gemini-prototype",
+  "terminalState": "Completed",
+  "reasonCode": "CompletedNormally",
+  "expectedStateRevision": 5,
+  "canonicalRepresentation": "correlation-state-canonical-json-v1",
+  "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "terminatedAt": "2026-10-24T02:00:00.000Z",
+  "producer": {
+    "kind": "GitHubApp",
+    "alias": "correlation-tombstone-producer-v1"
+  }
+}

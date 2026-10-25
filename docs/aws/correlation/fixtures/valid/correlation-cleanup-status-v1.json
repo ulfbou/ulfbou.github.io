@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "correlation-cleanup-status-v1",
+  "manifestId": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "receiptId": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+  "runtimeCommit": "2222222222222222222222222222222222222222",
+  "reconciledAt": "2026-10-24T02:15:00.000Z",
+  "outcome": "Reconciled",
+  "processedEntryIds": [
+    "entry-01jk6m2w8g6wmx9zq7v4c2af"
+  ]
+}

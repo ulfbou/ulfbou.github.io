@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Correlation tombstone v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "tombstoneId",
+    "correlationId",
+    "operationId",
+    "capability",
+    "providerAlias",
+    "terminalState",
+    "reasonCode",
+    "expectedStateRevision",
+    "canonicalRepresentation",
+    "expectedStateSha256",
+    "terminatedAt",
+    "deletionEligibleAt",
+    "decisionAuthority",
+    "producerEventId",
+    "publicLimitations",
+    "classification"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "correlation-tombstone-v1"
+    },
+    "tombstoneId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "correlationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "operationId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]{7,127}$"
+    },
+    "capability": {
+      "const": "architecture-scenario-classification-v1"
+    },
+    "providerAlias": {
+      "const": "google-gemini-prototype"
+    },
+    "terminalState": {
+      "enum": [
+        "Completed",
+        "Cancelled",
+        "Revoked",
+        "Expired",
+        "Invalid",
+        "FailedTerminal",
+        "Superseded"
+      ]
+    },
+    "reasonCode": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 64
+    },
+    "expectedStateRevision": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 100
+    },
+    "canonicalRepresentation": {
+      "const": "correlation-state-canonical-json-v1"
+    },
+    "expectedStateSha256": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "terminatedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+    },
+    "deletionEligibleAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}\\.[0-9]{3}Z$"
+    },
+    "decisionAuthority": {
+      "enum": [
+        "ResultBroker",
+        "CancellationBoundary",
+        "ExpiryPolicy",
+        "GovernanceAuthority"
+      ]
+    },
+    "producerEventId": {
+      "type": "string",
+      "pattern": "^sha256:[0-9a-f]{64}$"
+    },
+    "publicLimitations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 8,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 240
+      }
+    },
+    "classification": {
+      "const": "PublicPermanently"
+    }
+  }
+}

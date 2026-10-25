@@ -1,0 +1,15 @@
+{
+  "schemaVersion": "reason-codes-v1",
+  "values": [
+    "CompletedNormally",
+    "CancelledByVisitor",
+    "RevokedByAuthority",
+    "ExpiredByPolicy",
+    "InvalidState",
+    "ProviderUnavailable",
+    "ProviderQuotaExhausted",
+    "ProviderResponseInvalid",
+    "MaximumAttemptsExceeded",
+    "SupersededRevision"
+  ]
+}

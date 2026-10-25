@@ -1,0 +1,59 @@
+{
+  "schemaVersion": "correlation-canonical-vectors-v1",
+  "representation": "correlation-state-canonical-json-v1",
+  "vectors": [
+    {
+      "id": "unicode-order-escaping",
+      "input": {
+        "a": "Å",
+        "array": [
+          "b",
+          "a"
+        ],
+        "integer": 0,
+        "timestamp": "2026-10-24T02:00:00.000Z",
+        "z": "line\ntext"
+      },
+      "canonicalUtf8": "{\"a\":\"Å\",\"array\":[\"b\",\"a\"],\"integer\":0,\"timestamp\":\"2026-10-24T02:00:00.000Z\",\"z\":\"line\\ntext\"}",
+      "canonicalHex": "7b2261223a22c385222c226172726179223a5b2262222c2261225d2c22696e7465676572223a302c2274696d657374616d70223a22323032362d31302d32345430323a30303a30302e3030305a222c227a223a226c696e655c6e74657874227d",
+      "sha256": "sha256:ebf2f57b4d8eb868aef0c390e93ec9cc7b57cfde69e08d4d2e56825d519489b3"
+    }
+  ],
+  "rejections": [
+    {
+      "id": "duplicate-property",
+      "rawJson": "{\"a\":1,\"a\":2}",
+      "code": "DUPLICATE_PROPERTY"
+    },
+    {
+      "id": "fraction",
+      "rawJson": "{\"n\":1.5}",
+      "code": "NON_INTEGER_NUMBER"
+    },
+    {
+      "id": "exponent",
+      "rawJson": "{\"n\":1e2}",
+      "code": "NON_INTEGER_NUMBER"
+    },
+    {
+      "id": "negative-zero",
+      "rawJson": "{\"n\":-0}",
+      "code": "NEGATIVE_ZERO"
+    },
+    {
+      "id": "timestamp-offset",
+      "rawJson": "{\"timestamp\":\"2026-10-24T04:00:00+02:00\"}",
+      "code": "NON_CANONICAL_TIMESTAMP"
+    },
+    {
+      "id": "bom",
+      "rawHex": "efbbbf7b7d",
+      "code": "BOM_PROHIBITED"
+    },
+    {
+      "id": "final-newline-domain",
+      "canonicalSuffixHex": "none",
+      "code": "FINAL_NEWLINE_EXCLUDED"
+    }
+  ]
+}

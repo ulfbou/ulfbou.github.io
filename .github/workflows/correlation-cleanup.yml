@@ -1,0 +1,129 @@
+name: Correlation cleanup
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: '37 3 * * *'
+concurrency:
+  group: correlation-cleanup
+  cancel-in-progress: false
+permissions: {}
+env:
+  RUNTIME_BRANCH: correlation-runtime
+  AWS_REGION: eu-north-1
+  MAX_HANDOFF_BYTES: '131072'
+jobs:
+  compile:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    outputs:
+      runtime_commit: ${{ steps.compile.outputs.runtime_commit }}
+      manifest_sha256: ${{ steps.compile.outputs.manifest_sha256 }}
+      manifest_base64: ${{ steps.compile.outputs.manifest_base64 }}
+      has_entries: ${{ steps.compile.outputs.has_entries }}
+    steps:
+      - id: compile
+        shell: bash
+        env:
+          TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          git init runtime
+          git -C runtime remote add origin "https://x-access-token:${TOKEN}@github.com/${REPOSITORY}.git"
+          git -C runtime fetch --no-tags --depth=1 origin "$RUNTIME_BRANCH"
+          git -C runtime checkout --detach FETCH_HEAD
+          git -C runtime remote set-url origin "https://github.com/${REPOSITORY}.git"
+          runtime_commit="$(git -C runtime rev-parse HEAD)"
+          created_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          set +e
+          python tools/correlation/compile-cleanup-manifest.py --runtime-root runtime --repository "$REPOSITORY" --runtime-commit "$runtime_commit" --created-at "$created_at" --output manifest.json
+          status=$?
+          set -e
+          if [[ $status == 3 ]]; then
+            printf 'has_entries=false\nruntime_commit=%s\nmanifest_sha256=none\nmanifest_base64=none\n' "$runtime_commit" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          test $status -eq 0
+          bytes=$(wc -c < manifest.json); test "$bytes" -le "$MAX_HANDOFF_BYTES"
+          digest=$(sha256sum manifest.json | cut -d' ' -f1)
+          encoded=$(base64 -w0 manifest.json)
+          printf 'has_entries=true\nruntime_commit=%s\nmanifest_sha256=%s\nmanifest_base64=%s\n' "$runtime_commit" "$digest" "$encoded" >> "$GITHUB_OUTPUT"
+
+  delete:
+    needs: compile
+    if: needs.compile.outputs.has_entries == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    environment: correlation-cleanup
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      receipt_sha256: ${{ steps.delete.outputs.receipt_sha256 }}
+      receipt_base64: ${{ steps.delete.outputs.receipt_base64 }}
+    steps:
+      - id: delete
+        shell: bash
+        env:
+          MANIFEST_BASE64: ${{ needs.compile.outputs.manifest_base64 }}
+          MANIFEST_SHA256: ${{ needs.compile.outputs.manifest_sha256 }}
+          CLEANUP_ALIAS_ARN: ${{ secrets.AWS_CLEANUP_ALIAS_ARN }}
+          ROLE_ARN: ${{ secrets.AWS_CLEANUP_ROLE_ARN }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$MANIFEST_BASE64" | base64 -d > manifest.json
+          test "$(wc -c < manifest.json)" -le "$MAX_HANDOFF_BYTES"
+          test "$(sha256sum manifest.json | cut -d' ' -f1)" = "$MANIFEST_SHA256"
+          token_json="$(curl --fail --silent --show-error --proto '=https' --tlsv1.2 -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=sts.amazonaws.com")"
+          token="$(python -c 'import json,sys;print(json.load(sys.stdin)["value"])' <<<"$token_json")"
+          credentials="$(aws sts assume-role-with-web-identity --role-arn "$ROLE_ARN" --role-session-name "cleanup-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" --web-identity-token "$token" --duration-seconds 900 --output json)"
+          eval "$(python -c 'import json,sys; c=json.load(sys.stdin)["Credentials"]; print("export AWS_ACCESS_KEY_ID=%s\nexport AWS_SECRET_ACCESS_KEY=%s\nexport AWS_SESSION_TOKEN=%s"%(c["AccessKeyId"],c["SecretAccessKey"],c["SessionToken"]))' <<<"$credentials")"
+          unset token token_json credentials
+          aws lambda invoke --function-name "$CLEANUP_ALIAS_ARN" --cli-binary-format raw-in-base64-out --payload fileb://manifest.json receipt.json >/dev/null
+          test "$(wc -c < receipt.json)" -le "$MAX_HANDOFF_BYTES"
+          digest=$(sha256sum receipt.json | cut -d' ' -f1)
+          encoded=$(base64 -w0 receipt.json)
+          printf 'receipt_sha256=%s\nreceipt_base64=%s\n' "$digest" "$encoded" >> "$GITHUB_OUTPUT"
+
+  reconcile:
+    needs: [compile, delete]
+    if: needs.compile.outputs.has_entries == 'true' && needs.delete.result == 'success'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - shell: bash
+        env:
+          TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          EXPECTED_TIP: ${{ needs.compile.outputs.runtime_commit }}
+          MANIFEST_BASE64: ${{ needs.compile.outputs.manifest_base64 }}
+          MANIFEST_SHA256: ${{ needs.compile.outputs.manifest_sha256 }}
+          RECEIPT_BASE64: ${{ needs.delete.outputs.receipt_base64 }}
+          RECEIPT_SHA256: ${{ needs.delete.outputs.receipt_sha256 }}
+        run: |
+          set -euo pipefail
+          printf '%s' "$MANIFEST_BASE64" | base64 -d > manifest.json
+          printf '%s' "$RECEIPT_BASE64" | base64 -d > receipt.json
+          test "$(wc -c < manifest.json)" -le "$MAX_HANDOFF_BYTES"
+          test "$(wc -c < receipt.json)" -le "$MAX_HANDOFF_BYTES"
+          test "$(sha256sum manifest.json | cut -d' ' -f1)" = "$MANIFEST_SHA256"
+          test "$(sha256sum receipt.json | cut -d' ' -f1)" = "$RECEIPT_SHA256"
+          git init runtime
+          git -C runtime remote add origin "https://x-access-token:${TOKEN}@github.com/${REPOSITORY}.git"
+          git -C runtime fetch --no-tags --depth=1 origin "$RUNTIME_BRANCH"
+          git -C runtime checkout -B "$RUNTIME_BRANCH" FETCH_HEAD
+          test "$(git -C runtime rev-parse HEAD)" = "$EXPECTED_TIP"
+          reconciled_at="$(date -u +'%Y-%m-%dT%H:%M:%S.000Z')"
+          python tools/correlation/reconcile-cleanup.py --runtime-root runtime --manifest manifest.json --receipt receipt.json --reconciled-at "$reconciled_at"
+          git -C runtime config user.name github-actions
+          git -C runtime config user.email github-actions@users.noreply.github.com
+          git -C runtime add -- correlation-runtime/receipts/v1 correlation-runtime/status/v1 correlation-runtime/unresolved/v1 correlation-runtime/tombstones/v1
+          git -C runtime diff --cached --quiet && exit 0
+          git -C runtime commit -m "chore(correlation): reconcile cleanup receipt"
+          remote_tip="$(git -C runtime ls-remote origin "refs/heads/$RUNTIME_BRANCH" | cut -f1)"
+          test "$remote_tip" = "$EXPECTED_TIP"
+          git -C runtime push origin "HEAD:refs/heads/$RUNTIME_BRANCH"

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "correlation-deletion-manifest-v1",
+  "manifestId": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "repository": "ulfbou/ulfbou.github.io",
+  "runtimeBranch": "correlation-runtime",
+  "runtimeCommit": "1111111111111111111111111111111111111111",
+  "createdAt": "2026-10-24T02:01:00.000Z",
+  "expiresAt": "2026-10-24T02:15:00.000Z",
+  "policyVersion": "cleanup-policy-v1",
+  "entries": [
+    {
+      "entryId": "entry-01jk6m2w8g6wmx9zq7v4c2af",
+      "tombstonePath": "correlation-runtime/tombstones/v1/co/corr-01jk6m2w8g6wmx9zq7v4c2ab.json",
+      "tombstoneSha256": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+      "expectedStateRevision": 5,
+      "expectedStateSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    }
+  ]
+}

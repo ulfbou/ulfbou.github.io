@@ -1,7 +1,17 @@
-
 <Solution>
   <Project Path="src/Ulfbou.Portfolio.Core/Ulfbou.Portfolio.Core.csproj" />
   <Project Path="src/Ulfbou.Portfolio.Generator/Ulfbou.Portfolio.Generator.csproj" />
   <Project Path="src/Ulfbou.Site/Ulfbou.Site.csproj" />
   <Project Path="tests/Ulfbou.Portfolio.Core.Tests/Ulfbou.Portfolio.Core.Tests.csproj" />
+  <Project Path="src/Ulfbou.Correlation.Core/Ulfbou.Correlation.Core.csproj" />
+  <Project Path="tests/Ulfbou.Correlation.Core.Tests/Ulfbou.Correlation.Core.Tests.csproj" />
+  <Project Path="src/Ulfbou.Correlation.Application/Ulfbou.Correlation.Application.csproj" />
+  <Project Path="tests/Ulfbou.Correlation.Application.Tests/Ulfbou.Correlation.Application.Tests.csproj" />
+  <Project Path="src/Ulfbou.Correlation.RequestFunction/Ulfbou.Correlation.RequestFunction.csproj" />
+  <Project Path="src/Ulfbou.Correlation.ResultFunction/Ulfbou.Correlation.ResultFunction.csproj" />
+  <Project Path="src/Ulfbou.Correlation.CleanupFunction/Ulfbou.Correlation.CleanupFunction.csproj" />
+  <Project Path="src/Ulfbou.Correlation.Aws/Ulfbou.Correlation.Aws.csproj" />
+  <Project Path="tests/Ulfbou.Correlation.Aws.Tests/Ulfbou.Correlation.Aws.Tests.csproj" />
+  <Project Path="src/Ulfbou.Correlation.Runtime/Ulfbou.Correlation.Runtime.csproj" />
+  <Project Path="tests/Ulfbou.Correlation.Runtime.Tests/Ulfbou.Correlation.Runtime.Tests.csproj" />
 </Solution>

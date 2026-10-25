@@ -1,0 +1,10 @@
+{
+  "schemaVersion": "result-targets-v1",
+  "values": [
+    {
+      "id": "browser-active-interaction-v1",
+      "maximumBytes": 16384,
+      "durableArchive": false
+    }
+  ]
+}

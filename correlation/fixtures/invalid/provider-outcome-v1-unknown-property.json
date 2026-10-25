@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "provider-outcome-v1",
+  "operationId": "op-01jk6m2w8g6wmx9zq7v4c2ac",
+  "correlationId": "corr-01jk6m2w8g6wmx9zq7v4c2ab",
+  "providerAlias": "google-gemini-prototype",
+  "classification": "CandidateAnalysis",
+  "observations": [
+    {
+      "question": "Can a stale tombstone delete newer active state?",
+      "assessment": "No",
+      "rationale": "Deletion is authorized only after exact revision and digest comparison."
+    }
+  ],
+  "limitations": [
+    "This is provider-generated candidate analysis."
+  ],
+  "authoritative": false,
+  "unexpectedSecret": "must-fail"
+}

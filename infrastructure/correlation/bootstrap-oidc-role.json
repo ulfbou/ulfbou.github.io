@@ -1,0 +1,101 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "Bootstrap exact GitHub OIDC deployment role for bounded correlation stacks.",
+  "Parameters": {
+    "GitHubOidcProviderArn": {
+      "Type": "String",
+      "AllowedPattern": "^arn:aws:iam::[0-9]{12}:oidc-provider/token\\.actions\\.githubusercontent\\.com$"
+    },
+    "GitHubDeploySubject": {
+      "Type": "String",
+      "MinLength": 20,
+      "MaxLength": 300
+    },
+    "ArtifactBucketArn": {
+      "Type": "String",
+      "AllowedPattern": "^arn:aws:s3:::[a-z0-9.-]{3,63}$"
+    }
+  },
+  "Resources": {
+    "DeploymentRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": "ulfbou-correlation-deploy-prototype",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Federated": {
+                  "Ref": "GitHubOidcProviderArn"
+                }
+              },
+              "Action": "sts:AssumeRoleWithWebIdentity",
+              "Condition": {
+                "StringEquals": {
+                  "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+                  "token.actions.githubusercontent.com:sub": {
+                    "Ref": "GitHubDeploySubject"
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "Policies": [
+          {
+            "PolicyName": "bounded-correlation-deploy",
+            "PolicyDocument": {
+              "Version": "2012-10-17",
+              "Statement": [
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudformation:CreateChangeSet",
+                    "cloudformation:DescribeChangeSet",
+                    "cloudformation:ExecuteChangeSet",
+                    "cloudformation:DescribeStacks",
+                    "cloudformation:DescribeStackEvents",
+                    "cloudformation:GetTemplate",
+                    "cloudformation:DeleteChangeSet"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:cloudformation:${AWS::Region}:${AWS::AccountId}:stack/ulfbou-correlation-*/*"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": [
+                    "s3:GetObject",
+                    "s3:PutObject"
+                  ],
+                  "Resource": {
+                    "Fn::Sub": "${ArtifactBucketArn}/correlation/*"
+                  }
+                },
+                {
+                  "Effect": "Allow",
+                  "Action": "iam:PassRole",
+                  "Resource": {
+                    "Fn::Sub": "arn:${AWS::Partition}:iam::${AWS::AccountId}:role/ulfbou-correlation-*-prototype"
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "Outputs": {
+    "DeploymentRoleArn": {
+      "Value": {
+        "Fn::GetAtt": [
+          "DeploymentRole",
+          "Arn"
+        ]
+      }
+    }
+  }
+}

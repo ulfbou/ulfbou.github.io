@@ -1,0 +1,7 @@
+{
+  "schemaVersion": "google-gemini-error-v1",
+  "classification": "QuotaExhausted",
+  "httpStatus": 429,
+  "retryable": false,
+  "messageCode": "PROVIDER_QUOTA_EXHAUSTED"
+}

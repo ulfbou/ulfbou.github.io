@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Google Gemini request v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "modelAlias",
+    "systemInstruction",
+    "scenario",
+    "generationConfig"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "google-gemini-request-v1"
+    },
+    "modelAlias": {
+      "const": "deployment-pinned-flash"
+    },
+    "systemInstruction": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1200
+    },
+    "scenario": {
+      "$ref": "provider-request-v1.schema.json"
+    },
+    "generationConfig": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "title": "Gemini generation config",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "responseMimeType",
+        "maximumOutputTokens",
+        "temperature"
+      ],
+      "properties": {
+        "responseMimeType": {
+          "const": "application/json"
+        },
+        "maximumOutputTokens": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 1024
+        },
+        "temperature": {
+          "type": "integer",
+          "const": 0
+        }
+      }
+    }
+  }
+}

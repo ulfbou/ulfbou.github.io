@@ -1,0 +1,6 @@
+{
+  "schemaVersion": "correlation-create-request-v1",
+  "scenarioId": "git-backed-correlation-cleanup",
+  "scenarioSha256": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "clientOperationId": "client-01jk6m2w8g6wmx9zq7v4c2aa"
+}

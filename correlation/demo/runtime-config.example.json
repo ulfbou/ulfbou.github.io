@@ -1,0 +1,5 @@
+{
+  "schemaVersion": "correlation-runtime-config-v1",
+  "apiEndpoint": "https://replace-with-api-id.execute-api.eu-north-1.amazonaws.com/production",
+  "scenarioSha256": "sha256:replace-with-reviewed-fixture-digest"
+}

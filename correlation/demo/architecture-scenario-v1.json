@@ -1,0 +1,17 @@
+{
+  "schemaVersion": "architecture-scenario-v1",
+  "scenarioId": "git-backed-correlation-cleanup",
+  "title": "Git-governed terminal cleanup",
+  "facts": [
+    "Active correlation state is stored privately and temporarily in Amazon S3.",
+    "Terminal decisions are stored as public-safe GitHub tombstones.",
+    "GitHub Actions invokes Cleanup Lambda through short-lived OIDC credentials.",
+    "Cleanup Lambda conditionally deletes only an expected active-state revision."
+  ],
+  "questions": [
+    "Is the authority for terminal decisions explicit?",
+    "Can a stale tombstone delete newer active state?",
+    "Does the portfolio remain useful when AWS is unavailable?"
+  ],
+  "classification": "ReviewedPublicStaticFixture"
+}
