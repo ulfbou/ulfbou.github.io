@@ -72,6 +72,7 @@ public sealed record ApprovedProject(
     string Id,
     string Title,
     string ShortTitle,
+    string RepositoryUrl,
     string Proposition,
     string Story,
     string Contribution,

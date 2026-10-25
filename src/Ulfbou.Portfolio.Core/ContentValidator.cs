@@ -217,6 +217,23 @@ public static class ContentValidator
         {
             Required(project.Title, $"{path}.title");
             Required(project.ShortTitle, $"{path}.shortTitle");
+            Required(project.RepositoryUrl, $"{path}.repositoryUrl");
+            if (
+                !Uri.TryCreate(
+                    project.RepositoryUrl,
+                    UriKind.Absolute,
+                    out var repositoryUri)
+                || repositoryUri.Scheme != Uri.UriSchemeHttps
+                || !string.Equals(
+                    repositoryUri.Host,
+                    "github.com",
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                Fail(
+                    "VAL-REPOSITORY-URL",
+                    $"{path}.repositoryUrl",
+                    "Published repository URL must be an absolute GitHub HTTPS URL.");
+            }
             Required(
                 project.Proposition,
                 $"{path}.proposition");

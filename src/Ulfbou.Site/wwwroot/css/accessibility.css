@@ -25,7 +25,7 @@ a:focus-visible {
 }
 
 .empty-state,
-.representative-note {
+.portfolio-note {
     max-width: 1440px;
     margin-inline: auto;
 }
@@ -34,7 +34,7 @@ a:focus-visible {
     padding: 2rem 0;
 }
 
-.representative-note {
+.portfolio-note {
     color: var(--muted);
     font-size: .95rem;
 }

@@ -1,6 +1,6 @@
 # Story-block contract
 
-Reusable project-story blocks extend project-story blocks without moving runtime authority from `src/Ulfbou.Site/wwwroot/data/portfolio.json`.
+Reusable project-story blocks extend approved project stories without moving runtime authority from `src/Ulfbou.Site/wwwroot/data/generated/portfolio.json`.
 
 ## Common contract
 
@@ -22,7 +22,7 @@ The development fallback is presentation-only and cannot permit publication.
 
 ## Compatibility
 
-Existing existing approved project fields remain authoritative during this additive transition. Blocks that present established information use the exact approved approved existing wording or evidence values. The legacy runtime path remains authoritative.
+Existing approved project fields remain authoritative during this additive transition. Blocks that present established information use exact approved wording or evidence values. The generated projection remains the runtime authority.
 
 ## Extension rule
 

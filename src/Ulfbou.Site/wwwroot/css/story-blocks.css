@@ -6,6 +6,13 @@
 .compatibility-detail {
     align-self: start;
 }
+.project-repository {
+    grid-column: 1 / -1;
+    margin: 0;
+    font: 600 11px var(--mono);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+}
 
 @media print {
     @page {

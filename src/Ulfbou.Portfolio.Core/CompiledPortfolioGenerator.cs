@@ -51,6 +51,7 @@ public sealed class CompiledPortfolioGenerator
                     project.Id,
                     project.Title,
                     project.ShortTitle,
+                    project.RepositoryUrl,
                     project.Proposition,
                     project.Story,
                     project.Contribution,

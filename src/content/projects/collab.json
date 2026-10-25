@@ -3,6 +3,7 @@
   "id": "collab",
   "title": "Collab",
   "shortTitle": "Evidence-bounded AI delivery",
+  "repositoryUrl": "https://github.com/ulfbou/collab",
   "proposition": "Keep AI-assisted repository changes bounded, inspectable and human-approved.",
   "story": "Collab is Python and Bash developer tooling that constrains AI-assisted repository changes to one evidence-backed delivery at a time. It collects Git and GitHub context, validates structured handoffs, applies verified file-transfer packages and gates delivery through scope, build, test and consumer checks.",
   "contribution": "I designed the bounded planning and implementation stages, implemented deterministic evidence collection and immutable run records, enforced branch and scope guards, and developed read-only GitHub Actions diagnostic analysis.",

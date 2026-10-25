@@ -3,6 +3,7 @@
   "id": "dx-cli",
   "title": "Dx.Cli",
   "shortTitle": "Transactional workspace tooling",
+  "repositoryUrl": "https://github.com/ulfbou/Dx.Cli",
   "proposition": "Apply deterministic workspace changes without accepting partial state.",
   "story": "Dx.Cli is a .NET command-line tool that applies deterministic workspace-change packages transactionally while preserving inspectable state. Its installed dxs command initializes workspaces, applies validated changes and manages snapshots, diffs, checkout, logs, sessions, packing and diagnostics.",
   "contribution": "I designed the command workflow, separated the Spectre.Console interface from core execution authority, and implemented locking, atomic commits, rollback, interrupted-transaction recovery, SQLite metadata and content-addressed storage.",

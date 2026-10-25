@@ -3,6 +3,7 @@
   "id": "verdant",
   "title": "Verdant",
   "shortTitle": "Deterministic simulation foundations",
+  "repositoryUrl": "https://github.com/ulfbou/Verdant",
   "proposition": "Make accepted state transitions reproducible, replayable and compatibility-aware.",
   "story": "Verdant is an evolving C# and .NET foundation for simulations whose state must remain reproducible after every accepted command. It commits changes atomically, records only successful commands and reconstructs earlier states by replaying requested history prefixes from canonical initialization.",
   "contribution": "I implemented atomic command execution, replay and historical-query APIs, independent compatibility dimensions, restricted canonical JSON serialization, SHA-256 identities and fixed-order square-grid topology.",
@@ -67,8 +68,8 @@
     "description": "Mechanically derived from the controlling public projection."
   },
   "publication": {
-    "state": "Published",
-    "visibility": "Public",
+    "state": "Approved",
+    "visibility": "Candidate",
     "readingDepth": "Detailed"
   }
 }

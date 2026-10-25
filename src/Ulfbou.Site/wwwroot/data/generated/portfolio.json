@@ -22,6 +22,7 @@
       "id": "dx-domain",
       "title": "Dx.Domain",
       "shortTitle": "Domain rules with teeth",
+      "repositoryUrl": "https://github.com/ulfbou/Dx.Domain",
       "proposition": "Move domain rules and architectural boundaries closer to the compiler.",
       "story": "Dx.Domain is a C# and .NET library for expressing business rules through typed identities, structured results and errors, invariants, immutable facts, causation metadata and semantic annotations. Roslyn analyzers complement the public APIs by detecting prohibited construction, ignored failures, exception-driven control flow and architectural scope violations during builds.",
       "contribution": "I designed cohesive public APIs across four dependency-controlled NuGet packages, implemented scope-aware Roslyn analyzers and MSBuild governance, and established test, documentation, packaging and release-gate workflows.",
@@ -180,6 +181,7 @@
       "id": "dx-cli",
       "title": "Dx.Cli",
       "shortTitle": "Transactional workspace tooling",
+      "repositoryUrl": "https://github.com/ulfbou/Dx.Cli",
       "proposition": "Apply deterministic workspace changes without accepting partial state.",
       "story": "Dx.Cli is a .NET command-line tool that applies deterministic workspace-change packages transactionally while preserving inspectable state. Its installed dxs command initializes workspaces, applies validated changes and manages snapshots, diffs, checkout, logs, sessions, packing and diagnostics.",
       "contribution": "I designed the command workflow, separated the Spectre.Console interface from core execution authority, and implemented locking, atomic commits, rollback, interrupted-transaction recovery, SQLite metadata and content-addressed storage.",
@@ -242,6 +244,7 @@
       "id": "mold-first-bloom",
       "title": "MoldFirstBloom",
       "shortTitle": "Deterministic play in the browser",
+      "repositoryUrl": "https://github.com/ulfbou/MoldFirstBloom",
       "proposition": "Keep interactive presentation separate from authoritative game state.",
       "story": "MoldFirstBloom is a mobile-oriented Blazor WebAssembly vertical slice combining an isolated deterministic C# engine with a responsive browser interface. Players preview, rotate and confirm spatial moves while successful actions support reproducible replay, historical inspection and IndexedDB restoration.",
       "contribution": "I implemented the browser-independent engine, integrated Verdant Replay and History, created the touch-first Blazor interface and engineered replay-based IndexedDB restoration with compatibility checks.",
@@ -301,68 +304,10 @@
       "blocks": []
     },
     {
-      "id": "verdant",
-      "title": "Verdant",
-      "shortTitle": "Deterministic simulation foundations",
-      "proposition": "Make accepted state transitions reproducible, replayable and compatibility-aware.",
-      "story": "Verdant is an evolving C# and .NET foundation for simulations whose state must remain reproducible after every accepted command. It commits changes atomically, records only successful commands and reconstructs earlier states by replaying requested history prefixes from canonical initialization.",
-      "contribution": "I implemented atomic command execution, replay and historical-query APIs, independent compatibility dimensions, restricted canonical JSON serialization, SHA-256 identities and fixed-order square-grid topology.",
-      "reflection": "Determinism requires more than a repeatable algorithm. State authority, command history, serialization, compatibility and failure behavior must all agree on what can be reconstructed.",
-      "status": "Implementation in progress",
-      "accent": "#6d5b93",
-      "facets": [
-        "Architecture",
-        "Learning"
-      ],
-      "technologies": [
-        "C#",
-        ".NET 10",
-        "xUnit",
-        "System.Text",
-        "SHA-256",
-        "Deterministic JSON serialization",
-        "MSBuild"
-      ],
-      "proof": [
-        {
-          "label": "Transactions",
-          "value": "src/Verdant.Core/TransactionPipeline.cs"
-        },
-        {
-          "label": "Replay",
-          "value": "src/Verdant.Replay/ReplayEngine.cs"
-        },
-        {
-          "label": "Compatibility",
-          "value": "src/Verdant.Compatibility/"
-        },
-        {
-          "label": "Conformance",
-          "value": "tests/Verdant.ConformanceFixtures/"
-        }
-      ],
-      "demo": {
-        "kind": "code",
-        "caption": "Successful commands define history",
-        "lines": [
-          "canonical initialization",
-          "        + accepted command prefix",
-          "        -> isolated replay",
-          "        -> state and event batches",
-          "        -> unchanged live authority"
-        ]
-      },
-      "limitations": [
-        "The wider deterministic spatial-simulation system is not complete.",
-        "Persistence, crash recovery, Undo, Timeline mutation and replay sharing remain specification work.",
-        "Cross-runtime reproducibility and a complete First Bloom fixture suite are not established."
-      ],
-      "blocks": []
-    },
-    {
       "id": "zentient-results",
       "title": "Zentient.Results",
       "shortTitle": "Explicit outcomes for .NET",
+      "repositoryUrl": "https://github.com/ulfbou/Zentient.Results",
       "proposition": "Represent expected success and failure through one structured result model.",
       "story": "Zentient.Results is a reusable .NET library that lets application operations return explicit success values or structured failure information instead of relying solely on thrown exceptions. The model carries statuses, messages, errors, immutable metadata and optional typed values.",
       "contribution": "I designed sealed Result and Result<T> APIs, modeled structured errors and immutable metadata, implemented generic error transformations and developed System.Text.Json conversion for generic and non-generic results.",
@@ -424,6 +369,7 @@
       "id": "collab",
       "title": "Collab",
       "shortTitle": "Evidence-bounded AI delivery",
+      "repositoryUrl": "https://github.com/ulfbou/collab",
       "proposition": "Keep AI-assisted repository changes bounded, inspectable and human-approved.",
       "story": "Collab is Python and Bash developer tooling that constrains AI-assisted repository changes to one evidence-backed delivery at a time. It collects Git and GitHub context, validates structured handoffs, applies verified file-transfer packages and gates delivery through scope, build, test and consumer checks.",
       "contribution": "I designed the bounded planning and implementation stages, implemented deterministic evidence collection and immutable run records, enforced branch and scope guards, and developed read-only GitHub Actions diagnostic analysis.",
@@ -481,69 +427,6 @@
         "The project does not provide autonomous software delivery, repair or knowledge promotion.",
         "Uniform DX v2 generation across every compatibility path is not established.",
         "Production readiness, external adoption and successful execution of every GitHub mutation path are not established."
-      ],
-      "blocks": []
-    },
-    {
-      "id": "prototype-knowledge",
-      "title": "prototype-knowledge",
-      "shortTitle": "Knowledge with provenance",
-      "proposition": "Compile bounded AI context without allowing generated information to become authority.",
-      "story": "prototype-knowledge is a machine-readable knowledge registry and AI context compiler. Its Python CLI validates structured decisions, contracts, lessons and provenance, retrieves deterministic subsets and compiles bounded context for AI-assisted engineering.",
-      "contribution": "I designed the provenance and authority model, implemented dependency-free validation and structured retrieval, compiled selected knowledge into multiple representations and established governance and append-only history checks.",
-      "reflection": "Useful AI context needs more than retrieval. It must preserve provenance, distinguish durable knowledge from generated candidates and leave final acceptance with a human authority.",
-      "status": "Version 0.1.0 private prototype",
-      "accent": "#56718f",
-      "facets": [
-        "Human + AI",
-        "Developer tools",
-        "Architecture",
-        "Learning"
-      ],
-      "technologies": [
-        "Python 3.11+",
-        "JSON",
-        "JSON-compatible YAML 1.2",
-        "JSON Schema contracts",
-        "SHA-256",
-        "Git",
-        "GitHub Actions",
-        "unittest",
-        "DX carriers"
-      ],
-      "proof": [
-        {
-          "label": "Core",
-          "value": "src/prototype_knowledge/core.py"
-        },
-        {
-          "label": "CLI",
-          "value": "src/prototype_knowledge/cli.py"
-        },
-        {
-          "label": "Governance",
-          "value": "src/prototype_knowledge/governance.py"
-        },
-        {
-          "label": "Tests",
-          "value": "tests/"
-        }
-      ],
-      "demo": {
-        "kind": "terminal",
-        "caption": "Bounded context compilation",
-        "lines": [
-          "$ prototype-knowledge validate",
-          "PASS",
-          "$ prototype-knowledge compile --file queries/context.yaml",
-          "selected knowledge: deterministic",
-          "publication authority: human"
-        ]
-      },
-      "limitations": [
-        "The repository is private and its packaging is intentionally incomplete.",
-        "The runtime validator does not enforce every declared JSON Schema or query option.",
-        "The project does not implement autonomous learning, repository mutation, an MCP server or a decision-ledger runtime."
       ],
       "blocks": []
     }

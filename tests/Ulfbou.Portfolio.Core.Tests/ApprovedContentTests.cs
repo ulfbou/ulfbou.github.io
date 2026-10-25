@@ -325,6 +325,51 @@ public sealed class ApprovedContentTests
     }
 
     [Fact]
+    public void Phase_4_publishes_a_five_project_trajectory()
+    {
+        var compiled = new CompiledPortfolioGenerator()
+            .Compile(Load());
+
+        compiled.Projects
+            .Select(project => project.Id)
+            .Should()
+            .Equal(
+                "dx-domain",
+                "dx-cli",
+                "mold-first-bloom",
+                "zentient-results",
+                "collab");
+
+        compiled.Projects.Should().OnlyContain(
+            project =>
+                Uri.TryCreate(
+                    project.RepositoryUrl,
+                    UriKind.Absolute,
+                    out var repositoryUri)
+                && repositoryUri.Scheme == Uri.UriSchemeHttps
+                && repositoryUri.Host == "github.com");
+    }
+
+    [Fact]
+    public void Invalid_repository_url_is_rejected()
+    {
+        var portfolio = Load();
+        var project = portfolio.Projects[0] with
+        {
+            RepositoryUrl = "relative/repository"
+        };
+
+        Failure(
+                () => ContentValidator.Validate(
+                    portfolio with
+                    {
+                        Projects = [project]
+                    }))
+            .Code.Should()
+            .Be("VAL-REPOSITORY-URL");
+    }
+
+    [Fact]
     public void Generated_bytes_are_reproducible()
     {
         var loader = new ApprovedContentLoader();
@@ -364,47 +409,25 @@ public sealed class ApprovedContentTests
     }
 
     [Fact]
-    public void Legacy_and_generated_complete_graphs_are_equivalent()
+    public void Historical_pre_cutover_fixture_remains_test_only_evidence()
     {
-        var options = new JsonSerializerOptions
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        var historical = File.ReadAllText(
+            Path.Combine(
+                AppContext.BaseDirectory,
+                "legacy",
+                "portfolio.json"));
+        var generated = File.ReadAllText(
+            Path.Combine(
+                AppContext.BaseDirectory,
+                "generated",
+                "portfolio.json"));
 
-        var legacy = JsonSerializer.Deserialize<PortfolioData>(
-            File.ReadAllBytes(
-                Path.Combine(
-                    AppContext.BaseDirectory,
-                    "legacy",
-                    "portfolio.json")),
-            options);
-        var generated =
-            JsonSerializer.Deserialize<PortfolioData>(
-                File.ReadAllBytes(
-                    Path.Combine(
-                        AppContext.BaseDirectory,
-                        "generated",
-                        "portfolio.json")),
-                options);
-
-        legacy.Should().NotBeNull();
-        generated.Should().NotBeNull();
-
-        var legacyGraph = JsonSerializer.SerializeToElement(
-            legacy,
-            options);
-        var generatedGraph = JsonSerializer.SerializeToElement(
-            generated,
-            options);
-
-        JsonElement.DeepEquals(
-                generatedGraph,
-                legacyGraph)
-            .Should()
-            .BeTrue(
-                "the independently deserialized complete ordered object graphs must remain semantically equivalent");
-
-        generated!.Projects.Should().HaveCount(7);
+        historical.Should()
+            .Contain("\\"prototype-knowledge\\"");
+        generated.Should()
+            .NotContain("\\"prototype-knowledge\\"");
+        generated.Should()
+            .Contain("\\"repositoryUrl\\"");
     }
 
     private sealed class TemporaryContent : IDisposable

@@ -3,6 +3,7 @@
   "id": "zentient-results",
   "title": "Zentient.Results",
   "shortTitle": "Explicit outcomes for .NET",
+  "repositoryUrl": "https://github.com/ulfbou/Zentient.Results",
   "proposition": "Represent expected success and failure through one structured result model.",
   "story": "Zentient.Results is a reusable .NET library that lets application operations return explicit success values or structured failure information instead of relying solely on thrown exceptions. The model carries statuses, messages, errors, immutable metadata and optional typed values.",
   "contribution": "I designed sealed Result and Result<T> APIs, modeled structured errors and immutable metadata, implemented generic error transformations and developed System.Text.Json conversion for generic and non-generic results.",

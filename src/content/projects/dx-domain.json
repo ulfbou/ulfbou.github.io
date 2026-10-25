@@ -3,6 +3,7 @@
   "id": "dx-domain",
   "title": "Dx.Domain",
   "shortTitle": "Domain rules with teeth",
+  "repositoryUrl": "https://github.com/ulfbou/Dx.Domain",
   "proposition": "Move domain rules and architectural boundaries closer to the compiler.",
   "story": "Dx.Domain is a C# and .NET library for expressing business rules through typed identities, structured results and errors, invariants, immutable facts, causation metadata and semantic annotations. Roslyn analyzers complement the public APIs by detecting prohibited construction, ignored failures, exception-driven control flow and architectural scope violations during builds.",
   "contribution": "I designed cohesive public APIs across four dependency-controlled NuGet packages, implemented scope-aware Roslyn analyzers and MSBuild governance, and established test, documentation, packaging and release-gate workflows.",

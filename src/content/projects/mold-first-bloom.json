@@ -3,6 +3,7 @@
   "id": "mold-first-bloom",
   "title": "MoldFirstBloom",
   "shortTitle": "Deterministic play in the browser",
+  "repositoryUrl": "https://github.com/ulfbou/MoldFirstBloom",
   "proposition": "Keep interactive presentation separate from authoritative game state.",
   "story": "MoldFirstBloom is a mobile-oriented Blazor WebAssembly vertical slice combining an isolated deterministic C# engine with a responsive browser interface. Players preview, rotate and confirm spatial moves while successful actions support reproducible replay, historical inspection and IndexedDB restoration.",
   "contribution": "I implemented the browser-independent engine, integrated Verdant Replay and History, created the touch-first Blazor interface and engineered replay-based IndexedDB restoration with compatibility checks.",
