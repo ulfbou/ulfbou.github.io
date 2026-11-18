@@ -1,0 +1,50 @@
+:root {
+  color-scheme: dark;
+  --aws-color-background: #0d1220;
+  --aws-color-surface: #161d2f;
+  --aws-color-surface-strong: #1e2740;
+  --aws-color-border: #2a3550;
+  --aws-color-text: #e8edf7;
+  --aws-color-muted: #9fb0cc;
+  --aws-color-accent: #5b9dff;
+  --aws-color-highlight: #ffc65c;
+  --aws-font-sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --aws-font-mono: "Cascadia Mono", Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--aws-color-background);
+  color: var(--aws-color-text);
+  font: 1rem/1.6 var(--aws-font-sans);
+}
+
+a {
+  color: var(--aws-color-accent);
+  text-underline-offset: 4px;
+}
+
+a:hover {
+  color: var(--aws-color-highlight);
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--aws-color-accent);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.001ms !important;
+  }
+}
