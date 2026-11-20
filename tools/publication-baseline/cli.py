@@ -21,6 +21,10 @@ REQUIRED_CURRENT_PATHS = (
     "aws/index.html",
     "work/index.html",
     "data/generated/portfolio.json",
+    "articles/index.html",
+    "articles/feed.xml",
+    "data/generated/articles.json",
+    "sitemap.xml",
 )
 DISCOVERY_PATHS = ("robots.txt", "sitemap.xml", "feed.xml", "atom.xml", "rss.xml")
 REFERENCE_ATTRIBUTES = {"a": "href", "img": "src", "link": "href", "script": "src", "source": "src"}
@@ -229,6 +233,52 @@ def inspect(root: Path, source_revision: str | None = None) -> dict[str, object]
         if (item["page"], item["value"]) in asset_reference_keys
     )
     failures.extend(f"prohibited artifact path: {item['path']} ({item['reason']})" for item in privacy)
+    if "data/generated/articles.json" in known_files:
+        try:
+            projection = json.loads((root / "data/generated/articles.json").read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError) as error:
+            failures.append(f"invalid article projection: {error}")
+            projection = {"articles": []}
+        projected = projection.get("articles", [])
+        if not isinstance(projected, list):
+            failures.append("article projection articles must be an array")
+            projected = []
+        if any(not isinstance(item, dict) or item.get("status") != "published" for item in projected):
+            failures.append("article projection contains nonpublished or malformed records")
+        feed = (root / "articles/feed.xml").read_text(encoding="utf-8") if "articles/feed.xml" in known_files else ""
+        sitemap = (root / "sitemap.xml").read_text(encoding="utf-8") if "sitemap.xml" in known_files else ""
+        declared_pages = set()
+        for item in projected:
+            if not isinstance(item, dict):
+                continue
+            route = item.get("canonicalPath", "")
+            output = item.get("outputPath", "")
+            declared_pages.add(output)
+            if not route.startswith("/articles/") or not output.startswith("articles/"):
+                failures.append(f"published article has invalid route or output: {route}")
+                continue
+            if output not in known_files:
+                failures.append(f"published article page missing: {output}")
+                continue
+            article_html = (root / output).read_text(encoding="utf-8")
+            for marker in (
+                '<article>',
+                f'rel="canonical" href="https://ulfbou.github.io{route}"',
+                'application/ld+json',
+            ):
+                if marker not in article_html:
+                    failures.append(f"article page missing invariant: {output}: {marker}")
+            if "_framework/blazor" in article_html.lower():
+                failures.append(f"article body depends on Blazor startup: {output}")
+            if route not in feed:
+                failures.append(f"published article absent from feed: {route}")
+            if route not in sitemap:
+                failures.append(f"published article absent from sitemap: {route}")
+        undeclared = sorted(
+            path for path in known_files
+            if path.startswith("articles/") and path.endswith("/index.html") and path != "articles/index.html" and path not in declared_pages
+        )
+        failures.extend(f"undeclared article page: {path}" for path in undeclared)
     return {
         "schemaVersion": SCHEMA_VERSION,
         "sourceRevision": normalize_revision(source_revision),

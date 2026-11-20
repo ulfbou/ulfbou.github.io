@@ -231,3 +231,6 @@ Use reviewed pull requests and Conventional Commits as required by the active de
 - `docs/validation.md` defines current validation evidence and the platform validation direction.
 
 The accepted product and architecture documents define direction. Repository evidence determines which capabilities are currently implemented.
+## Article publication
+Approved article source is stored under `content/articles/`, independently of source-code layout and public routes. `src/Ulfbou.Articles` validates explicit article and series records and generates retained static output under `src/Ulfbou.Site/wwwroot/articles/`, the article projection under `data/generated/articles.json`, and the platform-owned combined `sitemap.xml`. Only records with `status: published`, final dates, and explicit editorial approval enter public output. The current Bias record is a non-public candidate; retained article output therefore represents the deterministic empty publication state.
+

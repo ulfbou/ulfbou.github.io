@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "1.0",
+  "series": [
+    {
+      "id": "confidently-wrong",
+      "title": "Confidently Wrong",
+      "description": "How systems — and people — become confidently wrong, and what makes them trustworthy again.",
+      "status": "ongoing"
+    }
+  ]
+}

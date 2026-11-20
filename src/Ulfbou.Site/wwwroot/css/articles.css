@@ -1,0 +1,13 @@
+:root { color-scheme: light; font-family: system-ui, sans-serif; line-height: 1.65; }
+body { margin: 0; color: #17212b; background: #f8fafc; }
+header, footer, main { max-width: 72rem; margin: auto; padding: 1rem 1.5rem; }
+header { display: flex; justify-content: space-between; gap: 1rem; align-items: center; }
+nav { display: flex; gap: 1rem; flex-wrap: wrap; }
+a { color: #075985; text-underline-offset: .2em; }
+article { max-width: 48rem; }
+h1, h2, h3 { line-height: 1.2; }
+.series, .article-meta { color: #475569; }
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { left: 1rem; top: 1rem; background: white; padding: .5rem; z-index: 10; }
+:focus-visible { outline: 3px solid #f59e0b; outline-offset: 3px; }
+@media print { header, footer, .skip-link { display: none; } body { background: white; color: black; } a { color: black; } a[href]::after { content: " (" attr(href) ")"; } }

@@ -17,6 +17,7 @@ class BaselineTests(unittest.TestCase):
         artifact = root / "artifact"
         (artifact / "aws").mkdir(parents=True)
         (artifact / "work").mkdir(parents=True)
+        (artifact / "articles").mkdir(parents=True)
         (artifact / "data/generated").mkdir(parents=True)
         (artifact / "css/aws").mkdir(parents=True)
         index = '<!doctype html><html lang="en"><head><title>Root</title><meta name="description" content="Root description"><link rel="canonical" href="https://ulfbou.github.io/"><link rel="stylesheet" href="css/site.css"></head><body></body></html>\n'
@@ -31,6 +32,19 @@ class BaselineTests(unittest.TestCase):
             encoding="utf-8",
         )
         (artifact / "data/generated/portfolio.json").write_text('{}\n', encoding="utf-8")
+        (artifact / "articles/index.html").write_text(
+            '<!doctype html><html lang="en"><head><title>Articles</title><meta name="description" content="Articles"><link rel="canonical" href="https://ulfbou.github.io/articles/"><link rel="stylesheet" href="/css/site.css"></head><body><main><h1>Articles</h1><p>No articles are currently published.</p></main></body></html>\n',
+            encoding="utf-8",
+        )
+        (artifact / "articles/feed.xml").write_text(
+            '<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom"><id>https://ulfbou.github.io/articles/</id><title>Articles</title><updated>1970-01-01T00:00:00Z</updated></feed>\n',
+            encoding="utf-8",
+        )
+        (artifact / "data/generated/articles.json").write_text('{"schemaVersion":"1.0","articles":[]}\n', encoding="utf-8")
+        (artifact / "sitemap.xml").write_text(
+            '<?xml version="1.0" encoding="utf-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://ulfbou.github.io/articles/</loc></url></urlset>\n',
+            encoding="utf-8",
+        )
         (artifact / "css/aws/base.css").write_text("body{}\n", encoding="utf-8")
         if not missing_asset:
             (artifact / "css/site.css").write_text("body{}\n", encoding="utf-8")
@@ -113,7 +127,7 @@ class BaselineTests(unittest.TestCase):
             report = CLI.inspect(artifact)
             self.assertTrue(report["verification"]["passed"], "a missing linked target route is reported but is not an Increment 2 requirement")
             self.assertTrue(report["currentBaseline"]["requiredPaths"]["work/index.html"])
-            self.assertNotIn("articles/index.html", report["currentBaseline"]["requiredPaths"])
+            self.assertTrue(report["currentBaseline"]["requiredPaths"]["articles/index.html"])
             self.assertNotIn("aws/ai/index.html", report["currentBaseline"]["requiredPaths"])
 
     def test_work_route_is_required_and_has_distinct_metadata(self):
@@ -135,6 +149,25 @@ class BaselineTests(unittest.TestCase):
 
             self.assertFalse(report["verification"]["passed"])
             self.assertIn("missing required current path: work/index.html", report["verification"]["failures"])
+
+    def test_missing_article_index_fails(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            artifact = self.artifact(Path(temporary))
+            (artifact / "articles/index.html").unlink()
+            report = CLI.inspect(artifact)
+            self.assertFalse(report["verification"]["passed"])
+            self.assertIn("missing required current path: articles/index.html", report["verification"]["failures"])
+
+    def test_nonpublished_projection_record_fails(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            artifact = self.artifact(Path(temporary))
+            (artifact / "data/generated/articles.json").write_text(
+                '{"schemaVersion":"1.0","articles":[{"status":"candidate"}]}\n',
+                encoding="utf-8",
+            )
+            report = CLI.inspect(artifact)
+            self.assertFalse(report["verification"]["passed"])
+            self.assertIn("article projection contains nonpublished or malformed records", report["verification"]["failures"])
 
     def test_invalid_revision_is_rejected(self):
         with tempfile.TemporaryDirectory() as temporary:
