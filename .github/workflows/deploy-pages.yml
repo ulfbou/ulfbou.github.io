@@ -1,13 +1,7 @@
 name: Deploy portfolio
 
 on:
-  pull_request:
-    branches:
-      - master
   push:
-    branches:
-      - master
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -15,7 +9,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -25,7 +19,7 @@ jobs:
     timeout-minutes: 20
 
     steps:
-      - name: Check out release revision
+      - name: Check out pushed revision
         uses: actions/checkout@v4
 
       - name: Set up Python
@@ -108,7 +102,7 @@ jobs:
 
   deploy:
     name: Deploy Pages artifact
-    if: github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/master'
     needs: build
     runs-on: ubuntu-latest
     timeout-minutes: 10
