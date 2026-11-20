@@ -2,9 +2,6 @@ name: Deploy portfolio
 
 on:
   push:
-    branches:
-      - master
-  workflow_dispatch:
 
 permissions:
   contents: read
@@ -12,25 +9,34 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  deploy:
+  build:
+    name: Build and upload Pages artifact
     runs-on: ubuntu-latest
-
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    timeout-minutes: 20
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Check out pushed revision
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-dotnet@v4
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.13"
+
+      - name: Set up .NET
+        uses: actions/setup-dotnet@v4
         with:
           dotnet-version: 10.0.x
 
-      - run: dotnet restore Ulfbou.Portfolio.slnx
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Restore
+        run: dotnet restore Ulfbou.Portfolio.slnx
 
       - name: Compile approved portfolio projection
         shell: bash
@@ -38,7 +44,10 @@ jobs:
           dotnet run --project src/Ulfbou.Portfolio.Generator/Ulfbou.Portfolio.Generator.csproj -- \
             src/content \
             src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
-          git diff --exit-code -- src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
+
+          git diff --exit-code -- \
+            src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
+
       - name: Generate approved article publication
         shell: bash
         run: |
@@ -47,34 +56,64 @@ jobs:
             src/Ulfbou.Site/wwwroot/articles \
             src/Ulfbou.Site/wwwroot
 
-      - run: dotnet test Ulfbou.Portfolio.slnx -c Release
+      - name: Test
+        run: dotnet test Ulfbou.Portfolio.slnx --no-restore -c Release
 
-      - run: dotnet publish src/Ulfbou.Site/Ulfbou.Site.csproj -c Release -o publish
+      - name: Publish static site
+        run: |
+          rm -rf publish
+          dotnet publish src/Ulfbou.Site/Ulfbou.Site.csproj \
+            --no-restore \
+            -c Release \
+            -o publish
 
       - name: Verify deployment data authority
         shell: bash
         run: |
+          test -f publish/wwwroot/index.html
+          test -f publish/wwwroot/work/index.html
+          test -f publish/wwwroot/articles/index.html
+          test -f publish/wwwroot/articles/bias/index.html
+          test -f publish/wwwroot/articles/feed.xml
           test -f publish/wwwroot/data/generated/portfolio.json
+          test -f publish/wwwroot/data/generated/articles.json
+          test -f publish/wwwroot/sitemap.xml
           test ! -e publish/wwwroot/data/portfolio.json
 
-      - name: Construct current Pages artifact
+      - name: Construct Pages artifact
         shell: bash
         run: |
           cp publish/wwwroot/index.html publish/wwwroot/404.html
           touch publish/wwwroot/.nojekyll
 
-      - name: Verify current publication artifact
+      - name: Verify publication artifact
         shell: bash
         run: |
           python tools/publication-baseline/cli.py publish/wwwroot \
             --source-revision "$GITHUB_SHA" \
             --output "$RUNNER_TEMP/publication-baseline.json"
 
-      - uses: actions/configure-pages@v5
-
-      - uses: actions/upload-pages-artifact@v3
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
         with:
+          name: github-pages
           path: publish/wwwroot
+          retention-days: 1
 
-      - id: deployment
+  deploy:
+    name: Deploy Pages artifact
+    if: github.ref == 'refs/heads/master'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
+        with:
+          artifact_name: github-pages
