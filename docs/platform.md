@@ -163,10 +163,11 @@ When documents overlap, the most specific semantic authority controls meaning an
 
 The accepted direction is the multi-area allocation and contract stated above: `/` as the professional landing page and launch pad, `/work/` as the portfolio, `/articles/` as the technical-article area, and `/aws/ai/` as the AWS Cloud and AI learning area.
 
-### Currently implemented behavior at the start of Increment 1
+### Verified current behavior
 
-The repository currently implements a .NET 10 Blazor WebAssembly portfolio at `/`, with approved portfolio source compiled to a generated JSON projection. It also contains a static AWS area at `/aws/` with a link to `/aws/ai/` and shared AWS learning assets. Existing repository documentation predominantly describes the one-page portfolio and its current publication pipeline.
+The repository implements a .NET 10 Blazor WebAssembly professional landing page at `/` and the complete portfolio at `/work/`. Root and work have distinct host documents, titles, descriptions, and canonical URLs. `Pages/Home.razor` presents the approved headline, aspirational supporting line, Home and Work navigation, working principles, professional profile, and GitHub destination. `Pages/Work.razor` preserves the data-driven portfolio and its disclosure behavior.
 
-The repository does not yet demonstrate the complete accepted route allocation, shared navigation, article area, or platform-wide publication implementation described in this document. In particular, this document does not claim that `/work/`, `/articles/`, or every `/aws/ai/` experience is currently deployed or that the root route has already become the final professional launch page.
+Approved portfolio source under `src/content/` compiles to `src/Ulfbou.Site/wwwroot/data/generated/portfolio.json`, requested as `data/generated/portfolio.json`. The repository also contains `/aws/` static assets and a link toward `/aws/ai/`. The publication-baseline verifier requires the root and work hosts, AWS index, generated data, and `404.html`.
 
-Increment 1 documentation establishes the governing product direction before later batches transfer, reconcile, or implement area-specific behavior. Existing information remains in place until a permitted, complete transfer occurs.
+The repository does not establish article output, a complete `/aws/ai/` index or experience, generalized publication units, machine-enforced multi-unit composition, successful workflow execution, deployment, or live state. Shared navigation currently exposes only Home and Work.
+

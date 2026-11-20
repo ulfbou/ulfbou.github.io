@@ -6,7 +6,7 @@ Reusable story blocks extend portfolio project stories and portfolio content. Th
 
 Story-block generation produces part of the bounded portfolio publication input. It does not allocate the final public route or grant ownership of an emitted output path. Final route and output-path allocation are governed by `docs/architecture/static-composition.md` and `docs/contracts/routes-and-output-ownership.md`.
 
-The accepted portfolio route is `/work/`, while repository evidence currently shows the portfolio application at `/`. The story-block contract does not claim that the route transition has occurred.
+The accepted portfolio route is `/work/`, and the supplied repository implements it through `Pages/Work.razor` and `wwwroot/work/index.html`. Story blocks remain portfolio-owned content and do not allocate routes beyond that boundary.
 
 Approved portfolio source remains the semantic authority for story-block meaning. Evidence cannot independently create or approve portfolio claims, and generated portfolio data does not become semantic authority merely because it is validated, retained, rendered, or consumed at runtime.
 

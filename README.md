@@ -98,13 +98,15 @@ Publish the current static host:
 dotnet publish src/Ulfbou.Site/Ulfbou.Site.csproj --no-restore -c Release -o publish
 ```
 
-The current deployment-shape checks require:
+The current workflows first apply these direct deployment-shape checks:
 
 ```bash
 test -f publish/wwwroot/index.html
 test -f publish/wwwroot/data/generated/portfolio.json
 test ! -e publish/wwwroot/data/portfolio.json
 ```
+
+They then run `tools/publication-baseline/cli.py`, which additionally requires `work/index.html`, `aws/index.html`, and `404.html`; records the complete produced-artifact inventory and SHA-256; inspects HTML metadata and local references; applies bounded privacy-path checks; and classifies effective `404.html` behavior. Repository files establish configured checks, not successful workflow execution, deployment, or live-site behavior.
 
 For local development, run the current Blazor WebAssembly project:
 

@@ -57,7 +57,7 @@ The supplied repository establishes automated checks for:
 - retained generated portfolio projection synchronization;
 - semantic equivalence between the controlling legacy projection and retained generated projection;
 - story-block payload and renderer coverage;
-- preservation of portfolio filtering and printable detail structure;
+- print-style rules that expose filtered and collapsed project detail;
 - static-site publication;
 - current root `index.html`;
 - current generated portfolio runtime data at `publish/wwwroot/data/generated/portfolio.json`;
@@ -380,7 +380,9 @@ Semantic equivalence governs public meaning. Byte identity is additionally requi
 
 ### Story-block validation
 
-Implemented automated story-block validation covers:
+Implemented automated story-block validation covers the content and renderer contracts below. One source-inspection test, `Home_preserves_filtering_while_retaining_printable_details`, still reads `Pages/Home.razor` although the portfolio moved to `Pages/Work.razor`. The supplied source therefore does not establish that this test currently proves portfolio filtering or disclosure structure.
+
+The aligned coverage includes:
 
 - stable non-empty IDs;
 - unique non-negative order;
@@ -400,7 +402,7 @@ Implemented automated story-block validation covers:
 - missing quote-attribution rejection;
 - unknown-type rejection;
 - malformed-payload rejection;
-- preservation of filtering and printable detail structure;
+- print stylesheet structure for exposing filtered and collapsed details;
 - loading story-block styles after base and accessibility styles.
 
 Published unknown or unsupported block types fail. A development fallback cannot authorize publication.
@@ -516,7 +518,7 @@ test -f publish/wwwroot/data/generated/portfolio.json
 test ! -e publish/wwwroot/data/portfolio.json
 ```
 
-These checks establish the current portfolio-oriented output shape only. They do not validate `/work/`, publication-unit ownership, clean composition, complete artifact inventory, or immutable-artifact deployment.
+These direct shell checks establish part of the output shape. The configured publication-baseline verifier additionally requires `work/index.html`, computes the complete produced-artifact inventory and SHA-256, inspects metadata and local references, applies bounded privacy-path rules, and classifies `404.html`. Together they validate the intended root/work artifact shape when successfully executed, but repository files alone do not prove execution, generalized ownership, clean multi-unit composition, or identity preservation across deployment.
 
 ## 8. Article validation
 

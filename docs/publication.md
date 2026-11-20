@@ -209,8 +209,7 @@ If infrastructure cannot render authorized meaning without alteration, publicati
 
 ## Accepted contract and current implementation
 
-This document is the accepted platform-wide publication contract for Increment 1.
+This document is the accepted platform-wide publication contract.
 
-At the start of Increment 1, the repository already implements a narrower portfolio publication model: approved source under `src/content/`, publication and visibility metadata, validation, deterministic compilation, a retained generated portfolio projection, and deployment checks. Existing documentation also defines portfolio-specific evidence and semantic non-regression rules.
+The repository currently implements approved portfolio source, publication and visibility metadata, validation, deterministic compilation, a retained generated projection, a professional landing page at `/`, the portfolio at `/work/`, distinct root/work host metadata, and bounded publication-baseline inspection. These mechanisms do not yet constitute complete platform implementation for `/articles/` or `/aws/ai/`, generalized publication units, clean multi-unit composition, complete emitted-path ownership, or post-upload immutable-artifact verification.
 
-Those mechanisms are evidence of current portfolio behavior only. They do not yet constitute a complete platform-wide implementation for `/`, `/work/`, `/articles/`, and `/aws/ai/`. Later increments must reconcile existing portfolio contracts with this platform contract without deleting or compressing their operational meaning in advance.

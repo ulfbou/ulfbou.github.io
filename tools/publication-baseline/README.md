@@ -42,15 +42,11 @@ For each observation record:
 
 Perform these bounded observations:
 
-1. Load `/` directly. Record title, visible initial state, portfolio-data loading outcome, local asset loading, and ordinary navigation available before interaction.
-2. Operate every current keyboard-reachable control on `/`. Record tab order, visible focus, facet selection, project disclosure, retry behavior when available, and whether focus becomes lost or obscured.
-3. Review `/` at representative narrow, medium, and wide viewports. Use 320 CSS pixels, 768 CSS pixels, and 1280 CSS pixels unless the environment cannot provide them; record any substitution.
-4. Review `/` at 200% and 400% browser zoom. Record reflow, horizontal scrolling, clipped content, and availability of controls and qualifications.
-5. Enable reduced motion at the operating-system or browser-emulation level, reload `/`, and record whether movement and transitions respect the preference.
-6. Disable JavaScript and load `/` directly. Record exactly what orientation, navigation, and approved portfolio meaning remain available. Do not convert absence of behavior into an inferred pass.
-7. Load `/aws/` directly. Record title, language, layout, keyboard focus, asset loading, link destinations, and the observed result of following `/aws/ai/` without claiming that target route is required by Increment 2.
-8. Request one unknown root path and one unknown path beneath `/aws/`. Record the actual status, final URL, rendered content, address-bar behavior, and whether the result is the root application, an HTML refresh, a host fallback, or a host 404.
-9. Compare the observed fallback with the automated report's `effective404` classification. Record any host-dependent difference without changing the artifact report.
+1. Load `/` directly and record landing-page title, initial state, assets, Home/Work navigation, GitHub link, focus, responsive behavior, zoom, reduced motion, and no-JavaScript orientation.
+2. Load `/work/` directly and record portfolio title, generated-data loading, framework and stylesheet loading, navigation, facet controls, project disclosure, retry behavior, focus, responsive behavior, zoom, reduced motion, print behavior, and the no-script orientation. Do not infer access to complete portfolio detail without JavaScript.
+3. Load `/aws/` directly and record title, language, layout, focus, assets, links, and the observed result of `/aws/ai/` without treating that target as a required current path.
+4. Request one unknown root path and one unknown `/aws/` path. Record status, final URL, content, address-bar behavior, and fallback classification.
+5. Compare observed fallback behavior with the automated report's `effective404` classification without changing the artifact report.
 
 A procedure is not a result. Do not update verified-current documentation until the automated report and these observations identify the same artifact and provide the evidence needed for the specific correction.
 

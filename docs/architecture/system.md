@@ -204,7 +204,7 @@ The repository contains GitHub Actions configuration for Pages deployment. That 
 - **Semantic authority:** `docs/product/landing-page.md` and approved landing-page source.
 - **Producer responsibility:** create a complete bounded landing-page publication unit without redefining portfolio, article, or learning meaning.
 - **Accepted allocation:** `/`, represented by `/index.html`.
-- **Implementation status:** target behavior. The supplied repository does not contain an implemented professional landing-page producer or approved landing-page source distinct from the current portfolio.
+- **Implementation status:** implemented inside the current `Ulfbou.Site` host through `Pages/Home.razor` and the root host document. It is not yet an independent route-neutral publication unit.
 
 Landing-page summaries of other areas must preserve their qualifications, limitations, maturity, and authority.
 
@@ -213,7 +213,7 @@ Landing-page summaries of other areas must preserve their qualifications, limita
 - **Semantic authority:** approved portfolio source under `src/content/` and the portfolio product documents.
 - **Producer responsibility:** validate and compile approved portfolio meaning into bounded portfolio output while preserving interactions, evidence boundaries, accessibility, compatibility, and failure behavior.
 - **Accepted allocation:** `/work/`, represented by `/work/index.html` and admitted descendants.
-- **Implementation status:** the portfolio producer and host currently emit the portfolio at `/`; allocation to `/work/` remains target behavior.
+- **Implementation status:** implemented inside the current `Ulfbou.Site` host through `Pages/Work.razor` and `wwwroot/work/index.html`. It is not yet an independent route-neutral publication unit.
 
 Portfolio output is one publication input into the wider platform. The portfolio producer does not own the landing page, articles, learning, shared platform output, or platform route allocation.
 
@@ -241,7 +241,8 @@ The architecture does not require one learning framework, a server-side runtime,
 
 Its current `wwwroot` contains:
 
-- the Blazor host `index.html`;
+- the root Blazor host `index.html` for the professional landing page;
+- the direct-entry portfolio host `work/index.html`;
 - a source `404.html`;
 - `.nojekyll`;
 - portfolio CSS;
@@ -249,7 +250,7 @@ Its current `wwwroot` contains:
 - a static `/aws/` index;
 - shared AWS CSS and JavaScript assets.
 
-The current `Home.razor` owns the root route through `@page "/"` and renders the portfolio. `PortfolioService` requests `data/generated/portfolio.json` relative to the application base address. UI state consists of the selected facet, expanded project, loading state, loaded data, and load error. Selection and expansion change disclosure, not source truth.
+The current `Home.razor` owns `@page "/"` and renders the professional landing page. `Work.razor` owns `@page "/work/"` and renders the portfolio. `PortfolioService` requests `data/generated/portfolio.json` relative to the application base address. UI state consists of the selected facet, expanded project, loading state, loaded data, and load error. Selection and expansion change disclosure, not source truth.
 
 The current portfolio supports loading, failure, empty, filtering, in-place expansion, story-block presentation, compatibility presentation, responsive layout, visible focus, reduced motion, and print exposure of filtered or collapsed project details.
 
@@ -422,7 +423,9 @@ Complete product accessibility and privacy expectations remain in `docs/platform
 The repository currently implements:
 
 - one .NET 10 Blazor WebAssembly host project;
-- one portfolio root route at `/`;
+- a professional landing-page root route at `/`;
+- a complete portfolio route at `/work/`;
+- distinct root and work host documents, metadata, and canonical URLs;
 - approved portfolio source under `src/content/`;
 - deterministic source validation and compilation;
 - one retained generated portfolio projection;
@@ -438,7 +441,7 @@ Current configuration does not prove live public-site state or successful workfl
 
 ### Verified transitional behavior
 
-The portfolio currently occupies `/`, while accepted direction allocates `/` to the professional landing page and `/work/` to the portfolio.
+The professional landing page currently occupies `/`, and the complete portfolio currently occupies `/work/`, matching the accepted allocation.
 
 The repository contains a static `/aws/` index linking to `/aws/ai/`, but does not establish `src/Ulfbou.Site/wwwroot/aws/ai/index.html` or a complete admitted learning experience.
 
@@ -470,8 +473,7 @@ This is accepted architecture, not a claim that the corresponding composer, publ
 
 Repository evidence does not yet establish:
 
-- a distinct professional landing-page producer and approved source;
-- portfolio output allocated to `/work/`;
+- route-neutral independent publication units for the implemented landing page and portfolio;
 - an article producer, article index, approved article, or article route;
 - a complete governed `/aws/ai/` index and admitted learning experience;
 - complete shared identity and cross-area navigation;
@@ -483,10 +485,10 @@ Repository evidence does not yet establish:
 - a deterministic final-site inventory;
 - a stable final-artifact digest or equivalent identity;
 - verification that deployment selects the exact artifact that passed platform validation;
-- executed compatibility handling for the portfolio’s current root behavior;
+- an explicit compatibility artifact or accepted no-redirect decision for historical expectations that the portfolio occupied `/`;
 - verified live route and deployment behavior.
 
-Increment 1 changes documentation only and does not close these implementation gaps.
+The implemented root/work allocation closes the earlier route-transition gap. It does not close the remaining composition, article, learning, compatibility, artifact-integrity, or live-verification gaps.
 
 ## Need-led architecture
 
