@@ -104,7 +104,7 @@ Current validation is partial for the wider platform. The repository has a portf
 
 ### Current and target routes
 
-The verified current application renders the portfolio at `/` and requests `data/generated/portfolio.json`. The repository contains a static `/aws/` index linking toward `/aws/ai/`.
+The current repository implementation maps the professional landing page to `/`. It maps the complete portfolio to `/work/`, where the portfolio implementation requests `data/generated/portfolio.json`. The repository also contains a static `/aws/` index linking toward `/aws/ai/`. Successful build, publication, direct loading, and hosted behavior require execution evidence for the exact candidate and artifact.
 
 The accepted target allocates:
 
@@ -113,7 +113,7 @@ The accepted target allocates:
 - `/articles/` to technical articles;
 - `/aws/ai/` to AWS Cloud and AI learning.
 
-Repository evidence does not establish `/work/index.html`, `/articles/index.html`, or `src/Ulfbou.Site/wwwroot/aws/ai/index.html`. Target-route checks remain **Required target** until implementation evidence exists.
+Repository evidence establishes `/work/index.html` as current output. It does not establish `/articles/index.html` or `src/Ulfbou.Site/wwwroot/aws/ai/index.html`; those later target-route checks remain **Required target** until implementation evidence exists.
 
 ## Validation evidence model
 
@@ -289,11 +289,11 @@ The accepted landing page at `/` requires validation of:
 - responsive and touch behavior;
 - exclusion of private or candidate material.
 
-These checks are **Required target**. The current `/` hosts the portfolio and must continue to receive current portfolio validation until the accepted route transition is implemented.
+These checks apply to the landing page at `/`. Repository evidence establishes the landing-page implementation and its route, metadata, no-JavaScript orientation, and navigation structure. Passing runtime, accessibility, responsive, and hosted results require execution or manual evidence for the exact candidate and artifact.
 
 ## 7. Portfolio validation
 
-The accepted portfolio allocation is `/work/`. Current automated and manual validation still targets the portfolio application at `/`. The transition must preserve every applicable portfolio requirement while adding route, asset, compatibility, direct-loading, and no-JavaScript validation for `/work/`.
+The implemented portfolio allocation is `/work/`. Automated and manual validation must target the portfolio application at `/work/`, preserve every applicable portfolio requirement, and cover route, asset, compatibility, direct-loading, and no-JavaScript behavior. The root landing page is validated separately.
 
 ### Canonical baseline
 
@@ -835,3 +835,14 @@ Platform validation does not:
 - convert evidence, runtime data, generated output, or metrics into semantic authority;
 - authorize publication merely because generation is deterministic;
 - authorize deployment of a failing, unknown, partial, stale, or mismatched artifact.
+
+## Implemented root and work allocation
+
+The current site requires two distinct public entry points in the produced artifact:
+
+- `/index.html` is the professional landing page;
+- `/work/index.html` is the complete portfolio host.
+
+Validation must confirm distinct titles, descriptions, and canonical URLs for these entry points. The root host must retain useful no-JavaScript orientation and a direct link to `/work/`. The work host must use root-relative framework and stylesheet references so direct loading at `/work/` resolves the same application and generated portfolio data as in-app navigation.
+
+The publication-baseline verifier treats `work/index.html` as a required current path. Its focused tests cover presence, absence, and distinct metadata for the root and work hosts. Artifact-level verification does not replace browser checks for direct loading, keyboard interaction, focus, responsive layout, zoom, reduced motion, or printing.

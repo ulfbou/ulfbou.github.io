@@ -164,9 +164,11 @@ Missing ownership, ambiguous ownership, unsafe paths, collisions, unauthorized p
 
 ### Verified current behavior
 
-The current repository publishes one Blazor WebAssembly `wwwroot` output tree. The root `index.html` hosts the portfolio application. The workflow creates `404.html` by copying the published root index. Static AWS files are included under `/aws/`. Current checks verify the root index and generated portfolio data but do not prove emitted-path ownership across independent units.
+The repository publishes one Blazor WebAssembly `wwwroot` output tree with two explicit public entry points. `/index.html` hosts the professional landing page, while `/work/index.html` hosts direct entry to the complete portfolio route. The Blazor router assigns `/` to the landing component and `/work/` to the preserved portfolio component. Both entry points use the GitHub Pages user-site root as their base path and have distinct titles, descriptions, and canonical URLs.
 
-Repository evidence does not establish `/work/index.html`, `/articles/index.html`, or `/aws/ai/index.html` as current emitted files. Documentation changes alone do not change routes.
+The workflow creates `404.html` by copying the published root index for unknown routes. `/work/` does not depend on that fallback because it has a concrete host document. Static AWS files remain under `/aws/` and are unchanged. The publication-baseline verifier requires the root index, work index, AWS index, generated portfolio data, and `404.html`; this remains bounded artifact validation rather than generalized emitted-path ownership across independent publication units.
+
+Repository evidence does not establish `/articles/index.html` or `/aws/ai/index.html` as current emitted files. Documentation changes alone do not create those routes.
 
 ### Accepted target allocations
 
@@ -174,7 +176,7 @@ The target assigns `/` to the landing page, `/work/` to the portfolio, `/article
 
 ### Transition obligations
 
-Moving the portfolio from `/` to `/work/` must preserve approved portfolio meaning and address compatibility for prior root expectations without leaving duplicate canonical identities. Existing `/aws/` behavior must be evaluated explicitly when `/aws/ai/` becomes the governed learning root. Article routes must not be claimed until admitted article output exists. Later implementation must validate direct navigation, nested assets, redirects or compatibility behavior, and final artifact ownership.
+The implemented allocation preserves approved portfolio meaning through the unchanged source and generated-data pipeline. Root has landing-page canonical identity, while `/work/` has portfolio canonical identity; direct entry is owned by `work/index.html`. Home and Work navigation explains the current allocation but does not provide compatibility for historical root fragments, bookmarks, search results, or external links that expected the portfolio at `/`. No redirect or compatibility artifact for those historical expectations is established by the current repository implementation; any accepted compatibility policy remains a separate route-policy decision and validation obligation. Existing `/aws/` behavior must be evaluated explicitly when `/aws/ai/` becomes the governed learning root. Article routes must not be claimed until admitted article output exists. Later implementation must validate direct navigation, nested assets, redirects or compatibility behavior, and final artifact ownership.
 
 ## What this contract does not govern
 

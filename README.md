@@ -4,6 +4,14 @@
 
 The portfolio is one public area of the platform. It remains a dynamic, data-driven editorial experience for selected systems, implementation artifacts, reflections, limitations, and bounded evidence through progressive disclosure. It is not a conventional CV or repository profiler, and it does not define the complete platform.
 
+## Public routes
+
+- `/` presents the professional landing page and platform orientation.
+- `/work/` presents the complete approved portfolio.
+- `/aws/` retains its existing static behavior.
+
+The root and work routes have distinct host documents, metadata, descriptions, and canonical URLs. The portfolio source under `src/content/` remains authoritative; `wwwroot/data/generated/portfolio.json` remains replaceable generated output.
+
 ## Implementation status
 
 ### Verified current implementation
@@ -11,7 +19,8 @@ The portfolio is one public area of the platform. It remains a dynamic, data-dri
 The repository currently contains:
 
 - a .NET 10 standalone Blazor WebAssembly portfolio application in `src/Ulfbou.Site`;
-- the current portfolio page at `/`;
+- the professional landing page at `/`;
+- the complete portfolio page at `/work/`;
 - approved portfolio source under `src/content/`;
 - deterministic portfolio compilation through `src/Ulfbou.Portfolio.Generator`;
 - the retained generated portfolio projection at `src/Ulfbou.Site/wwwroot/data/generated/portfolio.json`;
@@ -29,8 +38,8 @@ The accepted public allocations are:
 
 | Route | Area | Public purpose | Implementation status in the supplied repository |
 | --- | --- | --- | --- |
-| `/` | Professional landing page | Concise professional orientation and launch point for the platform. | Target allocation. The current implementation serves the portfolio at this route. |
-| `/work/` | Portfolio | Complete curated portfolio, including project stories, contributions, evidence, maturity, and limitations. | Target allocation. The supplied repository does not establish `/work/index.html`. |
+| `/` | Professional landing page | Concise professional orientation and launch point for the platform. | Implemented by the root host and `Pages/Home.razor`. |
+| `/work/` | Portfolio | Complete curated portfolio, including project stories, contributions, evidence, maturity, and limitations. | Implemented by `work/index.html` and `Pages/Work.razor`. |
 | `/articles/` | Technical articles | Durable technical explanations, analyses, reasoning, and reflections. | Target allocation. The supplied repository does not establish an article index or article output. |
 | `/aws/ai/` | AWS Cloud and AI learning | Learner-centred static explanations and interactive learning experiences. | Target allocation. The repository contains a static `/aws/` index linking to `/aws/ai/`, but does not establish `src/Ulfbou.Site/wwwroot/aws/ai/index.html`. |
 
