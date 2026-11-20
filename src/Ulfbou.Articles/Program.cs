@@ -7,6 +7,8 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 
+using Ulfbou.Articles;
+
 return ArticlePublisher.Run(args);
 
 public static class ArticlePublisher
@@ -356,40 +358,56 @@ public static class ArticlePublisher
             ? string.Empty
             : $"<meta property=\"og:type\" content=\"article\"><meta property=\"og:image\" content=\"https://ulfbou.github.io{E(image)}\"><meta name=\"twitter:card\" content=\"summary_large_image\">";
         var structured = jsonLd is null ? string.Empty : $"<script type=\"application/ld+json\">{jsonLd}</script>";
-        return $"<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>{E(title)}</title><meta name=\"description\" content=\"{E(description)}\"><link rel=\"canonical\" href=\"https://ulfbou.github.io{E(canonical)}\"><meta property=\"og:title\" content=\"{E(title)}\"><meta property=\"og:description\" content=\"{E(description)}\"><meta property=\"og:url\" content=\"https://ulfbou.github.io{E(canonical)}\">{social}<link rel=\"stylesheet\" href=\"/css/articles.css\">{structured}</head><body><a class=\"skip-link\" href=\"#main-content\">Skip to content</a><header><a href=\"/\">Ulf Bourelius</a><nav aria-label=\"Primary navigation\"><a href=\"/\">Home</a><a href=\"/work/\">Work</a><a href=\"/articles/\">Articles</a></nav></header>{body}<footer><a href=\"/\">Ulf Bourelius</a></footer></body></html>\n";
+        return $"<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>{E(title)}</title><meta name=\"description\" content=\"{E(description)}\"><link rel=\"canonical\" href=\"https://ulfbou.github.io{E(canonical)}\"><meta property=\"og:title\" content=\"{E(title)}\"><meta property=\"og:description\" content=\"{E(description)}\"><meta property=\"og:url\" content=\"https://ulfbou.github.io{E(canonical)}\">{social}<link rel=\"stylesheet\" href=\"/css/app.css\"><link rel=\"stylesheet\" href=\"/css/accessibility.css\"><link rel=\"stylesheet\" href=\"/css/articles.css\">{structured}</head><body><a class=\"skip-link\" href=\"#main-content\">Skip to content</a><header class=\"masthead\"><a class=\"identity\" href=\"/\"><span class=\"monogram\" aria-hidden=\"true\">UB</span><span>Ulf Bourelius<small>Cloud · AI · software systems</small></span></a><nav aria-label=\"Primary navigation\"><a href=\"/\">Home</a><a href=\"/work/\">Work</a><a href=\"/articles/\" aria-current=\"page\">Articles</a></nav></header>{body}<footer><span>Ulf Bourelius · Stockholm</span><span>Durable technical writing.</span><a href=\"#main-content\">Back to top ↑</a></footer></body></html>\n";
     }
 
     private static string IndexPage(Article[] articles)
     {
         var list = articles.Length == 0
-            ? "<p>No articles are currently published.</p>"
-            : "<ol>" + string.Join(string.Empty, articles.Select(article => $"<li><article><h2><a href=\"{E(article.CanonicalPath)}\">{E(article.Title)}</a></h2><p>{E(article.Deck)}</p><p><time datetime=\"{article.PublishedDate}\">{article.PublishedDate}</time> · {article.ReadingMinutes} min read</p></article></li>")) + "</ol>";
+            ? "<p class=\"empty-state\">No articles are currently published.</p>"
+            : "<div class=\"article-stack\">" + string.Join(string.Empty, articles.Select((article, index) => $"<article class=\"article-summary\"><span class=\"article-index\">{index + 1:00}</span><div class=\"article-summary-copy\"><p class=\"overline\">{E(article.SeriesId.Replace('-', ' '))} · Part {article.SeriesPart}</p><h2><a href=\"{E(article.CanonicalPath)}\">{E(article.Title)}</a></h2><p>{E(article.Deck)}</p></div><p class=\"article-summary-meta\"><time datetime=\"{article.PublishedDate}\">{article.PublishedDate}</time><span>{article.ReadingMinutes} min read</span></p><a class=\"article-explore\" href=\"{E(article.CanonicalPath)}\" aria-label=\"Read {E(article.Title)}\">Read</a></article>")) + "</div>";
         return Layout(
             "Articles · Ulf Bourelius",
             "Durable technical writing by Ulf Bourelius.",
             "/articles/",
-            "<main id=\"main-content\"><h1>Articles</h1><p>Technical explanations, architecture analyses, and reflections.</p>" + list + "</main>");
+            "<main id=\"main-content\"><section class=\"article-hero\" aria-labelledby=\"articles-title\"><p class=\"overline\">Technical articles</p><h1 id=\"articles-title\">Articles</h1><p class=\"intro\">Technical explanations, architecture analyses, and reflections.</p></section><section class=\"articles-field\" aria-label=\"Published articles\">" + list + "</section></main>");
     }
 
     private static string ArticlePage(Article article, Series series, string markdown)
     {
-        var data = JsonSerializer.Serialize(new
-        {
-            @context = "https://schema.org",
-            @type = "Article",
-            headline = article.Title,
-            description = article.Description,
-            author = new { @type = "Person", name = article.Author },
-            datePublished = article.PublishedDate,
-            dateModified = article.ModifiedDate,
-            mainEntityOfPage = $"https://ulfbou.github.io{article.CanonicalPath}",
-            image = $"https://ulfbou.github.io{article.SocialImage}"
-        }, new JsonSerializerOptions { Encoder = JavaScriptEncoder.Default });
-        var body = $"<main id=\"main-content\"><article><p><a href=\"/articles/\">← All articles</a></p><p class=\"series\">{E(series.Title)} · Part {article.SeriesPart}</p>{Markdown(markdown)}<p class=\"article-meta\">By {E(article.Author)} · <time datetime=\"{article.PublishedDate}\">{article.PublishedDate}</time> · {article.ReadingMinutes} min read</p></article></main>";
+        var canonicalUrl = $"https://ulfbou.github.io{article.CanonicalPath}";
+        var socialImageUrl = $"https://ulfbou.github.io{article.SocialImage}";
+
+        var data = JsonSerializer.Serialize(
+            new Dictionary<string, object?>
+            {
+                ["@context"] = "https://schema.org",
+                ["@type"] = "Article",
+                ["headline"] = article.Title,
+                ["description"] = article.Description,
+                ["author"] = new Dictionary<string, object?>
+                {
+                    ["@type"] = "Person",
+                    ["name"] = article.Author
+                },
+                ["datePublished"] = article.PublishedDate,
+                ["dateModified"] = article.ModifiedDate,
+                ["mainEntityOfPage"] = canonicalUrl,
+                ["image"] = socialImageUrl
+            },
+            new JsonSerializerOptions
+            {
+                Encoder = JavaScriptEncoder.Default
+            });
+        var updated = article.ModifiedDate == article.PublishedDate
+            ? string.Empty
+            : $"<span>Updated <time datetime=\"{article.ModifiedDate}\">{article.ModifiedDate}</time></span>";
+        var body = $"<main id=\"main-content\" class=\"article-page\"><article><header class=\"article-header\"><a class=\"back-link\" href=\"/articles/\">← All articles</a><p class=\"overline\">{E(series.Title)} · Part {article.SeriesPart}</p><h1>{E(article.Title)}</h1><p class=\"article-deck\">{E(article.Deck)}</p><p class=\"article-meta\"><span>By {E(article.Author)}</span><span>Published <time datetime=\"{article.PublishedDate}\">{article.PublishedDate}</time></span>{updated}<span>{article.ReadingMinutes} min read</span></p></header><div class=\"article-body\">{Markdown(markdown, suppressTitle: true)}</div></article></main>";
+
         return Layout(article.Title, article.Description, article.CanonicalPath, body, article.SocialImage, data);
     }
 
-    private static string Markdown(string markdown)
+    private static string Markdown(string markdown, bool suppressTitle = false)
     {
         if (markdown.Contains('<')) throw new InvalidDataException("ARTICLE014: raw HTML is not allowed");
         var result = new StringBuilder();
@@ -405,9 +423,17 @@ public static class ArticlePublisher
             }
             if (list) { result.Append("</ul>"); list = false; }
             if (line.Length == 0) continue;
-            if (line.StartsWith("### ")) result.Append("<h3>").Append(Inline(line[4..])).Append("</h3>");
+            if (line.StartsWith("### "))
+            {
+                var heading = Inline(line[4..]);
+                var css = string.Equals(line[4..], "Sources", StringComparison.OrdinalIgnoreCase) ? " class=\"sources-heading\"" : string.Empty;
+                result.Append("<h3").Append(css).Append(">").Append(heading).Append("</h3>");
+            }
             else if (line.StartsWith("## ")) result.Append("<h2>").Append(Inline(line[3..])).Append("</h2>");
-            else if (line.StartsWith("# ")) result.Append("<h1>").Append(Inline(line[2..])).Append("</h1>");
+            else if (line.StartsWith("# "))
+            {
+                if (!suppressTitle) result.Append("<h1>").Append(Inline(line[2..])).Append("</h1>");
+            }
             else result.Append("<p>").Append(Inline(line)).Append("</p>");
         }
         if (list) result.Append("</ul>");
@@ -438,42 +464,3 @@ public static class ArticlePublisher
 
     private sealed record OwnedOutput(string RelativePath, bool Directory);
 }
-
-public sealed record ArticleRegistry(string SchemaVersion, Article[] Articles);
-public sealed record SeriesRegistry(string SchemaVersion, Series[] Series);
-public sealed record Series(string Id, string Title, string Description, string Status);
-public sealed record Approval(bool Approved, string? ApprovedBy, string? ApprovedDate);
-public sealed record Article(
-    string Id,
-    string Slug,
-    string Status,
-    string Title,
-    string Deck,
-    string Description,
-    string Author,
-    string Language,
-    string? PublishedDate,
-    string? ModifiedDate,
-    int ReadingMinutes,
-    string BodyPath,
-    string SeriesId,
-    int SeriesPart,
-    string SocialImage,
-    string CanonicalPath,
-    Approval EditorialApproval);
-public sealed record PublicationProjection(string SchemaVersion, PublishedArticle[] Articles);
-public sealed record PublishedArticle(
-    string SourceId,
-    string SourcePath,
-    string BodySourcePath,
-    string Status,
-    string Slug,
-    string CanonicalPath,
-    string OutputPath,
-    string Title,
-    string Description,
-    string PublishedDate,
-    string ModifiedDate,
-    string SeriesId,
-    int SeriesPart,
-    string ContentSha256);

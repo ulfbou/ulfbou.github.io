@@ -64,6 +64,60 @@ public sealed class ArticlePublicationTests
     }
 
     [Fact]
+    public void PublishedArticleContainsRequiredSeoAndSocialMetadata()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteArticle("published", approved: true);
+
+        fixture.Generate();
+
+        var html = fixture.Read("articles/bias/index.html");
+
+        Assert.Contains(
+            "<link rel=\"canonical\" href=\"https://ulfbou.github.io/articles/bias/\">",
+            html);
+        Assert.Contains(
+            "<meta name=\"description\"",
+            html);
+        Assert.Contains(
+            "<meta property=\"og:type\" content=\"article\">",
+            html);
+        Assert.Contains(
+            "<meta property=\"og:title\"",
+            html);
+        Assert.Contains(
+            "<meta property=\"og:description\"",
+            html);
+        Assert.Contains(
+            "<meta property=\"og:url\" content=\"https://ulfbou.github.io/articles/bias/\">",
+            html);
+        Assert.Contains(
+            "<meta property=\"og:image\" content=\"https://ulfbou.github.io/assets/social/articles/bias.svg\">",
+            html);
+        Assert.Contains(
+            "<meta name=\"twitter:card\" content=\"summary_large_image\">",
+            html);
+        Assert.Contains(
+            "<script type=\"application/ld+json\">",
+            html);
+
+        using var document = JsonDocument.Parse(ExtractJsonLd(html));
+        var structuredData = document.RootElement;
+
+        Assert.Equal("https://schema.org", structuredData.GetProperty("@context").GetString());
+        Assert.Equal("Article", structuredData.GetProperty("@type").GetString());
+        Assert.Equal(
+            "https://ulfbou.github.io/articles/bias/",
+            structuredData.GetProperty("mainEntityOfPage").GetString());
+        Assert.Equal(
+            "https://ulfbou.github.io/assets/social/articles/bias.svg",
+            structuredData.GetProperty("image").GetString());
+        Assert.Equal(
+            "Ulf Bourelius",
+            structuredData.GetProperty("author").GetProperty("name").GetString());
+    }
+
+    [Fact]
     public void WithdrawalRemovesAllPublicRepresentations()
     {
         using var fixture = new Fixture();
@@ -191,6 +245,95 @@ public sealed class ArticlePublicationTests
     }
 
     [Fact]
+    public void GeneratedPagesUseSharedIdentityAndRemainStatic()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteArticle("published", approved: true);
+        fixture.Generate();
+
+        foreach (var relative in new[] { "articles/index.html", "articles/bias/index.html" })
+        {
+            var html = fixture.Read(relative);
+            Assert.Contains("class=\"masthead\"", html);
+            Assert.Contains("class=\"monogram\"", html);
+            Assert.Contains("href=\"/css/articles.css\"", html);
+            Assert.Contains("aria-current=\"page\">Articles", html);
+            Assert.DoesNotContain("_framework/blazor", html, StringComparison.OrdinalIgnoreCase);
+        }
+        var article = fixture.Read("articles/bias/index.html");
+        Assert.Contains("class=\"article-deck\"", article);
+        Assert.Contains("class=\"article-meta\"", article);
+        Assert.Contains("<article", article);
+        Assert.Contains("href=\"/css/app.css\"", article);
+        Assert.Contains("href=\"/css/accessibility.css\"", article);
+        Assert.Contains("href=\"/css/articles.css\"", article);
+        Assert.DoesNotContain("<script src=", article);
+        Assert.DoesNotContain("blazor", article, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
+    public void ApprovedMarkdownLinkBecomesEncodedAnchorAndUnsafeLinkDoesNot()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteBody("# Bias\n\n[Useful source](https://example.com/a?b=1&c=2)\n\n[Unsafe](javascript:alert(1))\n");
+        fixture.WriteArticle("published", approved: true);
+        fixture.Generate();
+
+        var html = fixture.Read("articles/bias/index.html");
+        Assert.Contains("<a href=\"https://example.com/a?b=1&amp;c=2\">Useful source</a>", html);
+        Assert.DoesNotContain("href=\"javascript:", html, StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("[Unsafe](javascript:alert(1))", html);
+    }
+
+    [Fact]
+    public void ArticleIndexContainsEditorialMetadata()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteArticle("published", approved: true);
+        fixture.Generate();
+
+        var indexHtml = fixture.Read("articles/index.html");
+
+        Assert.Contains("class=\"article-summary\"", indexHtml);
+        Assert.Contains("class=\"article-summary-meta\"", indexHtml);
+        Assert.Contains("<time datetime=", indexHtml);
+        Assert.Contains("min read", indexHtml);
+        Assert.Contains("/articles/bias/", indexHtml);
+    }
+
+    [Fact]
+    public void RepeatedGenerationIsByteDeterministic()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteArticle("published", approved: true);
+        fixture.Generate();
+        var first = fixture.OutputDigest();
+        fixture.Generate();
+        Assert.Equal(first, fixture.OutputDigest());
+    }
+
+    [Fact]
+    public void ArticleStylesContainNarrowPrintAndReducedMotionRules()
+    {
+        var root = RepositoryRoot();
+        var articleCss = File.ReadAllText(Path.Combine(root, "src/Ulfbou.Site/wwwroot/css/articles.css"));
+        var accessibilityCss = File.ReadAllText(Path.Combine(root, "src/Ulfbou.Site/wwwroot/css/accessibility.css"));
+        Assert.Contains("@media (max-width: 850px)", articleCss);
+        Assert.Contains("@media (max-width: 420px)", articleCss);
+        Assert.Contains("@media print", articleCss);
+        Assert.Contains("@media (prefers-reduced-motion: reduce)", accessibilityCss);
+        Assert.Contains("width: min(100%, 72ch)", articleCss);
+    }
+
+    private static string RepositoryRoot()
+    {
+        var directory = new DirectoryInfo(AppContext.BaseDirectory);
+        while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Ulfbou.Portfolio.slnx")))
+            directory = directory.Parent;
+        return directory?.FullName ?? throw new InvalidOperationException("repository root not found");
+    }
+
+    [Fact]
     public void UnknownSeriesStatusFails()
     {
         using var fixture = new Fixture();
@@ -228,6 +371,9 @@ public sealed class ArticlePublicationTests
                 File.WriteAllText(path, "<svg xmlns=\"http://www.w3.org/2000/svg\"/>\n", new UTF8Encoding(false));
             }
         }
+
+        public void WriteBody(string markdown) =>
+            File.WriteAllText(Path.Combine(SourceRoot, "bodies", "bias.md"), markdown, new UTF8Encoding(false));
 
         public void WriteArticle(
             string status,
@@ -359,5 +505,21 @@ public sealed class ArticlePublicationTests
         {
             if (Directory.Exists(root)) Directory.Delete(root, true);
         }
+    }
+
+    private static string ExtractJsonLd(string html)
+    {
+        const string startMarker = "<script type=\"application/ld+json\">";
+        const string endMarker = "</script>";
+
+        var start = html.IndexOf(startMarker, StringComparison.Ordinal);
+        Assert.True(start >= 0, "Article HTML must contain JSON-LD structured data.");
+
+        start += startMarker.Length;
+
+        var end = html.IndexOf(endMarker, start, StringComparison.Ordinal);
+        Assert.True(end >= 0, "The JSON-LD script element must be closed.");
+
+        return html[start..end];
     }
 }

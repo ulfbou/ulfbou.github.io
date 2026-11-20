@@ -65,4 +65,3 @@ Current implementation remains evidence of current behavior only. The repository
 Implementation and release must follow `docs/platform.md`, `docs/publication.md`, `docs/architecture/static-composition.md`, `docs/contracts/routes-and-output-ownership.md`, the applicable area product document, and the active `docs/roadmap.md`.
 ## Article publication implementation
 The repository implements explicit article records outside source-code directories, bounded publication states, complete static article HTML, retained deterministic projections, an Atom feed, and platform-owned sitemap integration. Article source controls meaning and approval; generators, validators, workflows, and deployment do not.
-

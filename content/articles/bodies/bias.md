@@ -6,23 +6,23 @@ It will probably give you a CEO who is a he, and a nurse who is a she. It will p
 
 That is what bias looks like in a large language model. Not a rant. Not an insult. Just a quiet default.
 
-## Bias is not an opinion. It is a pattern.
+## Bias is not about intent. It is about repetition.
 
 We tend to imagine bias as an opinion the model holds. Something we could argue with, or delete, or fix with a better instruction. Tell it to be neutral, and it will be neutral. That is not how it works.
 
-A model does not have opinions. It has probabilities. It has read more text than any human ever will, and it has learned which words tend to follow which other words. When you ask for a CEO, it does not think about CEOs. It reaches for the most common pattern it has seen.
+A model does not have opinions. It has probabilities. It has learned from more written material than any one person could reasonably consume in a lifetime, and it has learned which words tend to follow which other words. When you ask for a CEO, it does not evaluate anything about CEOs. It tends to produce the pattern that appears most often in the material it learned from.
 
-That is why bias in AI is so slippery. The model did not lie. It told you what we most often say. It mirrored our habits back to us, only cleaner and faster.
+This is what makes AI bias difficult to spot. The model is not necessarily inventing anything. In many cases it is simply repeating patterns that already exist in the material it learned from. The uncomfortable part is that those patterns came from us.
 
-The same mechanism is familiar in people. Psychologists have long described confirmation bias as the tendency to notice, remember, and weight information that confirms what we already believe. The model does not have beliefs in the human sense, but it has the same structural result: repetition becomes evidence.
+The same mechanism is familiar in people. Psychologists have long described confirmation bias as the tendency to notice, remember, and weight information that confirms what we already believe (Nickerson, 1998). The model does not have beliefs, but the outcome can look surprisingly similar. Patterns that appear again and again gain influence simply because they appear again and again.
 
-For a concise technical definition of how bias enters AI systems, see the National Institute of Standards and Technology work on AI bias: https://www.nist.gov/itl/ai-risk-management-framework
+For a detailed treatment of how bias enters AI systems, see the National Institute of Standards and Technology's [Towards a Standard for Identifying and Managing Bias in Artificial Intelligence](https://www.nist.gov/publications/towards-standard-identifying-and-managing-bias-artificial-intelligence).
 
 ## Repetition becomes truth
 
 This is uncomfortable because it removes a convenient excuse. If the model is biased, we cannot only blame the machine. We have to ask where the pattern came from. Who wrote the training data? Whose stories were published, quoted, and repeated until they became the statistical norm? Whose stories were missing?
 
-Bias in this sense is not about one bad sentence. It is about what becomes invisible through repetition. The CEO who is a woman does not disappear because the model hates women. She disappears because she appears less often in the pattern, so the model needs a stronger push to reach for her.
+Bias in this sense is not about one bad sentence. It is about what becomes invisible through repetition. The CEO who is a woman does not disappear because the model dislikes women. She becomes less likely because the pattern appears less often in the data the model learned from.
 
 Absence is a form of bias too. When a perspective is rarely represented, the system does not need to actively exclude it. It only needs to do the statistically normal thing.
 
@@ -44,9 +44,9 @@ Try this next time you use AI:
 
 - Ask for the default answer, then ask for the opposite default. Ask: Who else could this be?
 - Ask: What would this look like from a perspective that is rarely represented in your training data?
-- Notice how hard the model has to work for the second answer. That effort is a clue. It tells you where the bias lives.
+- Notice how hard the model has to work for the second answer. That extra effort usually points to where the default sits.
 
-A model will not tell you it is biased. It will just sound confident. Our job is not to expect neutrality from it. Our job is to learn to hear the silence where another story should have been.
+A model will not tell you it is biased. It will usually present the answer as if it were obvious. The useful question is often not what the model included, but what it left out.
 
 ## Where this series goes next
 
@@ -56,6 +56,7 @@ None of those are separate mysteries. They are what happens when a system that r
 
 ### Sources
 
-- National Institute of Standards and Technology, AI Risk Management Framework and work on AI bias: https://www.nist.gov/itl/ai-risk-management-framework
-- Anthropic, Towards Understanding Sycophancy in Language Models: https://www.anthropic.com/research/towards-understanding-sycophancy
-- Dunning, D., and Kruger, J., Unskilled and Unaware of It, Journal of Personality and Social Psychology, 1999: https://doi.org/10.1037/0022-3514.77.6.1121
+- [National Institute of Standards and Technology, Towards a Standard for Identifying and Managing Bias in Artificial Intelligence](https://www.nist.gov/publications/towards-standard-identifying-and-managing-bias-artificial-intelligence)
+- [Nickerson, R. S. (1998). Confirmation bias: A ubiquitous phenomenon in many guises. _Review of General Psychology, 2_(2), 175–220.](https://doi.org/10.1037/1089-2680.2.2.175)
+- [Anthropic, Towards Understanding Sycophancy in Language Models](https://arxiv.org/abs/2310.13548)
+- [Kruger, J., & Dunning, D. (1999). Unskilled and unaware of it: How difficulties in recognizing one's own incompetence lead to inflated self-assessments. _Journal of Personality and Social Psychology, 77_(6), 1121–1134.](https://doi.org/10.1037/0022-3514.77.6.1121)

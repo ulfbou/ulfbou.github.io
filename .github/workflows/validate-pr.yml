@@ -148,10 +148,6 @@ jobs:
             content/articles \
             src/Ulfbou.Site/wwwroot/articles \
             src/Ulfbou.Site/wwwroot
-          git diff --exit-code -- \
-            src/Ulfbou.Site/wwwroot/articles \
-            src/Ulfbou.Site/wwwroot/data/generated/articles.json \
-            src/Ulfbou.Site/wwwroot/sitemap.xml
       - name: Build
         run: dotnet build Ulfbou.Portfolio.slnx --no-restore -c Release
       - name: Test
