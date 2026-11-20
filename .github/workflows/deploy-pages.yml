@@ -50,9 +50,18 @@ jobs:
           test -f publish/wwwroot/data/generated/portfolio.json
           test ! -e publish/wwwroot/data/portfolio.json
 
-      - run: |
+      - name: Construct current Pages artifact
+        shell: bash
+        run: |
           cp publish/wwwroot/index.html publish/wwwroot/404.html
           touch publish/wwwroot/.nojekyll
+
+      - name: Verify current publication artifact
+        shell: bash
+        run: |
+          python tools/publication-baseline/cli.py publish/wwwroot \
+            --source-revision "$GITHUB_SHA" \
+            --output "$RUNNER_TEMP/publication-baseline.json"
 
       - uses: actions/configure-pages@v5
 

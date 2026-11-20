@@ -18,7 +18,7 @@ Portfolio product documents and approved portfolio source remain authoritative f
 
 The portfolio produces one bounded publication input for the wider platform. Producing portfolio files, generated projections, or a portfolio publication unit does not independently allocate a final public route or emitted output path. Final allocation and emitted-path ownership are governed by `docs/architecture/static-composition.md` and `docs/contracts/routes-and-output-ownership.md`.
 
-The accepted portfolio allocation is `/work/`. Repository evidence currently shows the portfolio application at `/`; it does not establish that the portfolio has moved to `/work/`. The current implementation and accepted target allocation must remain distinguishable during the transition.
+The accepted portfolio allocation is `/work/`, and the supplied repository implements that allocation through `Pages/Work.razor` and the direct-entry host `src/Ulfbou.Site/wwwroot/work/index.html`. The professional landing page is implemented separately at `/`.
 
 ## North star
 
@@ -100,15 +100,13 @@ Portfolio publication must preserve approved claims, evidence relationships, pro
 
 ### Verified current implementation
 
-The supplied repository implements one .NET 10 Blazor WebAssembly portfolio application at `/`. Approved portfolio source under `src/content/` is compiled into the retained generated projection at `src/Ulfbou.Site/wwwroot/data/generated/portfolio.json`. The current application consumes that projection through `data/generated/portfolio.json`.
+The supplied repository implements a .NET 10 Blazor WebAssembly application with a professional landing page at `/` and the complete portfolio at `/work/`. Approved portfolio source under `src/content/` is compiled into `src/Ulfbou.Site/wwwroot/data/generated/portfolio.json`. `Pages/Work.razor` consumes that projection through `data/generated/portfolio.json`, and `src/Ulfbou.Site/wwwroot/work/index.html` provides portfolio-specific direct-entry metadata and canonical identity.
 
-The current workflow compiles the portfolio projection, verifies reproducibility, tests and publishes the site, and checks for the generated portfolio data path. These facts establish current portfolio behavior only. They do not establish platform-wide composition, final emitted-path ownership across independent publication units, or implementation of the accepted `/work/` allocation.
+The workflows are configured to compile and compare the retained projection, test and publish the solution, construct `404.html` from the published root host, and run the publication-baseline verifier. The verifier requires the root host, work host, AWS index, generated portfolio data, and `404.html`. Configuration proves configured behavior, not a successful run, deployment, or live result.
 
-### Accepted target allocation
+### Continuing obligations
 
-The accepted target allocates the professional landing page to `/` and the complete portfolio to `/work/`. The portfolio must retain its approved content, evidence boundaries, interaction behavior, accessibility requirements, limitations, compatibility, and non-invention rules when moved.
-
-This target is accepted direction, not a claim that the route transition, compatibility behavior, redirects, static composition, or final output ownership has already been implemented.
+The implemented allocation must preserve approved portfolio meaning, evidence boundaries, interaction behavior, accessibility requirements, limitations, compatibility, and non-invention rules. The supplied repository contains no dedicated redirect or compatibility artifact for historical expectations that the portfolio occupied `/`; any additional compatibility policy remains a separate route-policy decision.
 
 ## Prototype boundary
 

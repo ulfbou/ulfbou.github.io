@@ -35,6 +35,8 @@ Done means the result is accepted, public documentation matches implementation, 
 
 ## Milestone 1 — Public documentation alignment
 
+**Implementation status:** Completed documentation foundation; later implementation changes must keep it aligned.
+
 **Outcome:** The repository contains one coherent, self-contained public documentation model for the multi-area platform.
 
 ### Acceptance Ready
@@ -81,6 +83,8 @@ Done means the result is accepted, public documentation matches implementation, 
 - No accepted target capability is reported as implemented without evidence.
 
 ## Milestone 3 — Professional landing page and portfolio allocation
+
+**Implementation status:** The route and host implementation is present. Full Done status is not proven by repository files because build, browser, accessibility, compatibility, deployment, release-authorization, and live results remain evidence-dependent.
 
 **Outcome:** `/` becomes the professional landing page and launch point, and the complete portfolio is available under `/work/`.
 

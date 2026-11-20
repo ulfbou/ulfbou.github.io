@@ -102,6 +102,8 @@ jobs:
           PY
       - name: Test portfolio-data prototype
         run: python tools/portfolio-data/tests.py
+      - name: Test publication-baseline verifier
+        run: python tools/publication-baseline/tests.py
       - name: Validate prototype fixture
         shell: bash
         run: |
@@ -145,9 +147,15 @@ jobs:
         run: dotnet test Ulfbou.Portfolio.slnx --no-build -c Release
       - name: Publish static site
         run: dotnet publish src/Ulfbou.Site/Ulfbou.Site.csproj --no-restore -c Release -o publish
-      - name: Verify current deployment shape
+      - name: Construct current Pages artifact
         shell: bash
         run: |
-          test -f publish/wwwroot/index.html
-          test -f publish/wwwroot/data/generated/portfolio.json
+          cp publish/wwwroot/index.html publish/wwwroot/404.html
+          touch publish/wwwroot/.nojekyll
+      - name: Verify current publication artifact
+        shell: bash
+        run: |
+          python tools/publication-baseline/cli.py publish/wwwroot \
+            --source-revision "${{ github.event.pull_request.head.sha }}" \
+            --output "$RUNNER_TEMP/publication-baseline.json"
           test ! -e publish/wwwroot/data/portfolio.json

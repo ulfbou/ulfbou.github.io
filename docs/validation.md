@@ -57,7 +57,7 @@ The supplied repository establishes automated checks for:
 - retained generated portfolio projection synchronization;
 - semantic equivalence between the controlling legacy projection and retained generated projection;
 - story-block payload and renderer coverage;
-- preservation of portfolio filtering and printable detail structure;
+- print-style rules that expose filtered and collapsed project detail;
 - static-site publication;
 - current root `index.html`;
 - current generated portfolio runtime data at `publish/wwwroot/data/generated/portfolio.json`;
@@ -104,7 +104,7 @@ Current validation is partial for the wider platform. The repository has a portf
 
 ### Current and target routes
 
-The verified current application renders the portfolio at `/` and requests `data/generated/portfolio.json`. The repository contains a static `/aws/` index linking toward `/aws/ai/`.
+The current repository implementation maps the professional landing page to `/`. It maps the complete portfolio to `/work/`, where the portfolio implementation requests `data/generated/portfolio.json`. The repository also contains a static `/aws/` index linking toward `/aws/ai/`. Successful build, publication, direct loading, and hosted behavior require execution evidence for the exact candidate and artifact.
 
 The accepted target allocates:
 
@@ -113,7 +113,7 @@ The accepted target allocates:
 - `/articles/` to technical articles;
 - `/aws/ai/` to AWS Cloud and AI learning.
 
-Repository evidence does not establish `/work/index.html`, `/articles/index.html`, or `src/Ulfbou.Site/wwwroot/aws/ai/index.html`. Target-route checks remain **Required target** until implementation evidence exists.
+Repository evidence establishes `/work/index.html` as current output. It does not establish `/articles/index.html` or `src/Ulfbou.Site/wwwroot/aws/ai/index.html`; those later target-route checks remain **Required target** until implementation evidence exists.
 
 ## Validation evidence model
 
@@ -289,11 +289,11 @@ The accepted landing page at `/` requires validation of:
 - responsive and touch behavior;
 - exclusion of private or candidate material.
 
-These checks are **Required target**. The current `/` hosts the portfolio and must continue to receive current portfolio validation until the accepted route transition is implemented.
+These checks apply to the landing page at `/`. Repository evidence establishes the landing-page implementation and its route, metadata, no-JavaScript orientation, and navigation structure. Passing runtime, accessibility, responsive, and hosted results require execution or manual evidence for the exact candidate and artifact.
 
 ## 7. Portfolio validation
 
-The accepted portfolio allocation is `/work/`. Current automated and manual validation still targets the portfolio application at `/`. The transition must preserve every applicable portfolio requirement while adding route, asset, compatibility, direct-loading, and no-JavaScript validation for `/work/`.
+The implemented portfolio allocation is `/work/`. Automated and manual validation must target the portfolio application at `/work/`, preserve every applicable portfolio requirement, and cover route, asset, compatibility, direct-loading, and no-JavaScript behavior. The root landing page is validated separately.
 
 ### Canonical baseline
 
@@ -380,7 +380,9 @@ Semantic equivalence governs public meaning. Byte identity is additionally requi
 
 ### Story-block validation
 
-Implemented automated story-block validation covers:
+Implemented automated story-block validation covers the content and renderer contracts below. One source-inspection test, `Home_preserves_filtering_while_retaining_printable_details`, still reads `Pages/Home.razor` although the portfolio moved to `Pages/Work.razor`. The supplied source therefore does not establish that this test currently proves portfolio filtering or disclosure structure.
+
+The aligned coverage includes:
 
 - stable non-empty IDs;
 - unique non-negative order;
@@ -400,7 +402,7 @@ Implemented automated story-block validation covers:
 - missing quote-attribution rejection;
 - unknown-type rejection;
 - malformed-payload rejection;
-- preservation of filtering and printable detail structure;
+- print stylesheet structure for exposing filtered and collapsed details;
 - loading story-block styles after base and accessibility styles.
 
 Published unknown or unsupported block types fail. A development fallback cannot authorize publication.
@@ -516,7 +518,7 @@ test -f publish/wwwroot/data/generated/portfolio.json
 test ! -e publish/wwwroot/data/portfolio.json
 ```
 
-These checks establish the current portfolio-oriented output shape only. They do not validate `/work/`, publication-unit ownership, clean composition, complete artifact inventory, or immutable-artifact deployment.
+These direct shell checks establish part of the output shape. The configured publication-baseline verifier additionally requires `work/index.html`, computes the complete produced-artifact inventory and SHA-256, inspects metadata and local references, applies bounded privacy-path rules, and classifies `404.html`. Together they validate the intended root/work artifact shape when successfully executed, but repository files alone do not prove execution, generalized ownership, clean multi-unit composition, or identity preservation across deployment.
 
 ## 8. Article validation
 
@@ -835,3 +837,14 @@ Platform validation does not:
 - convert evidence, runtime data, generated output, or metrics into semantic authority;
 - authorize publication merely because generation is deterministic;
 - authorize deployment of a failing, unknown, partial, stale, or mismatched artifact.
+
+## Implemented root and work allocation
+
+The current site requires two distinct public entry points in the produced artifact:
+
+- `/index.html` is the professional landing page;
+- `/work/index.html` is the complete portfolio host.
+
+Validation must confirm distinct titles, descriptions, and canonical URLs for these entry points. The root host must retain useful no-JavaScript orientation and a direct link to `/work/`. The work host must use root-relative framework and stylesheet references so direct loading at `/work/` resolves the same application and generated portfolio data as in-app navigation.
+
+The publication-baseline verifier treats `work/index.html` as a required current path. Its focused tests cover presence, absence, and distinct metadata for the root and work hosts. Artifact-level verification does not replace browser checks for direct loading, keyboard interaction, focus, responsive layout, zoom, reduced motion, or printing.

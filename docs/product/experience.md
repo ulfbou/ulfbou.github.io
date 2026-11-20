@@ -8,7 +8,7 @@ The professional landing page at `/` provides concise orientation and launches v
 
 The portfolio experience may link to `/` for professional orientation, `/articles/` for relevant technical writing, and `/aws/ai/` for relevant AWS Cloud and AI learning experiences. Cross-area links must identify the destination and its value. Navigation to another area does not grant the portfolio authority over landing-page, article, or learning meaning.
 
-The accepted portfolio allocation is `/work/`. Repository evidence currently shows the portfolio application at `/`; it does not establish that the portfolio has already moved. Current route behavior and accepted target behavior must remain distinguishable.
+The accepted portfolio allocation is `/work/`, and the supplied repository implements it through `Pages/Work.razor` and `wwwroot/work/index.html`. The professional landing page is implemented separately at `/`.
 
 ## Portfolio exploration
 
@@ -62,12 +62,10 @@ Generated projections, runtime data, repository observations, evidence, and pres
 
 ### Verified current behavior
 
-The supplied repository currently implements the portfolio at `/` as a .NET 10 Blazor WebAssembly application. It supports facet filtering, project discovery, in-place expansion, progressive disclosure, project status, technologies, story blocks, contribution, reflection, evidence, limitations, loading, empty and failure states, keyboard-operable native controls, visible focus, reduced motion, responsive layouts, zoom-oriented behavior, and print expansion of project details.
+The supplied repository implements the portfolio at `/work/` as part of a .NET 10 Blazor WebAssembly application. It supports facet filtering, project discovery, in-place expansion, progressive disclosure, project status, technologies, story blocks, contribution, reflection, evidence, limitations, loading, empty and failure states, native controls, focus styles, reduced-motion styles, responsive layouts, and print expansion of filtered or collapsed detail.
 
-The current implementation loads approved portfolio data from `data/generated/portfolio.json`. Repository evidence does not establish the accepted `/work/` route, complete cross-area navigation, or no-JavaScript access to all interactive portfolio detail.
+The implementation loads `data/generated/portfolio.json`. `wwwroot/work/index.html` provides direct-entry metadata, root-relative framework and stylesheet references, and no-script orientation. Repository files establish the route and configured presentation, but not successful build, browser, accessibility, responsive, print, hosted, or live behavior. No-JavaScript access to complete interactive portfolio detail is not implemented; the host explicitly says JavaScript is required for filtering and disclosure.
 
-### Accepted target behavior
+### Continuing target behavior
 
-The complete portfolio experience is allocated to `/work/`. `/` becomes the professional landing page and may feature selected portfolio summaries that link to the complete portfolio. `/articles/` and `/aws/ai/` remain separate areas with their own meaning and experience contracts.
-
-The route transition must preserve the established portfolio interactions, approved meaning, evidence boundaries, limitations, accessibility behavior, direct-loading obligations, and applicable URL compatibility. This document does not claim that the transition has already occurred.
+`/work/` remains the complete portfolio allocation. `/` is the professional landing page. `/articles/` and `/aws/ai/` remain separate areas and are not established as complete current outputs. Further work must preserve approved meaning, evidence boundaries, limitations, accessibility, direct loading, and compatibility obligations.

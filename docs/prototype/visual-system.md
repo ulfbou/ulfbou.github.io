@@ -6,7 +6,7 @@ This document primarily governs the visual system and presentation of the portfo
 
 The portfolio visual system may inform a future shared platform identity, including typography, focus treatment, navigation language, and editorial tone. Unless a platform document separately adopts a rule, it remains a portfolio requirement rather than an established platform-wide rule.
 
-The accepted portfolio allocation is `/work/`. Repository evidence currently shows the portfolio visuals at `/`; it does not establish that the route transition has occurred.
+The accepted portfolio allocation is `/work/`, and the supplied repository applies the portfolio visuals there through `Pages/Work.razor`, shared portfolio styles, and `wwwroot/work/index.html`.
 
 ## Editorial direction
 
@@ -68,10 +68,10 @@ These requirements govern the portfolio and may inform shared platform identity.
 
 ### Verified current behavior
 
-The supplied repository applies the portfolio visual system to the current portfolio at `/`. It includes the spacious opening, orbit/facet motif, dark work field, expandable projects, readable artifacts, project accents, responsive layouts, visible focus, reduced-motion rules, story-block presentation, and print rules that expose filtered and collapsed project detail.
+The supplied repository applies the portfolio visual system at `/work/`: the spacious opening, orbit/facet motif, dark work field, expandable projects, readable artifacts, accents, responsive rules, focus styles, reduced-motion rules, story-block presentation, and print rules exposing filtered and collapsed detail. The root professional landing page is also implemented with related typography and identity, without becoming the complete portfolio.
 
-### Accepted target behavior
+These files establish configured markup and styles, not measured contrast, browser, zoom, responsive, reduced-motion, print, or live-site results.
 
-The portfolio visual system and established interaction behavior remain requirements when the portfolio is allocated to `/work/`. Shared platform identity may adopt compatible concerns through separate platform authority, but this document does not create a universal design system.
+### Continuing target behavior
 
-This document does not claim that the portfolio visuals have already moved to `/work/`, that the professional landing page has been implemented, or that the other platform areas use this portfolio presentation.
+The portfolio visual system remains required at `/work/`. Shared platform identity may adopt compatible concerns through separate authority, but this document does not impose the portfolio presentation on articles or learning experiences.

@@ -28,7 +28,7 @@ A portfolio decision does not govern landing-page, article, or learning meaning.
 
 ## Portfolio decisions
 
-The following decisions remain valid for the portfolio area accepted at `/work/`. Current repository evidence shows the portfolio application at `/`; that current implementation does not change the accepted allocation or make the portfolio the whole platform.
+The following decisions remain valid for the portfolio area implemented at `/work/`. The professional landing page is implemented separately at `/`, and the portfolio remains one area rather than the whole platform.
 
 - **D-001 — Portfolio form:** The portfolio is one dynamic editorial portfolio page, not a conventional CV.
 - **D-002 — Story before evidence:** Human story comes first; supporting evidence is progressively available.
@@ -60,6 +60,6 @@ The following decisions remain valid for the portfolio area accepted at `/work/`
 
 The platform decisions supersede any interpretation of D-001 through D-025 that made the portfolio the complete website. They do not remove or weaken the portfolio decisions within their accepted scope.
 
-Current implementation remains evidence of current behavior only. The repository currently contains one portfolio-oriented .NET site output, a portfolio publication pipeline, and static AWS assets. The accepted route allocation, independent publication units, clean multi-unit composition, complete emitted-path ownership validation, article output, professional landing page, and immutable final-artifact deployment remain target behavior until implementation evidence establishes otherwise.
+Current implementation remains evidence of current behavior only. The repository contains one .NET site output with the professional landing page at `/`, the portfolio at `/work/`, a portfolio pipeline, bounded publication-baseline verification, and static AWS assets. Independent publication units, clean multi-unit composition, complete emitted-path ownership validation, article output, a complete `/aws/ai/` area, and post-validation immutable-artifact deployment remain target behavior.
 
 Implementation and release must follow `docs/platform.md`, `docs/publication.md`, `docs/architecture/static-composition.md`, `docs/contracts/routes-and-output-ownership.md`, the applicable area product document, and the active `docs/roadmap.md`.

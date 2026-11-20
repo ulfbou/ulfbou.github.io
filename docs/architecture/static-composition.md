@@ -137,13 +137,13 @@ Failure must not silently deploy stale output, partial output, placeholders, or 
 
 ### Verified current behavior
 
-The repository currently contains one .NET 10 Blazor WebAssembly site project. Its publish workflow compiles approved portfolio source, tests the solution, publishes one `wwwroot` tree, copies the published root document to `404.html`, creates `.nojekyll`, uploads that directory as one Pages artifact, and deploys it. The published tree also includes static AWS assets. Current validation verifies the root document and generated portfolio data path.
+The repository contains one .NET 10 Blazor WebAssembly site project with the professional landing page at `/` and the complete portfolio at `/work/`. Root and work have distinct host documents, metadata, descriptions, and canonical URLs. The workflow is configured to publish one `wwwroot` tree, replace the published `404.html` with the root host, create `.nojekyll`, inspect the produced tree, upload it as one Pages artifact, and deploy it.
 
-The current workflow does not prove an empty-destination multi-unit composer, a platform publication plan, emitted-path ownership validation, a complete output inventory, or immutable final-artifact verification.
+The publication-baseline verifier computes a deterministic inventory and artifact SHA-256; requires `index.html`, `work/index.html`, `aws/index.html`, `data/generated/portfolio.json`, and `404.html`; inspects HTML metadata and local references; applies bounded privacy-path rules; and classifies effective `404.html` behavior. This does not prove a clean multi-unit composer, a machine-enforced publication plan, generalized emitted-path ownership, or identity preservation after upload.
 
 ### Verified transitional behavior
 
-The current implementation serves the portfolio at `/`, while accepted product direction allocates `/` to the professional landing page and `/work/` to the portfolio. A static `/aws/` index links toward `/aws/ai/`. Documentation for `/articles/` exists, but repository evidence does not establish article output.
+The root/work allocation is implemented. A static `/aws/` index links to `/aws/ai/`, but the supplied repository does not contain `src/Ulfbou.Site/wwwroot/aws/ai/index.html`. Documentation for `/articles/` exists, but no article output is established.
 
 ### Accepted target behavior
 

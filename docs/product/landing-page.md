@@ -17,14 +17,14 @@ The page serves:
 - educators and learning designers, who should reach educational practice and AWS Cloud and AI learning experiences;
 - visitors arriving from Ulf's GitHub profile or a direct link, who should receive immediate orientation without repository knowledge.
 
-The first view must remain concise. Visitors must be able to move quickly to `/work/`, `/articles/`, `/aws/ai/`, or the approved GitHub destination.
+The first view must remain concise. Visitors must be able to move quickly to the complete portfolio at `/work/` or the approved GitHub destination. Incomplete platform areas are not exposed.
 
 ## Route and visitor journeys
 
 `/` is owned by the landing-page publication process. Primary journeys are:
 
 1. understand Ulf's professional direction;
-2. inspect featured work, then continue to the complete portfolio at `/work/`;
+2. follow the general work introduction to the complete portfolio at `/work/`;
 3. continue to technical writing at `/articles/`;
 4. continue to AWS Cloud and AI learning at `/aws/ai/`;
 5. reach an approved GitHub profile or repository destination whose purpose is clear.
@@ -109,12 +109,12 @@ The landing page is not:
 
 ### Accepted direction
 
-`/` is the professional landing page and launch point. `/work/` is the complete portfolio, `/articles/` is technical writing, and `/aws/ai/` is AWS Cloud and AI learning.
+`/` is the professional landing page and launch point. `/work/` is the complete portfolio. Articles and AWS Cloud and AI learning remain later platform allocations and are not visible first-release destinations.
 
 ### Verified current behavior
 
-The repository currently assigns `/` to a .NET 10 Blazor WebAssembly portfolio. The current root page loads approved portfolio data, presents selected work, and links to GitHub. Repository files also contain responsive, keyboard, focus, reduced-motion, loading, empty, and failure behavior for that portfolio implementation.
+The repository implements `/` as the professional landing page with the approved headline, aspirational supporting line, primary routes to `/work/` and GitHub, four working principles, a compact professional profile, and only the complete Home and Work destinations.
 
-### Transitional and target behavior
+The complete approved portfolio is implemented at `/work/`. Its approved structured source, deterministic generated projection, filtering, project expansion, story blocks, evidence, status, maturity, limitations, loading, empty, failure, keyboard, focus, responsive, reduced-motion, and print behavior remain in the existing portfolio implementation.
 
-The current portfolio-at-root behavior is transitional relative to the accepted allocation. This document does not establish that the portfolio has moved to `/work/`, that the landing page described here is implemented, or that all cross-area navigation is deployed. The transition must preserve approved portfolio meaning and stable public URL obligations while establishing `/` as the launch page.
+The produced site contains separate root and work host documents. `/index.html` owns landing-page metadata and no-JavaScript orientation. `/work/index.html` owns portfolio metadata and direct entry to the Blazor route. Their canonical URLs are `https://ulfbou.github.io/` and `https://ulfbou.github.io/work/` respectively. The GitHub Pages workflow continues to construct `404.html` from the root host for unknown routes; `/work/` does not depend on that fallback because it has a concrete host document.

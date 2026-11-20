@@ -1,273 +1,86 @@
 @page "/"
-@inject PortfolioService Portfolio
 
-<PageTitle>Ulf Bourelius · Selected Systems</PageTitle>
+<PageTitle>Ulf Bourelius · AWS Solution Architect in training</PageTitle>
+<HeadContent>
+    <meta name="description" content="Professional landing page for Ulf Bourelius, an AWS Solution Architect in training working across cloud, AI, software systems, and technical learning." />
+    <link rel="canonical" href="https://ulfbou.github.io/" />
+</HeadContent>
 
-@if (isLoading)
-{
-    <main id="main-content"><p class="load-state" role="status">Assembling the portfolio…</p></main>
-}
-else if (loadError is not null)
-{
-    <main id="main-content" class="load-state" role="alert">
-        <h1>The portfolio could not be loaded.</h1>
-        <p>@loadError</p>
-        <button type="button" @onclick="LoadAsync">Try again</button>
-    </main>
-}
-else if (data is null || data.Projects.Count == 0)
-{
-    <main id="main-content" class="load-state">
-        <h1>No portfolio projects are available.</h1>
-        <p>The representative collection is currently empty.</p>
-    </main>
-}
-else
-{
-    <a href="#main-content" class="skip-link">Skip to content</a>
-    <header class="masthead">
-        <a class="identity" href="#top">
-            <span class="monogram" aria-hidden="true">UB</span>
-            <span>@data.Profile.Name<small>Representative systems · 2026</small></span>
-        </a>
-        <nav aria-label="Page navigation">
-            <a href="#work">Work</a>
-            <a href="#about">Approach</a>
-            @foreach (var link in data.Profile.Links)
-            {
-                <a href="@link.Url">@link.Label</a>
-            }
-        </nav>
-    </header>
+<a href="#main-content" class="skip-link">Skip to content</a>
+<header class="masthead">
+    <a class="identity" href="/" aria-current="page">
+        <span class="monogram" aria-hidden="true">UB</span>
+        <span>Ulf Bourelius<small>Cloud · AI · software systems</small></span>
+    </a>
+    <nav aria-label="Primary navigation">
+        <a href="/" aria-current="page">Home</a>
+        <a href="/work/">Work</a>
+    </nav>
+</header>
 
-    <main id="main-content">
-        <section class="hero" id="top" aria-labelledby="portfolio-title">
-            <div class="hero-copy">
-                <p class="overline">Educator · developer · systems thinker</p>
-                <h1 id="portfolio-title">@data.Profile.Signal</h1>
-                <p class="intro">@data.Profile.Introduction</p>
-                <p class="representative-note">Representative prototype content pending final publication approval.</p>
+<main id="main-content" class="landing-page">
+    <section class="landing-hero" aria-labelledby="landing-title">
+        <p class="overline">Ulf Bourelius · Stockholm</p>
+        <h1 id="landing-title">AWS Solution Architect in training</h1>
+        <p class="landing-intro">I aim to design, build, explain, and evaluate cloud, AI, and software systems through practical projects and inspectable evidence.</p>
+        <div class="primary-actions" aria-label="Primary actions">
+            <a class="action action-primary" href="/work/">Explore my work</a>
+            <a class="action" href="https://github.com/ulfbou">View GitHub</a>
+        </div>
+    </section>
+
+    <section class="landing-section work-introduction" aria-labelledby="work-introduction-title">
+        <p class="section-number" aria-hidden="true">01</p>
+        <div>
+            <h2 id="work-introduction-title"><a href="/work/">Explore my work</a></h2>
+            <p>Systems, tools, learning projects, and implementation experiments with visible reasoning, evidence, and limitations.</p>
+        </div>
+    </section>
+
+    <section class="landing-section" aria-labelledby="areas-title">
+        <p class="section-number" aria-hidden="true">02</p>
+        <div>
+            <h2 id="areas-title">Current destinations</h2>
+            <div class="area-links">
+                <a href="/" aria-current="page"><strong>Home</strong><span>Professional direction and platform orientation</span></a>
+                <a href="/work/"><strong>Work</strong><span>Complete portfolio with evidence and limitations</span></a>
             </div>
+        </div>
+    </section>
 
-            <div class="orbit" aria-label="Portfolio themes">
-                <span class="orbit-core" aria-hidden="true">UB</span>
-                @for (var i = 0; i < data.Facets.Count; i++)
-                {
-                    var item = data.Facets[i];
-                    <button type="button"
-                            class="orbit-item @($"orbit-{i}")"
-                            aria-pressed="@(facet == item)"
-                            @onclick="() => SelectFacet(item)">
-                        @item
-                    </button>
-                }
-            </div>
+    <section class="landing-section" aria-labelledby="principles-title">
+        <p class="section-number" aria-hidden="true">03</p>
+        <div>
+            <h2 id="principles-title">Working principles</h2>
+            <ul class="principles-list">
+                <li>Meaning before machinery</li>
+                <li>Evidence before claims</li>
+                <li>Learning through real systems</li>
+                <li>Automation with human authority</li>
+            </ul>
+        </div>
+    </section>
 
-            <a class="scroll-cue" href="#work">Follow the threads <span aria-hidden="true">↓</span></a>
-        </section>
+    <section class="landing-section" aria-labelledby="profile-title">
+        <p class="section-number" aria-hidden="true">04</p>
+        <div class="profile-copy">
+            <h2 id="profile-title">Professional profile</h2>
+            <p>I am an educator and developer in Stockholm, building practical experience in AWS architecture, AI, software design, developer tooling, and technical learning.</p>
+            <p>I focus on systems whose reasoning, evidence, boundaries, and limitations remain visible to the people who use and evaluate them.</p>
+        </div>
+    </section>
 
-        <section class="work" id="work" aria-labelledby="work-title">
-            <div class="section-title">
-                <p class="overline">Selected work</p>
-                <h2 id="work-title">Ideas made inspectable.</h2>
-                <p>Choose a thread. The same projects reorganize around what you want to inspect.</p>
-            </div>
+    <section class="landing-section" aria-labelledby="links-title">
+        <p class="section-number" aria-hidden="true">05</p>
+        <div>
+            <h2 id="links-title">Approved external links</h2>
+            <a class="external-link" href="https://github.com/ulfbou">GitHub · github.com/ulfbou</a>
+        </div>
+    </section>
+</main>
 
-            <div class="facet-bar" aria-label="Filter projects">
-                <button type="button"
-                        class="@(facet is null ? "active" : null)"
-                        aria-pressed="@(facet is null)"
-                        @onclick="ClearFacet">
-                    All
-                </button>
-                @foreach (var item in data.Facets)
-                {
-                    <button type="button"
-                            class="@(facet == item ? "active" : null)"
-                            aria-pressed="@(facet == item)"
-                            @onclick="() => SelectFacet(item)">
-                        @item
-                    </button>
-                }
-            </div>
-
-            @if (!VisibleProjects.Any())
-            {
-                <p class="empty-state" role="status">No projects match this facet.</p>
-            }
-            else
-            {
-                <div class="project-stack">
-                    @foreach (var project in data.Projects)
-                    {
-                        var detailId = $"project-{project.Id}";
-                        var isVisible = ProjectMatchesFacet(project);
-                        var isOpen = openId == project.Id;
-
-                        <article class="project @(!isVisible ? "filtered-out" : null)"
-                                 style="@($"--accent:{project.Accent}")">
-                            <h3 class="project-heading">
-                                <button type="button"
-                                        class="project-summary"
-                                        aria-expanded="@isOpen"
-                                        aria-controls="@detailId"
-                                        @onclick="() => Toggle(project.Id)">
-                                    <span class="project-index">@ProjectNumber(project)</span>
-                                    <span class="project-name">
-                                        <small>@project.Status</small>
-                                        <strong>@project.Title</strong>
-                                        <em>@project.Proposition</em>
-                                    </span>
-                                    <span class="project-tech">@string.Join(" · ", project.Technologies.Take(3))</span>
-                                    <span class="toggle">@(isOpen ? "Close" : "Explore")</span>
-                                </button>
-                            </h3>
-
-                            <div class="project-detail @(!isOpen ? "collapsed-detail" : null)"
-                                 id="@detailId"
-                                 aria-hidden="@(!isOpen)">
-                                @if (project.Blocks.Count > 0)
-                                {
-                                    <div class="story-blocks">
-                                        @foreach (var block in project.Blocks.OrderBy(item => item.Order))
-                                        {
-                                            <StoryBlockView Block="@block" />
-                                        }
-                                    </div>
-
-                                    <div class="narrative compatibility-detail">
-                                        <h4>My contribution</h4>
-                                        <p>@project.Contribution</p>
-                                    </div>
-                                }
-                                else
-                                {
-                                    <div class="narrative">
-                                        <p class="overline">The story</p>
-                                        <p class="large-copy">@project.Story</p>
-
-                                        <div class="two-up">
-                                            <div>
-                                                <h4>My contribution</h4>
-                                                <p>@project.Contribution</p>
-                                            </div>
-                                            <div>
-                                                <h4>Reflection</h4>
-                                                <p>@project.Reflection</p>
-                                            </div>
-                                        </div>
-
-                                        <h4>Limitations</h4>
-                                        <ul>
-                                            @foreach (var limitation in project.Limitations)
-                                            {
-                                                <li>@limitation</li>
-                                            }
-                                        </ul>
-                                    </div>
-
-                                    <div class="artifact">
-                                        <div class="artifact-bar" aria-hidden="true">
-                                            <span></span>
-                                            <span></span>
-                                            <span></span>
-                                            <b>@project.Demo.Caption</b>
-                                        </div>
-                                        <pre aria-label="@project.Demo.Caption"><code>@string.Join("\n", project.Demo.Lines)</code></pre>
-                                        <div class="proof-grid" aria-label="Representative evidence pointers">
-                                            @foreach (var proof in project.Proof)
-                                            {
-                                                <div>
-                                                    <small>@proof.Label</small>
-                                                    <code>@proof.Value</code>
-                                                </div>
-                                            }
-                                        </div>
-                                    </div>
-                                }
-                            </div>
-                        </article>
-                    }
-                </div>
-            }
-        </section>
-
-        <section class="about" id="about" aria-labelledby="about-title">
-            <p class="overline">How I work</p>
-            <div>
-                <h2 id="about-title">Human authority.<br />Explicit boundaries.<br />Evidence that can be followed.</h2>
-                <p>@data.Profile.Direction</p>
-            </div>
-        </section>
-    </main>
-
-    <footer>
-        <span>@data.Profile.Name · Stockholm</span>
-        <span>Approved content loaded from <code>data/generated/portfolio.json</code>.</span>
-        <a href="#top">Back to top ↑</a>
-    </footer>
-}
-
-@code {
-    private PortfolioData? data;
-    private string? facet;
-    private string? openId;
-    private bool isLoading = true;
-    private string? loadError;
-
-    private IEnumerable<Project> VisibleProjects =>
-        data is null
-            ? []
-            : data.Projects.Where(ProjectMatchesFacet);
-
-    private bool ProjectMatchesFacet(Project project) =>
-        facet is null
-        || project.Facets.Contains(
-            facet,
-            StringComparer.Ordinal);
-
-    protected override Task OnInitializedAsync() => LoadAsync();
-
-    private async Task LoadAsync()
-    {
-        isLoading = true;
-        loadError = null;
-
-        try
-        {
-            data = await Portfolio.LoadAsync();
-        }
-        catch
-        {
-            data = null;
-            loadError = "Check the data source and try again.";
-        }
-        finally
-        {
-            isLoading = false;
-        }
-    }
-
-    private void ClearFacet()
-    {
-        facet = null;
-        openId = null;
-    }
-
-    private void SelectFacet(string value)
-    {
-        facet = value;
-        openId = null;
-    }
-
-    private void Toggle(string id) =>
-        openId = openId == id ? null : id;
-
-    private string ProjectNumber(Project project) =>
-        data is null
-            ? "00"
-            : (data.Projects
-                .ToList()
-                .FindIndex(item => item.Id == project.Id) + 1)
-                .ToString("00");
-}
+<footer>
+    <span>Ulf Bourelius · Stockholm</span>
+    <span>Professional orientation and inspectable work.</span>
+    <a href="#main-content">Back to top ↑</a>
+</footer>
