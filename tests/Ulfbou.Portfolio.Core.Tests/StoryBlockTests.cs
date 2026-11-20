@@ -147,13 +147,13 @@ public sealed class StoryBlockTests
     }
 
     [Fact]
-    public void Home_preserves_filtering_while_retaining_printable_details()
+    public void Work_preserves_filtering_while_retaining_printable_details()
     {
         var home = File.ReadAllText(
             Path.Combine(
                 AppContext.BaseDirectory,
                 "repository",
-                "Home.razor"));
+                "Work.razor"));
 
         home.Should().Contain(
             "@foreach (var project in data.Projects)");

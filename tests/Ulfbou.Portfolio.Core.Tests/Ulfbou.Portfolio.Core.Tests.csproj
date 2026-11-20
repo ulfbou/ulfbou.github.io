@@ -37,6 +37,9 @@
     <Content Include="../../src/Ulfbou.Site/Pages/Home.razor"
              Link="repository/Home.razor"
              CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../src/Ulfbou.Site/Pages/Work.razor"
+             Link="repository/Work.razor"
+             CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../src/Ulfbou.Site/wwwroot/css/story-blocks.css"
              Link="repository/story-blocks.css"
              CopyToOutputDirectory="PreserveNewest" />
