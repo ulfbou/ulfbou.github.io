@@ -212,4 +212,3 @@ If infrastructure cannot render authorized meaning without alteration, publicati
 This document is the accepted platform-wide publication contract.
 
 The repository currently implements approved portfolio source, publication and visibility metadata, validation, deterministic compilation, a retained generated projection, a professional landing page at `/`, the portfolio at `/work/`, distinct root/work host metadata, and bounded publication-baseline inspection. These mechanisms do not yet constitute complete platform implementation for `/articles/` or `/aws/ai/`, generalized publication units, clean multi-unit composition, complete emitted-path ownership, or post-upload immutable-artifact verification.
-

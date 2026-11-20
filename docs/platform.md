@@ -170,4 +170,3 @@ The repository implements a .NET 10 Blazor WebAssembly professional landing page
 Approved portfolio source under `src/content/` compiles to `src/Ulfbou.Site/wwwroot/data/generated/portfolio.json`, requested as `data/generated/portfolio.json`. The repository also contains `/aws/` static assets and a link toward `/aws/ai/`. The publication-baseline verifier requires the root and work hosts, AWS index, generated data, and `404.html`.
 
 The repository does not establish article output, a complete `/aws/ai/` index or experience, generalized publication units, machine-enforced multi-unit composition, successful workflow execution, deployment, or live state. Shared navigation currently exposes only Home and Work.
-

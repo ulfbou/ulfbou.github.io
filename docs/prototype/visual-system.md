@@ -75,4 +75,3 @@ These files establish configured markup and styles, not measured contrast, brows
 ### Continuing target behavior
 
 The portfolio visual system remains required at `/work/`. Shared platform identity may adopt compatible concerns through separate authority, but this document does not impose the portfolio presentation on articles or learning experiences.
-

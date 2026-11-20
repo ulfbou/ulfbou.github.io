@@ -69,4 +69,3 @@ The implementation loads `data/generated/portfolio.json`. `wwwroot/work/index.ht
 ### Continuing target behavior
 
 `/work/` remains the complete portfolio allocation. `/` is the professional landing page. `/articles/` and `/aws/ai/` remain separate areas and are not established as complete current outputs. Further work must preserve approved meaning, evidence boundaries, limitations, accessibility, direct loading, and compatibility obligations.
-
