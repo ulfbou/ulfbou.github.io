@@ -3,5 +3,7 @@
   <Project Path="src/Ulfbou.Portfolio.Core/Ulfbou.Portfolio.Core.csproj" />
   <Project Path="src/Ulfbou.Portfolio.Generator/Ulfbou.Portfolio.Generator.csproj" />
   <Project Path="src/Ulfbou.Site/Ulfbou.Site.csproj" />
+  <Project Path="src/Ulfbou.Articles/Ulfbou.Articles.csproj" />
   <Project Path="tests/Ulfbou.Portfolio.Core.Tests/Ulfbou.Portfolio.Core.Tests.csproj" />
+  <Project Path="tests/Ulfbou.Articles.Tests/Ulfbou.Articles.Tests.csproj" />
 </Solution>

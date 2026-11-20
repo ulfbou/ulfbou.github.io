@@ -534,3 +534,5 @@ The system architecture does not:
 - require authentication, a database, scheduled work, or live AI;
 - convert private working material into public output;
 - infer live GitHub, Pages, route, workflow, or deployment state from repository configuration.
+## Implemented article producer
+`src/Ulfbou.Articles` is the bounded deterministic producer for governed records under `content/articles/`. It writes complete static article output only to `wwwroot/articles/`, the retained article projection, and the explicitly platform-owned sitemap. Article pages do not depend on Blazor startup for body availability. This is a transitional implementation inside the existing host tree, not proof that the full target multi-unit composer exists.

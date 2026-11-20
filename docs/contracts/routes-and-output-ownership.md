@@ -190,3 +190,5 @@ This contract does not:
 - implement redirects;
 - prove that target routes are live;
 - permit infrastructure to alter area-owned meaning.
+## Implemented article output ownership
+The article producer exclusively owns `articles/index.html`, `articles/feed.xml`, and `articles/{slug}/index.html`. It also produces `data/generated/articles.json`. The platform owns the combined `sitemap.xml`; the current bounded article generator materializes it from explicit platform routes and the published article projection. Article generation is not authorized to modify `/`, `/work/`, `/aws/`, `/aws/ai/`, `404.html`, or sibling outputs.

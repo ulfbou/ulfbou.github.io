@@ -39,6 +39,13 @@ jobs:
             src/content \
             src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
           git diff --exit-code -- src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
+      - name: Generate approved article publication
+        shell: bash
+        run: |
+          dotnet run --project src/Ulfbou.Articles/Ulfbou.Articles.csproj -- \
+            content/articles \
+            src/Ulfbou.Site/wwwroot/articles \
+            src/Ulfbou.Site/wwwroot
 
       - run: dotnet test Ulfbou.Portfolio.slnx -c Release
 

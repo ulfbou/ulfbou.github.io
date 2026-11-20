@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "1.0",
+  "articles": [
+    {
+      "id": "article-bias",
+      "slug": "bias",
+      "status": "published",
+      "title": "Bias: Why Intelligence Repeats Its Training",
+      "deck": "Bias is not an opinion hidden in the machine. It is what happens when intelligence learns from repetition and mistakes frequency for truth.",
+      "description": "Why both humans and AI systems repeat their training — and why asking them to 'just be unbiased' does not work. The first part of Confidently Wrong.",
+      "author": "Ulf Bourelius",
+      "language": "en",
+      "publishedDate": "2026-11-20",
+      "modifiedDate": "2026-11-20",
+      "readingMinutes": 8,
+      "bodyPath": "bodies/bias.md",
+      "seriesId": "confidently-wrong",
+      "seriesPart": 1,
+      "socialImage": "/assets/social/articles/bias.svg",
+      "canonicalPath": "/articles/bias/",
+      "editorialApproval": {
+        "approved": true,
+        "approvedBy": "Ulf Bourelius",
+        "approvedDate": "2026-11-20"
+      }
+    }
+  ]
+}

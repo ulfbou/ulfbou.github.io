@@ -137,3 +137,7 @@ The supplied repository contains the governing platform and publication contract
 ### Target behavior not yet implemented
 
 This document defines the accepted article product contract. It does not claim that `/articles/`, an article feed, article metadata generation, redirects, or any article is currently deployed.
+## Implemented source and output
+Article meaning and publication state are held by explicit records in `content/articles/articles.json`; series declarations are held in `content/articles/series.json`; bodies are referenced explicitly beneath `content/articles/bodies/`. The bounded lifecycle is `draft`, `candidate`, `planned`, `published`, `withdrawn`, and `private`. Only `published` records with explicit editorial approval enter the generated index, article pages, Atom feed, projection, and sitemap.
+
+The article producer emits complete static HTML beneath `/articles/`. When no record is published, it emits an empty index, an empty Atom feed whose contract-defined `<updated>` sentinel is `1970-01-01T00:00:00Z`, an empty projection, and no article body route. Correction changes authoritative source and regenerates all projections. Withdrawal changes the source state and regeneration removes the page and every discovery entry. Generation and validation do not grant editorial approval.
