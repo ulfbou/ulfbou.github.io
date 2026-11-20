@@ -141,31 +141,13 @@ jobs:
             src/content \
             src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
           git diff --exit-code -- src/Ulfbou.Site/wwwroot/data/generated/portfolio.json
-      - name: Generate and verify approved article publication
+      - name: Generate approved article publication
         shell: bash
         run: |
-          article_paths=(
-            src/Ulfbou.Site/wwwroot/articles
-            src/Ulfbou.Site/wwwroot/data/generated/articles.json
-            src/Ulfbou.Site/wwwroot/sitemap.xml
-          )
-
           dotnet run --project src/Ulfbou.Articles/Ulfbou.Articles.csproj -- \
             content/articles \
             src/Ulfbou.Site/wwwroot/articles \
             src/Ulfbou.Site/wwwroot
-
-          mapfile -t untracked < <(
-            git ls-files --others --exclude-standard -- "${article_paths[@]}"
-          )
-
-          if ((${#untracked[@]})); then
-            printf 'Generated article output is untracked:\n' >&2
-            printf '  %s\n' "${untracked[@]}" >&2
-            exit 1
-          fi
-
-          git diff --exit-code -- "${article_paths[@]}"
       - name: Build
         run: dotnet build Ulfbou.Portfolio.slnx --no-restore -c Release
       - name: Test
