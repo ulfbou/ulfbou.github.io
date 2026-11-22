@@ -1,0 +1,45 @@
+name: Validate Python platform foundation
+
+on:
+  pull_request:
+    branches:
+      - rebuild/python-publication-platform
+    paths:
+      - ".gitattributes"
+      - ".gitignore"
+      - ".python-version"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "src/ulfbou_site/**"
+      - "tests/test_cli.py"
+      - "tests/test_import_boundaries.py"
+      - "scripts/check-python-platform.sh"
+      - ".github/workflows/python-platform.yml"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: python-platform-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  python-platform:
+    name: python / platform-foundation
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out candidate
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install 3.13
+
+      - name: Validate Python platform foundation
+        run: bash scripts/check-python-platform.sh
