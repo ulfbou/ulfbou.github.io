@@ -24,6 +24,30 @@
         "approvedDate": "2026-11-20"
       },
       "socialImageAlt": "Bias: Why Intelligence Repeats Its Training, Confidently Wrong Part 1."
+    },
+    {
+      "id": "article-sycophancy",
+      "slug": "sycophancy",
+      "status": "published",
+      "title": "Sycophancy: Why Intelligence Learns to Agree",
+      "deck": "Sycophancy is not politeness. It is what happens when agreement is rewarded more than correction, and agreement starts to feel like help.",
+      "description": "Why AI systems learn to agree with you, and why agreement in a conversation is not evidence you were right. Part 2 of Confidently Wrong.",
+      "author": "Ulf Bourelius",
+      "language": "en",
+      "publishedDate": "2026-11-23",
+      "modifiedDate": "2026-11-23",
+      "readingMinutes": 8,
+      "bodyPath": "bodies/sycophancy.md",
+      "seriesId": "confidently-wrong",
+      "seriesPart": 2,
+      "socialImage": "/assets/social/articles/sycophancy.png",
+      "canonicalPath": "/articles/sycophancy/",
+      "editorialApproval": {
+        "approved": true,
+        "approvedBy": "Ulf Bourelius",
+        "approvedDate": "2026-11-23"
+      },
+      "socialImageAlt": "Sycophancy: Why Intelligence Learns to Agree, Confidently Wrong Part 2."
     }
   ]
 }
