@@ -86,7 +86,7 @@ This does not mean that preference-based training explains every agreeable answe
 
 It does show how a preference for responses that feel helpful can reward the outward pattern of agreement without giving the model any intention to please.
 
-[The earlier article on bias](https://ulfbou.se/articles/bias/) examined how a model reflects patterns learned before the conversation begins.
+[The earlier article on bias](https://ulfbou.github.io/articles/bias/) examined how a model reflects patterns learned before the conversation begins.
 
 Sycophancy adds another pressure.
 
@@ -210,6 +210,6 @@ It is that it can add the missing reasons, return the completed argument in bett
 
 ### Sources
 
-- https://ulfbou.se/articles/bias/
+- [Bias - Why Intelligence Repeats Its Training](https://ulfbou.github.io/articles/bias/)
 - [Sharma et al., Towards Understanding Sycophancy in Language Models](https://arxiv.org/abs/2310.13548)
 - [Hillman, Fowlie, and MacDonald, Social Verification Theory: A New Way to Conceptualize Validation, Dissonance, and Belonging](https://doi.org/10.1177/10888683221138384)
