@@ -16,13 +16,14 @@
       "bodyPath": "bodies/bias.md",
       "seriesId": "confidently-wrong",
       "seriesPart": 1,
-      "socialImage": "/assets/social/articles/bias.svg",
+      "socialImage": "/assets/social/articles/bias.png",
       "canonicalPath": "/articles/bias/",
       "editorialApproval": {
         "approved": true,
         "approvedBy": "Ulf Bourelius",
         "approvedDate": "2026-11-20"
-      }
+      },
+      "socialImageAlt": "Bias: Why Intelligence Repeats Its Training, Confidently Wrong Part 1."
     }
   ]
 }
