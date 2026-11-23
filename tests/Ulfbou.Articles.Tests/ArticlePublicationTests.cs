@@ -118,6 +118,63 @@ public sealed class ArticlePublicationTests
     }
 
     [Fact]
+    public void PublishedArticleContainsOneCanonicalLinkedInShareLink()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteArticle("published", approved: true);
+        fixture.Generate();
+
+        var html = fixture.Read("articles/bias/index.html");
+        const string expectedUrl =
+            "https://www.linkedin.com/sharing/share-offsite/" +
+            "?url=https%3A%2F%2Fulfbou.github.io%2Farticles%2Fbias%2F";
+
+        Assert.Equal(1, CountOccurrences(html, "class=\"article-sharing\""));
+        Assert.Equal(1, CountOccurrences(html, expectedUrl));
+        Assert.Equal(1, CountOccurrences(html, "Share on LinkedIn"));
+        Assert.Contains("aria-label=\"Share this article\"", html);
+        Assert.Contains("target=\"_blank\"", html);
+        Assert.Contains("rel=\"noopener noreferrer\"", html);
+    }
+
+    [Theory]
+    [InlineData("draft")]
+    [InlineData("candidate")]
+    [InlineData("planned")]
+    [InlineData("withdrawn")]
+    [InlineData("private")]
+    public void NonpublishedArticleProducesNoLinkedInShareControl(string status)
+    {
+        using var fixture = new Fixture();
+        fixture.WriteArticle(status, approved: false);
+        fixture.Generate();
+
+        var indexHtml = fixture.Read("articles/index.html");
+
+        Assert.DoesNotContain("Share on LinkedIn", indexHtml);
+        Assert.DoesNotContain(
+            "linkedin.com/sharing/share-offsite",
+            indexHtml,
+            StringComparison.OrdinalIgnoreCase);
+        Assert.False(fixture.Exists("articles/bias/index.html"));
+    }
+
+    [Fact]
+    public void LinkedInSharingIntroducesNoApiSdkOrClientScript()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteArticle("published", approved: true);
+        fixture.Generate();
+
+        var html = fixture.Read("articles/bias/index.html");
+
+        Assert.DoesNotContain("platform.linkedin.com", html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("api.linkedin.com", html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("oauth", html, StringComparison.OrdinalIgnoreCase);
+        Assert.DoesNotContain("<script src=", html, StringComparison.OrdinalIgnoreCase);
+    }
+
+    [Fact]
     public void WithdrawalRemovesAllPublicRepresentations()
     {
         using var fixture = new Fixture();
@@ -331,6 +388,20 @@ public sealed class ArticlePublicationTests
         while (directory is not null && !File.Exists(Path.Combine(directory.FullName, "Ulfbou.Portfolio.slnx")))
             directory = directory.Parent;
         return directory?.FullName ?? throw new InvalidOperationException("repository root not found");
+    }
+
+    private static int CountOccurrences(string value, string marker)
+    {
+        var count = 0;
+        var offset = 0;
+
+        while ((offset = value.IndexOf(marker, offset, StringComparison.Ordinal)) >= 0)
+        {
+            count++;
+            offset += marker.Length;
+        }
+
+        return count;
     }
 
     [Fact]

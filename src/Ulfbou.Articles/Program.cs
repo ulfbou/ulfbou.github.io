@@ -376,8 +376,8 @@ public static class ArticlePublisher
     private static string ArticlePage(Article article, Series series, string markdown)
     {
         var canonicalUrl = $"https://ulfbou.github.io{article.CanonicalPath}";
+        var linkedInShareUrl = $"https://www.linkedin.com/sharing/share-offsite/?url={Uri.EscapeDataString(canonicalUrl)}";
         var socialImageUrl = $"https://ulfbou.github.io{article.SocialImage}";
-
         var data = JsonSerializer.Serialize(
             new Dictionary<string, object?>
             {
@@ -402,8 +402,8 @@ public static class ArticlePublisher
         var updated = article.ModifiedDate == article.PublishedDate
             ? string.Empty
             : $"<span>Updated <time datetime=\"{article.ModifiedDate}\">{article.ModifiedDate}</time></span>";
-        var body = $"<main id=\"main-content\" class=\"article-page\"><article><header class=\"article-header\"><a class=\"back-link\" href=\"/articles/\">← All articles</a><p class=\"overline\">{E(series.Title)} · Part {article.SeriesPart}</p><h1>{E(article.Title)}</h1><p class=\"article-deck\">{E(article.Deck)}</p><p class=\"article-meta\"><span>By {E(article.Author)}</span><span>Published <time datetime=\"{article.PublishedDate}\">{article.PublishedDate}</time></span>{updated}<span>{article.ReadingMinutes} min read</span></p></header><div class=\"article-body\">{Markdown(markdown, suppressTitle: true)}</div></article></main>";
-
+        var sharing = $"<aside class=\"article-sharing\" aria-label=\"Share this article\"><p>Share this article</p><a class=\"share-link share-link-linkedin\" href=\"{E(linkedInShareUrl)}\" target=\"_blank\" rel=\"noopener noreferrer\">Share on LinkedIn</a></aside>";
+        var body = $"<main id=\"main-content\" class=\"article-page\"><article><header class=\"article-header\"><a class=\"back-link\" href=\"/articles/\">← All articles</a><p class=\"overline\">{E(series.Title)} · Part {article.SeriesPart}</p><h1>{E(article.Title)}</h1><p class=\"article-deck\">{E(article.Deck)}</p><p class=\"article-meta\"><span>By {E(article.Author)}</span><span>Published <time datetime=\"{article.PublishedDate}\">{article.PublishedDate}</time></span>{updated}<span>{article.ReadingMinutes} min read</span></p></header><div class=\"article-body\">{Markdown(markdown, suppressTitle: true)}</div>{sharing}</article></main>";
         return Layout(article.Title, article.Description, article.CanonicalPath, body, article.SocialImage, data);
     }
 
