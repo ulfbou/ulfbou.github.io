@@ -39,6 +39,7 @@ public sealed record Article(
     string SeriesId,
     int SeriesPart,
     string SocialImage,
+    string SocialImageAlt,
     string CanonicalPath,
     Approval EditorialApproval);
 

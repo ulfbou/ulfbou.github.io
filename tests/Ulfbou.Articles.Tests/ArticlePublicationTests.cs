@@ -92,7 +92,7 @@ public sealed class ArticlePublicationTests
             "<meta property=\"og:url\" content=\"https://ulfbou.github.io/articles/bias/\">",
             html);
         Assert.Contains(
-            "<meta property=\"og:image\" content=\"https://ulfbou.github.io/assets/social/articles/bias.svg\">",
+            "<meta property=\"og:image\" content=\"https://ulfbou.github.io/assets/social/articles/bias.png\">",
             html);
         Assert.Contains(
             "<meta name=\"twitter:card\" content=\"summary_large_image\">",
@@ -110,13 +110,25 @@ public sealed class ArticlePublicationTests
             "https://ulfbou.github.io/articles/bias/",
             structuredData.GetProperty("mainEntityOfPage").GetString());
         Assert.Equal(
-            "https://ulfbou.github.io/assets/social/articles/bias.svg",
+            "https://ulfbou.github.io/assets/social/articles/bias.png",
             structuredData.GetProperty("image").GetString());
         Assert.Equal(
             "Ulf Bourelius",
             structuredData.GetProperty("author").GetProperty("name").GetString());
     }
 
+    [Fact]
+    public void PublishedArticleEmitsLinkedInCompatibleImageMetadata()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteArticle("published", approved: true);
+        fixture.Generate();
+        var html = fixture.Read("articles/bias/index.html");
+        Assert.Contains("property=\"og:image:type\" content=\"image/png\"", html);
+        Assert.Contains("property=\"og:image:width\" content=\"1200\"", html);
+        Assert.Contains("property=\"og:image:height\" content=\"627\"", html);
+        Assert.Contains("property=\"og:image:alt\" content=\"Bias article social preview.\"", html);
+    }
     [Fact]
     public void PublishedArticleContainsOneCanonicalLinkedInShareLink()
     {
@@ -437,12 +449,21 @@ public sealed class ArticlePublicationTests
                 new UTF8Encoding(false));
             if (createSocialAsset)
             {
-                var path = Path.Combine(WebRoot, "assets", "social", "articles", "bias.svg");
+                var path = Path.Combine(WebRoot, "assets", "social", "articles", "bias.png");
                 Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-                File.WriteAllText(path, "<svg xmlns=\"http://www.w3.org/2000/svg\"/>\n", new UTF8Encoding(false));
+                WritePngHeader(path, 1200, 627);
             }
         }
 
+        private static void WritePngHeader(string path, int width, int height)
+        {
+            var bytes = new byte[24];
+            new byte[] { 137, 80, 78, 71, 13, 10, 26, 10 }.CopyTo(bytes, 0);
+            Encoding.ASCII.GetBytes("IHDR").CopyTo(bytes, 12);
+            System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(bytes.AsSpan(16, 4), width);
+            System.Buffers.Binary.BinaryPrimitives.WriteInt32BigEndian(bytes.AsSpan(20, 4), height);
+            File.WriteAllBytes(path, bytes);
+        }
         public void WriteBody(string markdown) =>
             File.WriteAllText(Path.Combine(SourceRoot, "bodies", "bias.md"), markdown, new UTF8Encoding(false));
 
@@ -471,7 +492,8 @@ public sealed class ArticlePublicationTests
                 ["bodyPath"] = bodyPath,
                 ["seriesId"] = "confidently-wrong",
                 ["seriesPart"] = 1,
-                ["socialImage"] = "/assets/social/articles/bias.svg",
+                ["socialImage"] = "/assets/social/articles/bias.png",
+                ["socialImageAlt"] = "Bias article social preview.",
                 ["canonicalPath"] = "/articles/bias/",
                 ["editorialApproval"] = new Dictionary<string, object?>
                 {
@@ -496,7 +518,8 @@ public sealed class ArticlePublicationTests
             ["language"] = "en", ["publishedDate"] = null, ["modifiedDate"] = null,
             ["readingMinutes"] = 8, ["bodyPath"] = "bodies/bias.md",
             ["seriesId"] = "confidently-wrong", ["seriesPart"] = 1,
-            ["socialImage"] = "/assets/social/articles/bias.svg",
+            ["socialImage"] = "/assets/social/articles/bias.png",
+                ["socialImageAlt"] = "Bias article social preview.",
             ["canonicalPath"] = $"/articles/{slug}/",
             ["editorialApproval"] = new Dictionary<string, object?>
             { ["approved"] = false, ["approvedBy"] = null, ["approvedDate"] = null }

@@ -206,9 +206,15 @@ public static class ArticlePublisher
 
         if (!article.SocialImage.StartsWith("/assets/social/articles/", StringComparison.Ordinal))
             throw new InvalidDataException($"ARTICLE010: social image is outside article assets for {article.Id}");
+        Required(article.SocialImageAlt, "socialImageAlt", article.Id);
+        if (!string.Equals(Path.GetExtension(article.SocialImage), ".png", StringComparison.OrdinalIgnoreCase))
+            throw new InvalidDataException($"ARTICLE027: social image must be PNG for {article.Id}");
         var asset = SafePath(webRoot, article.SocialImage.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
         if (!File.Exists(asset))
             throw new InvalidDataException($"ARTICLE010: missing social image for {article.Id}");
+        var dimensions = PngDimensions(asset);
+        if (dimensions.Width != 1200 || dimensions.Height != 627)
+            throw new InvalidDataException($"ARTICLE028: social image must be exactly 1200x627 for {article.Id}");
     }
 
     private static void ValidateNotPublished(Article article)
@@ -231,6 +237,18 @@ public static class ArticlePublisher
 
     private static bool IsPlaceholder(string? value) =>
         value is not null && value.Contains("YYYY", StringComparison.OrdinalIgnoreCase);
+    private static (int Width, int Height) PngDimensions(string path)
+    {
+        Span<byte> header = stackalloc byte[24];
+        using var stream = File.OpenRead(path);
+        if (stream.Read(header) != header.Length
+            || !header[..8].SequenceEqual(new byte[] { 137, 80, 78, 71, 13, 10, 26, 10 })
+            || !header[12..16].SequenceEqual("IHDR"u8))
+            throw new InvalidDataException($"ARTICLE027: invalid PNG social image: {path}");
+        return (
+            System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(header[16..20]),
+            System.Buffers.Binary.BinaryPrimitives.ReadInt32BigEndian(header[20..24]));
+    }
 
     private static void Required(string? value, string field, string? id = null)
     {
@@ -352,11 +370,12 @@ public static class ArticlePublisher
         string canonical,
         string body,
         string? image = null,
+        string? imageAlt = null,
         string? jsonLd = null)
     {
         var social = image is null
             ? string.Empty
-            : $"<meta property=\"og:type\" content=\"article\"><meta property=\"og:image\" content=\"https://ulfbou.github.io{E(image)}\"><meta name=\"twitter:card\" content=\"summary_large_image\">";
+            : $"<meta property=\"og:type\" content=\"article\"><meta property=\"og:image\" content=\"https://ulfbou.github.io{E(image)}\"><meta property=\"og:image:type\" content=\"image/png\"><meta property=\"og:image:width\" content=\"1200\"><meta property=\"og:image:height\" content=\"627\"><meta property=\"og:image:alt\" content=\"{E(imageAlt ?? string.Empty)}\"><meta name=\"twitter:card\" content=\"summary_large_image\">";
         var structured = jsonLd is null ? string.Empty : $"<script type=\"application/ld+json\">{jsonLd}</script>";
         return $"<!doctype html>\n<html lang=\"en\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width,initial-scale=1\"><title>{E(title)}</title><meta name=\"description\" content=\"{E(description)}\"><link rel=\"canonical\" href=\"https://ulfbou.github.io{E(canonical)}\"><meta property=\"og:title\" content=\"{E(title)}\"><meta property=\"og:description\" content=\"{E(description)}\"><meta property=\"og:url\" content=\"https://ulfbou.github.io{E(canonical)}\">{social}<link rel=\"stylesheet\" href=\"/css/app.css\"><link rel=\"stylesheet\" href=\"/css/accessibility.css\"><link rel=\"stylesheet\" href=\"/css/articles.css\">{structured}</head><body><a class=\"skip-link\" href=\"#main-content\">Skip to content</a><header class=\"masthead\"><a class=\"identity\" href=\"/\"><span class=\"monogram\" aria-hidden=\"true\">UB</span><span>Ulf Bourelius<small>Cloud · AI · software systems</small></span></a><nav aria-label=\"Primary navigation\"><a href=\"/\">Home</a><a href=\"/work/\">Work</a><a href=\"/articles/\" aria-current=\"page\">Articles</a></nav></header>{body}<footer><span>Ulf Bourelius · Stockholm</span><span>Durable technical writing.</span><a href=\"#main-content\">Back to top ↑</a></footer></body></html>\n";
     }
@@ -404,7 +423,7 @@ public static class ArticlePublisher
             : $"<span>Updated <time datetime=\"{article.ModifiedDate}\">{article.ModifiedDate}</time></span>";
         var sharing = $"<aside class=\"article-sharing\" aria-label=\"Share this article\"><p>Share this article</p><a class=\"share-link share-link-linkedin\" href=\"{E(linkedInShareUrl)}\" target=\"_blank\" rel=\"noopener noreferrer\">Share on LinkedIn</a></aside>";
         var body = $"<main id=\"main-content\" class=\"article-page\"><article><header class=\"article-header\"><a class=\"back-link\" href=\"/articles/\">← All articles</a><p class=\"overline\">{E(series.Title)} · Part {article.SeriesPart}</p><h1>{E(article.Title)}</h1><p class=\"article-deck\">{E(article.Deck)}</p><p class=\"article-meta\"><span>By {E(article.Author)}</span><span>Published <time datetime=\"{article.PublishedDate}\">{article.PublishedDate}</time></span>{updated}<span>{article.ReadingMinutes} min read</span></p></header><div class=\"article-body\">{Markdown(markdown, suppressTitle: true)}</div>{sharing}</article></main>";
-        return Layout(article.Title, article.Description, article.CanonicalPath, body, article.SocialImage, data);
+        return Layout(article.Title, article.Description, article.CanonicalPath, body, article.SocialImage, article.SocialImageAlt, data);
     }
 
     private static string Markdown(string markdown, bool suppressTitle = false)
