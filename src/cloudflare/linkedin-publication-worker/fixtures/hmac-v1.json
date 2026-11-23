@@ -1,0 +1,22 @@
+{
+  "method": "POST",
+  "path": "/v1/linkedin/publications/dry-run",
+  "timestamp": "1795430400",
+  "requestId": "123e4567-e89b-42d3-a456-426614174000",
+  "testOnlySecret": "test-only-signing-secret",
+  "exactBodyUtf8": "{\"schemaVersion\":\"1.0\",\"channel\":\"linkedin\",\"canonicalUrl\":\"https://ulfbou.github.io/articles/bias/\",\"articleRevision\":\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\",\"sourceRepository\":\"ulfbou/ulfbou.github.io\",\"sourceCommit\":\"bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"sourceWorkflowRunId\":\"123456789\",\"publicationIntent\":\"governed-article-publication\",\"articleSourceId\":\"bias\",\"requestedAt\":\"2026-11-23T12:00:00Z\"}",
+  "bodySha256": "495f677d8d009423502a456a7129d20992fb83d1c0b0c356845a45e3ce44b6c0",
+  "canonicalInputUtf8": "POST\n/v1/linkedin/publications/dry-run\n1795430400\n123e4567-e89b-42d3-a456-426614174000\n495f677d8d009423502a456a7129d20992fb83d1c0b0c356845a45e3ce44b6c0",
+  "expectedSignature": "v1=6052cefc6c57c3fc2a23ba77fbf6d912394df08651b66c6d16a34dff5d1f69fc",
+  "nonAsciiExactBodyUtf8": "{\"value\":\"räka\"}",
+  "nonAsciiBodySha256": "631c5c9374497c70d1dbb639c23ed479421891601d522466d77548acc1e36aba",
+  "negativeVariants": [
+    "changed-body-byte",
+    "changed-path",
+    "changed-timestamp",
+    "changed-request-id",
+    "changed-signature-version",
+    "duplicate-json-key",
+    "unsupported-content-encoding"
+  ]
+}

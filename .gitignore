@@ -430,3 +430,6 @@ FodyWeavers.xsd
 *#
 *~
 *.#*#
+.venv/
+.wrangler/
+__pycache__

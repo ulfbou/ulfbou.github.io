@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "linkedin-publication-worker",
+  "main": "src/entry.py",
+  "compatibility_date": "2026-11-19",
+  "compatibility_flags": ["python_workers"],
+  "vars": {
+    "ENVIRONMENT": "preview",
+    "PUBLICATION_ENABLED": "false",
+    "CANONICAL_ARTICLE_URLS": "https://ulfbou.github.io/articles/bias/"
+  },
+  "observability": {"enabled": false}
+}
