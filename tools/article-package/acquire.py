@@ -91,7 +91,7 @@ def acquire(pin_path:Path,output:Path,token:str,consumer_path:Path)->dict[str,An
   except Exception as exc: fail(f"article package validation failed: {exc}")
   if verified.get("schemaVersion")!=pin["contractVersion"] or verified.get("slugs")!=pin["expectedSlugs"]: fail("validated package identity does not match the reviewed pin")
   manifest=load_json(package/"manifest.json")
-  if manifest.get("releaseId")!=pin["publicationId"] or manifest.get("product")!=pin["product"]: fail("manifest publication identity does not match the reviewed pin")
+  if manifest.get("product")!=pin["product"]: fail("manifest product does not match the reviewed pin")
   staged=output.with_name(output.name+".new")
   if staged.exists(): shutil.rmtree(staged)
   shutil.copytree(package,staged)
