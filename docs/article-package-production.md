@@ -4,7 +4,7 @@
 
 ## Reviewed production pin
 
-`tools/article-package/production-pin.json` is intentionally unconfigured until a real promotion exists. A configured review must bind the provider repository, full provider commit, release tag, publication ID, GitHub asset ID, exact asset filename, archive SHA-256, contract version, product and sorted expected slugs. Floating identities are rejected.
+`tools/article-package/production-pin.json` is configured only from validated immutable provider-release evidence. A configured review must bind the provider repository, full provider commit, release tag, publication ID, GitHub asset ID, exact asset filename, archive SHA-256, contract version, product and sorted expected slugs. Floating identities are rejected.
 
 The private-repository credential is exposed only as `ARTICLE_PROVIDER_TOKEN` to the acquisition step. It needs read-only access to releases in `ulfbou/content`. Do not expose it to fork pull requests, generated pages, logs or artifacts. Pull requests continue to use the committed parity fixture. Production deployment must acquire the reviewed pin in a trusted branch context.
 
