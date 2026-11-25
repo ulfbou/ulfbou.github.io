@@ -1,0 +1,16 @@
+{
+  "schemaVersion": "1.0",
+  "providerRepository": "ulfbou/content",
+  "providerCommit": "c59f549ee2ea93ca84dbd8e17c5330f06edad1e2",
+  "releaseTag": "articles-fixture-2026.11.24.1",
+  "publicationId": "fixture-2026.11.24.1",
+  "assetName": "articles-fixture-2026.11.24.1.zip",
+  "archiveSha256": "01bac0b74ddad6f24f4fbfbd08d89b9b05e45d1e83932d018ed0666a72412bf7",
+  "contractVersion": "1.0",
+  "product": "articles",
+  "expectedSlugs": [
+    "bias",
+    "sycophancy"
+  ],
+  "fixtureOnly": true
+}
