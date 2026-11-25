@@ -1,0 +1,16 @@
+{
+  "state": "unconfigured",
+  "providerRepository": "ulfbou/content",
+  "providerCommit": null,
+  "releaseTag": null,
+  "publicationId": null,
+  "assetId": null,
+  "assetFilename": null,
+  "archiveSha256": null,
+  "contractVersion": "1.0",
+  "product": "articles",
+  "expectedSlugs": [
+    "bias",
+    "sycophancy"
+  ]
+}
