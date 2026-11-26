@@ -355,6 +355,22 @@ public sealed class ArticlePublicationTests
     }
 
     [Fact]
+    public void ApprovedMarkdownEmphasisRendersInsideAndOutsideLinksWithoutChangingHref()
+    {
+        using var fixture = new Fixture();
+        fixture.WriteBody("# Bias\n\nBefore _outside_ after.\n\n[The _journal title_ issue](https://example.com/a_path?b=1&c=2)\n\n[The *other title* issue](https://example.com/plain)\n\n[Plain label](https://example.com/plain)\n\nUnmatched _ delimiter and * delimiter.\n");
+        fixture.WriteArticle("published", approved: true);
+        fixture.Generate();
+
+        var html = fixture.Read("articles/bias/index.html");
+        Assert.Contains("Before <em>outside</em> after.", html);
+        Assert.Contains("<a href=\"https://example.com/a_path?b=1&amp;c=2\">The <em>journal title</em> issue</a>", html);
+        Assert.Contains("<a href=\"https://example.com/plain\">The <em>other title</em> issue</a>", html);
+        Assert.Contains("<a href=\"https://example.com/plain\">Plain label</a>", html);
+        Assert.Contains("Unmatched _ delimiter and * delimiter.", html);
+    }
+
+    [Fact]
     public void ArticleIndexContainsEditorialMetadata()
     {
         using var fixture = new Fixture();

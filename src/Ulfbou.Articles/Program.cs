@@ -24,6 +24,7 @@ public static class ArticlePublisher
     private static readonly UTF8Encoding Utf8 = new(false);
     private static readonly Regex Slug = new("^[a-z0-9]+(?:-[a-z0-9]+)*$", RegexOptions.CultureInvariant);
     private static readonly Regex Link = new(@"\[([^\]]+)\]\((https?://[^\s)]+)\)", RegexOptions.CultureInvariant);
+    private static readonly Regex Emphasis = new(@"([*_])([^*_\r\n]+)\1", RegexOptions.CultureInvariant);
     private static readonly HashSet<string> AllowedStatuses = new(
         ["draft", "candidate", "planned", "published", "withdrawn", "private"],
         StringComparer.Ordinal);
@@ -462,8 +463,26 @@ public static class ArticlePublisher
     private static string Inline(string value)
     {
         var encoded = E(value);
-        return Link.Replace(encoded, match => $"<a href=\"{match.Groups[2].Value}\">{match.Groups[1].Value}</a>");
+        var result = new StringBuilder(encoded.Length);
+        var offset = 0;
+
+        foreach (Match match in Link.Matches(encoded))
+        {
+            result.Append(RenderEmphasis(encoded[offset..match.Index]));
+            result.Append("<a href=\"")
+                .Append(match.Groups[2].Value)
+                .Append("\">")
+                .Append(RenderEmphasis(match.Groups[1].Value))
+                .Append("</a>");
+            offset = match.Index + match.Length;
+        }
+
+        result.Append(RenderEmphasis(encoded[offset..]));
+        return result.ToString();
     }
+
+    private static string RenderEmphasis(string value) =>
+        Emphasis.Replace(value, match => $"<em>{match.Groups[2].Value}</em>");
 
     private static string Feed(Article[] articles)
     {
